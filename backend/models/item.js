@@ -4,11 +4,13 @@ const Schema = mongoose.Schema;
 
 const itemSchema = new Schema({
     name: {type: String, required: true, maxLength: 100},
-    desc: {type: String, maxLength: 1000},
+    description: {type: String, maxLength: 1000},
+    tags: {type: [Schema.Types.ObjectId], ref: "Tag"},
+    quantity: {type: Number, required: true},
+    location: {type: String, maxLength: 100},
     // photo will be added later
-    status: {type: String, required: true, enum: ["Available", "Loaned", "Maintenance"]},
-    due_back: {type: Date},
-    borrower: {type: Schema.Types.ObjectId, ref: "Team", required: true},
+    category: {type: Schema.Types.ObjectId, ref: "Category"},
+
 });
 
 module.exports = mongoose.model("Item", itemSchema);
