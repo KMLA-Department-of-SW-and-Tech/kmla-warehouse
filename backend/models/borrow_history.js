@@ -8,6 +8,6 @@ const borrowHistorySchema = new Schema({
     borrower: {type: Schema.Types.ObjectId, ref: "Team", required: true},
     borrow_date: {type: Date, required: true},
     return_date: {type: Date, required: true},
-})
+});
 
 module.exports = mongoose.model("BorrowHistory", borrowHistorySchema);
