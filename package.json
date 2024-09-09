@@ -1,22 +1,19 @@
 {
   "name": "kmla-warehouse",
-  "version": "0.0.0",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "devstart": "nodemon ./bin/www",
-    "serverstart": "DEBUG=express-locallibrary-tutorial:* npm run devstart"
-  },
-  "dependencies": {
-    "cookie-parser": "^1.4.6",
-    "debug": "^4.3.5",
-    "express": "^4.19.2",
-    "http-errors": "~2.0.0",
-    "mongoose": "^8.6.1",
-    "morgan": "^1.10.0",
-    "pug": "3.0.3"
+    "start:backend": "npm run start --workspace backend",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "dev:backend": "npm run dev --workspace backend",
+    "dev": "concurrently --names \"FRONTEND, BACKEND\" \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "lint": "npm run lint --workspaces"
   },
   "devDependencies": {
-    "nodemon": "^3.1.4"
+    "concurrently": "^9.0.0",
+    "eslint": "^9.9.0"
   }
 }

@@ -1,0 +1,22 @@
+{
+  "name": "backend",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "DEBUG=express-locallibrary-tutorial:* nodemon ./bin/www",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "debug": "^4.3.5",
+    "express": "^4.19.2",
+    "http-errors": "~2.0.0",
+    "mongoose": "^8.6.1",
+    "morgan": "^1.10.0",
+    "pug": "3.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
