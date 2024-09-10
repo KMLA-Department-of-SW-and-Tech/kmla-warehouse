@@ -7,7 +7,7 @@ import { useAuthentication } from '@web/modules/authentication' // 사용자 인
 import { useSnackbar } from 'notistack' // 알림 메시지 표시를 위한 hook import
 import { useRouter, useParams } from 'next/navigation' // Next.js 라우터 및 URL 파라미터를 가져오는 hook import
 import { Api, Model } from '@web/domain' // API 호출 및 데이터 모델 관련 모듈 import
-import { PageLayout } from '@web/layouts/Page.layout' // 페이지 레이아웃 컴포넌트 import
+import { PageLayout } from '../layouts/page-layout' // 페이지 레이아웃 컴포넌트 import
 
 // 장비 목록 페이지 컴포넌트
 export default function EquipmentListPage() {
