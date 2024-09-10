@@ -20,7 +20,8 @@ import dayjs from 'dayjs'
 import { useSnackbar } from 'notistack'
 import { useRouter, useParams } from 'next/navigation'
 import { Api, Model } from '@web/domain'
-import { PageLayout } from '@web/layouts/Page.layout'
+import { PageLayout } from '../layouts/page-layout'
+import React from 'react'
 
 export default function EquipmentManagementPage() {
   const router = useRouter()

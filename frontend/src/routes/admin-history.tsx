@@ -1,15 +1,15 @@
-'use client'
 
 import { useEffect, useState } from 'react'
 import { Table, Button, Space, Typography } from 'antd'
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
 const { Title, Text } = Typography
 import { useAuthentication } from '@web/modules/authentication'
-import dayjs from 'dayjs'
 import { useSnackbar } from 'notistack'
 import { useRouter, useParams } from 'next/navigation'
 import { Api, Model } from '@web/domain'
-import { PageLayout } from '@web/layouts/Page.layout'
+import { PageLayout } from '../layouts/page-layout'
+import React from 'react'
+
 
 export default function ReservationManagementPage() {
   const router = useRouter()
@@ -72,18 +72,6 @@ export default function ReservationManagementPage() {
       key: 'equipment',
     },
     {
-      title: 'Start Time',
-      dataIndex: 'startTime',
-      key: 'startTime',
-      render: (text: string) => dayjs(text).format('YYYY-MM-DD HH:mm'),
-    },
-    {
-      title: 'End Time',
-      dataIndex: 'endTime',
-      key: 'endTime',
-      render: (text: string) => dayjs(text).format('YYYY-MM-DD HH:mm'),
-    },
-    {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
@@ -117,11 +105,7 @@ export default function ReservationManagementPage() {
 
   return (
     <PageLayout layout="narrow">
-      <Title level={2}>Reservation Management</Title>
-      <Text>
-        As an administrator, you can approve or reject reservation requests to
-        manage the availability of equipment.
-      </Text>
+      <Title level={2}>대여 현황 관리</Title>
       <Table
         columns={columns}
         dataSource={reservations}
