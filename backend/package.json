@@ -5,8 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
-    "dev": "DEBUG=express-locallibrary-tutorial:* npm run devstart",
-    "dev-w": "SET DEBUG=express-locallibrary-tutorial:* & npm run devstart",
+    "dev": "DEBUG=express-locallibrary-tutorial:* npm run start",
+    "dev-w": "SET DEBUG=express-locallibrary-tutorial:* & npm run start",
     "lint": "eslint ."
   },
   "dependencies": {
