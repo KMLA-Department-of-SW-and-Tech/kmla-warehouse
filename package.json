@@ -9,7 +9,9 @@
     "start:backend": "npm run start --workspace backend",
     "dev:frontend": "npm run dev --workspace frontend",
     "dev:backend": "npm run dev --workspace backend",
+    "dev:backend-w": "npm run dev-w --workspace backend",
     "dev": "concurrently --names \"FRONTEND, BACKEND\" \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev-w": "concurrently --names \"FRONTEND, BACKEND\" \"npm run dev:frontend\" \"npm run dev:backend-w\"",
     "lint": "npm run lint --workspaces"
   },
   "devDependencies": {
