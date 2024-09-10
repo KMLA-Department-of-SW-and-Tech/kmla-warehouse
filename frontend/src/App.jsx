@@ -1,18 +1,9 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
-import fetchEquipment from "./routes/home";
 
-const router = createBrowserRouter([
-  {
-    path: "/home",
-    element: (
-      <fetchEquipment />
-    )
-  }
-])
 
 function App() {
   const [data, setData] = useState(null)
@@ -30,3 +21,7 @@ function App() {
 }
 
 export default App
+
+
+
+

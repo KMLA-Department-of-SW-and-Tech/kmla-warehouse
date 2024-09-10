@@ -15,5 +15,9 @@
   "devDependencies": {
     "concurrently": "^9.0.0",
     "eslint": "^9.9.0"
+  },
+  "dependencies": {
+    "antd": "^5.20.6",
+    "react-router-dom": "^6.26.2"
   }
 }
