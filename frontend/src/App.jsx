@@ -1,4 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import axios from 'axios';
+
 import Login from "./non-authenticated/login/page.tsx"; 
 import Signup from "./non-authenticated/signup/page.tsx"; 
 
@@ -9,6 +11,7 @@ import UserHistoryPage from "./authenticated/user-home/history-page.tsx";
 
 import AddEquipmentPage from "./admin/add-equipment-page.tsx"; 
 import AdminHistoryPage from "./admin/history-page.tsx";  
+
 
 const router = createBrowserRouter([
   // Home page
@@ -58,3 +61,7 @@ const App = () => {
 };
 
 export default App;
+
+
+
+
