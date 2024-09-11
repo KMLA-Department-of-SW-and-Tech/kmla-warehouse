@@ -1,27 +1,60 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Login from "./non-authenticated/login/page.tsx"; 
+import Signup from "./non-authenticated/signup/page.tsx"; 
 
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
+import Home from "./authenticated/equipment-home/equipment-home.tsx"; 
+import EquipmentDetails from "./authenticated/equipment-home/equipment-details.tsx"; 
+import FavoritePage from "./authenticated/user-home/favorite-page.tsx"; 
+import UserHistoryPage from "./authenticated/user-home/history-page.tsx"; 
 
+import AddEquipmentPage from "./admin/add-equipment-page.tsx"; 
+import AdminHistoryPage from "./admin/history-page.tsx";  
 
-function App() {
-  const [data, setData] = useState(null)
-  useEffect(() => {
-    axios.get('/api')
-      .then((response) => setData(response.data))
-      .catch((error) => console.error(error))
-  }, [])
-  return (
-    <>
-      <h1>Data from Backend</h1>
-      {data ? <pre>{JSON.stringify(data, null, 2)}</pre>: <p>Loading...</p>}
-    </>
-  )
-}
+const router = createBrowserRouter([
+  // Home page
+  {
+    path: "/kmla-warehouse/home",
+    element: <Home />,
+  },
+  // Equipment details page
+  {
+    path: "/kmla-warehouse/item/:itemId",
+    element: <EquipmentDetails />,
+  },
+  // Favorite page
+  {
+    path: "/kmla-warehouse/favorites",
+    element: <FavoritePage />,
+  },
+  // User rental history page
+  {
+    path: "/kmla-warehouse/rental-history",
+    element: <UserHistoryPage />,
+  },
+  // Login page
+  {
+    path: "/kmla-warehouse/login",
+    element: <Login />,
+  },
+  // Signup page
+  {
+    path: "/kmla-warehouse/signup",
+    element: <Signup />,
+  },
+  // Admin: add equipment page
+  {
+    path: "/kmla-warehouse/admin/upload-item",
+    element: <AddEquipmentPage />,
+  },
+  // Admin: history page
+  {
+    path: "/kmla-warehouse/admin/history",
+    element: <AdminHistoryPage />,
+  },
+]);
 
-export default App
+const App = () => {
+  return <RouterProvider router={router} />;
+};
 
-
-
-
+export default App;
