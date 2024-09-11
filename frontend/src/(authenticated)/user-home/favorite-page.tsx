@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "../../components/header";
 
 interface FavoriteItem {
   name: string;
@@ -15,17 +16,18 @@ const favoriteItems: FavoriteItem[] = [
 
 const Favorites = () => {
   return (
+    <><Header />
     <div style={{ padding: '20px' }}>
-      <h2>즐겨찾기</h2>
-      <div>
-        {favoriteItems.map((item, index) => (
-          <div key={index} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
-            <h3>{item.name}</h3>
-            <p>{item.reservationStatus}</p>
+          <h2>즐겨찾기</h2>
+          <div>
+              {favoriteItems.map((item, index) => (
+                  <div key={index} style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
+                      <h3>{item.name}</h3>
+                      <p>{item.reservationStatus}</p>
+                  </div>
+              ))}
           </div>
-        ))}
-      </div>
-    </div>
+      </div></>
   );
 };
 
