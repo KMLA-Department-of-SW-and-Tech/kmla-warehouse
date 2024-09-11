@@ -11,6 +11,7 @@ exports.team_list = asyncHandler(async (req, res, next) => {
         return next(err);
     }
     res.json(teamList);
+    
 }); // only for admin
 
 exports.team_detail = asyncHandler(async (req, res, next) => {
