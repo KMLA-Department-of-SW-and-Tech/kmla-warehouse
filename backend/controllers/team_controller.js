@@ -2,13 +2,25 @@ const Team = require("../models/team");
 const asyncHandler = require("express-async-handler");
 
 exports.team_list = asyncHandler(async (req, res, next) => {
-    const data = await Team.find({}, "name").sort({ name: 1, }).exec()
-    res.json(data);
+    const teamList = await Team.find({}, "name")
+    .sort({ name: 1, })
+    .exec();
+    if(teamList == null) {
+        const err = new Error("Teams not found");
+        err.status = 404;
+        return next(err);
+    }
+    res.json(teamList);
 }); // only for admin
 
 exports.team_detail = asyncHandler(async (req, res, next) => {
-    const data = await Team.findById(req.params.id, "name username").exec();
-    res.json(data);
+    const team = await Team.findById(req.params.id, "name username").exec();
+    if(team == null) {
+        const err = new Error("Team not found");
+        err.status = 404;
+        return next(err);
+    }
+    res.json(team);
 });
 
 // Will implement search
