@@ -10,3 +10,5 @@ router.post("/", adminController.admin_create);
 router.put("/:id", adminController.admin_update);
 
 router.delete("/:id", adminController.admin_delete);
+
+module.exports = router;

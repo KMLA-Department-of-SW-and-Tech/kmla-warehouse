@@ -13,4 +13,6 @@ router.put("/:id", itemController.item_update_put);
 
 router.patch("/:id", itemController.item_update_patch);
 
-router.delete("/:id", itemController.item_delete)
+router.delete("/:id", itemController.item_delete);
+
+module.exports = router;

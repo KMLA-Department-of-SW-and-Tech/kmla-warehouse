@@ -9,4 +9,6 @@ router.get("/:id", borrowHistoryController.borrow_history_detail);
 
 router.post("/", borrowHistoryController.borrow_history_create);
 
-router.delete("/:id", borrowHistoryController.borrow_history_delete)
+router.delete("/:id", borrowHistoryController.borrow_history_delete);
+
+module.exports = router;

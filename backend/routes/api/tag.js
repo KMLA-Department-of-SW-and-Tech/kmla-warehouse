@@ -10,3 +10,5 @@ router.post("/", tagController.tag_create);
 router.put("/:id", tagController.tag_update);
 
 router.delete("/:id", tagController.tag_delete);
+
+module.exports = router;

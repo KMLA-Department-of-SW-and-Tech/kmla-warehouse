@@ -13,3 +13,5 @@ router.put("/:id", teamController.team_update_put);
 
 router.delete("/:id", teamController.team_delete);
 
+module.exports = router;
+
