@@ -5,8 +5,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('dotenv').config();
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+// const indexRouter = require('./routes/index');
+// const usersRouter = require('./routes/users');
 const apiRouter = require('./routes/api');
 
 const app = express();
@@ -22,8 +22,6 @@ async function main() {
 }
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
