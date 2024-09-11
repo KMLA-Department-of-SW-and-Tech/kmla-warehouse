@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./(non-authenticated)/login/page.tsx"; 
-import Signup from "./(non-authenticated)/signup/page.tsx"; 
+import axios from 'axios';
+
+import Login from "./non-authenticated/login/page.tsx"; 
+import Signup from "./non-authenticated/signup/page.tsx"; 
 
 import Home from "./(authenticated)/equipment-home/equipment-home.tsx"; 
 import EquipmentDetails from "./(authenticated)/equipment-home/equipment-details.tsx"; 
@@ -10,6 +12,7 @@ import UserHistoryPage from "./(authenticated)/user-home/history-page.tsx";
 
 import AddEquipmentPage from "./admin/add-equipment-page.tsx"; 
 import AdminHistoryPage from "./admin/history-page.tsx";  
+
 
 const router = createBrowserRouter([
   // Home page
@@ -64,3 +67,7 @@ const App = () => {
 };
 
 export default App;
+
+
+
+

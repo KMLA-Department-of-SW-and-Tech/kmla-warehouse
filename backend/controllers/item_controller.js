@@ -2,14 +2,25 @@ const Item = require("../models/item");
 const asyncHandler = require("express-async-handler");
 
 exports.item_list = asyncHandler(async (req, res, next) => {
-    const allItems = await Item.find({}, "name status")
-    .sort(({name: 1}))
+    const itemList = await Item.find({}, "name status")
+    .sort({name: 1})
     .exec();
-    res.send(allItems);
+    if(itemList == null) {
+        const err = new Error("Items not found");
+        err.status = 404;
+        return next(err);
+    }
+    res.send(itemList);
 });
 
 exports.item_detail = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Item detail");
+    const item = await Item.findById(req.params.id).exec();
+    if(item == null) {
+        const err = new Error("Item not found");
+        err.status = 404;
+        return next(err);
+    }
+    res.json({item});
 });
 
 // Will implement search

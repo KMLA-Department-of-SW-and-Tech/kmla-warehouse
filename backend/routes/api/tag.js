@@ -7,7 +7,7 @@ router.get("/list", tagController.tag_list);
 
 router.post("/", tagController.tag_create);
 
-router.put("/:id", tagController.tag_update);
+router.put("/:id", tagController.tag_update_put);
 
 router.delete("/:id", tagController.tag_delete);
 
