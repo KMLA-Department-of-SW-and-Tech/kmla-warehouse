@@ -2,7 +2,10 @@ const Item = require("../models/item");
 const asyncHandler = require("express-async-handler");
 
 exports.item_list = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Item list");
+    const allItems = await Item.find({}, "name status")
+    .sort(({name: 1}))
+    .exec();
+    res.send(allItems);
 });
 
 exports.item_detail = asyncHandler(async (req, res, next) => {
