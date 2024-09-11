@@ -10,8 +10,7 @@ exports.team_list = asyncHandler(async (req, res, next) => {
         err.status = 404;
         return next(err);
     }
-    res.json(teamList);
-    
+    res.send(teamList);
 }); // only for admin
 
 exports.team_detail = asyncHandler(async (req, res, next) => {
