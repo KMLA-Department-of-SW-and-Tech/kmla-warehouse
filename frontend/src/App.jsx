@@ -11,7 +11,8 @@ import ReservationStatus from "./(authenticated)/user-home/reservation-status.ts
 import UserHistoryPage from "./(authenticated)/user-home/history-page.tsx"; 
 
 import AddEquipmentPage from "./admin/add-equipment-page.tsx"; 
-import AdminHistoryPage from "./admin/history-page.tsx";  
+import AdminHistoryPage from "./admin/history-page.tsx";
+import EditUserPage from "./admin/edit-user-page.tsx";
 
 
 const router = createBrowserRouter([
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
   {
     path: "/kmla-warehouse/admin/history",
     element: <AdminHistoryPage />,
+  },
+  {
+    path: "/kmla-warehouse/admin/edit-user",
+    element: <EditUserPage />,
   },
 ]);
 
