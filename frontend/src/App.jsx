@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 //import axios from 'axios';
 
-// //import Login from "./non-authenticated/login/page.tsx"; 
-// //import Signup from "./non-authenticated/signup/page.tsx"; 
+// import Login from "./non-authenticated/login/page.tsx"; 
+// import Signup from "./non-authenticated/signup/page.tsx"; 
 
 import Home from "./(authenticated)/equipment-home/equipment-home.tsx"; 
 // import EquipmentDetails from "./(authenticated)/equipment-home/equipment-details.tsx"; 
@@ -16,7 +16,7 @@ import Home from "./(authenticated)/equipment-home/equipment-home.tsx";
 
 const router = createBrowserRouter([
   // Home page
-  /*
+  
   {
     path: "/kmla-warehouse/home",
     element: <Home />,
