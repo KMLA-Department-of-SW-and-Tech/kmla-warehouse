@@ -1,0 +1,41 @@
+Admin
+GET 어드민 정보 /api/admin/:id
+POST 어드민 생성 /api/admin/
+PUT 어드민 업데이트 /api/admin/:id
+DELETE 어드민 삭제 /api/admin/:id
+
+Borrow_History
+GET 전체 리스트 /api/borrow_history/list
+GET 검색 
+GET 로그 정보 /api/borrow_history/:id
+POST 로그 생성 /api/borrow_history/
+DELETE 로그 삭제 /api/borrow_history/:id
+
+Category
+GET 전체 리스트 /api/category/list
+POST 카테고리 생성 /api/category/
+PUT 카테고리 업데이트 /api/category/:id
+DELETE 카테고리 삭제 /api/category/:id
+
+Item
+GET 전체 리스트 /api/item/list
+GET 검색
+GET 물품 정보 /api/item/:id
+POST 물품 생성 /api/item/
+PUT 물품 업데이트 /api/item/:id
+PATCH 물품 업데이트 /api/item/:id
+DELETE 물품 삭제 /api/item/:id
+
+Tag
+GET 전체 리스트 /api/tag/list
+POST 테그 생성 /api/tag/
+PUT 테그 업데이트 /api/tag/:id
+DELETE 팀 삭제 /api/tag/:id
+
+Team
+GET 전체 리스트 /api/team/list
+GET 검색
+GET 팀 정보 /api/team/:id
+POST 팀 생성 /api/team/
+PUT 팀 업데이트 /api/team/:id
+DELETE 팀 삭제 /api/team/:id
