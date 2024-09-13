@@ -12,30 +12,30 @@ POST 로그 생성 /api/borrow_history/
 DELETE 로그 삭제 /api/borrow_history/:id
 
 Category
-GET 전체 리스트 /api/categories/list
-POST 카테고리 생성 /api/categories/
-PUT 카테고리 업데이트 /api/categories/:id
-DELETE 카테고리 삭제 /api/categories/:id
+GET 전체 리스트 /api/category/list
+POST 카테고리 생성 /api/category/
+PUT 카테고리 업데이트 /api/category/:id
+DELETE 카테고리 삭제 /api/category/:id
 
 Item
-GET 전체 리스트 /api/items/list
+GET 전체 리스트 /api/item/list
 GET 검색
-GET 물품 정보 /api/items/:id
-POST 물품 생성 /api/items/
-PUT 물품 업데이트 /api/items/:id
-PATCH 물품 업데이트 /api/items/:id
-DELETE 물품 삭제 /api/items/:id
+GET 물품 정보 /api/item/:id
+POST 물품 생성 /api/item/
+PUT 물품 업데이트 /api/item/:id
+PATCH 물품 업데이트 /api/item/:id
+DELETE 물품 삭제 /api/item/:id
 
 Tag
-GET 전체 리스트 /api/tags/list
-POST 테그 생성 /api/tags/
-PUT 테그 업데이트 /api/tags/:id
-DELETE 팀 삭제 /api/tags/:id
+GET 전체 리스트 /api/tag/list
+POST 테그 생성 /api/tag/
+PUT 테그 업데이트 /api/tag/:id
+DELETE 팀 삭제 /api/tag/:id
 
 Team
-GET 전체 리스트 /api/teams/list
+GET 전체 리스트 /api/team/list
 GET 검색
-GET 팀 정보 /api/teams/:id
-POST 팀 생성 /api/teams/
-PUT 팀 업데이트 /api/teams/:id
-DELETE 팀 삭제 /api/teams/:id
+GET 팀 정보 /api/team/:id
+POST 팀 생성 /api/team/
+PUT 팀 업데이트 /api/team/:id
+DELETE 팀 삭제 /api/team/:id
