@@ -6,10 +6,10 @@ router.get('/', (req, res) => {
   res.json({ message: 'API Index' });
 });
 
-const itemRouter = require("./item");
-const teamRouter = require("./team");
-const tagRouter = require("./tag");
-const categoryRouter = require("./category");
+const itemRouter = require("./items");
+const teamRouter = require("./teams");
+const tagRouter = require("./tags");
+const categoryRouter = require("./categories");
 const borrowHistoryRouter = require("./borrow_history");
 const adminRouter = require("./admin");
 
