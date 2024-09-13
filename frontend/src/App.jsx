@@ -11,7 +11,7 @@ import EquipmentDetails from "./(authenticated)/equipment-home/equipment-details
 // import UserHistoryPage from "./(authenticated)/user-home/history-page.tsx"; 
 // 
 // import AddEquipmentPage from "./admin/add-equipment-page.tsx"; 
-// import AdminHistoryPage from "./admin/history-page.tsx";  
+import AdminHistoryPage from "./admin/history-page.tsx";  
 
 
 const router = createBrowserRouter([
