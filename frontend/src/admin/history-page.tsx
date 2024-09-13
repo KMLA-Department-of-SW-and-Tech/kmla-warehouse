@@ -1,54 +1,72 @@
-import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
-import { Layout, Card, Button, Row, Col } from 'antd';
-import Sidebar from '../components/admin/sidebar';
+import React from 'react';
+import Sidebar from '../components/admin/sidebar'
+import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import { Breadcrumb, Layout, Menu, theme } from 'antd';
 
-const { Sider, Content } = Layout;
+const { Header, Content, Sider } = Layout;
 
-interface Reservation {
-  id: number;
-  name: string;
-  status: string;
-  dateRange: string;
-}
+const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
+  key,
+  label: `nav ${key}`,
+}));
 
-const AdminHistoryPage: React.FC = () => {
-  const [reservations] = useState<Reservation[]>([
-    { id: 1, name: '전자물품1', status: '수령전', dateRange: '24/09/01~24/10/01' },
-    { id: 2, name: '전자물품2', status: '사용중', dateRange: '24/08/20~24/08/23' },
-    { id: 3, name: '전자물품3', status: '반납완료', dateRange: '24/04/12~24/04/22' },
-  ]);
+const items2: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
+  (icon, index) => {
+    const key = String(index + 1);
+
+    return {
+      key: `sub${key}`,
+      icon: React.createElement(icon),
+      label: `subnav ${key}`,
+
+      children: new Array(4).fill(null).map((_, j) => {
+        const subKey = index * 4 + j + 1;
+        return {
+          key: subKey,
+          label: `option${subKey}`,
+        };
+      }),
+    };
+  },
+);
+
+const App: React.FC = () => {
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
 
   return (
-    <Layout>
-      <Sider>
-        <Sidebar />
-      </Sider>
+    <Layout style={{minHeight:'100vh', minWidth:'100vw'}}>
+      <Header style={{ display: 'flex', alignItems: 'center', backgroundColor: 'gray' }}>
+        <h2 style={{color: 'white'}}>KMLA Storage</h2>
+      </Header>
       <Layout>
-        <Content style={{ padding: '20px' }}>
-          <h2>예약현황</h2>
-          <Button.Group>
-            <Button type="default">전체</Button>
-            <Button type="default">수령전</Button>
-            <Button type="default">사용중</Button>
-            <Button type="default">반납완료</Button>
-          </Button.Group>
-          <div style={{ marginTop: '20px' }}>
-            <Row gutter={[16, 16]}>
-              {reservations.map((item) => (
-                <Col span={8} key={item.id}>
-                  <Card title={item.name}>
-                    <p>상태: {item.status}</p>
-                    <p>예약날짜: {item.dateRange}</p>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
-          </div>
-        </Content>
+        <Sider width={200} style={{ background: colorBgContainer }}>
+          <Sidebar />
+          
+        </Sider>
+        <Layout style={{ padding: '0 24px 24px' }}>
+          <Breadcrumb style={{ margin: '16px 0' }}>
+            <Breadcrumb.Item>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>List</Breadcrumb.Item>
+            <Breadcrumb.Item>App</Breadcrumb.Item>
+          </Breadcrumb>
+          <Content
+            style={{
+              padding: 24,
+              margin: 0,
+              minHeight: 280,
+              background: colorBgContainer,
+              borderRadius: borderRadiusLG,
+            }}
+          >
+            Content
+          </Content>
+        </Layout>
       </Layout>
     </Layout>
   );
 };
 
-export default AdminHistoryPage;
+export default App;

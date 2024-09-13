@@ -5,9 +5,11 @@ import { HomeOutlined, AppstoreOutlined, HistoryOutlined } from '@ant-design/ico
 const Sidebar: React.FC = () => {
   return (
     <Menu
-      style={{ width: 256, height: '100vh' }}
-      defaultSelectedKeys={['reservation']}
       mode="inline"
+      defaultSelectedKeys={['1']}
+      defaultOpenKeys={['sub1']}
+      style={{ height: '100vh', borderRight: 0 }}
+      
     >
       <Menu.Item key="home" icon={<HomeOutlined />}>
         홈화면
@@ -20,7 +22,7 @@ const Sidebar: React.FC = () => {
       </Menu.ItemGroup>
       <Menu.ItemGroup key="mypage" title="마이페이지">
         <Menu.Item key="favorite">즐겨찾기</Menu.Item>
-        <Menu.Item key="reservation" icon={<AppstoreOutlined />}>
+        <Menu.Item key="1" icon={<AppstoreOutlined />}>
           예약현황
         </Menu.Item>
         <Menu.Item key="history" icon={<HistoryOutlined />}>
