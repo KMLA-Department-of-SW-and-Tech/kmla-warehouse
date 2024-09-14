@@ -1,5 +1,6 @@
 const Team = require("../models/team");
 const asyncHandler = require("express-async-handler");
+const { body, validationResult } = require("express-validator");
 
 exports.team_list = asyncHandler(async (req, res, next) => {
     const teamList = await Team.find({}, "name")
@@ -25,10 +26,32 @@ exports.team_detail = asyncHandler(async (req, res, next) => {
 
 // Will implement search
 
-exports.team_create = asyncHandler(async (req, res, next) => {
-    
-    res.send("NOT IMPLEMENTED: team create");
-});
+exports.team_create = [
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
+
+        if(!errors.isEmpty()) {
+            req.send(errors.array());
+        }
+        else {
+            const teamExists = await Team.findOne({username: req.body.username})
+            .collation({ locale: "en", strength: 2 })
+            .exec();
+            if(teamExists) {
+                res.status(409).send("이미 같은 아이디로 등록된 팀이 존재합니다.");
+            }
+            else {
+                const newTeam = new Team({
+                    username: req.body.username, 
+                    password: req.body.password,
+                    name: req.body.name,
+                });
+                await newTeam.save();
+                res.status(201).send("팀 등록 성공!");
+            }
+        }
+    })
+];
 
 exports.team_update_put = asyncHandler(async (req, res, next) => {
     res.send("NOT IMPLEMENTED: team update put");

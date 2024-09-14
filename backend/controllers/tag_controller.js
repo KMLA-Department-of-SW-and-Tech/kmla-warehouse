@@ -22,8 +22,6 @@ exports.tag_create = [
 
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
-
-        const newTag = new Tag({name: req.body.name});
         
         if(!errors.isEmpty()) {
             res.send(errors.array());
@@ -36,6 +34,7 @@ exports.tag_create = [
                 res.status(409).send("이미 등록된 태그입니다.");
             }
             else {
+                const newTag = new Tag({name: req.body.name});
                 await newTag.save();
                 res.status(201).send("태그 등록 성공!");
             }
