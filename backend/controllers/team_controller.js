@@ -1,6 +1,6 @@
 const Team = require("../models/team");
 const asyncHandler = require("express-async-handler");
-const { body, validationResult } = require("express-validator");
+const { validationResult } = require("express-validator");
 
 exports.team_list = asyncHandler(async (req, res, next) => {
     const teamList = await Team.find({}, "name")
@@ -50,7 +50,7 @@ exports.team_create = [
                 res.status(201).send("팀 등록 성공!");
             }
         }
-    })
+    }) // okay? saving password as it is??
 ];
 
 exports.team_update_put = asyncHandler(async (req, res, next) => {
