@@ -14,7 +14,7 @@ exports.team_list = asyncHandler(async (req, res, next) => {
 }); // only for admin
 
 exports.team_detail = asyncHandler(async (req, res, next) => {
-    const team = await Team.findById(req.params.id, "name username").exec();
+    const team = await Team.findById(req.params.id).exec();
     if(team == null) {
         const err = new Error("Team not found");
         err.status = 404;
