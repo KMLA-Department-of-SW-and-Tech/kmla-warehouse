@@ -28,7 +28,7 @@ exports.tag_create = [
         }
         else {
             const tagExists = await Tag.findOne({name: req.body.name})
-            .collation({ locale: "en", strength: 2 })
+            .collation({ locale: "ko", strength: 2 })
             .exec();
             if(tagExists) {
                 res.status(409).send("이미 등록된 태그입니다.");

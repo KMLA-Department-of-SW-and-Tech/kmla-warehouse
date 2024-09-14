@@ -35,7 +35,7 @@ exports.team_create = [
         }
         else {
             const teamExists = await Team.findOne({username: req.body.username})
-            .collation({ locale: "en", strength: 2 })
+            .collation({ locale: "ko", strength: 2 })
             .exec();
             if(teamExists) {
                 res.status(409).send("이미 같은 아이디로 등록된 팀이 존재합니다.");
