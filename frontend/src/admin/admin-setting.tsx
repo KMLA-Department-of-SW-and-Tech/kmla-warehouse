@@ -8,7 +8,7 @@ import { itemService, Item } from '../api/itemService';
 const { Content, Sider } = Layout;
 
 
-const AdminHome: React.FC = () => {
+const AdminSettingPage: React.FC = () => {
   return (
     <Layout className="layout">
       <Headbar/>
@@ -25,4 +25,4 @@ const AdminHome: React.FC = () => {
   );
 };
   
-  export default AdminHome;
+  export default AdminSettingPage;

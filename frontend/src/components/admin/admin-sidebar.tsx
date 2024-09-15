@@ -16,7 +16,7 @@ const Sidebar: React.FC = () => {
 
 const items1: MenuProps['items'] = [
   {
-    key: 'mypage',
+    key: 'manage',
     label: '관리 페이지',
     type: 'group',
     children: [
@@ -26,12 +26,12 @@ const items1: MenuProps['items'] = [
         label: '홈화면',
       },
       {
-        key: 'kmla-warehouse/admin/manage-team',
+        key: 'kmla-warehouse/admin/team',
         icon: <TeamOutlined />,
         label: '팀관리',
       },
       {
-        key: 'kmla-warehouse/admin/history',
+        key: 'kmla-warehouse/admin/reservation',
         icon: <Badge size='small' count={5}><HistoryOutlined /></Badge>,
         label: '신청관리',
       },
@@ -48,7 +48,7 @@ const items1: MenuProps['items'] = [
     type: 'group',
     children: [
       {
-        key: 'equipment',
+        key: 'kmla-warehouse/admin/setting',
         icon: <UserOutlined />,
         label: '계정설정',
       },

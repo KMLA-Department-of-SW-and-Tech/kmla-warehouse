@@ -10,21 +10,22 @@ import EquipmentDetails from "./(authenticated)/equipment-home/equipment-details
 // import ReservationStatus from "./(authenticated)/user-home/reservation-status.tsx"
 // import UserHistoryPage from "./(authenticated)/user-home/history-page.tsx"; 
 // 
-// import AddEquipmentPage from "./admin/add-equipment-page.tsx"; 
+import AdminEquipmentPage from "./admin/equipment-page.tsx"; 
 import AdminHistoryPage from "./admin/history-page.tsx";  
 import AdminHome from "./admin/admin-home.tsx";
+import AdminTeamPage from "./admin/manage-team-page.tsx";
+import AdminSettingPage from "./admin/admin-setting.tsx";
 
 
 const router = createBrowserRouter([
   // Home page
- 
-  /*
   {
     path: "/kmla-warehouse/home",
     element: <Home />,
   },
   // Equipment details page
   
+  /*
   {
     path: "/kmla-warehouse/item/:itemId",
     element: <EquipmentDetails />,
@@ -60,20 +61,34 @@ const router = createBrowserRouter([
     element: <AdminHome />,
   },
 
-  /* 
+  
   
   // Admin: add equipment page
   {
-    path: "/kmla-warehouse/admin/upload-item",
-    element: <AddEquipmentPage />,
+    path: "/kmla-warehouse/admin/equipment",
+    element: <AdminEquipmentPage />,
   },
   
-  */
-  // Admin: history page
+
+  // Admin: reservation page
   {
-    path: "/kmla-warehouse/admin/history",
+    path: "/kmla-warehouse/admin/reservation",
     element: <AdminHistoryPage />,
   },
+
+  // Admin: mange team page
+  {
+    path: "kmla-warehouse/admin/team",
+    element: <AdminTeamPage />,
+  },
+
+  // Admin: account setting page
+  {
+    path: "kmla-warehouse/admin/setting",
+    element: <AdminSettingPage />,
+  }
+
+
 ]);
 
 const App = () => {

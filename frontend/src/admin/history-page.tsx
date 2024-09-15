@@ -7,7 +7,7 @@ import "../styles/admin-home.css";
 import Headbar from "../components/header"
 import { itemService, Item } from '../api/itemService';
 
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 const { Title } = Typography;
 
 interface DataType {
