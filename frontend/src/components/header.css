@@ -6,7 +6,8 @@
   position: sticky; /* 스크롤 시 상단에 고정 */
   top: 0;
   z-index: 1000;
-  width: 90vw; /* 화면 전체 너비 */
+  width: 100vw; /* 화면 전체 너비 */
+  color: black;
 }
 
 /* 헤더 내용물의 최대 너비 설정과 중앙 정렬 */

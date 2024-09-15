@@ -2,7 +2,7 @@ import React from 'react';
 import './header.css'; // 스타일 파일을 가져옵니다.
 
 // Header 컴포넌트 정의
-const Header: React.FC = () => {
+const Headbar: React.FC = () => {
   return (
     <header className="header">
       <div className="header-container">
@@ -17,4 +17,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+export default Headbar;

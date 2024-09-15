@@ -1,65 +1,72 @@
 import React from 'react';
-import { Menu, MenuProps } from 'antd';
-import { HomeOutlined, AppstoreOutlined, HistoryOutlined, LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import { Menu, MenuProps, Badge } from 'antd';
+import { 
+  HomeOutlined, 
+  HistoryOutlined, 
+  ProductOutlined, 
+  TeamOutlined,
+  UserOutlined
+} from '@ant-design/icons';
 
+
+
+const Sidebar: React.FC = () => {
+  const navigate = useNavigate();
 
 const items1: MenuProps['items'] = [
   {
     key: 'mypage',
-    label: '관리자 페이지',
+    label: '관리 페이지',
     type: 'group',
     children: [
       {
-        key: 'home',
+        key: 'kmla-warehouse/admin/home',
         icon: <HomeOutlined />,
         label: '홈화면',
       },
       {
-        key: 'reservation',
-        icon: <AppstoreOutlined />,
-        label: '예약 관리',
+        key: 'kmla-warehouse/admin/manage-team',
+        icon: <TeamOutlined />,
+        label: '팀관리',
       },
       {
-        key: 'history',
-        icon: <HistoryOutlined />,
-        label: '히스토리',
+        key: 'kmla-warehouse/admin/history',
+        icon: <Badge size='small' count={5}><HistoryOutlined /></Badge>,
+        label: '신청관리',
+      },
+      {
+        key: 'kmla-warehouse/admin/equipment',
+        icon: <ProductOutlined />,
+        label: '물품관리',
       },
     ],
   },
   {
     key: 'categories',
-    label: '물품 카테고리',
+    label: '마이페이지',
     type: 'group',
     children: [
       {
-        key: 'all',
-        label: '전체물품',
-      },
-      {
-        key: 'electronics',
-        label: '전자부품',
-      },
-      {
-        key: 'measuring',
-        label: '측정기기',
-      },
-      {
-        key: 'tools',
-        label: '공구',
+        key: 'equipment',
+        icon: <UserOutlined />,
+        label: '계정설정',
       },
     ],
   },
   
 ];
 
-
-const Sidebar: React.FC = () => {
+const handleMenuClick = (e: {key: string}) => {
+  navigate(`/${e.key}`);
+};
   return (
     <Menu
       mode="inline"
       defaultSelectedKeys={['home']}
-      style={{ height: '100vh', paddingTop: '10px'}}
+      onClick={handleMenuClick}
       items={items1}
+      style={{ height: '100vh', paddingTop: '10px' }}
       
     />
   );

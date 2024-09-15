@@ -15,5 +15,8 @@
   "devDependencies": {
     "concurrently": "^9.0.0",
     "eslint": "^9.9.0"
+  },
+  "dependencies": {
+    "antd": "^5.20.6"
   }
 }

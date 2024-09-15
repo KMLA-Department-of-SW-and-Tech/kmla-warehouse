@@ -12,6 +12,7 @@ import EquipmentDetails from "./(authenticated)/equipment-home/equipment-details
 // 
 // import AddEquipmentPage from "./admin/add-equipment-page.tsx"; 
 import AdminHistoryPage from "./admin/history-page.tsx";  
+import AdminHome from "./admin/admin-home.tsx";
 
 
 const router = createBrowserRouter([
@@ -53,6 +54,13 @@ const router = createBrowserRouter([
     path: "/kmla-warehouse/signup",
     element: <Signup />,
   },
+  */
+  {
+    path: "/kmla-warehouse/admin/home",
+    element: <AdminHome />,
+  },
+
+  /* 
   
   // Admin: add equipment page
   {
