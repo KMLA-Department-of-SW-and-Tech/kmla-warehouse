@@ -31,9 +31,9 @@ DELETE 물품 삭제 /api/item/:id
 
 Tag
 GET 전체 리스트 /api/tag/list
-POST 테그 생성 /api/tag/
+POST 태그 생성 /api/tag/
   body: name(String)
-PUT 테그 업데이트 /api/tag/:id
+PUT 태그 업데이트 /api/tag/:id
 DELETE 팀 삭제 /api/tag/:id
 
 Team
@@ -64,3 +64,6 @@ axios.post('/api/team/', {
   .catch(function (error) {
     console.log(error);
   });
+
+
+axios.get("/api/team/list")
