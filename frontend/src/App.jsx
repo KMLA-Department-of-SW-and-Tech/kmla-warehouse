@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 //import axios from 'axios';
 
-//import Login from "./non-authenticated/login/page.tsx"; 
-// import Signup from "./non-authenticated/signup/page.tsx"; 
+//import Login from "./(non-authenticated)/login/page.tsx"; 
+import Signup from "./(non-authenticated)/signup/page.tsx"; 
 
 import Home from "./(authenticated)/equipment-home/equipment-home.tsx"; 
 import EquipmentDetails from "./(authenticated)/equipment-home/equipment-details.tsx"; 
@@ -31,11 +31,12 @@ const router = createBrowserRouter([
   },
   // Equipment details page
   
-  /*
+  
   {
     path: "/kmla-warehouse/item/:itemId",
     element: <EquipmentDetails />,
   },
+  /*
   // Favorite page
   {
     path: "/kmla-warehouse/favorites",
@@ -48,15 +49,15 @@ const router = createBrowserRouter([
   },
   // User rental history page
   {
-    path: "/kmla-warehouse/rental-history",
+    path: "/kmla-warehouse/history",
     element: <UserHistoryPage />,
-  },
+  },*/
   // Signup page
   {
     path: "/kmla-warehouse/signup",
     element: <Signup />,
   },
-  */
+  
   {
     path: "/kmla-warehouse/admin/home",
     element: <AdminHome />,

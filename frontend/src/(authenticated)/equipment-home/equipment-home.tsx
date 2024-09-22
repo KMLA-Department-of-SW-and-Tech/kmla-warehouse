@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Typography, Card, Row, Col, Spin, Layout } from 'antd';
 import { CalendarOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Sidebar from '../../components/equipment/equipment-bar'; // Importing the sidebar component
 
 const { Sider, Content } = Layout;
@@ -33,65 +34,12 @@ export default function EquipmentListPage() {
       location: 'Lab C',
       photoUrl: '',
     },
-    {
-      id: '3',
-      name: 'CNC 머신',
-      location: 'Lab C',
-      photoUrl: '',
-    },
-    {
-      id: '3',
-      name: 'CNC 머신',
-      location: 'Lab C',
-      photoUrl: '',
-    },
-    {
-      id: '3',
-      name: 'CNC 머신',
-      location: 'Lab C',
-      photoUrl: '',
-    },
-    {
-      id: '3',
-      name: 'CNC 머신',
-      location: 'Lab C',
-      photoUrl: '',
-    },
-    {
-      id: '3',
-      name: 'CNC 머신',
-      location: 'Lab C',
-      photoUrl: '',
-    },
-    {
-      id: '3',
-      name: 'CNC 머신',
-      location: 'Lab C',
-      photoUrl: '',
-    },
-    {
-      id: '3',
-      name: 'CNC 머신',
-      location: 'Lab C',
-      photoUrl: '',
-    },
-    {
-      id: '3',
-      name: 'CNC 머신',
-      location: 'Lab C',
-      photoUrl: '',
-    },
-    {
-      id: '3',
-      name: 'CNC 머신',
-      location: 'Lab C',
-      photoUrl: '',
-    },
-    // Additional equipment entries...
   ]);
 
+  const navigate = useNavigate(); // Initialize the navigate function
+
   const handleViewDetails = (equipmentId: string) => {
-    console.log('View details for equipment:', equipmentId);
+    navigate(`/kmla-warehouse/item/${equipmentId}`); // Navigate to the details page
   };
 
   return (
@@ -111,52 +59,51 @@ export default function EquipmentListPage() {
       </Sider>
 
       {/* Main content */}
-      <Layout style={{ marginLeft: 250 }}> 
+      <Layout style={{ marginLeft: 250 }}>
         <Content style={{ padding: '20px' }}>
           {loading ? (
             <Spin size="large" />
           ) : (
             <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
-  {equipmentList?.map((equipment) => (
-    <Col xs={8} sm={8} md={8} lg={8} key={equipment.id}>
-      <Card
-        hoverable
-        cover={
-          <div
-            style={{
-              width: '100%',
-              height: '150px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: '#f0f0f0',
-            }}
-          >
-            <Typography.Text>이미지 없음</Typography.Text>
-          </div>
-        }
-        actions={[
-          <CalendarOutlined
-            key="view"
-            onClick={() => handleViewDetails(equipment.id)}
-          />,
-        ]}
-        style={{ minWidth: '200px', height: '300px' }} // 최소 너비 설정
-      >
-        <Card.Meta
-          title={equipment.name}
-          description={equipment.location}
-          style={{
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}
-        />
-      </Card>
-    </Col>
-  ))}
-</Row>
-
+              {equipmentList?.map((equipment) => (
+                <Col xs={8} sm={8} md={8} lg={8} key={equipment.id}>
+                  <Card
+                    hoverable
+                    cover={
+                      <div
+                        style={{
+                          width: '100%',
+                          height: '150px',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          backgroundColor: '#f0f0f0',
+                        }}
+                      >
+                        <Typography.Text>이미지 없음</Typography.Text>
+                      </div>
+                    }
+                    actions={[
+                      <CalendarOutlined
+                        key="view"
+                        onClick={() => handleViewDetails(equipment.id)}
+                      />,
+                    ]}
+                    style={{ minWidth: '200px', height: '300px' }} // 최소 너비 설정
+                  >
+                    <Card.Meta
+                      title={equipment.name}
+                      description={equipment.location}
+                      style={{
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}
+                    />
+                  </Card>
+                </Col>
+              ))}
+            </Row>
           )}
         </Content>
       </Layout>
