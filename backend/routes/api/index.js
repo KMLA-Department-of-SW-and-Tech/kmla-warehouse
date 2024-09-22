@@ -12,6 +12,7 @@ const tagRouter = require("./tag");
 const categoryRouter = require("./category");
 const borrowHistoryRouter = require("./borrow_history");
 const adminRouter = require("./admin");
+const authRouter = require("./auth")
 
 router.use("/item", itemRouter);
 router.use("/team", teamRouter);
@@ -19,5 +20,6 @@ router.use("/tag", tagRouter);
 router.use("/category", categoryRouter);
 router.use("/borrow-history", borrowHistoryRouter);
 router.use("/adminRouter", adminRouter);
+router.user("/auth", authRouter);
 
 module.exports = router;

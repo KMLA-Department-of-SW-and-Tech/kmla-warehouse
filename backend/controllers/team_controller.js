@@ -37,8 +37,9 @@ exports.team_create = [
             res.send(errors.array());
         }
         else {
-            const teamExists = await Team.findOne({username: req.body.username})
-            .collation({ locale: "ko", strength: 2 })
+            const { username, password, name } = req.body;
+            const teamExists = await Team.findOne({username: username})
+            .collation({ locale: "en_US", strength: 2 })
             .exec();
             if(teamExists) {
                 res.status(409).send("A Team with the same username already exists");
@@ -46,12 +47,12 @@ exports.team_create = [
             else {
                 try {
                     // encrypt the password
-                    const hashedPwd = await bcrypt.hash(req.body.password, 10);
+                    const hashedPwd = await bcrypt.hash(password, 10);
                     // store new user
                     const newTeam = new Team({
-                        username: req.body.username, 
+                        username: username, 
                         password: hashedPwd,
-                        name: req.body.name,
+                        name: name,
                     });
                     await newTeam.save();
                     res.status(201).send("Successful team register");
