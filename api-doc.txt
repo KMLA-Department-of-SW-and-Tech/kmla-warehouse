@@ -67,3 +67,16 @@ axios.post('/api/team/', {
 
 
 axios.get("/api/team/list")
+
+
+async {
+  try {
+    const response = await <Promise>;
+
+  } catch(e) {
+    console.log(e.message);
+    
+  }
+}
+
+<Promise>.then(response => ).error(error => )
