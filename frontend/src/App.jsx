@@ -1,21 +1,21 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 //import axios from 'axios';
 
-//import Login from "./(non-authenticated)/login/page.tsx"; 
+import Login from "./(non-authenticated)/login/page.tsx"; 
 import Signup from "./(non-authenticated)/signup/page.tsx"; 
 
 import Home from "./(authenticated)/equipment-home/equipment-home.tsx"; 
 import EquipmentDetails from "./(authenticated)/equipment-home/equipment-details.tsx"; 
-// import FavoritePage from "./(authenticated)/user-home/favorite-page.tsx"; 
-// import ReservationStatus from "./(authenticated)/user-home/reservation-status.tsx"
-// import UserHistoryPage from "./(authenticated)/user-home/history-page.tsx"; 
-// 
+import FavoritePage from "./(authenticated)/user-home/favorite-page.tsx"; 
+import ReservationStatus from "./(authenticated)/user-home/reservation-status.tsx";
+//import UserHistoryPage from "./(authenticated)/user-home/history-page.tsx"; 
+ 
 import AdminEquipmentPage from "./admin/equipment-page.tsx"; 
 import AdminHistoryPage from "./admin/history-page.tsx";  
 import AdminHome from "./admin/admin-home.tsx";
 import AdminTeamPage from "./admin/manage-team-page.tsx";
 import AdminSettingPage from "./admin/admin-setting.tsx";
-import LoginPage from "./(non-authenticated)/login/page.tsx";
+
 
 
 const router = createBrowserRouter([
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
   // Login page
   {
     path: "/kmla-warehouse/login",
-    element: <LoginPage />,
+    element: <Login />,
   },
   // Equipment details page
   
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
     path: "/kmla-warehouse/item/:itemId",
     element: <EquipmentDetails />,
   },
-  /*
+  
   // Favorite page
   {
     path: "/kmla-warehouse/favorites",
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
     element: <ReservationStatus />,
   },
   // User rental history page
-  {
+  /*{
     path: "/kmla-warehouse/history",
     element: <UserHistoryPage />,
   },*/

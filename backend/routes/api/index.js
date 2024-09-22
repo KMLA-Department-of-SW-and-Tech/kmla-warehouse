@@ -20,6 +20,6 @@ router.use("/tag", tagRouter);
 router.use("/category", categoryRouter);
 router.use("/borrow-history", borrowHistoryRouter);
 router.use("/adminRouter", adminRouter);
-router.user("/auth", authRouter);
+router.use("/auth", authRouter);
 
 module.exports = router;
