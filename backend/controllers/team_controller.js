@@ -1,7 +1,9 @@
 const Team = require("../models/team");
 const asyncHandler = require("express-async-handler");
 const { validationResult } = require("express-validator");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+
+// next error handling과 res.send() error handling이 같이 쓰이는데 이거 기준이 뭔가요?
 
 exports.team_list = asyncHandler(async (req, res, next) => {
     const teamList = await Team.find({}, "name")
@@ -39,7 +41,7 @@ exports.team_create = [
             .collation({ locale: "ko", strength: 2 })
             .exec();
             if(teamExists) {
-                res.status(409).send("이미 같은 아이디로 등록된 팀이 존재합니다.");
+                res.status(409).send("A Team with the same username already exists");
             }
             else {
                 try {
@@ -52,7 +54,7 @@ exports.team_create = [
                         name: req.body.name,
                     });
                     await newTeam.save();
-                    res.status(201).send("팀 등록 성공!");
+                    res.status(201).send("Successful team register");
                 } catch(err) {
                     res.status(500).send(`Error: ${err.message}`); // error handling
                 }
