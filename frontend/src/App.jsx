@@ -78,13 +78,13 @@ const router = createBrowserRouter([
 
   // Admin: mange team page
   {
-    path: "kmla-warehouse/admin/team",
+    path: "/kmla-warehouse/admin/team",
     element: <AdminTeamPage />,
   },
 
   // Admin: account setting page
   {
-    path: "kmla-warehouse/admin/setting",
+    path: "/kmla-warehouse/admin/setting",
     element: <AdminSettingPage />,
   }
 
