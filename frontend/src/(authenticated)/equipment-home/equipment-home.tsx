@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Card, Row, Col, Spin, Layout } from 'antd';
-import { CalendarOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import Sidebar from '../../components/equipment/equipment-bar'; // Importing the sidebar component
+import { CalendarOutlined, UnorderedListOutlined } from '@ant-design/icons'; // Import the icon
+import { useNavigate } from 'react-router-dom';
+import Sidebar from '../../components/equipment/equipment-bar';
+import { itemService } from '../../api/itemService'; // Import the itemService
 
 const { Sider, Content } = Layout;
+const { Title } = Typography;
 
 interface Item {
   id: string;
@@ -14,29 +16,25 @@ interface Item {
 }
 
 export default function EquipmentListPage() {
-  const [loading, setLoading] = useState(false);
-  const [equipmentList, setEquipmentList] = useState<Item[]>([
-    {
-      id: '1',
-      name: '3D 프린터',
-      location: 'Lab A',
-      photoUrl: '',
-    },
-    {
-      id: '2',
-      name: '레이저 커터',
-      location: 'Lab B',
-      photoUrl: '',
-    },
-    {
-      id: '3',
-      name: 'CNC 머신',
-      location: 'Lab C',
-      photoUrl: '',
-    },
-  ]);
+  const [loading, setLoading] = useState(true); // Start loading as true
+  const [equipmentList, setEquipmentList] = useState<Item[]>([]); // Empty list initially
+  const navigate = useNavigate();
 
-  const navigate = useNavigate(); // Initialize the navigate function
+  useEffect(() => {
+    // Fetch equipment list from API
+    const fetchEquipmentList = async () => {
+      try {
+        const items = await itemService.getAll(); // Fetch all items from the API
+        setEquipmentList(items);
+      } catch (error) {
+        console.error('Failed to fetch equipment list:', error);
+      } finally {
+        setLoading(false); // Stop loading once the data is fetched
+      }
+    };
+
+    fetchEquipmentList();
+  }, []);
 
   const handleViewDetails = (equipmentId: string) => {
     navigate(`/kmla-warehouse/item/${equipmentId}`); // Navigate to the details page
@@ -49,7 +47,7 @@ export default function EquipmentListPage() {
         width={250}
         style={{
           background: '#fff',
-          position: 'fixed', // Keep the sidebar fixed
+          position: 'fixed',
           height: '100vh',
           left: 0,
           top: 0,
@@ -60,13 +58,20 @@ export default function EquipmentListPage() {
 
       {/* Main content */}
       <Layout style={{ marginLeft: 250 }}>
-        <Content style={{ padding: '20px' }}>
+        <Content style={{ padding: '40px', width: 'calc(100vw - 250px)' }}>
+          
+          {/* Title with icon */}
+          <Title level={2} style={{ display: 'flex', alignItems: 'center' }}>
+            <UnorderedListOutlined style={{ marginRight: '10px' }} />
+            물품목록 전체보기
+          </Title>
+          
           {loading ? (
             <Spin size="large" />
           ) : (
             <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
               {equipmentList?.map((equipment) => (
-                <Col xs={8} sm={8} md={8} lg={8} key={equipment.id}>
+                <Col xs={24} sm={12} md={8} lg={5} key={equipment.id}>
                   <Card
                     hoverable
                     cover={
@@ -80,7 +85,15 @@ export default function EquipmentListPage() {
                           backgroundColor: '#f0f0f0',
                         }}
                       >
-                        <Typography.Text>이미지 없음</Typography.Text>
+                        {equipment.photoUrl ? (
+                          <img
+                            src={equipment.photoUrl}
+                            alt={equipment.name}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          />
+                        ) : (
+                          <Typography.Text>이미지 없음</Typography.Text>
+                        )}
                       </div>
                     }
                     actions={[
@@ -89,7 +102,7 @@ export default function EquipmentListPage() {
                         onClick={() => handleViewDetails(equipment.id)}
                       />,
                     ]}
-                    style={{ minWidth: '200px', height: '300px' }} // 최소 너비 설정
+                    style={{ maxWidth: '220px', height: '270px' }}
                   >
                     <Card.Meta
                       title={equipment.name}
