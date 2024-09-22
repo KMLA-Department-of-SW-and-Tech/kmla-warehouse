@@ -44,3 +44,23 @@ POST 팀 생성 /api/team/
   body: username(String), password(String), name(String)
 PUT 팀 업데이트 /api/team/:id
 DELETE 팀 삭제 /api/team/:id
+
+
+// Create Team example
+Request with CURL in Windows!!
+curl -X POST http://localhost:3000/api/team/ -H "Content-Type: application/json" -d "{""username"" : ""LoginTestUsername"", ""password"" : ""LoginTestPassword"", ""name"" : ""LoginTestName""}"
+Request with CURL in MacOS!!
+curl -X POST http://localhost:3000/api/team/ -H 'Content-Type: application/json' -d '{"username" : "LoginTestUsername", "password" : "LoginTestPassword", "name" : "LoginTestName"}'
+
+Request with Axios // just an example, do not use it in this form, use async and send multiple requests at once (Promise.all)
+axios.post('/api/team/', {
+    username: "LoginTestUsername",
+    password: "LoginTestPassword",
+    name: "LoginTestName",
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });

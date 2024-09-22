@@ -15,6 +15,7 @@ import AdminHistoryPage from "./admin/history-page.tsx";
 import AdminHome from "./admin/admin-home.tsx";
 import AdminTeamPage from "./admin/manage-team-page.tsx";
 import AdminSettingPage from "./admin/admin-setting.tsx";
+import LoginPage from "./(non-authenticated)/login/page.tsx";
 
 
 const router = createBrowserRouter([
@@ -22,6 +23,11 @@ const router = createBrowserRouter([
   {
     path: "/kmla-warehouse/home",
     element: <Home />,
+  },
+  // Login page
+  {
+    path: "/kmla-warehouse/login",
+    element: <LoginPage />,
   },
   // Equipment details page
   
@@ -44,11 +50,6 @@ const router = createBrowserRouter([
   {
     path: "/kmla-warehouse/rental-history",
     element: <UserHistoryPage />,
-  },
-  // Login page
-  {
-    path: "/kmla-warehouse/login",
-    element: <Login />,
   },
   // Signup page
   {

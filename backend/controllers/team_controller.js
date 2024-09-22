@@ -28,10 +28,10 @@ exports.team_detail = asyncHandler(async (req, res, next) => {
 
 exports.team_create = [
     asyncHandler(async (req, res, next) => {
+        console.log(req.body)
         const errors = validationResult(req);
-
         if(!errors.isEmpty()) {
-            req.send(errors.array());
+            res.send(errors.array());
         }
         else {
             const teamExists = await Team.findOne({username: req.body.username})
