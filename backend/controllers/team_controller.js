@@ -1,6 +1,7 @@
 const Team = require("../models/team");
 const asyncHandler = require("express-async-handler");
 const { validationResult } = require("express-validator");
+const bcrypt = require("bcrypt")
 
 exports.team_list = asyncHandler(async (req, res, next) => {
     const teamList = await Team.find({}, "name")
@@ -41,16 +42,23 @@ exports.team_create = [
                 res.status(409).send("이미 같은 아이디로 등록된 팀이 존재합니다.");
             }
             else {
-                const newTeam = new Team({
-                    username: req.body.username, 
-                    password: req.body.password,
-                    name: req.body.name,
-                });
-                await newTeam.save();
-                res.status(201).send("팀 등록 성공!");
+                try {
+                    // encrypt the password
+                    const hashedPwd = await bcrypt.hash(req.body.password, 10);
+                    // store new user
+                    const newTeam = new Team({
+                        username: req.body.username, 
+                        password: hashedPwd,
+                        name: req.body.name,
+                    });
+                    await newTeam.save();
+                    res.status(201).send("팀 등록 성공!");
+                } catch(err) {
+                    res.status(500).send(`Error: ${err.message}`); // error handling
+                }
             }
         }
-    }) // okay? saving password as it is??
+    })
 ];
 
 exports.team_update_put = asyncHandler(async (req, res, next) => {
