@@ -6,7 +6,6 @@ import Signup from "./(non-authenticated)/signup/page.tsx";
 
 import Home from "./(authenticated)/equipment-home/equipment-home.tsx"; 
 import EquipmentDetails from "./(authenticated)/equipment-home/equipment-details.tsx"; 
-import FavoritePage from "./(authenticated)/user-home/favorite-page.tsx"; 
 import ReservationStatus from "./(authenticated)/user-home/reservation-status.tsx";
 //import UserHistoryPage from "./(authenticated)/user-home/history-page.tsx"; 
  
@@ -30,28 +29,20 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   // Equipment details page
-  
-  
   {
     path: "/kmla-warehouse/item/:itemId",
     element: <EquipmentDetails />,
   },
-  
-  // Favorite page
-  {
-    path: "/kmla-warehouse/favorites",
-    element: <FavoritePage />,
-  },
-  // Reservation Status page
+  //Reservation Status page
   {
     path: "/kmla-warehouse/reservation-status",
     element: <ReservationStatus />,
   },
   // User rental history page
-  /*{
-    path: "/kmla-warehouse/history",
-    element: <UserHistoryPage />,
-  },*/
+  // {
+  //   path: "/kmla-warehouse/history",
+  //   element: <UserHistoryPage />,
+  // },
   // Signup page
   {
     path: "/kmla-warehouse/signup",

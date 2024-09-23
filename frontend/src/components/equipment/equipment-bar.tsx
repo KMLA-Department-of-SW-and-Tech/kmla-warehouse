@@ -35,13 +35,8 @@ const MenuBar: React.FC = () => {
       type: 'group',
       children: [
         {
-          key: 'kmla-warehouse/favorites',
-          icon: <StarOutlined />,
-          label: '즐겨찾기',
-        },
-        {
           key: 'kmla-warehouse/reservation-status',
-          icon: <Badge size="small" count={3}><HistoryOutlined /></Badge>,
+          icon: <Badge size="small" count={99}><HistoryOutlined /></Badge>,
           label: '예약현황',
         },
         {

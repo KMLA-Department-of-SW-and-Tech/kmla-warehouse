@@ -1,9 +1,9 @@
-const borrowHistory = require("../models/borrow_history");
+const BorrowHistory = require("../models/borrow_history");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
 exports.borrow_history_list = asyncHandler(async (req, res, next) => {
-    const borrowHistoryList = await borrowHistory.find({})
+    const borrowHistoryList = await BorrowHistory.find({})
     .sort({name: 1})
     .exec();
     if(borrowHistoryList == null) {
@@ -28,7 +28,7 @@ exports.borrow_history_create = [
             res.send(errors.array());
         }
         else {
-            const newEntry = new borrowHistory({
+            const newEntry = new BorrowHistory({
                 item: req.body.item,
                 quantity: req.body.quantity,
                 borrower: req.body.borrower,
