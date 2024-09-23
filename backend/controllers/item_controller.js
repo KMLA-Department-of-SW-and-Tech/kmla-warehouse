@@ -1,4 +1,5 @@
 const Item = require("../models/item");
+const BorrowHistory = require("../models/borrow_history");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
@@ -21,6 +22,7 @@ exports.item_detail = asyncHandler(async (req, res, next) => {
         err.status = 404;
         return next(err);
     }
+    const itemHistory = await BorrowHistory.find({item: req.params.id})
     res.json({item});
 });
 

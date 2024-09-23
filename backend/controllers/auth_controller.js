@@ -26,10 +26,9 @@ exports.handle_login = asyncHandler(async (req, res, next) => {
             { "username": foundUser.username, "name": foundUser.name, "admin": false },
             process.env.REFRESH_TOKEN_SECRET,
             { expiresIn: '1d' }
-        ); // fails
+        );
         // pass refress token to database
         const response = await Team.updateOne({ username: foundUser.username }, { $set: { refresh_token: refreshToken }}).exec();
-        console.log(response, foundUser.username)
         res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }); // max age same as token expiration(1d)
         // http only to block attacks from sending cookies, but use secure to completely secure the cookie.(for late implementation)
         res.status(200).json({ accessToken });
