@@ -12,9 +12,9 @@ const LoginPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      // 로그인 API 호출 (백엔드에서 제공하는 실제 로그인 엔드포인트로 변경해야 합니다)
-      const response = await axios.post('http://your-backend-url/api/login', { username, password });
-      
+      const response = await axios.post('/api/auth/', { username, password });
+      console.log(response)
+      /* 
       // 로그인 성공 시 토큰을 저장합니다 (백엔드 응답에 따라 조정 필요)
       localStorage.setItem('token', response.data.token);
       
@@ -29,10 +29,10 @@ const LoginPage = () => {
       }
 
       // 홈 페이지로 이동
-      navigate("/equipment-home");
+      navigate("/equipment-home"); */
     } catch (error) {
       console.error('로그인 실패:', error);
-      alert('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.');
+      /* alert('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.'); */
     }
   };
 
