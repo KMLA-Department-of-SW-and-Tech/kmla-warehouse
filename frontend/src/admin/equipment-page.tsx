@@ -4,6 +4,7 @@ import { Layout } from 'antd';
 import Sidebar from "../components/admin/admin-sidebar";
 import '../styles/admin-home.css';
 import Headbar from "../components/header"
+import { Item, itemService } from '../api/itemService'
 
 const { Sider, Content } = Layout;
 
@@ -17,7 +18,6 @@ const AdminEquipmentPage: React.FC = () => {
                 </Sider>
                 <Layout>
                     <Content className="content">
-                        
                     </Content>
                 </Layout>
             </Layout>

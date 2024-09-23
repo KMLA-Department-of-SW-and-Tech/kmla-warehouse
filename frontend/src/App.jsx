@@ -10,7 +10,7 @@ import ReservationStatus from "./(authenticated)/user-home/reservation-status.ts
 //import UserHistoryPage from "./(authenticated)/user-home/history-page.tsx"; 
  
 import AdminEquipmentPage from "./admin/equipment-page.tsx"; 
-import AdminHistoryPage from "./admin/history-page.tsx";  
+import AdminHistoryPage from "./admin/reservation-page.tsx";  
 import AdminHome from "./admin/admin-home.tsx";
 import AdminTeamPage from "./admin/manage-team-page.tsx";
 import AdminSettingPage from "./admin/admin-setting.tsx";
