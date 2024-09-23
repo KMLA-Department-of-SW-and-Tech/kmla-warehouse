@@ -22,7 +22,8 @@ exports.item_detail = asyncHandler(async (req, res, next) => {
         err.status = 404;
         return next(err);
     }
-    const itemHistory = await BorrowHistory.find({item: req.params.id})
+    const lastItemHistory = await BorrowHistory.find({item: req.params.id, return_date: null}).exec();
+    item._doc.current_borrower =  (lastItemHistory.length == 0 ? null : lastItemHistory[0].borrower); // find borrower faulty
     res.json({item});
 });
 
