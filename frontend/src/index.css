@@ -66,3 +66,24 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+input {
+  background-color: #ffffff; /* 입력 필드 배경을 흰색으로 설정 */
+  border: none; /* 테두리를 제거 */
+  border-bottom: 2px solid transparent; /* 기본 상태에서는 밑줄을 투명하게 */
+  padding: 0.5em 0; /* 적절한 패딩 추가 */
+  font-size: 1em; /* 폰트 크기 설정 */
+  color: #000000; /* 글씨를 검은색으로 설정 */
+  width: 100%;
+  transition: border-bottom 0.25s ease; /* 클릭 시 밑줄 변경에 대한 부드러운 전환 */
+}
+
+input:focus {
+  outline: none; /* 클릭 시 외곽선 제거 */
+  border-bottom: 2px solid #000000; /* 클릭 시 검은색 굵은 줄로 나타나게 설정 */
+}
+
+input::placeholder {
+  color: #777777; /* placeholder 글씨를 회색으로 설정 */
+  background-color: #ffffff;
+}
