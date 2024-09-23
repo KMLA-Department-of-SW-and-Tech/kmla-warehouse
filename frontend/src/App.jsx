@@ -7,7 +7,6 @@ import Signup from "./(non-authenticated)/signup/page.tsx";
 import Home from "./(authenticated)/equipment-home/equipment-home.tsx"; 
 import EquipmentDetails from "./(authenticated)/equipment-home/equipment-details.tsx"; 
 import ReservationStatus from "./(authenticated)/user-home/reservation-status.tsx";
-//import UserHistoryPage from "./(authenticated)/user-home/history-page.tsx"; 
  
 import AdminEquipmentPage from "./admin/equipment-page.tsx"; 
 import AdminHistoryPage from "./admin/history-page.tsx";  
@@ -38,11 +37,6 @@ const router = createBrowserRouter([
     path: "/kmla-warehouse/reservation-status",
     element: <ReservationStatus />,
   },
-  // User rental history page
-  // {
-  //   path: "/kmla-warehouse/history",
-  //   element: <UserHistoryPage />,
-  // },
   // Signup page
   {
     path: "/kmla-warehouse/signup",
@@ -53,35 +47,26 @@ const router = createBrowserRouter([
     path: "/kmla-warehouse/admin/home",
     element: <AdminHome />,
   },
-
-  
-  
   // Admin: add equipment page
   {
     path: "/kmla-warehouse/admin/equipment",
     element: <AdminEquipmentPage />,
   },
-  
-
   // Admin: reservation page
   {
     path: "/kmla-warehouse/admin/reservation",
     element: <AdminHistoryPage />,
   },
-
   // Admin: mange team page
   {
     path: "/kmla-warehouse/admin/team",
     element: <AdminTeamPage />,
   },
-
   // Admin: account setting page
   {
     path: "/kmla-warehouse/admin/setting",
     element: <AdminSettingPage />,
   }
-
-
 ]);
 
 const App = () => {
