@@ -30,7 +30,7 @@ const router = createBrowserRouter([
   },
   // Equipment details page
   {
-    path: "/kmla-warehouse/item/:itemId",
+    path: "/kmla-warehouse/item/:id",
     element: <EquipmentDetails />,
   },
   //Reservation Status page
