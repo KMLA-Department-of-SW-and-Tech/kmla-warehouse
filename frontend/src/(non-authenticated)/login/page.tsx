@@ -12,7 +12,7 @@ const LoginPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/auth/', { username, password });
+      const response = await axios.post('/api/auth/login', { username, password });
       console.log(response.data.accessToken)
       /* 
       // 로그인 성공 시 토큰을 저장합니다 (백엔드 응답에 따라 조정 필요)
@@ -38,6 +38,9 @@ const LoginPage = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <button onClick={async () => {
+        await axios.post('/api/auth/logout');
+      }}>Click Me</button>
       <div className="p-8 bg-white rounded shadow-md w-96">
         <h2 className="mb-6 text-2xl font-bold text-center">로그인</h2>
         <form onSubmit={handleSubmit}>

@@ -20,7 +20,7 @@ exports.handle_login = asyncHandler(async (req, res, next) => {
         const accessToken = jwt.sign(
             { "username": foundUser.username, "name": foundUser.name, "admin": false },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '5min' }
+            { expiresIn: '30min' }
         );
         const refreshToken = jwt.sign(
             { "username": foundUser.username, "name": foundUser.name, "admin": false },
@@ -38,4 +38,22 @@ exports.handle_login = asyncHandler(async (req, res, next) => {
     }
 }); // handle login
 
+exports.handle_logout = asyncHandler(async (req, res, next) => {
+    // On client delete the accessToken!!!!
 
+    const cookies = req.cookies;
+    if(!cookies?.jwt) return res.sendStatus(204); // no content
+    const refreshToken = cookies.jwt;
+    console.log(cookies.jwt);
+    const foundUser = await Team.findOne({refreshToken: refreshToken})
+    if(!foundUser) {
+        res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+        return res.sendStatus(204); // no content
+    }
+    // Delete refreshToken in db
+    await Team.updateOne({ username: foundUser.username }, { $set: { refreshToken: "" }}).exec();
+    res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: true });
+    res.sendStatus(204);
+}); // handle login
+
+// Same site + Cors haven't implemented yet (Security)

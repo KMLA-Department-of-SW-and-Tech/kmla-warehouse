@@ -23,7 +23,7 @@ exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
             const accessToken = jwt.sign(
                 { "username": decoded.username, "name": decoded.name, "admin": false },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '5min' }
+                { expiresIn: '30min' }
             );
             res.json( {accessToken} )
         }
