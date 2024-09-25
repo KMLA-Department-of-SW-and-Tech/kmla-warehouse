@@ -10,7 +10,7 @@ exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
     console.log(cookies.jwt);
     const refreshToken = cookies.jwt;
 
-    const foundUser = await Team.findOne({refresh_token: refreshToken})
+    const foundUser = await Team.findOne({refreshToken: refreshToken})
     .collation({ locale: "en_US", strength: 2 })
     .exec();
     if(!foundUser) return res.sendStatus(403); // forbidden

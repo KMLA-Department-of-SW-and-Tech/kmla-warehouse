@@ -47,8 +47,8 @@ exports.item_create = [
                 const newItem = new Item({
                     name: req.body.name,
                     description: req.body.description,
-                    total_quantity: req.body.quantity,
-                    available_quantity: req.body.quantity,
+                    totalQuantity: req.body.quantity,
+                    availableQuantity: req.body.quantity,
                     location: req.body.location,
                     status: "대여가능",
                     tags: [],
