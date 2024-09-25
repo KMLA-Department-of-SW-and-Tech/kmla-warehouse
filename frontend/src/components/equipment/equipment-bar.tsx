@@ -40,11 +40,6 @@ const MenuBar: React.FC = () => {
           label: '예약현황',
         },
         {
-          key: 'kmla-warehouse/history',
-          icon: <ContainerOutlined />,
-          label: '히스토리',
-        },
-        {
           key: 'kmla-warehouse/account-settings',
           icon: <UserOutlined />,
           label: '계정설정',

@@ -1,16 +1,17 @@
 const express = require("express");
 const router = express.Router();
+const verifyJWT = require("../../middleware/verifyJWT");
 
 const teamController = require("../../controllers/team_controller");
 
 router.post("/", teamController.team_create);
 
-router.get("/list", teamController.team_list);
+router.get("/list", /* verifyJWT,  */teamController.team_list);
 
 router.route("/:id")
-    .get(teamController.team_detail)
-    .put(teamController.team_update_put)
-    .delete(teamController.team_delete);
+    .get(/* verifyJWT,  */teamController.team_detail)
+    .put(/* verifyJWT,  */teamController.team_update_put)
+    .delete(/* verifyJWT,  */teamController.team_delete);
 
 
 
