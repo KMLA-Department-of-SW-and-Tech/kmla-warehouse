@@ -12,7 +12,7 @@ const LoginPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/auth/login', { username, password });
+      const response = await axios.post('/api/auth/login', { username: username, password: password });
       console.log(response.data.accessToken)
       /* 
       // 로그인 성공 시 토큰을 저장합니다 (백엔드 응답에 따라 조정 필요)

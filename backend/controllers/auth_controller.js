@@ -15,6 +15,7 @@ exports.handle_login = asyncHandler(async (req, res, next) => {
     if(!foundUser) return res.status(401).send("No team with matching username");
     // evaluate password
     const match = await bcrypt.compare(password, foundUser.password);
+    console.log(match)
     if(match) {
         // create JWTs
         const accessToken = jwt.sign(

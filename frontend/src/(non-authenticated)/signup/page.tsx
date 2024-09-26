@@ -3,8 +3,8 @@ import { PageLayout } from '../../layouts/page-layout'; // Assume this is the co
 import axios from 'axios';
 
 const SignUpPage: React.FC = () => {
-  const [teamName, setTeamName] = useState('');
-  const [nickname, setNickname] = useState('');
+  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -20,8 +20,8 @@ const SignUpPage: React.FC = () => {
       return;
     }
     const res = await axios.post("/api/team/", {
-        username: nickname,
-        name: teamName,
+        username: username,
+        name: name,
         password: password,
     });
     console.log(res);
@@ -35,14 +35,14 @@ const SignUpPage: React.FC = () => {
           <div className="space-y-4">
           <div>
               <input
-                id="nickname"
-                name="nickname"
+                id="name"
+                name="name"
                 type="text"
                 required
                 className="w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-black placeholder-gray-500 text-gray-900 sm:text-lg"
                 placeholder="융프명"
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div>
@@ -53,8 +53,8 @@ const SignUpPage: React.FC = () => {
                 required
                 className="w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-black placeholder-gray-500 text-gray-900 sm:text-lg"
                 placeholder="아이디"
-                value={teamName}
-                onChange={(e) => setTeamName(e.target.value)}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div>

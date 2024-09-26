@@ -48,12 +48,11 @@ exports.team_create = [
                 try {
                     // encrypt the password
                     const hashedPwd = await bcrypt.hash(password, 10);
-                    console.log("a")
                     // store new user
                     const newTeam = new Team({
                         username: username, 
                         password: hashedPwd,
-                        role: [ "User", ],
+                        roles: [ "User", ],
                         name: name,
                     });
                     await newTeam.save();
