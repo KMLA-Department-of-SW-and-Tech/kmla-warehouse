@@ -64,9 +64,27 @@ exports.team_create = [
     })
 ];
 
-exports.team_update_put = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: team update put");
-});
+exports.team_update_put = [
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
+
+        if(!errors.isEmpty()) {
+            res.send(errors.array());
+        }
+        else {
+            res.status(201).send();
+            const team = {
+                username: req.body.username, 
+                password: req.body.password,
+                name: req.body.name,
+                refreshToken: req.body.refreshToken,
+                _id:req.params.id,
+            }
+            const updatedTeam = await Team.findByIdAndUpdate(req.params.id, team, {});
+            res.status(200).send("Successfuly updated team");
+        }
+    }),
+];
 
 // exports.team_update_patch = asyncHandler(async (req, res, next) => {
 //     res.send("NOT IMPLEMENTED: team update patch");
