@@ -48,10 +48,40 @@ const columns: TableProps<DataType>['columns'] = [
 
 const AdminHistoryPage: React.FC = () => {
   const [data, setData] = useState<DataType[] | null>(null);
+  
   const fetchData = async () => {
     try {
       const res = await axios.get("/api/borrow-history/list");
-      setData(res.data);
+      const rawdata = res.data;
+
+      /*
+      rawdata.forEach(async (element, index) => {
+        const borrower = await axios.get("/api/team/" + element.borrower);
+        rawdata[index].borrower = borrower.data.name;
+        const item = await axios.get("/api/item/" + element.item);
+        rawdata[index].item = item.data.item.name;
+      });
+      */
+      //console.log(rawdata.data.item.name)
+      //setData(rawdata);
+
+      const processedData = await Promise.all(
+        rawdata.map(async (element: any) => {
+          const borrowerRes = await axios.get("/api/team/" + element.borrower);
+          const itemRes = await axios.get("/api/item/" + element.item);
+          
+          return {
+            item: itemRes.data.item.name,
+            quantity: element.quantity,
+            borrower: borrowerRes.data.name,
+            borrow_date: dayjs(element.borrow_date).format('YYYY-MM-DD'),
+            return_date: dayjs(element.return_date).format('YYYY-MM-DD'),
+          };
+        })
+      );
+
+      setData(processedData);
+
     } catch (e: any) {
       console.log(e.message);
     }
@@ -59,18 +89,6 @@ const AdminHistoryPage: React.FC = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  // MongoDB 데이터를 변환하는 함수
-  const transformData = (mongoData: any[]): DataType[] => {
-    return mongoData.map(item => ({
-      _id: item._id.$oid,
-      item: item.item.$oid, // 실제로는 아이템의 이름을 가져오기 위한 추가 요청이 필요할 수 있음
-      quantity: parseInt(item.quantity.$numberInt),
-      borrower: item.borrower.$oid, // 마찬가지로 실제 팀명을 가져오기 위한 추가 요청이 필요할 수 있음
-      borrow_date: dayjs(parseInt(item.borrow_date.$date.$numberLong)).format('YYYY-MM-DD'),
-      return_date: dayjs(parseInt(item.return_date.$date.$numberLong)).format('YYYY-MM-DD'),
-    }));
-  };
 
   return (
     <Layout className="layout">
@@ -81,11 +99,11 @@ const AdminHistoryPage: React.FC = () => {
         </Sider>
         <Layout>
           <Content className="content">
-            <Title level={3}>예약현황</Title>
+            <Title level={3}>신청현황</Title>
             <Table
               columns={columns}
               dataSource={data || []}
-              rowKey="id"  // 고유한 key로 설정
+              rowKey="id"
             />
           </Content>
         </Layout>
