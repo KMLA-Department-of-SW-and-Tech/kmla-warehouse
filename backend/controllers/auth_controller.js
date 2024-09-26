@@ -39,3 +39,24 @@ exports.handle_login = asyncHandler(async (req, res, next) => {
 }); // handle login
 
 
+exports.get_user_info = asyncHandler(async (req, res, next) => {
+    const cookies = req.cookies;
+    if(!cookies?.jwt) return res.sendStatus(401);
+    console.log(cookies.jwt);
+    const refreshToken = cookies.jwt;
+
+    const foundUser = await Team.findOne({refreshToken: refreshToken}, "username name")
+    .collation({ locale: "en_US", strength: 2 })
+    .exec();
+    if(!foundUser) return res.sendStatus(403); // forbidden
+    // evaluate jwt
+    jwt.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET,
+        (err, decoded) => {
+            if(err || foundUser.username !== decoded.username || foundUser.name !== decoded.name) res.sendStatus(403);
+            res.json(foundUser);
+        }
+    );
+    
+})
