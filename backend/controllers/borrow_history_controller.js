@@ -31,9 +31,9 @@ exports.borrow_history_create = [
             const newEntry = new BorrowHistory({
                 item: req.body.item,
                 quantity: req.body.quantity,
-                borrower: req.body.borrower,
-                borrow_date: req.body.borrowDate,
-                return_date: req.body.returnDate,
+                user: req.body.user,
+                timestamp: req.body.timestamp,
+                type: req.body.type,
             });
             await newEntry.save();
             req.status(201).send("Sucessflly created log entry");
