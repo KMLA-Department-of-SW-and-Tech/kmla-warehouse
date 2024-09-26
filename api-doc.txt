@@ -80,3 +80,6 @@ async {
 }
 
 <Promise>.then(response => ).error(error => )
+
+PUT 사용 시 유의점!
+각 데이터 종류에 대해 그것이 가지는 *모든* 하위 항목에 대한 정보를 줘야 함. Ex) Item 고칠거면 name, description, tags, category, location, status, availableQuantity, totalQuantity
