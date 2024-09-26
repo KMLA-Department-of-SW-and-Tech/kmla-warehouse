@@ -11,10 +11,15 @@ interface Item {
   _id: string;
   name: string;
   description: string;
-  quantity: number;
+  totalQuantity: number;
+  availableQuantity: number;
   location: string;
   photoUrl?: string;
+  tags: string[];  // Array of ObjectId (represented as strings)
+  status: "available" | "deleted";  // Enum for status
+  category: string;  // ObjectId (represented as string)
 }
+
 
 export default function EquipmentDetailPage() {
   const [loading, setLoading] = useState(true); // 로딩 상태
@@ -95,7 +100,7 @@ export default function EquipmentDetailPage() {
               <Text>{item.description}</Text>
               <div style={{ marginTop: '20px' }}>
                 <Text strong>수량: </Text>
-                <Text>{item.quantity}</Text>
+                <Text>{item.availableQuantity}</Text>
               </div>
               <div style={{ marginTop: '10px' }}>
                 <Text strong>위치: </Text>
