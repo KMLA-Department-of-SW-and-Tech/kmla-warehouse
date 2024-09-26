@@ -1,6 +1,5 @@
 import React from 'react';
 import './header.css'; // 스타일 파일을 가져옵니다.
-
 // Header 컴포넌트 정의
 const Headbar: React.FC = () => {
   return (
@@ -16,5 +15,4 @@ const Headbar: React.FC = () => {
     </header>
   );
 };
-
 export default Headbar;

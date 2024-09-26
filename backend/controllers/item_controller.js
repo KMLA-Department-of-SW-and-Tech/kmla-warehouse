@@ -22,8 +22,8 @@ exports.item_detail = asyncHandler(async (req, res, next) => {
         err.status = 404;
         return next(err);
     }
-    const lastItemHistory = await BorrowHistory.find({item: req.params.id, return_date: null}).exec();
-    item._doc.current_borrower =  (lastItemHistory.length == 0 ? null : lastItemHistory[0].borrower); // find borrower faulty
+    // const lastItemHistory = await BorrowHistory.find({item: req.params.id, return_date: null}).exec();
+    // item._doc.current_borrower =  (lastItemHistory.length == 0 ? null : lastItemHistory[0].borrower); // find borrower faulty
     res.json({item});
 });
 
@@ -47,8 +47,8 @@ exports.item_create = [
                 const newItem = new Item({
                     name: req.body.name,
                     description: req.body.description,
-                    total_quantity: req.body.quantity,
-                    available_quantity: req.body.quantity,
+                    totalQuantity: req.body.quantity,
+                    availableQuantity: req.body.quantity,
                     location: req.body.location,
                     status: "대여가능",
                     tags: [],
@@ -61,9 +61,32 @@ exports.item_create = [
     }),
 ]
 
-exports.item_update_put = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Item update put");
-});
+exports.item_update_put = [
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
+        
+        if(!errors.isEmpty()) {
+            res.send(errors.array());
+        }
+        else {
+            const item = new Item({
+                name: req.body.name,
+                description: req.body.description,
+                tags: req.body.tags,
+                totalQuantity: req.body.totalQuantity,
+                availableQuantity: req.body.availableQuantity,
+                location: req.body.location,
+                // photo will be added later
+                category: req.body.category,
+                status: req.body.status,
+                _id: req.params.id,
+            });
+            const updatedItem = await Item.findByIdAndUpdate(req.params.id, item, {});
+            res.status(200).send("Successfully updated item");
+
+        }
+    }),
+];
 
 exports.item_update_patch = asyncHandler(async (req, res, next) => {
     res.send("NOT IMPLEMENTED: Item update patch");

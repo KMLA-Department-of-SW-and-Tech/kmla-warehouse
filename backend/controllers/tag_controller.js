@@ -44,9 +44,23 @@ exports.tag_create = [
 
 // Will implement search
 
-exports.tag_update_put = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: tag update put");
-});
+exports.tag_update_put = [
+    asyncHandler(async (req, res, next) => {
+        errors = validationResult(req);
+
+        if(!errors.isEmpty()) {
+            res.send(errors.array());
+        }
+        else {
+            const tag = {
+                name: req.body.name,
+                _id:req.params.id,
+            }
+            const updatedId = await Tag.findByIdAndUpdate(req.params.id, tag, {});
+            res.status(200).send("Successfuly updated tag");
+        }
+    }),
+];
 
 exports.tag_delete = asyncHandler(async (req, res, next) => {
     res.send("NOT IMPLEMENTED: tag delete");

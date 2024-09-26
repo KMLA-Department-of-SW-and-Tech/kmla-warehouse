@@ -13,7 +13,7 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const response = await axios.post('/api/auth/', { username, password });
-      console.log(response)
+      console.log(response.data.accessToken)
       /* 
       // 로그인 성공 시 토큰을 저장합니다 (백엔드 응답에 따라 조정 필요)
       localStorage.setItem('token', response.data.token);
