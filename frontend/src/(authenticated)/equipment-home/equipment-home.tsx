@@ -9,7 +9,7 @@ const { Sider, Content } = Layout;
 const { Title } = Typography;
 
 interface Item {
-  id: string;
+  _id: string;
   name: string;
   location: string;
   photoUrl?: string;
@@ -26,18 +26,14 @@ export default function EquipmentListPage() {
       try {
         const items = await itemService.getAll();  // Fetch all items from the API
         console.log('Fetched items:', items); // Add this line to check the response
+        setEquipmentList(items);
         
-        // Ensure items is an array
-        if (Array.isArray(items)) {
-          setEquipmentList(items);
-        } else {
-          console.error('API returned a non-array:', items);
-          setEquipmentList([]);  // Set to empty array if response is not an array
-        }
+
       } catch (error) {
         console.error('Failed to fetch equipment list:', error);
         setEquipmentList([]); // Handle error by setting empty array
       } finally {
+        console.log(equipmentList)
         setLoading(false); // Stop loading once the data is fetched
       }
     };
@@ -80,8 +76,8 @@ export default function EquipmentListPage() {
           ) : (
             <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
               {equipmentList.length > 0 ? (
-                equipmentList.map((equipment) => (
-                  <Col xs={24} sm={12} md={8} lg={5} key={equipment.id}>
+                equipmentList.map((equipment, index) => (
+                  <Col xs={24} sm={12} md={8} lg={5} key={equipment._id}>
                     <Card
                       hoverable
                       cover={
@@ -109,7 +105,7 @@ export default function EquipmentListPage() {
                       actions={[
                         <CalendarOutlined
                           key="view"
-                          onClick={() => handleViewDetails(equipment.id)}
+                          onClick={() => handleViewDetails(equipment._id)}
                         />,
                       ]}
                       style={{ maxWidth: '220px', height: '270px' }}

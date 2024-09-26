@@ -1,78 +1,115 @@
 import React, { useEffect, useState } from 'react';
+import { Typography, Spin, Card, Layout, Button } from 'antd';
 import { useParams, useNavigate } from 'react-router-dom';
-import { PageLayout } from '../../layouts/page-layout.tsx';
-import { itemService, Item } from '../../api/itemService';
+import { itemService } from '../../api/itemService';
+import Sidebar from '../../components/equipment/equipment-bar';
 
-import {
-  Typography,
-  Button,
-  Spin,
-  Row,
-  Col,
-  Card,
-  Image,
-} from 'antd'
-import { SendOutlined } from '@ant-design/icons'
-const { Title, Text } = Typography
+const { Sider, Content } = Layout;
+const { Title, Text } = Typography;
+
+interface Item {
+  _id: string;
+  name: string;
+  description: string;
+  quantity: number;
+  location: string;
+  photoUrl?: string;
+}
 
 export default function EquipmentDetailPage() {
-  const navigate = useNavigate()
-  const params = useParams<any>()
-  const [equipment, setEquipment] = useState<Item | null>(null)
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState(true); // 로딩 상태
+  const [item, setItem] = useState<Item | null>(null); // 선택된 아이템
+  const { id } = useParams<{ id: string }>(); // 라우트에서 ID 가져오기
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchEquipment = async () => {
+    const fetchItemDetails = async () => {
+      if (!id) return;
       try {
-        const equipmentData = await itemService.getById(params.equipmentId)
-        setEquipment(equipmentData)
+        const fetchedItem = await itemService.getById(id); // API를 통해 아이템 상세 정보 가져오기
+        console.log('Fetched item:', fetchedItem);
+        setItem(fetchedItem);
       } catch (error) {
-        alert('장비 상세 정보를 불러오는데 실패했습니다')
+        console.error('Failed to fetch item details:', error);
+        setItem(null); // 에러 발생 시 null로 설정
       } finally {
-        setLoading(false)
+        setLoading(false); // 로딩 끝
       }
-    }
+    };
 
-    fetchEquipment()
-  }, [params.equipmentId])
+    fetchItemDetails();
+  }, [id]);
 
-  const handleReservationSubmit = async () => {
-    if (!equipment) return;
-
-    try {
-      const updatedEquipment = await itemService.partialUpdate(equipment.id, { reserved: true })
-      setEquipment(updatedEquipment)
-      alert('예약 신청이 성공적으로 제출되었습니다')
-    } catch (error) {
-      alert('예약 신청에 실패했습니다')
-    }
-  }
-
-  if (loading) {
-    return <Spin size="large" />
-  }
+  const handleBack = () => {
+    navigate('/kmla-warehouse'); // 목록으로 돌아가기
+  };
 
   return (
-    <PageLayout>
-      <Row gutter={[16, 16]}>
-        <Col span={12}>
-          <Image src={equipment?.imageUrl} alt={equipment?.name} />
-        </Col>
-        <Col span={12}>
-          <Card>
-            <Title level={2}>{equipment?.name}</Title>
-            <Text>{equipment?.description}</Text>
-            <Button 
-              type="primary" 
-              icon={<SendOutlined />} 
-              onClick={handleReservationSubmit}
-              disabled={equipment?.reserved}
+    <Layout style={{ minHeight: '100vh' }}>
+      <Sider
+        width={250}
+        style={{
+          background: '#fff',
+          position: 'fixed',
+          height: '100vh',
+          left: 0,
+          top: 0,
+        }}
+      >
+        <Sidebar />
+      </Sider>
+
+      {/* Main content */}
+      <Layout style={{ marginLeft: 250 }}>
+        <Content style={{ padding: '40px', width: 'calc(100vw - 250px)' }}>
+          {loading ? (
+            <Spin size="large" />
+          ) : item ? (
+            <Card
+              hoverable
+              cover={
+                <div
+                  style={{
+                    width: '100%',
+                    height: '300px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: '#f0f0f0',
+                  }}
+                >
+                  {item.photoUrl ? (
+                    <img
+                      src={item.photoUrl}
+                      alt={item.name}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  ) : (
+                    <Typography.Text>이미지 없음</Typography.Text>
+                  )}
+                </div>
+              }
+              style={{ maxWidth: '600px', margin: '0 auto' }}
             >
-              {equipment?.reserved ? '예약됨' : '예약 신청'}
-            </Button>
-          </Card>
-        </Col>
-      </Row>
-    </PageLayout>
-  )
+              <Title level={3}>{item.name}</Title>
+              <Text>{item.description}</Text>
+              <div style={{ marginTop: '20px' }}>
+                <Text strong>수량: </Text>
+                <Text>{item.quantity}</Text>
+              </div>
+              <div style={{ marginTop: '10px' }}>
+                <Text strong>위치: </Text>
+                <Text>{item.location}</Text>
+              </div>
+              <Button type="primary" style={{ marginTop: '20px' }} onClick={handleBack}>
+                돌아가기
+              </Button>
+            </Card>
+          ) : (
+            <Typography.Text>아이템 정보를 불러오지 못했습니다.</Typography.Text>
+          )}
+        </Content>
+      </Layout>
+    </Layout>
+  );
 }

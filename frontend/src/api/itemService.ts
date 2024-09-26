@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export interface Item {
-  id: string;
+  _id: string;
   name: string;
   description: string;
   quantity: number;
@@ -13,6 +13,7 @@ export const itemService = {
   getAll: async (): Promise<Item[]> => {
     try {
       const response = await axios.get(`/api/item/list`);
+      console.log(response);
       return response.data;
     } catch (e) {
       console.error(e.message);
@@ -24,7 +25,7 @@ export const itemService = {
   getById: async (id: string): Promise<Item> => {
     try {
       const response = await axios.get(`/api/item/${id}`);
-      return response.data;
+      return response.data.item;
     } catch (e) {
       console.error(e.message);
       throw e;
