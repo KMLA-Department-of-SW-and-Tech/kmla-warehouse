@@ -1,14 +1,15 @@
 const express = require("express");
 const router = express.Router();
+const verifyJWT = require("../../middleware/verifyJWT");
 
 const borrowHistoryController = require("../../controllers/borrow_history_controller");
 
-router.get("/list", borrowHistoryController.borrow_history_list);
+router.get("/list", verifyJWT, borrowHistoryController.borrow_history_list);
 
-router.get("/:id", borrowHistoryController.borrow_history_detail);
+router.post("/", verifyJWT, borrowHistoryController.borrow_history_create);
 
-router.post("/", borrowHistoryController.borrow_history_create);
-
-router.delete("/:id", borrowHistoryController.borrow_history_delete);
+router.route("/:id")
+    .get(verifyJWT, borrowHistoryController.borrow_history_detail)
+    .delete(verifyJWT, borrowHistoryController.borrow_history_delete);
 
 module.exports = router;

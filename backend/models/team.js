@@ -6,6 +6,7 @@ const teamSchema = new Schema({
     username: {type: String, required: true, maxLength: 100},
     password: {type: String, required: true, maxLength: 100},
     name: {type: String, required: true, maxLength: 100},
+    roles: {type: [String], required: true},
     refreshToken: { type: String, required: false },
 });
 
