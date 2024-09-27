@@ -7,7 +7,7 @@ const teamSchema = new Schema({
     password: {type: String, required: true, maxLength: 100},
     name: {type: String, required: true, maxLength: 100},
     roles: {type: [String], required: true},
-    refreshToken: { type: String, required: false },
+    refreshToken: { type: [String], required: false },
 });
 
 module.exports = mongoose.model("Team", teamSchema);
