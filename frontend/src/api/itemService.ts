@@ -94,5 +94,5 @@ export const itemService = {
       console.error('Error fetching reservations:', error.message);
       throw error;
     }
-  };
+  },
 }
