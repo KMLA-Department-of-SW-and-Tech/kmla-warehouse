@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Card, Row, Col, Spin, Layout } from 'antd';
 import { CalendarOutlined, UnorderedListOutlined } from '@ant-design/icons'; // Import the icon
 import Sidebar from '../../components/equipment/equipment-bar';
@@ -10,31 +9,57 @@ const { Sider, Content } = Layout;
 const { Title } = Typography;
 
 interface Item {
-  id: string;
+  _id: string;
   name: string;
-  location: string;
+  status: string;
   photoUrl?: string;
 }
 
-export default function ReservationStatus(){
+interface Reservation {
+  _id: string;
+  item: string;  // item ID
+  quantity: number;
+  borrower: string;
+}
+
+export default function ReservationStatus({ currentUserId }: {currentUserId: string}) {
   const [loading, setLoading] = useState(true); // Start loading as true
   const [equipmentList, setEquipmentList] = useState<Item[]>([]); // Empty list initially
+  const [reservationList, setReservationList] = useState<Reservation[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch equipment list from API
-    const fetchEquipmentList = async () => {
+    const fetchReservationsAndItems = async () => {
       try {
-        const items = await itemService.getAll(); // Fetch all items from the API
-        setEquipmentList(items);
+        // 모든 예약 데이터를 불러옴, API에서 getReservations로 정보 받아오기
+        const reservationData: Reservation[] = await itemService.getReservations();
+        // 현재 사용자의 예약만 필터링
+        const userReservations = reservationData.filter(
+          reservation => reservation.borrower === currentUserId
+        );
+        setReservationList(userReservations);
+
+        // 모든 아이템 정보를 가져옴
+        const items = await itemService.getAll();
+        // 아이템의 id를 _id로 변환
+        const itemsWithId = items.map(item => ({
+          ...item,
+          _id: item.id // id를 _id로 변환
+        }));
+        // 예약된 아이템 ID와 매칭되는 아이템만 필터링
+        const reservedItems = items.filter(item => 
+          userReservations.some(reservation => reservation.item === item.id)
+        );
+        setEquipmentList(reservedItems);
       } catch (error) {
-        console.error('Failed to fetch equipment list:', error);
+        console.error('Failed to fetch reservation and item data:', error);
       } finally {
-        setLoading(false); // Stop loading once the data is fetched
+        setLoading(false);
       }
     };
-    fetchEquipmentList();
-  }, []);
+
+    fetchReservationsAndItems();
+  }, [currentUserId]);
 
   const handleViewDetails = (equipmentId: string) => {
     navigate(`/kmla-warehouse/item/${equipmentId}`); // Navigate to the details page
@@ -71,7 +96,7 @@ export default function ReservationStatus(){
           ) : (
             <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
               {equipmentList?.map((equipment) => (
-                <Col xs={24} sm={12} md={8} lg={5} key={equipment.id}>
+                <Col xs={24} sm={12} md={8} lg={5} key={equipment._id}>
                   <Card
                     hoverable
                     cover={
@@ -99,14 +124,14 @@ export default function ReservationStatus(){
                     actions={[
                       <CalendarOutlined
                         key="view"
-                        onClick={() => handleViewDetails(equipment.id)}
+                        onClick={() => handleViewDetails(equipment._id)}
                       />,
                     ]}
                     style={{ maxWidth: '220px', height: '270px' }}
                   >
                     <Card.Meta
                       title={equipment.name}
-                      description={equipment.location}
+                      description={equipment.status}
                       style={{
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',

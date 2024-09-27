@@ -73,4 +73,18 @@ export const itemService = {
         throw error;
       });
   },
-};
+
+
+
+
+  // 예약 데이터 가져오기
+  getReservations: async () => {
+    try {
+      const response = await axios.get('/api/borrow-histroy/list'); // 예약 데이터를 가져오는 API
+      return response.data; // 예약 데이터 반환
+    } catch (error) {
+      console.error('Error fetching reservations:', error.message);
+      throw error;
+    }
+  };
+}
