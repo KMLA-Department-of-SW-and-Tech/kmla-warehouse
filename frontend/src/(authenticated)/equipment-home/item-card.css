@@ -1,0 +1,14 @@
+.item-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+  }
+  
+  .image-container img {
+    border-radius: 8px;
+  }
+  
+  .no-image {
+    font-size: 14px;
+  }
+  

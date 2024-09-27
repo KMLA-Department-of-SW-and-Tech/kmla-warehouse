@@ -11,7 +11,7 @@ const itemSchema = new Schema({
     location: {type: String, maxLength: 100},
     // photo will be added later
     category: {type: Schema.Types.ObjectId, ref: "Category"},
-    status: {type: String, enum: ["대여가능", "대여중", "대여불가", "삭제됨"]}
+    status: {type: String, enum: ["available", "deleted"]}
 });
 
 module.exports = mongoose.model("Item", itemSchema);

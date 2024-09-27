@@ -1,78 +1,148 @@
 import React, { useEffect, useState } from 'react';
+import { Typography, Spin, Layout, Button } from 'antd';
 import { useParams, useNavigate } from 'react-router-dom';
-import { PageLayout } from '../../layouts/page-layout.tsx';
-import { itemService, Item } from '../../api/itemService';
+import { itemService } from '../../api/itemService';
+import Sidebar from '../../components/equipment/equipment-bar';
 
-import {
-  Typography,
-  Button,
-  Spin,
-  Row,
-  Col,
-  Card,
-  Image,
-} from 'antd'
-import { SendOutlined } from '@ant-design/icons'
-const { Title, Text } = Typography
+const { Sider, Content } = Layout;
+const { Title, Text } = Typography;
+
+interface Item {
+  _id: string;
+  name: string;
+  description: string;
+  totalQuantity: number;
+  availableQuantity: number;
+  location: string;
+  photoUrl?: string;
+  tags: string[]; // Array of ObjectId (represented as strings)
+  status: 'available' | 'deleted'; // Enum for status
+  category: string; // ObjectId (represented as string)
+}
 
 export default function EquipmentDetailPage() {
-  const navigate = useNavigate()
-  const params = useParams<any>()
-  const [equipment, setEquipment] = useState<Item | null>(null)
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState(true);
+  const [item, setItem] = useState<Item | null>(null);
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchEquipment = async () => {
+    const fetchItemDetails = async () => {
+      if (!id) return;
       try {
-        const equipmentData = await itemService.getById(params.equipmentId)
-        setEquipment(equipmentData)
+        const fetchedItem = await itemService.getById(id);
+        console.log('Fetched item:', fetchedItem);
+        setItem(fetchedItem);
       } catch (error) {
-        alert('장비 상세 정보를 불러오는데 실패했습니다')
+        console.error('Failed to fetch item details:', error);
+        setItem(null);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchEquipment()
-  }, [params.equipmentId])
-
-  const handleReservationSubmit = async () => {
-    if (!equipment) return;
-
-    try {
-      const updatedEquipment = await itemService.partialUpdate(equipment.id, { reserved: true })
-      setEquipment(updatedEquipment)
-      alert('예약 신청이 성공적으로 제출되었습니다')
-    } catch (error) {
-      alert('예약 신청에 실패했습니다')
-    }
-  }
-
-  if (loading) {
-    return <Spin size="large" />
-  }
-
+    fetchItemDetails();
+  }, [id]);
+ 
   return (
-    <PageLayout>
-      <Row gutter={[16, 16]}>
-        <Col span={12}>
-          <Image src={equipment?.imageUrl} alt={equipment?.name} />
-        </Col>
-        <Col span={12}>
-          <Card>
-            <Title level={2}>{equipment?.name}</Title>
-            <Text>{equipment?.description}</Text>
-            <Button 
-              type="primary" 
-              icon={<SendOutlined />} 
-              onClick={handleReservationSubmit}
-              disabled={equipment?.reserved}
-            >
-              {equipment?.reserved ? '예약됨' : '예약 신청'}
-            </Button>
-          </Card>
-        </Col>
-      </Row>
-    </PageLayout>
-  )
+    <Layout style={{ minHeight: '100vh' }}>
+      <Sider
+        width={250}
+        style={{
+          background: '#fff',
+          position: 'fixed',
+          height: '100vh',
+          left: 0,
+          top: 0,
+        }}
+      >
+        <Sidebar />
+      </Sider>
+
+      <Layout style={{ marginLeft: 250 }}>
+        <Content style={{ padding: '40px', width: 'calc(100vw - 250px)' }}>
+          {loading ? (
+            <Spin size="large" />
+          ) : item ? (
+            <div style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', flexDirection: 'row' }}>
+              {/* Left side: Image */}
+              <div style={{ width: '50%', position: 'relative' }}>
+                <div
+                  style={{
+                    width: '100%',
+                    height: '0',
+                    paddingTop: '100%', // This maintains the 1:1 aspect ratio
+                    backgroundColor: '#f0f0f0',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    position: 'relative',
+                  }}
+                >
+                  {item.photoUrl ? (
+                    <img
+                      src={item.photoUrl}
+                      alt={item.name}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                      }}
+                    />
+                  ) : (
+                    <Typography.Text
+                      style={{
+                        position: 'absolute',
+                        textAlign: 'center',
+                        color: '#888',
+                        fontSize: '16px',
+                      }}
+                    >
+                    
+                    </Typography.Text>
+                  )}
+                </div>
+
+          
+
+                {/* Placeholder for additional images */}
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    marginTop: '20px',
+                  }}
+                >
+                  <div style={{ width: '30%', backgroundColor: '#f0f0f0', height: '50px' }} />
+                  <div style={{ width: '30%', backgroundColor: '#f0f0f0', height: '50px' }} />
+                  <div style={{ width: '30%', backgroundColor: '#f0f0f0', height: '50px' }} />
+                </div>
+              </div>
+
+              {/* Right side: Text content */}
+              <div style={{ width: '50%', paddingLeft: '50px' }}>
+                <Title level={1}>{item.name}</Title>
+                <Text>남은 수량 {item.availableQuantity} 개</Text> 
+                
+                <div style={{ marginTop: '10px' }}>
+                  <Text>위치 {item.location}</Text> 
+                  <Title level={5}>[제품 설명]</Title>
+                  <Text>{item.description}</Text>
+                </div>
+
+                <Button type="primary" style={{ marginTop: '20px' }} onClick={() => handle()}>
+                  대여하기
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <Typography.Text>아이템 정보를 불러오지 못했습니다.</Typography.Text>
+          )}
+        </Content>
+      </Layout>
+    </Layout>
+  );
 }

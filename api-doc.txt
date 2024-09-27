@@ -11,7 +11,7 @@ GET 로그 정보 /api/borrow-history/:id
 POST 로그 생성 /api/borrow-history/
   body: item(String), quantity(Number), borrower(ObjectId), borrow_date(Date), return_date(Date)
 DELETE 로그 삭제 /api/borrow-history/:id
-
+cd
 Category
 GET 전체 리스트 /api/category/list
 POST 카테고리 생성 /api/category/
@@ -80,3 +80,6 @@ async {
 }
 
 <Promise>.then(response => ).error(error => )
+
+PUT 사용 시 유의점!
+각 데이터 종류에 대해 그것이 가지는 *모든* 하위 항목에 대한 정보를 줘야 함. Ex) Item 고칠거면 name, description, tags, category, location, status, availableQuantity, totalQuantity

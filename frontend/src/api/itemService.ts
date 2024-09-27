@@ -1,11 +1,16 @@
 import axios from 'axios';
 
-export interface Item {
-  id: string;
+interface Item {
+  _id: string;
   name: string;
   description: string;
-  quantity: number;
+  totalQuantity: number;
+  availableQuantity: number;
   location: string;
+  photoUrl?: string;
+  tags: string[];  // Array of ObjectId (represented as strings)
+  status: "available" | "deleted";  // Enum for status
+  category: string;  // ObjectId (represented as string)
 }
 
 export const itemService = {
@@ -13,6 +18,7 @@ export const itemService = {
   getAll: async (): Promise<Item[]> => {
     try {
       const response = await axios.get(`/api/item/list`);
+      console.log(response);
       return response.data;
     } catch (e) {
       console.error(e.message);
@@ -23,8 +29,10 @@ export const itemService = {
   // 물품 정보 가져오기
   getById: async (id: string): Promise<Item> => {
     try {
+      console.log("a")
       const response = await axios.get(`/api/item/${id}`);
-      return response.data;
+      console.log("b")
+      return response.data.item;
     } catch (e) {
       console.error(e.message);
       throw e;

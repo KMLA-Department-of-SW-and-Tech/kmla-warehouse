@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { PageLayout } from '../../layouts/page-layout'; // Assume this is the correct path
-
+import { PageLayout } from '../../layouts/page-layout'; 
 const SignUpPage: React.FC = () => {
   const [teamName, setTeamName] = useState('');
   const [nickname, setNickname] = useState('');

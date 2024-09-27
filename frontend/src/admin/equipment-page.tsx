@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Layout } from 'antd';
+import { Layout, Typography } from 'antd';
 import Sidebar from "../components/admin/admin-sidebar";
 import '../styles/admin-home.css';
 import Headbar from "../components/header"
-import { Item, itemService } from '../api/itemService'
+import EditEquipment from "../components/admin/admin-edit-equipment-table";
 
 const { Sider, Content } = Layout;
+const { Title } = Typography;
 
 const AdminEquipmentPage: React.FC = () => {
     return(
@@ -18,6 +18,8 @@ const AdminEquipmentPage: React.FC = () => {
                 </Sider>
                 <Layout>
                     <Content className="content">
+                        <Title level={3}>물품관리</Title>
+                        <EditEquipment/>
                     </Content>
                 </Layout>
             </Layout>
