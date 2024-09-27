@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const verifyJWT = require("../../middleware/verifyJWT");
+const verifyRoles = require("../../middleware/verifyRoles"); // in case of admin secrurity
 
 const itemController = require("../../controllers/item_controller");
 
