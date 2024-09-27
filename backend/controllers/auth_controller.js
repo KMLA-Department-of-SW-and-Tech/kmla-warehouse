@@ -19,12 +19,24 @@ exports.handle_login = asyncHandler(async (req, res, next) => {
     if(match) {
         // create JWTs
         const accessToken = jwt.sign(
-            { "username": foundUser.username, "name": foundUser.name, "admin": false },
+            { 
+                "UserInfo": {
+                    "username": foundUser.username,
+                    "name": foundUser.name,
+                    "roles": foundUser.roles
+                }
+            },
             process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: '30min' }
         );
         const refreshToken = jwt.sign(
-            { "username": foundUser.username, "name": foundUser.name, "admin": false },
+            { 
+                "UserInfo": {
+                    "username": foundUser.username,
+                    "name": foundUser.name,
+                    "roles": foundUser.roles
+                }
+            },
             process.env.REFRESH_TOKEN_SECRET,
             { expiresIn: '1d' }
         );
