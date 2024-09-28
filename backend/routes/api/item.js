@@ -15,4 +15,6 @@ router.patch("/:id", itemController.item_update_patch);
 
 router.delete("/:id", itemController.item_delete);
 
+router.post("/:id/borrow", itemController.item_borrow);
+
 module.exports = router;
