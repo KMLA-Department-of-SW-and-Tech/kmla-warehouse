@@ -7,23 +7,24 @@ import authService from "../../api/authService";
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const result = await authService.login(username, password);
-    if(result) {
+    try {
+      await authService.login(username, password);
       console.log("Successful login");
-
       try { // example of axiosPrivate usage
         const response = await axiosPrivate.get("/api/team/list");
         console.log(response);
+        navigate("/kmla-warehouse/home");
       } catch (err) {
         console.log(err);
       }
       //await authService.logout(); //example of logout
-
-      navigate("/kmla-warehouse/home");
+    } catch(err) {
+      setError(err.response.data);
     }
   }
   return (
@@ -62,6 +63,7 @@ const LoginPage = () => {
               required
             />
           </div>
+          {error ? <div>{error}</div> : <></>}
           <button
             type="submit"
             className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600"
