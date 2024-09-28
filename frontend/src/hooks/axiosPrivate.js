@@ -4,7 +4,7 @@ import authService from '../api/authService';
 // use try catch
 
 const axiosPrivate = {
-    accessToken: "", // check if accessToken == "", then you get whether you are logged in
+    accessToken: "",
     refreshRequest: async () => { // internal function do not use outside
         try {
             const result = await axios.get("/api/refresh");
@@ -39,6 +39,7 @@ const axiosPrivate = {
                 } else {
                     // unsuccessful refresh - refresh token expired
                     console.error(refreshResult[1]);
+                    console.log("Unsuccessful refresh")
                     await authService.logout();
                     throw new Error("Invalid refresh token");
                 }

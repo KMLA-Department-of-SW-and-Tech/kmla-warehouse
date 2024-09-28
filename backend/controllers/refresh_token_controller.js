@@ -22,6 +22,7 @@ exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
                 if(err) return res.sendStatus(403); // forbidden 
                 console.log("Attempted refresh token reuse");
                 const hackedUser = await Team.findOne({username: decoded.username}).exec();
+                console.log("hacked user", hackedUser)
                 hackedUser.refreshToken = [];
                 const result = await hackedUser.save();
                 console.log(result);
@@ -32,7 +33,6 @@ exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
     // evaluate jwt
 
     const newRefreshTokenArray = foundUser.refreshToken.filter(rt => rt !== refreshToken);
-
     jwt.verify(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,

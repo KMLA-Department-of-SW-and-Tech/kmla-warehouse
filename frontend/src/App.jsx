@@ -13,59 +13,60 @@ import AdminHistoryPage from "./admin/reservation-page.tsx";
 import AdminHome from "./admin/admin-home.tsx";
 import AdminTeamPage from "./admin/manage-team-page.tsx";
 import AdminSettingPage from "./admin/admin-setting.tsx";
+import { ProtectedRoute } from "./components/protected-routes.jsx";
 
 
 
 const router = createBrowserRouter([
-  // Home page
-  {
-    path: "/kmla-warehouse/home",
-    element: <Home />,
-  },
   // Login page
   {
     path: "/kmla-warehouse/login",
     element: <Login />,
-  },
-  // Equipment details page
-  {
-    path: "/kmla-warehouse/item/:id",
-    element: <EquipmentDetails />,
-  },
-  //Reservation Status page
-  {
-    path: "/kmla-warehouse/reservation-status",
-    element: <ReservationStatus />,
   },
   // Signup page
   {
     path: "/kmla-warehouse/signup",
     element: <Signup />,
   },
+  // Home page
+  {
+    path: "/kmla-warehouse/home",
+    element: <ProtectedRoute><Home /></ProtectedRoute>,
+  },
+  // Equipment details page
+  {
+    path: "/kmla-warehouse/item/:id",
+    element: <ProtectedRoute><EquipmentDetails /></ProtectedRoute>,
+  },
+  //Reservation Status page
+  {
+    path: "/kmla-warehouse/reservation-status",
+    element: <ProtectedRoute><ReservationStatus /></ProtectedRoute>,
+  },
   
   {
     path: "/kmla-warehouse/admin/home",
-    element: <AdminHome />,
+    element: <ProtectedRoute><AdminHome /></ProtectedRoute>,
   },
   // Admin: add equipment page
   {
     path: "/kmla-warehouse/admin/equipment",
-    element: <AdminEquipmentPage />,
+    element: <ProtectedRoute><AdminEquipmentPage /></ProtectedRoute>,
   },
   // Admin: reservation page
   {
     path: "/kmla-warehouse/admin/reservation",
-    element: <AdminHistoryPage />,
+    element: <ProtectedRoute><AdminHistoryPage /></ProtectedRoute>,
   },
   // Admin: mange team page
   {
     path: "/kmla-warehouse/admin/team",
-    element: <AdminTeamPage />,
+    element: <ProtectedRoute><AdminTeamPage /></ProtectedRoute>,
   },
   // Admin: account setting page
   {
     path: "/kmla-warehouse/admin/setting",
-    element: <AdminSettingPage />,
+    element: <ProtectedRoute><AdminSettingPage /></ProtectedRoute>,
   }
 ]);
 
