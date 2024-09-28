@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt");
 // next error handling과 res.send() error handling이 같이 쓰이는데 이거 기준이 뭔가요?
 
 exports.getAllTeams = async () => {
-    const teamList = await Team.find({}, "name")
+    const teamList = await Team.find({})
     .sort({ name: 1, })
     .exec();
     return teamList;
@@ -37,7 +37,8 @@ exports.findTeamByName = async (username) => {
 };
 
 exports.saveTeam = async (team) => {
-    return await team.save();
+    const newTeam = await team.save();
+    return newTeam;
 }
 
 exports.findByIdAndUpdate = async (team, id) => {

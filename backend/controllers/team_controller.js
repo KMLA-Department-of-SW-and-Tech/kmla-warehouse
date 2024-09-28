@@ -10,7 +10,7 @@ const teamService = require("../services/team_service");
 exports.team_list = asyncHandler(async (req, res, next) => {
     try {
         const teamList = await teamService.getTeamList();
-        res.send(teamList);
+        res.status(200).send(teamList);
     } catch (err) {
         if(err.message == "Failed to get team list from database") {
             res.status(404).send(err.message);
@@ -25,7 +25,7 @@ exports.team_list = asyncHandler(async (req, res, next) => {
 exports.team_detail = asyncHandler(async (req, res, next) => {
     try {
         const team = await teamService.getTeamDetail(req.params.id);
-        res.json( {_id: team._id, username: team.username, name: team.name} );
+        res.status(200).json( {_id: team._id, username: team.username, name: team.name} );
     } catch (err) {
         if(err.message == "Team not found") {
             res.status(404).send(err.message);
@@ -43,7 +43,7 @@ exports.team_create = [
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
         if(!errors.isEmpty()) {
-            res.send(errors.array());
+            res.status(200).send(errors.array());
         }
         else {
             const { username, password, name } = req.body;
@@ -68,7 +68,7 @@ exports.team_update_put = [
         const errors = validationResult(req);
 
         if(!errors.isEmpty()) {
-            res.send(errors.array());
+            res.status(200).send(errors.array());
         }
         else {
             // const {username, password, name, refreshToken} = req.body;

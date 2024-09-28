@@ -17,7 +17,6 @@ exports.category_list = asyncHandler(async (req, res, next) => {
 exports.category_create = [
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
-        
         if(!errors.isEmpty()) {
             res.send(errors.array());
         }

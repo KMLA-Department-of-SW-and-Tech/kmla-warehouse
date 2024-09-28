@@ -53,11 +53,14 @@ exports.createTeam = async (username, password, name) => {
         password: hashedPwd,
         name: name,
     });
-    return await teamRepository.saveTeam(newTeam);
+    try {
+        return await teamRepository.saveTeam(newTeam);
+    } catch (err) {
+        throw new Error("Failed to save team to database");
+    }
 } 
 
 exports.updateTeam = async (team, id) => {
-    console.log(team);
     try {
         return await teamRepository.findByIdAndUpdate(team, id);
     } catch (err) {
