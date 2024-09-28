@@ -52,6 +52,7 @@ exports.team_create = [
                     const newTeam = new Team({
                         username: username, 
                         password: hashedPwd,
+                        roles: [ "User", ],
                         name: name,
                     });
                     await newTeam.save();

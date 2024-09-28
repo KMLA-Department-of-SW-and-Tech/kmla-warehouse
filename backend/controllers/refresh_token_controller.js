@@ -9,23 +9,70 @@ exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
     if(!cookies?.jwt) return res.sendStatus(401);
     console.log(cookies.jwt);
     const refreshToken = cookies.jwt;
+    res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
 
-    const foundUser = await Team.findOne({refreshToken: refreshToken})
-    .collation({ locale: "en_US", strength: 2 })
-    .exec();
-    if(!foundUser) return res.sendStatus(403); // forbidden
+    const foundUser = await Team.findOne({refreshToken: refreshToken}).exec();
+    
+    // refresh token reuse detection
+    if(!foundUser) {
+        jwt.verify(
+            refreshToken,
+            process.env.REFRESH_TOKEN_SECRET,
+            async (err, decoded) => {
+                if(err) return res.sendStatus(403); // forbidden 
+                console.log("Attempted refresh token reuse");
+                const hackedUser = await Team.findOne({username: decoded.username}).exec();
+                hackedUser.refreshToken = [];
+                const result = await hackedUser.save();
+                console.log(result);
+            }
+        );
+        return res.sendStatus(403); // forbidden 
+    }
     // evaluate jwt
+
+    const newRefreshTokenArray = foundUser.refreshToken.filter(rt => rt !== refreshToken);
+
     jwt.verify(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
-        (err, decoded) => {
-            if(err || foundUser.username !== decoded.username || foundUser.name !== decoded.name) res.sendStatus(403);
+        async (err, decoded) => {
+            if(err) {
+                console.log("Expired refresh token identified");
+                foundUser.refreshToken = [...newRefreshTokenArray];
+                await foundUser.save();
+                return res.status(403).send("Refresh token expired");
+            }
+            if(foundUser.username !== decoded.UserInfo.username) return res.sendStatus(403);
+            // refreshToken still valid
+            const roles = /* Object.values( */foundUser.roles;/* ) */
             const accessToken = jwt.sign(
-                { "username": decoded.username, "name": decoded.name, "admin": false },
+                { 
+                    "UserInfo": {
+                        "username": decoded.UserInfo.username,
+                        "roles": roles,
+                    }
+                },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '5min' }
+                { expiresIn: '1d' }
             );
-            res.json( {accessToken} )
+
+            const newRefreshToken = jwt.sign(
+                { 
+                    "UserInfo": {
+                        "username": foundUser.username,
+                        "roles": foundUser.roles
+                    }
+                },
+                process.env.REFRESH_TOKEN_SECRET,
+                { expiresIn: '10s' }
+            );
+            // pass refress token to database
+            foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken ];
+            /* const response =  */await foundUser.save();
+            res.cookie('jwt', newRefreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: true, sameSite: 'None' }); // max age same as token expiration(1d)
+
+            res.json( { /* roles,  */accessToken} )
         }
     );
 }); // handle login
