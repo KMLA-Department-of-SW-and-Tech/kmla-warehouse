@@ -40,21 +40,21 @@ exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
             if(err) {
                 console.log("Expired refresh token identified");
                 foundUser.refreshToken = [...newRefreshTokenArray];
-                const result = await foundUser.save();
-                console.log(result);
+                await foundUser.save();
+                return res.status(403).send("Refresh token expired");
             }
-            if(err || foundUser.username !== decoded.UserInfo.username) res.sendStatus(403);
+            if(foundUser.username !== decoded.UserInfo.username) return res.sendStatus(403);
             // refreshToken still valid
             const roles = /* Object.values( */foundUser.roles;/* ) */
             const accessToken = jwt.sign(
                 { 
                     "UserInfo": {
-                        "username": decoded.username,
+                        "username": decoded.UserInfo.username,
                         "roles": roles,
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '30min' }
+                { expiresIn: '1d' }
             );
 
             const newRefreshToken = jwt.sign(
@@ -65,14 +65,14 @@ exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
                     }
                 },
                 process.env.REFRESH_TOKEN_SECRET,
-                { expiresIn: '1d' }
+                { expiresIn: '10s' }
             );
             // pass refress token to database
             foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken ];
             /* const response =  */await foundUser.save();
             res.cookie('jwt', newRefreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: true, sameSite: 'None' }); // max age same as token expiration(1d)
 
-            res.json( { roles, accessToken} )
+            res.json( { /* roles,  */accessToken} )
         }
     );
 }); // handle login

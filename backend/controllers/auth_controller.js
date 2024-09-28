@@ -27,7 +27,7 @@ exports.handle_login = asyncHandler(async (req, res, next) => {
                 }
             },
             process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '30min' }
+            { expiresIn: '5min' }
         );
         const newRefreshToken = jwt.sign(
             { 
@@ -70,8 +70,7 @@ exports.handle_login = asyncHandler(async (req, res, next) => {
 }); // handle login
 
 exports.handle_logout = asyncHandler(async (req, res, next) => {
-    // On client delete the accessToken!!!!
-
+    // On client delete the accessToken!!!! --> did this
     const cookies = req.cookies;
     if(!cookies?.jwt) return res.sendStatus(204); // no content
     const refreshToken = cookies.jwt;
