@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
-import { teamService } from '../../api/teamService';
 import React from "react";
 import axiosPrivate from "../../hooks/axiosPrivate";
 import authService from "../../api/authService";
