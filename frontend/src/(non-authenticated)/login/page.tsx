@@ -16,24 +16,20 @@ const LoginPage = () => {
     const result = await authService.login(username, password);
     if(result) {
       console.log("Successful login");
-      /* navigate("/equipment-home"); */
+
+      try { // example of axiosPrivate usage
+        const response = await axiosPrivate.get("/api/team/list");
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
+      //await authService.logout(); //example of logout
+
+      navigate("/kmla-warehouse/home");
     }
   }
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div>Example buttons: Need to be deleted</div>
-      <button onClick={async () => {
-        await authService.logout();
-      }}>LogOut</button><br />
-      <button onClick={async () => {
-        try {
-          const response = await axiosPrivate.get("/api/team/list");
-          console.log(response);
-        } catch (err) {
-          console.log(err);
-        }
-      }}>Get Team List</button><br />
-
       <div className="p-8 bg-white rounded shadow-md w-96">
         <h2 className="mb-6 text-2xl font-bold text-center">로그인</h2>
         <form onSubmit={handleSubmit}>
