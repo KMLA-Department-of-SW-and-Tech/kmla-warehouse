@@ -28,6 +28,11 @@ const LoginPage = () => {
   }
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <button onClick={
+        async () => {
+          await authService.logout();
+        }
+      }>Logout</button>
       <div className="p-8 bg-white rounded shadow-md w-96">
         <h2 className="mb-6 text-2xl font-bold text-center">로그인</h2>
         <form onSubmit={handleSubmit}>
