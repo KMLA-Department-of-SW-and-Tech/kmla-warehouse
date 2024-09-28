@@ -14,7 +14,6 @@ const verifyJWT = asyncHandler(async (req, res, next) => {
             if(err) return res.sendStatus(403); // invalid token
             console.log(decoded)
             req.username = decoded.UserInfo.username;
-            req.name = decoded.UserInfo.name;
             req.roles = decoded.UserInfo.roles;
             next();
         }
