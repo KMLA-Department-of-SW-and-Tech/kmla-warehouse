@@ -72,7 +72,7 @@ exports.item_create = [
                     res.status(500).send(err);
                     return;
                 }
-                res.status(500).send("Internal Server Error");
+                res.status(500).send({error: "Internal Server Error"});
                 return;
             }
         }
