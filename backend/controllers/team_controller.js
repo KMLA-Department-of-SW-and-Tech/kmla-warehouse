@@ -93,6 +93,10 @@ exports.team_update_put = [
             try {
                 const updatedTeam = await teamService.updateTeam(req.body, id);
             } catch (err) {
+                if(err.message == "Team not found") {
+                    res.status(404).send(err);
+                    return;
+                }
                 res.status(500).send(err);
                 return;
             }

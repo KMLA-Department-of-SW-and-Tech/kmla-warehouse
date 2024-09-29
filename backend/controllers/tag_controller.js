@@ -78,7 +78,6 @@ exports.tag_update_put = [
                     res.status(404).send(err);
                     return;
                 }
-                console.log(err);
                 res.status(500).send(err);
                 return;
             }

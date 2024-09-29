@@ -69,8 +69,14 @@ exports.createTeam = async (username, password, name) => {
 
 exports.updateTeam = async (team, id) => {
     try {
-        return await teamRepository.findByIdAndUpdate(team, id);
+        const updatedTeam = await teamRepository.findByIdAndUpdate(team, id);
+        if (updatedTeam == null) {
+            throw new Error("Team not found");
+        }
     } catch (err) {
-        throw new Error(err);
+        if(err.message == "Team not found") {
+            throw err;
+        }
+        throw err;
     }
 };

@@ -47,6 +47,7 @@ exports.updateTag = async (tag, id) => {
         if (updatedTag == null) {
             throw new Error("Tag not found");
         }
+        return updatedTag;
     } catch (err) {
         if(err.message == "Tag not found") {
             throw err;

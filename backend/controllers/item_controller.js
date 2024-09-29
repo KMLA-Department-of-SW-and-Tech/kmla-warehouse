@@ -90,12 +90,13 @@ exports.item_update_put = [
             const id = req.params.id;
             try {
                 const updatedItem = await itemService.updateItem(req.body, id);
-                if (updatedItem == null) {
-                    throw new Error("Failed to update item");
-                }
                 res.status(200).send("Successfully updated item");
                 return;
             } catch (err) {
+                if(err.message == "Item not found") {
+                    res.status(404).send(err);
+                    return;
+                }
                 res.status(500).send(err);
                 return;
             }

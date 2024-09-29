@@ -70,8 +70,15 @@ exports.createItem = async (item) => {
 
 exports.updateItem = async (item, id) => {
     try {
-        return await itemRepository.findByIdAndUpdate(item, id);
+        updatedItem = await itemRepository.findByIdAndUpdate(item, id);
+        if (updatedItem == null) {
+            throw new Error("Item not found");
+        }
+        return updatedItem;
     } catch (err) {
+        if(err.message == "Item not found") {
+            throw err;
+        }
         throw err;
     }
 };
