@@ -13,8 +13,8 @@ const verifyJWT = asyncHandler(async (req, res, next) => {
         (err, decoded) => {
             if(err) return res.status(403).send("Invalid access token"); // invalid token (includes access token expiration)
             console.log(decoded)
-            req.UserInfo.username = decoded.UserInfo.username;
-            req.UserInfo.roles = decoded.UserInfo.roles;
+            req.username = decoded.UserInfo.username;
+            req.roles = decoded.UserInfo.roles;
             next();
         }
     );
