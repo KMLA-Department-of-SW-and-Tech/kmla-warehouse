@@ -3,63 +3,78 @@ const asyncHandler = require("express-async-handler");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 
+const teamService = require("../services/team_service");
+
 // next error handling과 res.send() error handling이 같이 쓰이는데 이거 기준이 뭔가요?
 
 exports.team_list = asyncHandler(async (req, res, next) => {
-    const teamList = await Team.find({}, "name")
-    .sort({ name: 1, })
-    .exec();
-    if(teamList == null) {
-        const err = new Error("Teams not found");
-        err.status = 404;
-        return next(err);
+    try {
+        const teamList = await teamService.getTeamList();
+        res.status(200).send(teamList);
+        return;
+    } catch (err) {
+        if(err.message == "Failed to get team list from database") {
+            res.status(404).send(err.message);
+            return;
+        }
+        if(err.message == "Teams not found") {
+            res.status(404).send(err.message);
+            return;
+        }
+        res.status(500).send({error: "Internal Server Error"});
+        return;
     }
-    res.send(teamList);
 }); // only for admin
 
 exports.team_detail = asyncHandler(async (req, res, next) => {
-    const team = await Team.findById(req.params.id, {}).exec();
-    if(team == null) {
-        const err = new Error("Team not found");
-        err.status = 404;
-        return next(err);
+    try {
+        const team = await teamService.getTeamDetail(req.params.id);
+        res.status(200).json( {_id: team._id, username: team.username, name: team.name} );
+        return;
+    } catch (err) {
+        if(err.message == "Team not found") {
+            res.status(404).send(err.message);
+            return;
+        }
+        if(err.message == "Failed to get team data from database") {
+            res.status(404).send(err.message);
+            return;
+        }
+        res.status(500).send({error: "Internal Server Error"});
+        return;
     }
-    res.json( {_id: team._id, username: team.username, name: team.name} );
 });
 
 // Will implement search
 
 exports.team_create = [
     asyncHandler(async (req, res, next) => {
-        console.log(req.body)
         const errors = validationResult(req);
         if(!errors.isEmpty()) {
-            res.send(errors.array());
+            res.status(200).send(errors.array());
+            return;
         }
         else {
             const { username, password, name } = req.body;
-            const teamExists = await Team.findOne({username: username})
-            .collation({ locale: "en_US", strength: 2 })
-            .exec();
-            if(teamExists) {
-                res.status(409).send("A Team with the same username already exists");
-            }
-            else {
-                try {
-                    // encrypt the password
-                    const hashedPwd = await bcrypt.hash(password, 10);
-                    // store new user
-                    const newTeam = new Team({
-                        username: username, 
-                        password: hashedPwd,
-                        roles: [ "User", ],
-                        name: name,
-                    });
-                    await newTeam.save();
-                    res.status(201).send("Successful team register");
-                } catch(err) {
-                    res.status(500).send(`Error: ${err.message}`); // error handling
+            try {
+                const newTeam = await teamService.createTeam(username, password, name);
+                res.status(201).send("Successfully registered team");
+                return;
+            } catch (err) {
+                if(err.message == "Failed to get team data from database") {
+                    res.status(404).send(err.message);
+                    return;
                 }
+                if(err.message == "A Team with the same username already exists") {
+                    res.status(409).send(err.message);
+                    return;
+                }
+                if(err.message == "Failed to save team to database") {
+                    res.status(500).send(err);
+                    return;
+                }
+                res.status(500).send("Internal Server Error");
+                return;
             }
         }
     })
@@ -68,21 +83,25 @@ exports.team_create = [
 exports.team_update_put = [
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
-
         if(!errors.isEmpty()) {
-            res.send(errors.array());
+            res.status(200).send(errors.array());
+            return;
         }
         else {
-            res.status(201).send();
-            const team = {
-                username: req.body.username, 
-                password: req.body.password,
-                name: req.body.name,
-                refreshToken: req.body.refreshToken,
-                _id:req.params.id,
+            // const {username, password, name, refreshToken} = req.body;
+            const id = req.params.id;
+            try {
+                const updatedTeam = await teamService.updateTeam(req.body, id);
+            } catch (err) {
+                if(err.message == "Team not found") {
+                    res.status(404).send(err);
+                    return;
+                }
+                res.status(500).send(err);
+                return;
             }
-            const updatedTeam = await Team.findByIdAndUpdate(req.params.id, team, {});
             res.status(200).send("Successfuly updated team");
+            return;
         }
     }),
 ];
