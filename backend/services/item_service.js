@@ -7,7 +7,7 @@ const itemRepository = require("../repositories/item_repository");
 
 exports.getItemList = async () => {
     try {
-        const itemList = await itemRepository.getItemList();
+        const itemList = await itemRepository.getAllItems();
         if(itemList == null) {
            throw new Error("Items not found");
         } 
@@ -72,7 +72,6 @@ exports.updateItem = async (item, id) => {
     try {
         return await itemRepository.findByIdAndUpdate(item, id);
     } catch (err) {
-        console.log(err);
         throw err;
     }
 };

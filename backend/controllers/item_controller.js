@@ -68,6 +68,10 @@ exports.item_create = [
                     res.status(404).send(err);
                     return;
                 }
+                if(err.message == "Failed to save item to database") {
+                    res.status(500).send(err);
+                    return;
+                }
                 res.status(500).send("Internal Server Error");
                 return;
             }

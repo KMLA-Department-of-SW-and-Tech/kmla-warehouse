@@ -69,6 +69,10 @@ exports.team_create = [
                     res.status(409).send(err.message);
                     return;
                 }
+                if(err.message == "Failed to save team to database") {
+                    res.status(500).send(err);
+                    return;
+                }
                 res.status(500).send("Internal Server Error");
                 return;
             }

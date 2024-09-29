@@ -3,7 +3,7 @@ const BorrowHistory = require("../models/borrow_history");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
-exports.getItemList = async () => {
+exports.getAllItems = async () => {
     const itemList = await Item.find({})
     .sort({name: 1})
     .exec();

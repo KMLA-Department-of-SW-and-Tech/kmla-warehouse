@@ -2,65 +2,58 @@ const Tag = require("../models/tag");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
-exports.tag_list = asyncHandler(async (req, res, next) => {
-    const tagList = await Tag.find({}, "name")
-    .sort({name: 1})
-    .exec();
-    if(tagList == null) {
-        const err = new Error("Tags not found");
-        err.status = 404;
-        return next(err);
+const tagRepository = require("../repositories/tag_repository");
+
+exports.getTagList = async () => {
+    try {
+        const tagList = await tagRepository.getAllTags();
+        if(tagList == null) {
+            throw new Error("Tags not found");
+        }
+        return tagList;
+    } catch (err) {
+        if(err.message == "Tags not found") {
+            throw err;
+        }
+        throw new Error("Failed to get tag list fron database");
     }
-    res.send(tagList);
-});
+};
 
-exports.tag_create = [
-    body("name", "Tag name must not be empty")
-    .trim()
-    .isLength({min:1})
-    .escape(),
-
-    asyncHandler(async (req, res, next) => {
-        const errors = validationResult(req);
-        
-        if(!errors.isEmpty()) {
-            res.send(errors.array());
+exports.createTag = async (tag) => {
+    try {
+        const tagExists = await tagRepository.getTagByName(tag.name);
+        if(tagExists) {
+            throw new Error("A tag with the same name already exists")
         }
-        else {
-            const tagExists = await Tag.findOne({name: req.body.name})
-            .collation({ locale: "ko", strength: 2 })
-            .exec();
-            if(tagExists) {
-                res.status(409).send("이미 등록된 태그입니다.");
-            }
-            else {
-                const newTag = new Tag({name: req.body.name});
-                await newTag.save();
-                res.status(201).send("태그 등록 성공!");
-            }
+    } catch (err) {
+        if(err.message == "A tag with the same name already exists") {
+            throw err;
         }
-    }),
-];
+        throw new Error("Failed to get tag data from database");
+    }
+    const newTag = new Tag({name: tag.name});
+    try {
+        return await tagRepository.saveTag(newTag);
+    } catch (err) {
+        throw new Error("Failed to save tag to database");
+    }
+};
 
 // Will implement search
 
-exports.tag_update_put = [
-    asyncHandler(async (req, res, next) => {
-        errors = validationResult(req);
-
-        if(!errors.isEmpty()) {
-            res.send(errors.array());
+exports.updateTag = async (tag, id) => {
+    try {
+        const updatedTag = await tagRepository.findByIdAndUpdate(tag, id);
+        if (updatedTag == null) {
+            throw new Error("Tag not found");
         }
-        else {
-            const tag = {
-                name: req.body.name,
-                _id:req.params.id,
-            }
-            const updatedId = await Tag.findByIdAndUpdate(req.params.id, tag, {});
-            res.status(200).send("Successfuly updated tag");
+    } catch (err) {
+        if(err.message == "Tag not found") {
+            throw err;
         }
-    }),
-];
+        throw err;
+    }
+}
 
 exports.tag_delete = asyncHandler(async (req, res, next) => {
     res.send("NOT IMPLEMENTED: tag delete");
