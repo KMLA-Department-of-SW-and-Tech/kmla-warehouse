@@ -4,6 +4,8 @@ const { body, validationResult } = require("express-validator");
 
 exports.getAllBoroHistory = async () => {
     const borrowHistoryList = await BorrowHistory.find({})
+    .populate('item')
+    .populate('user')
     .sort({name: 1})
     .exec();
     return borrowHistoryList;

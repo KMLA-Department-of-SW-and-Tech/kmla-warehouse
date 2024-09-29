@@ -5,13 +5,16 @@ const { body, validationResult } = require("express-validator");
 
 exports.getAllItems = async () => {
     const itemList = await Item.find({})
+    .polulate('tags')
     .sort({name: 1})
     .exec();
     return itemList;
 };
 
 exports.getItemById = async (itemId) => {
-    const item = await Item.findById(itemId).exec();
+    const item = await Item.findById(itemId)
+    .populate('tags')
+    .exec();
     return item;
 };
 
