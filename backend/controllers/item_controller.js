@@ -3,8 +3,6 @@ const BorrowHistory = require("../models/borrow_history");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
-const borrowHistoryController = require("./borrow_history_controller");
-
 const itemService = require("../services/item_service");
 
 exports.item_list = asyncHandler(async (req, res, next) => {
@@ -88,6 +86,9 @@ exports.item_update_put = [
             const id = req.params.id;
             try {
                 const updatedItem = await itemService.updateItem(req.body, id);
+                if (updatedItem == null) {
+                    throw new Error("Failed to update item");
+                }
                 res.status(200).send("Successfully updated item");
                 return;
             } catch (err) {

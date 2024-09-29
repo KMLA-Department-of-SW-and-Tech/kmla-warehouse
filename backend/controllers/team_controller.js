@@ -11,14 +11,18 @@ exports.team_list = asyncHandler(async (req, res, next) => {
     try {
         const teamList = await teamService.getTeamList();
         res.status(200).send(teamList);
+        return;
     } catch (err) {
         if(err.message == "Failed to get team list from database") {
             res.status(404).send(err.message);
+            return;
         }
         if(err.message == "Teams not found") {
             res.status(404).send(err.message);
+            return;
         }
         res.status(500).send({error: "Internal Server Error"});
+        return;
     }
 }); // only for admin
 
@@ -26,14 +30,18 @@ exports.team_detail = asyncHandler(async (req, res, next) => {
     try {
         const team = await teamService.getTeamDetail(req.params.id);
         res.status(200).json( {_id: team._id, username: team.username, name: team.name} );
+        return;
     } catch (err) {
         if(err.message == "Team not found") {
             res.status(404).send(err.message);
+            return;
         }
         if(err.message == "Failed to get team data from database") {
             res.status(404).send(err.message);
+            return;
         }
         res.status(500).send({error: "Internal Server Error"});
+        return;
     }
 });
 
@@ -44,20 +52,25 @@ exports.team_create = [
         const errors = validationResult(req);
         if(!errors.isEmpty()) {
             res.status(200).send(errors.array());
+            return;
         }
         else {
             const { username, password, name } = req.body;
             try {
                 const newTeam = await teamService.createTeam(username, password, name);
                 res.status(201).send("Successfully registered team");
+                return;
             } catch (err) {
                 if(err.message == "Failed to get team data from database") {
                     res.status(404).send(err.message);
+                    return;
                 }
                 if(err.message == "A Team with the same username already exists") {
                     res.status(409).send(err.message);
+                    return;
                 }
                 res.status(500).send("Internal Server Error");
+                return;
             }
         }
     })
@@ -66,9 +79,9 @@ exports.team_create = [
 exports.team_update_put = [
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
-
         if(!errors.isEmpty()) {
             res.status(200).send(errors.array());
+            return;
         }
         else {
             // const {username, password, name, refreshToken} = req.body;
@@ -77,8 +90,10 @@ exports.team_update_put = [
                 const updatedTeam = await teamService.updateTeam(req.body, id);
             } catch (err) {
                 res.status(500).send(err);
+                return;
             }
             res.status(200).send("Successfuly updated team");
+            return;
         }
     }),
 ];

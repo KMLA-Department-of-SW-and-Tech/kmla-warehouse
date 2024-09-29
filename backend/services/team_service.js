@@ -11,13 +11,14 @@ const teamRepository = require("../repositories/team_repository");
 exports.getTeamList = async () => {
     try {
         const teamList = await teamRepository.getAllTeams();
-
         if(teamList == null) {
             throw new Error("Teams not found");
         }
-
         return teamList;
     } catch (err) {
+        if(err.message = "Teams not found") {
+            throw err;
+        }
         throw new Error("Failed to get team list from database");
     }
 }; // only for admin
@@ -30,6 +31,9 @@ exports.getTeamDetail = async (teamId) => {
         }
         return team;
     } catch (err) {
+        if(err.message == "Team not found") {
+            throw err;
+        }
         throw new Error("Failed to get team data from database");
     }
 };
@@ -43,6 +47,9 @@ exports.createTeam = async (username, password, name) => {
             throw new Error("A Team with the same username already exists");
         }
     } catch (err) {
+        if(err.message == "A Team with the same username already exists") {
+            throw err;
+        }
         throw new Error("Failed to get team data from database");
     }
     // encrypt the password

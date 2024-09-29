@@ -13,6 +13,9 @@ exports.getItemList = async () => {
         } 
         return itemList;
     } catch (err) {
+        if(err.message == "Items not found") {
+            throw err;
+        }
         throw new Error("Failed to get item list fron database");
     }
 };
@@ -25,6 +28,9 @@ exports.getItemDetail = async(itemId) => {
         }
         return item;
     } catch (err) {
+        if(err.message == "Item not Found") {
+            throw err;
+        }
         throw new Error("Failed to get item data from database");
     }
 };
@@ -67,7 +73,7 @@ exports.updateItem = async (item, id) => {
         return await itemRepository.findByIdAndUpdate(item, id);
     } catch (err) {
         console.log(err);
-        throw new Error(err);
+        throw err;
     }
 };
 
