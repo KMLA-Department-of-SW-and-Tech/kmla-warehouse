@@ -18,7 +18,7 @@ const LoginPage = () => {
       try { // example of axiosPrivate usage
         const response = await axiosPrivate.get("/api/team/list");
         console.log(response);
-        navigate("/kmla-warehouse/home");
+        navigate("/kmla-warehouse/home"); //살려라!!!
       } catch (err) {
         console.log(err);
       }
@@ -34,6 +34,11 @@ const LoginPage = () => {
           await authService.logout();
         }
       }>Logout</button>
+      {/* <button onClick={
+        async () => {
+          await axiosPrivate.get('/api/item/list');
+        }
+      }>Click Me</button> */}
       <div className="p-8 bg-white rounded shadow-md w-96">
         <h2 className="mb-6 text-2xl font-bold text-center">로그인</h2>
         <form onSubmit={handleSubmit}>

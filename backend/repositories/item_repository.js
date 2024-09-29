@@ -5,7 +5,7 @@ const { body, validationResult } = require("express-validator");
 
 exports.getAllItems = async () => {
     const itemList = await Item.find({})
-    .polulate('tags')
+    .populate('tags')
     .sort({name: 1})
     .exec();
     return itemList;
