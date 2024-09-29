@@ -61,7 +61,9 @@ exports.createTeam = async (username, password, name) => {
         name: name,
     });
     try {
-        return await teamRepository.saveTeam(newTeam);
+        const createdTeam = await teamRepository.saveTeam(newTeam);
+        if(createdTeam == null) throw new Error();
+        return createdTeam;
     } catch (err) {
         throw new Error("Failed to save team to database");
     }

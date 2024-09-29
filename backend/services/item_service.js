@@ -62,7 +62,9 @@ exports.createItem = async (item) => {
         category: null,
     });
     try {
-        return await itemRepository.saveItem(newItem);
+        const createdItem = await itemRepository.saveItem(newItem);
+        if(createdItem == null) throw new Error();
+        return createdItem;
     } catch (err) {
         throw new Error("Failed to save item to database");
     }

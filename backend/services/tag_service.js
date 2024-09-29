@@ -33,7 +33,9 @@ exports.createTag = async (tag) => {
     }
     const newTag = new Tag({name: tag.name});
     try {
-        return await tagRepository.saveTag(newTag);
+        const createdTag = await tagRepository.saveTag(newTag);
+        if(createdTag == null) throw new Error();
+        return createdTag;
     } catch (err) {
         throw new Error("Failed to save tag to database");
     }
