@@ -6,14 +6,8 @@ import authService from '../api/authService';
 const axiosPrivate = {
     accessToken: "",
     refreshRequest: async () => { // internal function do not use outside
-        try {
-            const result = await axios.get("/api/refresh");
-            axiosPrivate.accessToken = result.data.accessToken;
-            return [ true ];
-
-        } catch (err) {
-            return [ false, err ];
-        }
+        const result = await axios.get("/api/refresh");
+        axiosPrivate.accessToken = result.data.accessToken;
     },
     get: async (apiUrl, axiosConfig) => {
         try {
@@ -26,8 +20,8 @@ const axiosPrivate = {
             return response;
         } catch (err) {
             if(err.response.data == "Invalid access token") {
-                const refreshResult = await axiosPrivate.refreshRequest();
-                if(refreshResult[0]) {
+                try {
+                    await axiosPrivate.refreshRequest();
                     // successsful refresh
                     const response = await axios.get(apiUrl, {
                         ...axiosConfig,
@@ -36,17 +30,13 @@ const axiosPrivate = {
                         }
                     });
                     return response;
-                } else {
-                    // unsuccessful refresh - refresh token expired
-                    console.error(refreshResult[1]);
-                    console.log("Unsuccessful refresh")
-                    await authService.logout();
-                    throw new Error("Invalid refresh token");
+                } catch(err) {
+                    console.log("Unsuccessful refresh");
+                    /* await authService.logout(); */
+                    throw err;
                 }
             }
-            else {
-                throw err;
-            }
+            else throw err;
         }
     },
     post: async (apiUrl, requestData, axiosConfig) => {

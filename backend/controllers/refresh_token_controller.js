@@ -7,11 +7,12 @@ require("dotenv").config();
 exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
     const cookies = req.cookies;
     if(!cookies?.jwt) return res.sendStatus(401);
-    console.log(cookies.jwt);
     const refreshToken = cookies.jwt;
+    console.log(!cookies?.jwt, refreshToken);
     res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
 
     const foundUser = await Team.findOne({refreshToken: refreshToken}).exec();
+    console.log(refreshToken, "Ha gotcha")
     
     // refresh token reuse detection
     if(!foundUser) {
@@ -21,11 +22,10 @@ exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
             async (err, decoded) => {
                 if(err) return res.sendStatus(403); // forbidden 
                 console.log("Attempted refresh token reuse");
-                const hackedUser = await Team.findOne({username: decoded.username}).exec();
-                console.log("hacked user", hackedUser)
+                const hackedUser = await Team.findOne({username: decoded.UserInfo.username}).exec();
+                console.log("hacked user", hackedUser, refreshToken, decoded)
                 hackedUser.refreshToken = [];
                 const result = await hackedUser.save();
-                console.log(result);
             }
         );
         return res.sendStatus(403); // forbidden 

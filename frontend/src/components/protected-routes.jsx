@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 
 export function ProtectedRoute({ children }) {
     return (
-        !Cookies.get("Logged_In") ? <Navigate to="/kmla-warehouse/login" /> : children
+        !Cookies.get("logged_in") ? <Navigate to="/kmla-warehouse/login" /> : children
     );
     
 }

@@ -59,7 +59,6 @@ exports.handle_login = asyncHandler(async (req, res, next) => {
         // pass refress token to database
         foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken];
         const result = await foundUser.save();
-        console.log(result);
         res.cookie('jwt', newRefreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: true, sameSite: 'None' }); // max age same as token expiration(1d)
         // http only to block attacks from sending cookies, but use secure to completely secure the cookie.(for late implementation)
         res.status(200).json({ accessToken });
