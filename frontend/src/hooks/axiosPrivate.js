@@ -50,8 +50,8 @@ const axiosPrivate = {
             return response;
         } catch (err) {
             if(err.response.data == "Invalid access token") {
-                const refreshResult = await axiosPrivate.refreshRequest();
-                if(refreshResult[0]) {
+                try {
+                    await axiosPrivate.refreshRequest();
                     // successsful refresh
                     const response = await axios.post(apiUrl, requestData, {
                         ...axiosConfig,
@@ -60,16 +60,13 @@ const axiosPrivate = {
                         }
                     });
                     return response;
-                } else {
-                    // unsuccessful refresh - refresh token expired
-                    console.error(refreshResult[1]);
-                    await authService.logout();
-                    throw new Error("Invalid refresh token");
+                } catch(err) {
+                    console.log("Unsuccessful refresh");
+                    /* await authService.logout(); */
+                    throw err;
                 }
             }
-            else {
-                throw err;
-            }
+            else throw err;
         }
     },
     put: async (apiUrl, requestData, axiosConfig) => {
@@ -83,8 +80,8 @@ const axiosPrivate = {
             return response;
         } catch (err) {
             if(err.response.data == "Invalid access token") {
-                const refreshResult = await axiosPrivate.refreshRequest();
-                if(refreshResult[0]) {
+                try {
+                    await axiosPrivate.refreshRequest();
                     // successsful refresh
                     const response = await axios.put(apiUrl, requestData, {
                         ...axiosConfig,
@@ -93,16 +90,13 @@ const axiosPrivate = {
                         }
                     });
                     return response;
-                } else {
-                    // unsuccessful refresh - refresh token expired
-                    console.error(refreshResult[1]);
-                    await authService.logout();
-                    throw new Error("Invalid refresh token");
+                } catch(err) {
+                    console.log("Unsuccessful refresh");
+                    /* await authService.logout(); */
+                    throw err;
                 }
             }
-            else {
-                throw err;
-            }
+            else throw err;
         }
     },
     patch: async (apiUrl, requestData, axiosConfig) => {
@@ -116,8 +110,8 @@ const axiosPrivate = {
             return response;
         } catch (err) {
             if(err.response.data == "Invalid access token") {
-                const refreshResult = await axiosPrivate.refreshRequest();
-                if(refreshResult[0]) {
+                try {
+                    await axiosPrivate.refreshRequest();
                     // successsful refresh
                     const response = await axios.patch(apiUrl, requestData, {
                         ...axiosConfig,
@@ -126,16 +120,13 @@ const axiosPrivate = {
                         }
                     });
                     return response;
-                } else {
-                    // unsuccessful refresh - refresh token expired
-                    console.error(refreshResult[1]);
-                    await authService.logout();
-                    throw new Error("Invalid refresh token");
+                } catch(err) {
+                    console.log("Unsuccessful refresh");
+                    /* await authService.logout(); */
+                    throw err;
                 }
             }
-            else {
-                throw err;
-            }
+            else throw err;
         }
     },
     delete: async (apiUrl, axiosConfig) => {
@@ -149,8 +140,8 @@ const axiosPrivate = {
             return response;
         } catch (err) {
             if(err.response.data == "Invalid access token") {
-                const refreshResult = await axiosPrivate.refreshRequest();
-                if(refreshResult[0]) {
+                try {
+                    await axiosPrivate.refreshRequest();
                     // successsful refresh
                     const response = await axios.delete(apiUrl, {
                         ...axiosConfig,
@@ -159,16 +150,13 @@ const axiosPrivate = {
                         }
                     });
                     return response;
-                } else {
-                    // unsuccessful refresh - refresh token expired
-                    console.error(refreshResult[1]);
-                    await authService.logout();
-                    throw new Error("Invalid refresh token");
+                } catch(err) {
+                    console.log("Unsuccessful refresh");
+                    /* await authService.logout(); */
+                    throw err;
                 }
             }
-            else {
-                throw err;
-            }
+            else throw err;
         }
     },
 };
