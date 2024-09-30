@@ -19,4 +19,7 @@ router.route("/:id")
 router.route("/:id/borrow")
     .post(verifyJWT, itemController.item_borrow);
 
+router.route("/:id/return")
+    .post(verifyJWT, itemController.item_return);
+
 module.exports = router;

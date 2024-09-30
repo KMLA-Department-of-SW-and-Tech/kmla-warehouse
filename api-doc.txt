@@ -32,6 +32,9 @@ DELETE 물품 삭제 /api/item/:id
 
 PUT 물품 대여 /api/item/:id/borrow
   body: quantity(Number)
+PUT 물품 반납 /api/item/:id/return
+  body: quantity(Number)
+
 Tag
 GET 전체 리스트 /api/tag/list
 POST 태그 생성 /api/tag/

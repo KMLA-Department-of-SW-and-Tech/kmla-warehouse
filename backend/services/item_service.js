@@ -106,6 +106,7 @@ exports.borrowItem = async (itemId, quantity, username) => {
         }
         throw err;
     }
+
     // get item
     let item = null;
     try {
@@ -133,6 +134,51 @@ exports.borrowItem = async (itemId, quantity, username) => {
         quantity: quantity,
         user: user._id,
         type: "borrow",
+    }
+    try {
+        borrowHistoryService.createBorrowHistory(newEntry);
+    } catch (err) {
+        throw err;
+    }
+};
+
+exports.returnItem = async (itemId, quantity, username) => {
+    // get user
+    let user = null;
+    try {
+        user = await teamRepository.findTeamByName(username);
+        if(user == null) {
+            throw new Error("Failed to get user data from database");
+        }
+    } catch (err) {
+        if(err.message == "Failed to get user data from database") {
+            throw err;
+        }
+        throw err;
+    }
+
+    // get item
+    let item = null;
+    try {
+        item = await getItemDetail(itemId);
+    } catch(err) {
+        throw err;
+    }
+
+    // update item quantity data
+    item.availableQuantity += quantity;
+    try {
+        await updateItem(item, itemId);
+    } catch (err) {
+        throw err;
+    }
+
+    // enter log
+    const newEntry = {
+        item: itemId,
+        quantity: quantity,
+        user: user._id,
+        type: "return",
     }
     try {
         borrowHistoryService.createBorrowHistory(newEntry);

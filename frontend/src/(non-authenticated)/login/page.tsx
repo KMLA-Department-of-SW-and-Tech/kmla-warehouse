@@ -76,8 +76,8 @@ const LoginPage = () => {
       }>Logout</button>
       <button onClick={
         async () => {
-          await axiosPrivate.post('/api/item/66f81dfc1c40becece185d1b/borrow', {
-            quantity: 1,
+          await axiosPrivate.post('/api/item/66f81dfc1c40becece185d1b/return', {
+            quantity: 2,
           });
         }
       }>Click Me</button>
