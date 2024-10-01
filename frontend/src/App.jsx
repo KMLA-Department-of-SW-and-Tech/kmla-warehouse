@@ -12,7 +12,7 @@ import AdminHistoryPage from "./admin/reservation-page.tsx";
 import AdminTeamPage from "./admin/manage-team-page.tsx";
 import AdminSettingPage from "./admin/admin-setting.tsx";
 import { ProtectedRoute } from "./components/protected-routes.jsx";
-import AccountSettings from "./(authenticated)/user-home/user-setting.tsx";
+import AccountSettings from "./(authenticated)/user-home/account-settings.tsx";
 
 
 
