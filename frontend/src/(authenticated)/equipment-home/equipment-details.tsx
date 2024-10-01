@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Spin, Layout, Button } from 'antd';
+import { Typography, Spin, Layout, Button, message, Form, InputNumber } from 'antd'; // Added Form and InputNumber
 import { useParams, useNavigate } from 'react-router-dom';
 import { itemService } from '../../api/itemService';
 import Sidebar from '../../components/equipment/equipment-bar';
@@ -15,14 +15,15 @@ interface Item {
   availableQuantity: number;
   location: string;
   photoUrl?: string;
-  tags: string[]; // Array of ObjectId (represented as strings)
-  status: 'available' | 'deleted'; // Enum for status
-  category: string; // ObjectId (represented as string)
+  tags: string[];
+  status: 'available' | 'deleted';
+  category: string;
 }
 
 export default function EquipmentDetailPage() {
   const [loading, setLoading] = useState(true);
   const [item, setItem] = useState<Item | null>(null);
+  const [borrowQuantity, setBorrowQuantity] = useState<number>(1); // State for quantity
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
@@ -43,7 +44,23 @@ export default function EquipmentDetailPage() {
 
     fetchItemDetails();
   }, [id]);
- 
+
+  const handleBorrow = async () => {
+    if (!id || !item) return;
+    if (borrowQuantity < 1 || borrowQuantity > item.availableQuantity) {
+      message.error('유효한 수량을 입력하세요.'); // Validate quantity
+      return;
+    }
+    try {
+      await itemService.borrowRequest(id, borrowQuantity); // Pass quantity
+      message.success('대여 요청이 성공적으로 처리되었습니다.');
+      setItem(prev => prev ? { ...prev, availableQuantity: prev.availableQuantity - borrowQuantity } : null);
+    } catch (error) {
+      console.error('Failed to borrow item:', error);
+      message.error('대여 요청에 실패했습니다. 다시 시도해 주세요.');
+    }
+  };
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider
@@ -71,7 +88,7 @@ export default function EquipmentDetailPage() {
                   style={{
                     width: '100%',
                     height: '0',
-                    paddingTop: '100%', // This maintains the 1:1 aspect ratio
+                    paddingTop: '100%',
                     backgroundColor: '#f0f0f0',
                     display: 'flex',
                     justifyContent: 'center',
@@ -101,12 +118,9 @@ export default function EquipmentDetailPage() {
                         fontSize: '16px',
                       }}
                     >
-                    
                     </Typography.Text>
                   )}
                 </div>
-
-          
 
                 {/* Placeholder for additional images */}
                 <div
@@ -125,17 +139,30 @@ export default function EquipmentDetailPage() {
               {/* Right side: Text content */}
               <div style={{ width: '50%', paddingLeft: '50px' }}>
                 <Title level={1}>{item.name}</Title>
-                <Text>남은 수량 {item.availableQuantity} 개</Text> 
-                
+                <Text>남은 수량 {item.availableQuantity} 개</Text>
+
                 <div style={{ marginTop: '10px' }}>
-                  <Text>위치 {item.location}</Text> 
+                  <Text>위치 {item.location}</Text>
                   <Title level={5}>[제품 설명]</Title>
                   <Text>{item.description}</Text>
                 </div>
 
-                <Button type="primary" style={{ marginTop: '20px' }} onClick={() => handle()}>
-                  대여하기
-                </Button>
+                {/* Borrow form */}
+                <Form layout="vertical" style={{ marginTop: '20px' }}>
+                  <Form.Item label="대여할 수량을 선택하세요">
+                    <InputNumber
+                      min={1}
+                      max={item.availableQuantity}
+                      value={borrowQuantity}
+                      onChange={(value) => setBorrowQuantity(value || 1)} // Update state
+                      style={{ width: '100%' }}
+                    />
+                  </Form.Item>
+
+                  <Button type="primary" onClick={handleBorrow}>
+                    대여하기
+                  </Button>
+                </Form>
               </div>
             </div>
           ) : (
