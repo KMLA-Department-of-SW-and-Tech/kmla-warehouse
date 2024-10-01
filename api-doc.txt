@@ -52,6 +52,16 @@ curl -X POST http://localhost:3000/api/team/ -H "Content-Type: application/json"
 Request with CURL in MacOS!!
 curl -X POST http://localhost:3000/api/team/ -H 'Content-Type: application/json' -d '{"username" : "LoginTestUsername", "password" : "LoginTestPassword", "name" : "LoginTestName"}'
 
+
+
+
+*****Important*****
+use authService or axiosPrivate for requests or you will get auth errors
+
+
+
+
+
 Request with Axios // just an example, do not use it in this form, use async and send multiple requests at once (Promise.all)
 axios.post('/api/team/', {
     username: "LoginTestUsername",

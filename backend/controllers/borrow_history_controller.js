@@ -2,16 +2,25 @@ const BorrowHistory = require("../models/borrow_history");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
+const borrowHistoryService = require("../services/borrow_history_service");
+
 exports.borrow_history_list = asyncHandler(async (req, res, next) => {
-    const borrowHistoryList = await BorrowHistory.find({})
-    .sort({name: 1})
-    .exec();
-    if(borrowHistoryList == null) {
-        const err = new Error("Borrow history not found");
-        err.status = 404;
-        return next(err);
+    try {
+        const borrowHistoryList = await borrowHistoryService.getBorrowHistoryList();
+        res.status(200).send(borrowHistoryList);
+        return;
+    } catch (err) {
+        if(err.message == "Borrow history not found") {
+            res.status(404).send(err);
+            return;
+        }
+        if(err.message == "Failed to get item list fron database") {
+            res.status(404).send(err);
+            return;
+        }
+        res.status(500).send({error: "Internal Server Error"});
+        return;
     }
-    res.send(borrowHistoryList);
 });
 
 exports.borrow_history_detail = asyncHandler(async (req, res, next) => {
@@ -23,20 +32,22 @@ exports.borrow_history_detail = asyncHandler(async (req, res, next) => {
 exports.borrow_history_create = [
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
-
         if(!errors.isEmpty()) {
             res.send(errors.array());
         }
         else {
-            const newEntry = new BorrowHistory({
-                item: req.body.item,
-                quantity: req.body.quantity,
-                user: req.body.user,
-                timestamp: req.body.timestamp,
-                type: req.body.type,
-            });
-            await newEntry.save();
-            req.status(201).send("Sucessflly created log entry");
+            try {
+                const newEntry = await borrowHistoryService.createBorrowHistory(req.body);
+                res.status(201).send("Sucessflly created log entry");
+                return;
+            } catch (err) {
+                if(err.message == "Failed to save entry to database") {
+                    res.status(500).send(err);
+                    return;
+                }
+                res.status(500).send({error: "Internal Server Error"});
+                return;
+            }
         }
     })
 ]

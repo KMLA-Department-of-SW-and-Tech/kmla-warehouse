@@ -18,9 +18,9 @@ const refreshRouter = require("./refresh")
 router.use("/item", itemRouter);
 router.use("/team", teamRouter);
 router.use("/tag", tagRouter);
-router.use("/category", categoryRouter);
+/* router.use("/category", categoryRouter); */
 router.use("/borrow-history", borrowHistoryRouter);
-router.use("/adminRouter", adminRouter);
+/* router.use("/adminRouter", adminRouter); */
 router.use("/auth", authRouter);
 router.use("/refresh", refreshRouter);
 

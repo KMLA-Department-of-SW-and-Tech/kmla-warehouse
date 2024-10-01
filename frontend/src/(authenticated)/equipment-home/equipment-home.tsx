@@ -27,8 +27,6 @@ export default function EquipmentListPage() {
         const items = await itemService.getAll();  // Fetch all items from the API
         console.log('Fetched items:', items); // Add this line to check the response
         setEquipmentList(items);
-        
-
       } catch (error) {
         console.error('Failed to fetch equipment list:', error);
         setEquipmentList([]); // Handle error by setting empty array
