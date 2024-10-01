@@ -2,8 +2,7 @@
 import { Navigate } from "react-router-dom";
 import axiosPrivate from "../hooks/axiosPrivate";
 import { useEffect, useRef, useState } from "react";
-/* import { Spin } from 'antd'
- */
+/* import { Spin } from 'antd'*/
   
 export const ProtectedRoute = ({ children }) => {
     const [loading, setLoading] = useState(true);

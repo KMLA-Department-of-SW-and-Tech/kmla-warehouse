@@ -29,7 +29,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/kmla-warehouse/account-settings",
-    element: <AccountSettings />
+    element: <ProtectedRoute><AccountSettings /></ProtectedRoute>,
   },
   // Home page
   {
@@ -39,32 +39,32 @@ const router = createBrowserRouter([
   // Equipment details page
   {
     path: "/kmla-warehouse/item/:id",
-    element: <EquipmentDetails />,
+    element: <ProtectedRoute><EquipmentDetails /></ProtectedRoute>,
   },
   //Reservation Status page
   {
     path: "/kmla-warehouse/reservation-status",
-    element: <ReservationStatus />,
+    element: <ProtectedRoute><ReservationStatus /></ProtectedRoute>,
   },
   // Admin: add equipment page
   {
     path: "/kmla-warehouse/admin/equipment",
-    element: <AdminEquipmentPage />,
+    element: <ProtectedRoute><AdminEquipmentPage /></ProtectedRoute>,
   },
   // Admin: reservation page
   {
     path: "/kmla-warehouse/admin/reservation",
-    element: <AdminHistoryPage />,
+    element: <ProtectedRoute><AdminHistoryPage /></ProtectedRoute>,
   },
   // Admin: mange team page
   {
     path: "/kmla-warehouse/admin/team",
-    element: <AdminTeamPage />,
+    element: <ProtectedRoute><AdminTeamPage /></ProtectedRoute>,
   },
   // Admin: account setting page
   {
     path: "/kmla-warehouse/admin/setting",
-    element: <AdminSettingPage />,
+    element: <ProtectedRoute><AdminSettingPage /></ProtectedRoute>,
   }  
 ]);
 
