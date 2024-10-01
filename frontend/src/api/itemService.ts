@@ -51,8 +51,8 @@ export const itemService = {
   
 
   // 물품 생성
-  create: (item: Omit<Item, 'id'>): Promise<Item> => {
-    return axiosPrivate.post(`/api/item`, item)
+  create: (item: Item): Promise<Item> => {
+    return axios.post(`/api/item`, item)
       .then(response => response.data)
       .catch(error => {
         console.error(error.message);

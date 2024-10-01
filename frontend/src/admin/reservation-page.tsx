@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Table, Typography } from 'antd';
-import { TableProps } from 'antd';
+import { Layout, Table, Typography, TableProps } from 'antd';
 import Sidebar from '../components/admin/admin-sidebar';
 import "../styles/admin-home.css";
 import Headbar from "../components/header";
@@ -13,16 +12,15 @@ const { Title } = Typography;
 interface DataType {
   item: string;
   quantity: number;
-  borrower: string;
-  borrow_date: string;
-  return_date: string;
+  type: string;
+  timestamp: string;
 }
 
 const columns: TableProps<DataType>['columns'] = [
   {
     title: '팀명',
-    dataIndex: 'borrower',
-    key: 'borrower',
+    dataIndex: 'user',
+    key: 'user',
   },
   {
     title: '신청물품',
@@ -35,15 +33,16 @@ const columns: TableProps<DataType>['columns'] = [
     key: 'quantity',
   },
   {
-    title: '대여일',
-    dataIndex: 'borrow_date',
-    key: 'borrow_date',
+    title: '상태',
+    dataIndex: 'type',
+    key: 'type',
   },
   {
-    title: '반납일',
-    dataIndex: 'return_date',
-    key: 'return_date',
-  },
+    title: '시간',
+    dataIndex: "timestamp", 
+    key: 'timestamp',
+
+  }
 ];
 
 const AdminHistoryPage: React.FC = () => {
@@ -54,28 +53,18 @@ const AdminHistoryPage: React.FC = () => {
       const res = await axios.get("/api/borrow-history/list");
       const rawdata = res.data;
 
-      /*
-      rawdata.forEach(async (element, index) => {
-        const borrower = await axios.get("/api/team/" + element.borrower);
-        rawdata[index].borrower = borrower.data.name;
-        const item = await axios.get("/api/item/" + element.item);
-        rawdata[index].item = item.data.item.name;
-      });
-      */
-      //console.log(rawdata.data.item.name)
-      //setData(rawdata);
-
       const processedData = await Promise.all(
         rawdata.map(async (element: any) => {
-          const borrowerRes = await axios.get("/api/team/" + element.borrower);
+          const borrowerRes = await axios.get("/api/team/" + element.user);
           const itemRes = await axios.get("/api/item/" + element.item);
           
           return {
             item: itemRes.data.item.name,
             quantity: element.quantity,
-            borrower: borrowerRes.data.name,
-            borrow_date: dayjs(element.borrow_date).format('YYYY-MM-DD'),
-            return_date: dayjs(element.return_date).format('YYYY-MM-DD'),
+            user: borrowerRes.data.user,
+            type: borrowerRes.data.type,
+            timestamp: borrowerRes.data.timestamp,
+            
           };
         })
       );
@@ -113,3 +102,15 @@ const AdminHistoryPage: React.FC = () => {
 };
 
 export default AdminHistoryPage;
+
+
+/*
+      rawdata.forEach(async (element, index) => {
+        const borrower = await axios.get("/api/team/" + element.borrower);
+        rawdata[index].borrower = borrower.data.name;
+        const item = await axios.get("/api/item/" + element.item);
+        rawdata[index].item = item.data.item.name;
+      });
+      */
+      //console.log(rawdata.data.item.name)
+      //setData(rawdata);
