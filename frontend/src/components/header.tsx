@@ -8,7 +8,7 @@ const Headbar: React.FC = () => {
   useEffect( () => {
     const fetchCurrentUser = async () => {
       const data = await currentUser.currentUser();
-      console.log(data);
+      //console.log(data);
       setCurrentUserName(data);
     };
   fetchCurrentUser();

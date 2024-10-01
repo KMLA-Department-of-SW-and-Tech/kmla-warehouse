@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Card, Row, Col, Spin, Layout } from 'antd';
-import { CalendarOutlined, UnorderedListOutlined } from '@ant-design/icons'; // Import the icon
+import { Typography, Card, Row, Col, Spin, Layout, message } from 'antd';
+import { LoginOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import Sidebar from '../../components/equipment/equipment-bar';
 import { teamService } from "../../api/teamService.ts";
 import { itemService } from "../../api/itemService.ts";
@@ -27,35 +27,60 @@ interface Reservation {
 
 export default function ReservationStatus() {
   const [loading, setLoading] = useState(true);
-  const [currentUserId, setCurrentUserId] = useState("")
+  const [currentUserId, setCurrentUserId] = useState("");
   const [reservationList, setReservationList] = useState<Reservation[]>([]);
   const navigate = useNavigate();
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchReservationAndEquipment = async () => {
       try {
-          //aware current user information
+        // Get current user information
         const userInfo = await teamService.getUserInfo();
         console.log('Fetched user info:', userInfo);
         setCurrentUserId(userInfo);
-          //fetch reservation list
+        
+        // Fetch reservation list
         const reservations = await itemService.getReservations(userInfo._id);
         console.log('Fetched reservations:', reservations);
         setReservationList(reservations);
       } catch (error) {
-        console.log("Failed to fetch:", error)
+        console.log("Failed to fetch:", error);
       } finally {
-        // console.log(reservationList);
-        // console.log(currentUserId);
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
     fetchReservationAndEquipment();
-  },[]);
+  }, []);
 
-  const handleViewDetails = (equipmentId: string) => {
-    navigate(`/kmla-warehouse/item/${equipmentId}`); // Navigate to the details page
+  // 반납 처리 핸들러
+  const handleReturn = async (reservationId: string) => {
+    if (!reservationId) return;
+    try {
+      await itemService.returnItem(reservationId);
+      message.success('반납 요청이 성공적으로 처리되었습니다.');
+
+      // 페이지 리로드하여 상태를 갱신
+      window.location.reload();
+    } catch (error) {
+      console.error('Failed to return item:', error);
+      if (error.response) {
+        const status = error.response.status;
+        const messageText = error.response.data.message || error.message;
+
+        if (status === 404) {
+          message.error(messageText || '아이템을 찾을 수 없습니다.');
+        } else if (status === 400) {
+          message.error(messageText || '유효하지 않은 반납 요청입니다.');
+        } else if (status === 500) {
+          message.error(messageText || '서버 오류가 발생했습니다.');
+        } else {
+          message.error('반납 요청에 실패했습니다. 다시 시도해 주세요.');
+        }
+      } else {
+        message.error('반납 요청에 실패했습니다. 다시 시도해 주세요.');
+      }
+    }
   };
 
   return (
@@ -75,19 +100,18 @@ export default function ReservationStatus() {
       </Sider>
       <Layout style={{ marginLeft: 250 }}>
         <Content style={{ padding: '40px', marginTop: '64px', width: 'calc(98vw - 250px)' }}>
-
           <Title level={2} style={{ display: 'flex', alignItems: 'center' }}>
             <UnorderedListOutlined style={{ marginRight: '10px' }} />
             예약현황 보기
           </Title>
-          
+
           {loading ? (
             <Spin size="large" />
           ) : (
             <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
               {reservationList.length > 0 ? (
-                reservationList?.map((equipment) => (
-                  <Col xs={24} sm={12} md={8} lg={4} key={equipment._id}>
+                reservationList?.map((reservation) => (
+                  <Col xs={24} sm={12} md={8} lg={4} key={reservation._id}>
                     <Card
                       hoverable
                       cover={
@@ -101,10 +125,10 @@ export default function ReservationStatus() {
                             backgroundColor: '#f0f0f0',
                           }}
                         >
-                          {equipment.item.photoUrl ? (
+                          {reservation.item.photoUrl ? (
                             <img
-                              src={equipment.item.photoUrl}
-                              alt={equipment.item.name}
+                              src={reservation.item.photoUrl}
+                              alt={reservation.item.name}
                               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
                           ) : (
@@ -113,16 +137,16 @@ export default function ReservationStatus() {
                         </div>
                       }
                       actions={[
-                        <CalendarOutlined
-                          key="view"
-                          onClick={() => handleViewDetails(equipment._id)}
+                        <LoginOutlined
+                          key="return"
+                          onClick={() => handleReturn(reservation._id)} // 반납 요청 핸들러 호출
                         />,
                       ]}
                       style={{ maxWidth: '220px', height: '300px' }}
                     >
                       <Card.Meta
-                        title={equipment.item.name}
-                        description={`${equipment.item.location} / ${new Date(equipment.timestamp).toLocaleDateString()}`}
+                        title={reservation.item.name}
+                        description={`${reservation.item.location} / ${new Date(reservation.timestamp).toLocaleDateString()}`}
                         style={{
                           whiteSpace: 'nowrap',
                           overflow: 'hidden',
