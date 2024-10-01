@@ -7,7 +7,8 @@ const borrowHistorySchema = new Schema({
     quantity: {type: Number, required: true},
     user: {type: Schema.Types.ObjectId, ref: "Team", required: true},
     timestamp: {type: Schema.Types.Date, required: true, default: Date.now},
-    type: {type: String, enum: ["borrow", "return", "delete"]}
+    type: {type: String, enum: ["borrow", "return", "delete"]},
+    reference: {type: Schema.Types.ObjectId},
     // borrowDate: {type: Date, required: true},
     // returnDate: {type: Date/* , required: true */},
 });

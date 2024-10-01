@@ -77,7 +77,7 @@ const LoginPage = () => {
       {/* <button onClick={
         async () => {
           try {
-            await axiosPrivate.delete('/api/item/66f8218b5743d574b5f90936');
+            await axiosPrivate.post('/api/item/66f81dfc1c40becece185d1b/borrow');
           } catch (err) {
             console.error(err.response.data);
           }

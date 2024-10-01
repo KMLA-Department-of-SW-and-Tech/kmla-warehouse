@@ -11,7 +11,7 @@ exports.getAllBorrowHistory = async () => {
     return borrowHistoryList;
 };
 
-exportgetHistoryById = async (logId) => {
+exports.getHistoryById = async (logId) => {
     const borrowHistory = await BorrowHistory.findById(logId)
     .populate('item')
     .populate('user')

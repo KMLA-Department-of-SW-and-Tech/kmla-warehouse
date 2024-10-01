@@ -134,6 +134,7 @@ exports.borrowItem = async (itemId, quantity, username) => {
         quantity: quantity,
         user: user._id,
         type: "borrow",
+        reference: null,
     }
     try {
         borrowHistoryService.createBorrowHistory(newEntry);
