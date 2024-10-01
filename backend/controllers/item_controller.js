@@ -118,6 +118,7 @@ exports.item_borrow = [
     asyncHandler(async (req, res, next) => {
         try {
             itemService.borrowItem(req.params.id, req.body.quantity, req.username);
+            res.status(200).send("Successfully borrowed item");
         } catch (err) {
             if (err.message == "Failed to get user data from database") {
                 res.status(404).send(err);
