@@ -53,13 +53,13 @@ exports.handle_login = asyncHandler(async (req, res, next) => {
                 newRefreshTokenArray = [];
             }
 
-            res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None' });
+            res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, /* secure: true, */ /* sameSite: 'None' */ });
         }
 
         // pass refress token to database
         foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken];
-        const result = await foundUser.save();
-        res.cookie('jwt', newRefreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: true, sameSite: 'None' }); // max age same as token expiration(1d)
+        await foundUser.save();
+        res.cookie('jwt', newRefreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, /* secure: true, */ /* sameSite: 'None' */ }); // max age same as token expiration(1d)
         // http only to block attacks from sending cookies, but use secure to completely secure the cookie.(for late implementation)
         res.status(200).json({ accessToken });
     }
@@ -83,7 +83,7 @@ exports.handle_logout = asyncHandler(async (req, res, next) => {
     foundUser.refreshToken = foundUser.refreshToken.filter(rt => rt !== refreshToken);
     const result = await foundUser.save();
     console.log(result);
-    res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None' });
+    res.clearCookie('jwt', { httpOnly: true, /* secure: true, */ /* sameSite: 'None' */ });
     res.sendStatus(204);
 }); // handle login
 

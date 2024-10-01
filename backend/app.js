@@ -3,7 +3,9 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cors = require('cors');
 require('dotenv').config();
+
 
 // const indexRouter = require('./routes/index');
 // const usersRouter = require('./routes/users');
@@ -13,6 +15,8 @@ const app = express();
 
 // connect to mongodb
 const mongoose = require("mongoose");
+const corsOptions = require('./config/corsOptions');
+const credentials = require('./middleware/credentials');
 mongoose.set("strictQuery", false);
 const mongoDB = "mongodb+srv://kwagi:q4VQtadoiPgXgqBo@cluster0.s1ckl.mongodb.net/kmla_storage?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -31,6 +35,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+/* app.use(credentials);
+app.use(cors(corsOptions)); */
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+  
+}))
 
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);

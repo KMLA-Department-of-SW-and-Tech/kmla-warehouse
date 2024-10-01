@@ -8,11 +8,11 @@ exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
     const cookies = req.cookies;
     if(!cookies?.jwt) return res.sendStatus(401);
     const refreshToken = cookies.jwt;
-    console.log(!cookies?.jwt, refreshToken);
-    res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
-
+    console.log(refreshToken);
+    res.clearCookie('jwt', { httpOnly: true, /* secure: true, */ /* sameSite: 'None' */ });
+    
     const foundUser = await Team.findOne({refreshToken: refreshToken}).exec();
-    console.log(refreshToken, "Ha gotcha")
+    console.log(foundUser, refreshToken, "Ha gotcha")
     
     // refresh token reuse detection
     if(!foundUser) {
@@ -54,7 +54,7 @@ exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '1d' }
+                { expiresIn: '5min' }
             );
 
             const newRefreshToken = jwt.sign(
@@ -65,13 +65,14 @@ exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
                     }
                 },
                 process.env.REFRESH_TOKEN_SECRET,
-                { expiresIn: '10s' }
+                { expiresIn: '1d' }
             );
             // pass refress token to database
             foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken ];
+            console.log("Going to update", foundUser, "r", refreshToken, "n", newRefreshToken)
             /* const response =  */await foundUser.save();
-            res.cookie('jwt', newRefreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: true, sameSite: 'None' }); // max age same as token expiration(1d)
-
+            res.cookie('jwt', newRefreshToken, { path: "/", httpOnly: true, maxAge: 24 * 60 * 60 * 1000, /* secure: true, */ /* sameSite: 'None' */ }); // max age same as token expiration(1d)
+            
             res.json( { /* roles,  */accessToken} )
         }
     );
