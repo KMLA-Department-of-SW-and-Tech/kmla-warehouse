@@ -2,7 +2,7 @@ const BorrowHistory = require("../models/borrow_history");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
-exports.getAllBoroHistory = async () => {
+exports.getAllBorrowHistory = async () => {
     const borrowHistoryList = await BorrowHistory.find({})
     .populate('item')
     .populate('user')
@@ -25,6 +25,15 @@ exports.saveBorrowHistory = async (entry) => {
     const newEntry = await entry.save();
     return newEntry;
 }
+
+exports.getUserBorrowHistory = async (userId) => {
+    const borrowHistoryList = await BorrowHistory.find({user: userId})
+    .populate('item')
+    .populate('user')
+    .sort({timestamp: 1})
+    .exec();
+    return borrowHistoryList;
+};
 
 exports.borrow_history_delete = asyncHandler(async (req, res, next) => {
     res.send("NOT IMPLEMENTED: borrow_history delete");

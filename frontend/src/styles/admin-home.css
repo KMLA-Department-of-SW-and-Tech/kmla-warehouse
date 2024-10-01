@@ -14,9 +14,9 @@
 
 .content {
     background-color: white;
-    border-radius: 1em;
     min-height: 280;
     padding: 12px 24px;
-    margin: 24px;
+    margin: 0;
+    margin-top: 50px;
     
 }

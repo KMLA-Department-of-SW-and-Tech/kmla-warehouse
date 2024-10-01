@@ -106,7 +106,6 @@ exports.borrowItem = async (itemId, quantity, username) => {
         }
         throw err;
     }
-
     // get item
     let item = null;
     try {
@@ -134,9 +133,10 @@ exports.borrowItem = async (itemId, quantity, username) => {
         quantity: quantity,
         user: user._id,
         type: "borrow",
+        reference: null,
     }
     try {
-        borrowHistoryService.createBorrowHistory(newEntry);
+        await borrowHistoryService.createBorrowHistory(newEntry);
     } catch (err) {
         throw err;
     }

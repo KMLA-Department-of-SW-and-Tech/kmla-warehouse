@@ -10,7 +10,6 @@ import ReservationStatus from "./(authenticated)/user-home/reservation-status.ts
  
 import AdminEquipmentPage from "./admin/equipment-page.tsx"; 
 import AdminHistoryPage from "./admin/reservation-page.tsx";  
-import AdminHome from "./admin/admin-home.tsx";
 import AdminTeamPage from "./admin/manage-team-page.tsx";
 import AdminSettingPage from "./admin/admin-setting.tsx";
 import { ProtectedRoute } from "./components/protected-routes.jsx";
@@ -41,10 +40,6 @@ const router = createBrowserRouter([
   {
     path: "/kmla-warehouse/reservation-status",
     element: <ReservationStatus />,
-  },
-  {
-    path: "/kmla-warehouse/admin/home",
-    element: <AdminHome />,
   },
   // Admin: add equipment page
   {

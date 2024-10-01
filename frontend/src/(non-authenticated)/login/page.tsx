@@ -76,9 +76,18 @@ const LoginPage = () => {
       }>Logout</button>
       {/* <button onClick={
         async () => {
-          await axiosPrivate.post('/api/borrow-history/66fb474f588ddf8a65fe8ea9/return', {
-            quantity: 2,
-          });
+          try {
+            // console.log("----------------------------------------------------------------");
+            // await axiosPrivate.post('/api/borrow-history/66fc02ee04b0e0dc2306146d/return', {
+
+            // });
+            // await axiosPrivate.post('/api/item/66f81dfc1c40becece185d1b/borrow', {
+            //   quantity: 4,
+            // });
+            console.log(await axiosPrivate.get('/api/team/66f5e847eccf4b831081cfcd/borrow-list', {}));
+          } catch (err) {
+            console.error(err.response.data);
+          }
         }
       }>Click Me</button> */}
       

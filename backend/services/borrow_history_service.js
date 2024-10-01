@@ -10,7 +10,7 @@ const itemService = require("../services/item_service");
 
 exports.getBorrowHistoryList = async () => {
     try {
-        const borrowHistoryList = await borrowHistoryRepository.getAllBoroHistory();
+        const borrowHistoryList = await borrowHistoryRepository.getAllBorrowHistory();
         if(borrowHistoryList == null) {
             throw new Error("Borrow history not found");
         }
@@ -49,6 +49,7 @@ exports.createBorrowHistory = async (entry) => {
         user: entry.user,
         timestamp: entry.timestamp,
         type: entry.type,
+        reference: entry.reference,
     });
     try {
         const newBorrowHistory = await borrowHistoryRepository.saveBorrowHistory(newEntry);
@@ -117,10 +118,42 @@ exports.returnItem = async (logId, username) => {
         quantity: quantity,
         user: user._id,
         type: "return",
+        reference: logId,
     }
     try {
-        exports.createBorrowHistory(newEntry);
+        await exports.createBorrowHistory(newEntry);
     } catch (err) {
         throw err;
     }
 };
+
+exports.getBorrowList = async (userId) => {
+    try {
+        const borrowHistoryList = await borrowHistoryRepository.getUserBorrowHistory(userId);
+        if(borrowHistoryList == null) {
+            throw new Error("Borrow history not found");
+        }
+        const ret = [];
+        for (borrow_log of borrowHistoryList) {
+            if(borrow_log.type != "borrow") continue;
+            let isReturned = false;
+            for(return_log of borrowHistoryList) {
+                if(return_log.type != "return") continue;
+                console.log(return_log.reference, borrow_log._id, return_log.reference.equals(borrow_log._id))
+                if(return_log.reference.equals(borrow_log._id)) {
+                    isReturned = true;
+                    break;
+                }
+            }
+            if(!isReturned) {
+                ret.push(borrow_log);
+            }
+        }
+        return ret;
+    } catch (err) {
+        if(err.message == "Borrow history not found") {
+            throw err;
+        }
+        throw new Error("Failed to get borrow list from database");
+    }
+}

@@ -1,110 +1,183 @@
-//equipment-page
+//admin-equipment-page
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
-import { Layout, Typography, TableProps, Table } from 'antd';
+import { Layout, Typography, Spin, message } from 'antd';
+import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from "../components/admin/admin-sidebar";
 import '../styles/admin-home.css';
 import Headbar from "../components/header"
-import EditEquipment from "../components/admin/admin-edit-equipment-table";
+import { itemService } from "../api/itemService";
+//import EditEquipment from "../components/admin/admin-edit-equipment-table";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
 
-interface DataType {
-    name: string;
-    description: string;
-    tags: string;
-    quantity: number;
-    location: string;
-    photo: HTMLImageElement;
-    category: string;
-  }
-  
-  /*
-  const columns: TableProps<DataType>['columns'] = [
+interface Item {
+  _id: string;
+  name: string;
+  description: string;
+  totalQuantity: number;
+  availableQuantity: number;
+  location: string;
+  photoUrl?: string;
+  tags: string[];
+  status: 'available' | 'deleted';
+  category: string;
+}
+
+const AdminEquipmentPage: React.FC = () => {
+  const [items, setItems] = useState<Item[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      setLoading(true);
+      try {
+        const response = await itemService.getAll(); // 모든 아이템을 가져옴
+        setItems(response);
+      } catch (error) {
+        message.error('Failed to fetch items');
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchItems();
+  }, []);
+
+  const handleAddItem = async (newItem: Item) => {
+    try {
+      const addedItem = await itemService.create(newItem); // 새 아이템을 등록
+      setItems([...items, addedItem]); // 테이블에 새 아이템 추가
+      message.success('Item added successfully');
+    } catch (error) {
+      message.error('Failed to add item');
+      console.error(error);
+    }
+  };
+
+  const handleUpdateItem = async (id: string, updatedItem: Item) => {
+    try {
+      const updated = await itemService.update(id, updatedItem); // 아이템 업데이트
+      setItems(items.map(item => (item._id === id ? updated : item))); // 테이블 업데이트
+      message.success('Item updated successfully');
+    } catch (error) {
+      message.error('Failed to update item');
+      console.error(error);
+    }
+  };
+
+  const handleDeleteItem = async (id: string) => {
+    try {
+      await itemService.delete(id); // 아이템 삭제
+      setItems(items.filter(item => item._id !== id)); // 삭제된 아이템을 테이블에서 제거
+      message.success('Item deleted successfully');
+    } catch (error) {
+      message.error('Failed to delete item');
+      console.error(error);
+    }
+  };
+
+  const columns: ProColumns<Item>[] = [
     {
       title: '물품명',
       dataIndex: 'name',
-      key: 'name',
+  
     },
     {
       title: '설명',
       dataIndex: 'description',
-      key: 'description',
+
     },
     {
-        title: '태그',
-        dataIndex: 'tag', 
-        key: 'tag',
+      title: '총수량',
+      dataIndex: 'totalQuantity',
+
     },
     {
-      title: '수량',
-      dataIndex: 'quantity',
-      key: 'quantity',
+      title: '사용 가능 수량',
+      dataIndex: 'availableQuantity',
+
     },
     {
       title: '위치',
-      dataIndex: 'borrow_date',
-      key: 'borrow_date',
+      dataIndex: 'location',
     },
     {
-      title: '편집하기',
-      dataIndex: 'return_date',
-      key: 'return_date',
+      title: 'Actions',
+      valueType: 'option',
+      render: (text, record, action) => [
+        <a
+          key="editable"
+          onClick={() => {
+            //action?.startEditable?.(record._id);
+          }}
+        >
+          Edit
+        </a>,
+        <a
+          key="delete"
+          onClick={() => handleDeleteItem(record._id)} // 삭제 요청
+        >
+          Delete
+        </a>,
+      ],
     },
   ];
 
-  */
-const AdminEquipmentPage: React.FC = () => {
-    const [data, setData] = useState<DataType[] | null>(null);
-
-
-    const fetchData = async () => {
-        try {
-          const res = await axios.get("/api/item/");
-    
-          const processedData = await Promise.all(
-            res.data.map(async (element: any) => {
-              
-              return {
-                name: element.name,
-                description: element.description,
-                tags: element.tags,
-                quantity: element.quantity,
-                location: element.location, 
-                photo: element.photo, 
-                category: element.category,
-                
-              };
-            })
-          );
-    
-          setData(processedData);
-    
-        } catch (e: any) {
-          console.log(e.message);
-        }
-      };
-      useEffect(() => {
-        fetchData();
-      }, []);
-    return(
-        <Layout className="layout">
-            <Headbar />
-            <Layout>
-                <Sider>
-                    <Sidebar />
-                </Sider>
-                <Layout>
-                    <Content className="content">
-                        <Title level={3}>물품관리</Title>
-                        <EditEquipment/>
-                    </Content>
-                </Layout>
-            </Layout>
+  return (
+    <Layout className="layout">
+      <Headbar />
+      <Layout>
+        <Sider>
+          <Sidebar />
+        </Sider>
+        <Layout>
+          <Content className="content">
+            <Title level={3}>물품관리</Title>
+            {loading ? (
+              <Spin />
+            ) : (
+              <>
+                <EditableProTable<Item>
+                  rowKey="_id"
+                  value={items}
+                  columns={columns}
+                  editable={{
+                    type: 'multiple',
+                    editableKeys,
+                    onSave: async (rowKey, data, row) => {
+                      if (!data._id) {
+                        await handleAddItem(data as Item);
+                      } else {
+                        await handleUpdateItem(data._id, data as Item);
+                      }
+                    },
+                    onChange: setEditableRowKeys,
+                  }}
+                  recordCreatorProps={{
+                    position: 'bottom',
+                    record: () => ({
+                      _id: `${(Math.random() * 1000000).toFixed(0)}`,
+                      name: '',
+                      description: '',
+                      totalQuantity: 0,
+                      availableQuantity: 0,
+                      location: '',
+                      tags: [],
+                      status: 'available',
+                      category: '',
+                    }),
+                  }}
+                />
+              </>
+            )}
+          </Content>
         </Layout>
-    );
-}
-
+      </Layout>
+    </Layout>
+  );
+};
 
 export default AdminEquipmentPage;

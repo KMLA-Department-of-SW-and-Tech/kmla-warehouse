@@ -17,7 +17,16 @@ const authService = {
         } catch (err) {
             console.error(err);
         }
-    }
+    },
+    currentUser: async () => {
+        try {
+          const response = await axios.post('/api/auth');
+          return response.data.username;
+        } catch (err) {
+          console.error(err);
+        }
+      }
+      ,
 }
 
 export default authService;

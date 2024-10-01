@@ -4,6 +4,7 @@ const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 
 const teamService = require("../services/team_service");
+const borrowHistoryService = require("../services/borrow_history_service");
 
 // next error handling과 res.send() error handling이 같이 쓰이는데 이거 기준이 뭔가요?
 
@@ -109,6 +110,25 @@ exports.team_update_put = [
 // exports.team_update_patch = asyncHandler(async (req, res, next) => {
 //     res.send("NOT IMPLEMENTED: team update patch");
 // });
+
+exports.team_borrow_list = asyncHandler(async (req, res, next) => {
+    try {
+        const borrowList = await borrowHistoryService.getBorrowList(req.params.id);
+        res.status(200).send(borrowList);
+        return;
+    } catch (err) {
+        if(err.message == "Failed to get borrow list from database") {
+            res.status(404).send(err.message);
+            return;
+        }
+        if(err.message == "Borrow history not found") {
+            res.status(404).send(err.message);
+            return;
+        }
+        res.status(500).send({error: "Internal Server Error"});
+        return;
+    }
+});
 
 exports.team_delete = asyncHandler(async (req, res, next) => {
     res.send("NOT IMPLEMENTED: team delete");
