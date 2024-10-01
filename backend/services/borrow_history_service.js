@@ -133,7 +133,23 @@ exports.getBorrowList = async (userId) => {
         if(borrowHistoryList == null) {
             throw new Error("Borrow history not found");
         }
-        return borrowHistoryList;
+        const ret = [];
+        for (borrow_log of borrowHistoryList) {
+            if(borrow_log.type != "borrow") continue;
+            let isReturned = false;
+            for(return_log of borrowHistoryList) {
+                if(return_log.type != "return") continue;
+                console.log(return_log.reference, borrow_log._id, return_log.reference.equals(borrow_log._id))
+                if(return_log.reference.equals(borrow_log._id)) {
+                    isReturned = true;
+                    break;
+                }
+            }
+            if(!isReturned) {
+                ret.push(borrow_log);
+            }
+        }
+        return ret;
     } catch (err) {
         if(err.message == "Borrow history not found") {
             throw err;
