@@ -16,12 +16,17 @@ const Sidebar: React.FC = () => {
 
 const items1: MenuProps['items'] = [
   {
-    key: 'test',
-    label: 'test\ntest\ntest\ntest',
+    key: 'test1',
+    label: '',
     type: 'group',
   },
   {
     key: 'test2',
+    label: '',
+    type: 'group',
+  },
+  {
+    key: 'test3',
     label: '',
     type: 'group',
   },
