@@ -4,6 +4,7 @@ import { CalendarOutlined, UnorderedListOutlined } from '@ant-design/icons'; // 
 import Sidebar from '../../components/equipment/equipment-bar';
 import Headbar from '../../components/header.tsx';
 import { itemService } from '../../api/itemService'; // Import the itemService
+import { teamService } from "../../api/teamService.ts";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import axiosPrivate from "../../hooks/axiosPrivate.js";
@@ -33,7 +34,7 @@ export default function ReservationStatus() {
   useEffect(()=>{
     const fetchReservationAndEquipment = async () => {
       try {
-        const userInfo = await itemService.getUserInfo();
+        const userInfo = await teamService.getUserInfo();
         console.log('Fetched user info:', currentUserId);
         setCurrentUserId(userInfo);
 

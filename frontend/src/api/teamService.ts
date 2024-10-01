@@ -38,4 +38,9 @@ export const teamService = {
   deleteTeam: async (id: number): Promise<void> => {
     await axiosPrivate.delete(`${API_URL}/${id}`);
   },
+
+  getUserInfo : async () => {
+    const response = await axiosPrivate.get(`/api/auth`);
+    return response.data;
+  },
 };
