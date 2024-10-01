@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Spin, Layout, Button, message, Form, InputNumber } from 'antd'; // Added Form and InputNumber
-import { useParams, useNavigate } from 'react-router-dom';
+import { Typography, Spin, Layout, Button, message, Form, InputNumber } from 'antd'; 
+import { useParams } from 'react-router-dom';
 import { itemService } from '../../api/itemService';
 import Sidebar from '../../components/equipment/equipment-bar';
+import Headbar from '../../components/header';
 
 const { Sider, Content } = Layout;
 const { Title, Text } = Typography;
@@ -23,9 +24,8 @@ interface Item {
 export default function EquipmentDetailPage() {
   const [loading, setLoading] = useState(true);
   const [item, setItem] = useState<Item | null>(null);
-  const [borrowQuantity, setBorrowQuantity] = useState<number>(1); // State for quantity
+  const [borrowQuantity, setBorrowQuantity] = useState<number>(1);
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchItemDetails = async () => {
@@ -46,23 +46,42 @@ export default function EquipmentDetailPage() {
   }, [id]);
 
   const handleBorrow = async () => {
-    if (!id || !item) return;
-    if (borrowQuantity < 1 || borrowQuantity > item.availableQuantity) {
-      message.error('유효한 수량을 입력하세요.'); // Validate quantity
+    console.log('Borrow request for item id:', id);  
+    if (!id) return;
+    if (borrowQuantity < 1) {
+      message.error('유효한 수량을 입력하세요.');
       return;
     }
+
     try {
-      await itemService.borrowRequest(id, borrowQuantity); // Pass quantity
+      await itemService.borrowRequest(id, borrowQuantity);
       message.success('대여 요청이 성공적으로 처리되었습니다.');
-      setItem(prev => prev ? { ...prev, availableQuantity: prev.availableQuantity - borrowQuantity } : null);
     } catch (error) {
       console.error('Failed to borrow item:', error);
-      message.error('대여 요청에 실패했습니다. 다시 시도해 주세요.');
+      if (error.response) {
+        const status = error.response.status;
+        const message = error.response.data.message || error.message;
+
+        if (status === 404) {
+          message.error(message || '아이템을 찾을 수 없습니다.');
+        } else if (status === 400) {
+          message.error(message || '유효하지 않은 대여 요청입니다.');
+        } else if (status === 500) {
+          message.error(message || '서버 오류가 발생했습니다.');
+        } else {
+          message.error('대여 요청에 실패했습니다. 다시 시도해 주세요.');
+        }
+      } else {
+        message.error('대여 요청에 실패했습니다. 다시 시도해 주세요.');
+      }
     }
   };
 
   return (
+    <Layout>
+    
     <Layout style={{ minHeight: '100vh' }}>
+      
       <Sider
         width={250}
         style={{
@@ -77,7 +96,15 @@ export default function EquipmentDetailPage() {
       </Sider>
 
       <Layout style={{ marginLeft: 250 }}>
-        <Content style={{ padding: '40px', width: 'calc(100vw - 250px)' }}>
+        
+
+        <Content 
+          style={{ 
+            padding: '40px', 
+            marginTop: '64px', // 헤더 높이만큼 여백을 추가해서 겹침 방지
+            width: 'calc(100vw - 250px)', 
+          }}
+        >
           {loading ? (
             <Spin size="large" />
           ) : item ? (
@@ -117,8 +144,7 @@ export default function EquipmentDetailPage() {
                         color: '#888',
                         fontSize: '16px',
                       }}
-                    >
-                    </Typography.Text>
+                    />
                   )}
                 </div>
 
@@ -154,7 +180,7 @@ export default function EquipmentDetailPage() {
                       min={1}
                       max={item.availableQuantity}
                       value={borrowQuantity}
-                      onChange={(value) => setBorrowQuantity(value || 1)} // Update state
+                      onChange={(value) => setBorrowQuantity(value || 1)}
                       style={{ width: '100%' }}
                     />
                   </Form.Item>
@@ -170,6 +196,7 @@ export default function EquipmentDetailPage() {
           )}
         </Content>
       </Layout>
+    </Layout>
     </Layout>
   );
 }
