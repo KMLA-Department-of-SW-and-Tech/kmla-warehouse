@@ -70,7 +70,7 @@ button:focus-visible {
 input {
   background-color: #ffffff; /* 입력 필드 배경을 흰색으로 설정 */
   border: none; /* 테두리를 제거 */
-  border-bottom: 2px solid #c5c5c5; /* 기본 상태에서는 밑줄을 투명하게 */
+  border-bottom: 2px solid #777777; /* 기본 상태에서는 밑줄을 투명하게 */
   padding: 0.5em 0; /* 적절한 패딩 추가 */
   font-size: 1em; /* 폰트 크기 설정 */
   color: #000000; /* 글씨를 검은색으로 설정 */
