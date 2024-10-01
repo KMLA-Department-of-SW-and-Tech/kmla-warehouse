@@ -1,44 +1,54 @@
-import axios from 'axios';
 import axiosPrivate from '../hooks/axiosPrivate';
 
-const API_URL = 'http://your-backend-url/api/teams'; // 백엔드 URL을 적절히 변경하세요
-
 export interface Team {
-  id: number;
+  id: string;
   name: string;
-  // 필요한 다른 팀 속성들을 추가하세요
 }
 
 export const teamService = {
-  getAll: async (): Promise<Team[]> => {
-    const response = await axiosPrivate.get(API_URL);
-    return response.data;
-  },
 
+  //GET 팀리스트
+  getAll: async (): Promise<Team[]> => {
+    try {
+      const response = await axiosPrivate.get(`/api/team/list`);
+      console.log(response);
+      return response.data;
+    } catch (e) {
+      console.error(e.message);
+      return [];
+    }
+  },
+  /*
   search: async (query: string): Promise<Team[]> => {
     const response = await axiosPrivate.get(`${API_URL}/search`, { params: { query } });
     return response.data;
   },
+  */
 
-  getTeamInfo: async (id: number): Promise<Team> => {
-    const response = await axiosPrivate.get(`${API_URL}/${id}`);
+  //GET 아이디별 팀정보
+  getTeamInfo: async (id: string): Promise<Team> => {
+    const response = await axiosPrivate.get(`/api/team/${id}`);
     return response.data;
   },
 
-  createTeam: async (teamData: Omit<Team, 'id'>): Promise<Team> => {
-    const response = await axiosPrivate.post(API_URL, teamData);
+  //POST 팀정보 업로드하기
+  createTeam: async (teamData: Team): Promise<Team> => {
+    const response = await axiosPrivate.post("/api/team/", teamData);
     return response.data;
   },
 
-  updateTeam: async (id: number, teamData: Partial<Team>): Promise<Team> => {
-    const response = await axiosPrivate.put(`${API_URL}/${id}`, teamData);
+  //PUT 팀정보 업데이트하기
+  updateTeam: async (id: string, teamData: Partial<Team>): Promise<Team> => {
+    const response = await axiosPrivate.put(`/api/team/${id}`, teamData);
     return response.data;
   },
 
-  deleteTeam: async (id: number): Promise<void> => {
-    await axiosPrivate.delete(`${API_URL}/${id}`);
+  //DELETE 팀 삭제하기
+  deleteTeam: async (id: string): Promise<void> => {
+    await axiosPrivate.delete(`/api/team/${id}`);
   },
 
+  //유저 정보 가져오기
   getUserInfo : async () => {
     const response = await axiosPrivate.get(`/api/auth`);
     return response.data;

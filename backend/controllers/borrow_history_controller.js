@@ -55,27 +55,36 @@ exports.borrow_history_create = [
 exports.item_return = [
     asyncHandler(async (req, res, next) => {
         try {
-            borrowHistoryService.returnItem(req.params.id, req.username);
+            await borrowHistoryService.returnItem(req.params.id, req.username);
+            res.status(200).send("Sucessfully returned item");
+            return;
         } catch (err) {
             if (err.message == "Failed to get user data from database") {
                 res.status(404).send(err);
+                return;
             }
             if (err.message == "Item not Found") {
                 res.status(404).send(err);
+                return;
             }
             if (err.message == "Failed to get item data from database") {
                 res.status(404).send(err);
+                return;
             }
             if ("Failed to get borrow History data from database") {
                 res.status(404).send(err);
+                return;
             }
             if (err.message == "Failed to save entry to database") {
                 res.status(500).send(err);
+                return;
             }
             if (err.message == "Not a valid borrow request: items unavailable") {
                 res.status(400).send(err);
+                return;
             }
             res.status(500).send(err);
+            return;
         }
     }),
 ];

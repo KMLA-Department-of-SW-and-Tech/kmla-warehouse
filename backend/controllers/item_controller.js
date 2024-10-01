@@ -1,3 +1,5 @@
+
+
 const Item = require("../models/item");
 const BorrowHistory = require("../models/borrow_history");
 const asyncHandler = require("express-async-handler");
@@ -115,23 +117,29 @@ exports.item_delete = asyncHandler(async (req, res, next) => {
 exports.item_borrow = [
     asyncHandler(async (req, res, next) => {
         try {
-            itemService.borrowItem(req.params.id, req.body.quantity, req.username);
-            res.status(200).send("Successfully borrowed item");
+            await itemService.borrowItem(req.params.id, req.body.quantity, req.username);
+            res.status(200).send("Sucessfully borrowed item");
+            return;
         } catch (err) {
             if (err.message == "Failed to get user data from database") {
                 res.status(404).send(err);
+                return;
             }
             if (err.message == "Item not Found") {
                 res.status(404).send(err);
+                return;
             }
             if (err.message == "Failed to get item data from database") {
                 res.status(404).send(err);
+                return;
             }
             if (err.message == "Failed to save entry to database") {
                 res.status(500).send(err);
+                return;
             }
             if (err.message == "Not a valid borrow request: items unavailable") {
                 res.status(400).send(err);
+                return;
             }
             res.status(500).send(err);
         }

@@ -3,8 +3,7 @@ import { Layout, Table, Typography, TableProps } from 'antd';
 import Sidebar from '../components/admin/admin-sidebar';
 import "../styles/admin-home.css";
 import Headbar from "../components/header";
-import axios from 'axios';
-import dayjs from 'dayjs';
+
 
 const { Content, Sider } = Layout;
 const { Title } = Typography;
@@ -48,36 +47,6 @@ const columns: TableProps<DataType>['columns'] = [
 const AdminHistoryPage: React.FC = () => {
   const [data, setData] = useState<DataType[] | null>(null);
   
-  const fetchData = async () => {
-    try {
-      const res = await axios.get("/api/borrow-history/list");
-      const rawdata = res.data;
-
-      const processedData = await Promise.all(
-        rawdata.map(async (element: any) => {
-          const borrowerRes = await axios.get("/api/team/" + element.user);
-          const itemRes = await axios.get("/api/item/" + element.item);
-          
-          return {
-            item: itemRes.data.item.name,
-            quantity: element.quantity,
-            user: borrowerRes.data.user,
-            type: borrowerRes.data.type,
-            timestamp: borrowerRes.data.timestamp,
-            
-          };
-        })
-      );
-
-      setData(processedData);
-
-    } catch (e: any) {
-      console.log(e.message);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <Layout className="layout">

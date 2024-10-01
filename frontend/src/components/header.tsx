@@ -9,7 +9,7 @@ const Headbar: React.FC = () => {
           KMLA Warehouse
         </div>
         <div className="user-info">
-          <span>John Doe</span> {/* 예시 사용자 이름 */}
+          <span>정촹운 크로스 조류찬</span> {/* 예시 사용자 이름 */}
         </div>
       </div>
     </header>

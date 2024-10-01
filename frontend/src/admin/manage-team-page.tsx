@@ -1,29 +1,153 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Layout } from 'antd';
-import "../styles/admin-home.css";
-import Headbar from "../components/header";
+import { Layout, Typography, Spin, message } from 'antd';
+import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from "../components/admin/admin-sidebar";
+import '../styles/admin-home.css';
+import Headbar from "../components/header"
+import { teamService, Team } from "../api/teamService";
 
 const { Sider, Content } = Layout;
+const { Title } = Typography;
 
 
 const AdminTeamPage: React.FC = () => {
-    return(
-        <Layout className="layout">
-            <Headbar/>
-            <Layout>
-                <Sider>
-                    <Sidebar />
-                </Sider>
-                <Layout>
-                    <Content className="content">
+  const [teams, setTeams] = useState<Team[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
 
-                    </Content>
-                </Layout>
-            </Layout>
+  useEffect(() => {
+    const fetchTeams = async () => {
+      setLoading(true);
+      try {
+        const response = await teamService.getAll(); 
+        setTeams(response);
+      } catch (error) {
+        message.error('Failed to fetch items');
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTeams();
+  }, []);
+
+  const handleAddTeam = async (newTeam: Team) => {
+    try {
+      const addedTeam = await teamService.createTeam(newTeam); // 새 아이템을 등록
+      setTeams([...teams, addedTeam]); // 테이블에 새 아이템 추가
+      message.success('Team added successfully');
+    } catch (error) {
+      message.error('Failed to add team');
+      console.error(error);
+    }
+  };
+
+  const handleUpdateTeam = async (id: string, updatedTeam: Team) => {
+    try {
+      const updated = await teamService.updateTeam(id, updatedTeam); 
+      setTeams(teams.map(team => (team.id === id ? updated : team))); 
+      message.success('Team updated successfully');
+    } catch (error) {
+      message.error('Failed to update team');
+      console.error(error);
+    }
+  };
+
+  const handleDeleteTeam = async (id: string) => {
+    try {
+      await teamService.deleteTeam(id); 
+      setTeams(teams.filter(team => team.id !== id)); 
+      message.success('Team deleted successfully');
+    } catch (error) {
+      message.error('Failed to delete team');
+      console.error(error);
+    }
+  };
+
+  const columns: ProColumns<Team>[] = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+    },
+    {
+      title: '팀명',
+      dataIndex: 'name',
+    },
+    {
+      title: 'Actions',
+      valueType: 'option',
+      render: (text, record, action) => [
+        <a
+          key="editable"
+          onClick={() => {
+            //action?.startEditable?.(record.id);
+          }}
+        >
+          Edit
+        </a>,
+        <a
+          key="delete"
+          onClick={() => handleDeleteTeam(record.id.toString())} 
+        >
+          Delete
+        </a>,
+      ],
+    },
+  ];
+
+  return (
+    <Layout className="layout">
+      <Headbar />
+      <Layout>
+        <Sider>
+          <Sidebar />
+        </Sider>
+        <Layout>
+          <Content className="content">
+            <Title level={3}>팀관리</Title>
+            {loading ? (
+              <Spin />
+            ) : (
+              <>
+                <EditableProTable<Team>
+                  rowKey="id"
+                  value={teams}
+                  columns={columns}
+                  editable={{
+                    type: 'multiple',
+                    editableKeys,
+                    onSave: async (rowKey, data, row) => {
+                      if (!data.id) {
+                        await handleAddTeam(data as Team);
+                      } else {
+                        await handleUpdateTeam(data.id, data as Team);
+                      }
+                    },
+                    onChange: setEditableRowKeys,
+                  }}
+                  recordCreatorProps={{
+                    position: 'bottom',
+                    record: () => ({
+                      id: `${(Math.random() * 1000000).toFixed(0)}`,
+                      name: '',
+                      description: '',
+                      totalQuantity: 0,
+                      availableQuantity: 0,
+                      location: '',
+                      tags: [],
+                      status: 'available',
+                      category: '',
+                    }),
+                  }}
+                />
+              </>
+            )}
+          </Content>
         </Layout>
-    );
-}
+      </Layout>
+    </Layout>
+  );
+};
 
 export default AdminTeamPage;

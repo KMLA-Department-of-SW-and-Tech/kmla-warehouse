@@ -4,6 +4,7 @@ import { CalendarOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/equipment/equipment-bar';
 import { itemService } from '../../api/itemService'; 
+import Headbar from '../../components/header';
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -46,6 +47,7 @@ export default function EquipmentListPage() {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
+      <Headbar />
       <Sider
         width={250}
         style={{
@@ -53,13 +55,13 @@ export default function EquipmentListPage() {
           position: 'fixed',
           height: '100vh',
           left: 0,
-          top: 0,
+          top: 64,
         }}
       >
         <Sidebar />
       </Sider>
       <Layout style={{ marginLeft: 250 }}>
-        <Content style={{ padding: '40px', width: 'calc(98vw - 250px)' }}>
+        <Content style={{ padding: '40px', marginTop: '64px', width: 'calc(98vw - 250px)' }}>
           
           <Title level={2} style={{ display: 'flex', alignItems: 'center' }}>
             <UnorderedListOutlined style={{ marginRight: '10px' }} />
@@ -72,7 +74,7 @@ export default function EquipmentListPage() {
             <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
               {equipmentList.length > 0 ? (
                 equipmentList.map((equipment, index) => (
-                  <Col xs={24} sm={12} md={8} lg={5} key={equipment._id}>
+                  <Col xs={24} sm={12} md={8} lg={4} key={equipment._id}>
                     <Card
                       hoverable
                       cover={
