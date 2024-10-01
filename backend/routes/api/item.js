@@ -16,6 +16,7 @@ router.route("/:id")
     .patch(verifyJWT, itemController.item_update_patch)
     .delete(verifyJWT, itemController.item_delete);
 
-router.post("/:id/borrow", itemController.item_borrow);
+router.route("/:id/borrow")
+    .post(verifyJWT, itemController.item_borrow);
 
 module.exports = router;

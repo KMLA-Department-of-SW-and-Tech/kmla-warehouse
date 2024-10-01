@@ -102,7 +102,8 @@ exports.get_user_info = asyncHandler(async (req, res, next) => {
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
         (err, decoded) => {
-            if(err || foundUser.username !== decoded.username || foundUser.name !== decoded.name) res.sendStatus(403);
+            console.log(foundUser, decoded.UserInfo)
+            if(err || foundUser.username !== decoded.UserInfo.username) return res.sendStatus(403);
             res.json(foundUser);
         }
     );
