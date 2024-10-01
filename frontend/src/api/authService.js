@@ -31,11 +31,10 @@ const authService = {
     },
     changePassword: async (currentPassword, newPassword) => {
       try {
-        const response = await axiosPrivate.patch("/api/team/update-password", {
-          currentPassword: currentPassword,
-          newPassword: newPassword,
-        })
-        console.log(response);  
+        
+          return await axios.post('/api/team/update-password', { currentPassword, newPassword });
+        
+       
       } catch(err) {
         console.log(err);
       }
