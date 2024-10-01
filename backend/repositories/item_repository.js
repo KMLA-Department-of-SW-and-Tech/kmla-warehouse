@@ -11,6 +11,27 @@ exports.getAllItems = async () => {
     return itemList;
 };
 
+exports.searchItems = async (query) => {
+    const queryStrings = query.split(' ');
+    allQueries = [];
+    queryStrings.forEach(word => {
+        allQueries.push({
+            $or: [
+                {name: {$regex: String(word)}},
+                {description: {$regex: String(word)}},
+            ],
+        })
+    });
+    console.log(allQueries);
+    const itemList = await Item.find({
+        $or: allQueries,
+    })
+    .populate('tags')
+    .sort({name: 1})
+    .exec();
+    return itemList;
+};
+
 exports.getItemById = async (itemId) => {
     const item = await Item.findById(itemId)
     .populate('tags')

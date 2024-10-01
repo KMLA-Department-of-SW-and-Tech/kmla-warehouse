@@ -9,6 +9,7 @@ const itemController = require("../../controllers/item_controller");
 
 router.get("/list", verifyJWT, itemController.item_list);
 
+router.get("/search/:query", itemController.item_search);
 
 router.post("/", verifyJWT, itemController.item_create);
 
