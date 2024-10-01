@@ -21,11 +21,6 @@ const items1: MenuProps['items'] = [
     type: 'group',
     children: [
       {
-        key: 'kmla-warehouse/admin/home',
-        icon: <HomeOutlined />,
-        label: '홈화면',
-      },
-      {
         key: 'kmla-warehouse/admin/team',
         icon: <TeamOutlined />,
         label: '팀관리',

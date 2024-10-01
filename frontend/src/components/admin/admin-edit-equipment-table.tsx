@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Layout, Spin, Typography, message } from 'antd';
+import { Layout, Spin, message } from 'antd';
 import { EditableProTable } from '@ant-design/pro-components';
 import { itemService } from '../../api/itemService'; // itemService를 가져옴
 import { useNavigate } from 'react-router-dom';
 
-const { Sider, Content } = Layout;
-const { Title } = Typography;
+const { Content } = Layout;
 
 interface Item {
   _id: string;
@@ -20,8 +19,8 @@ interface Item {
   category: string;
 }
 
-const EquipmentManagementPage: React.FC = () => {
-  const [items, setItems] = useState<Item[]>([]);
+const EditEquipment: React.FC = () => {
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const navigate = useNavigate();
@@ -32,7 +31,6 @@ const EquipmentManagementPage: React.FC = () => {
       setLoading(true);
       try {
         const response = await itemService.getAll(); // 모든 아이템을 가져옴
-        console.log("dhlfsdlkfhlsdkhfl", response)
         setItems(response);
       } catch (error) {
         message.error('Failed to fetch items');
@@ -61,7 +59,7 @@ const EquipmentManagementPage: React.FC = () => {
   const handleUpdateItem = async (id: string, updatedItem: Item) => {
     try {
       const updated = await itemService.update(id, updatedItem); // 아이템 업데이트
-      setItems(items.map(item => (item._id === id ? updated : item))); // 테이블 업데이트
+      setItems(items.map(item => (item._id === id ? update : item))); // 테이블 업데이트
       message.success('Item updated successfully');
     } catch (error) {
       message.error('Failed to update item');
@@ -130,13 +128,9 @@ const EquipmentManagementPage: React.FC = () => {
   ];
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <Sider width={250} style={{ background: '#fff' }}>
-        {/* 사이드바 컴포넌트 */}
-      </Sider>
-
+    <Layout>
       <Layout>
-        <Content style={{ width: 'calc(100vw - 250px)' }}>
+        <Content>
           {loading ? (
             <Spin/>
           ) : (
@@ -169,10 +163,12 @@ const EquipmentManagementPage: React.FC = () => {
                     totalQuantity: 0,
                     availableQuantity: 0,
                     location: '',
+                    tags: [],
                     status: 'available',
                     category: '',
                   }),
                 }}
+
                 
               />
             </>
@@ -183,4 +179,4 @@ const EquipmentManagementPage: React.FC = () => {
   );
 };
 
-export default EquipmentManagementPage;
+export default EditEquipment;
