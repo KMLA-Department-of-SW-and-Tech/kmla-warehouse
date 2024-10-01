@@ -16,7 +16,7 @@ const LoginPage = () => {
       await authService.login(username, password);
       console.log("Successful login");
       try { // example of axiosPrivate usage
-        const response = await axiosPrivate.get("/api/team/list");
+        const response = await axiosPrivate.get("/api/auth/");
         console.log(response);
         navigate("/kmla-warehouse/home"); //살려라!!!
       } catch (err) {
