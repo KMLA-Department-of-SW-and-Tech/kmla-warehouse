@@ -4,6 +4,7 @@ import { CalendarOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/equipment/equipment-bar';
 import { itemService } from '../../api/itemService'; 
+import Headbar from '../../components/header';
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -46,6 +47,7 @@ export default function EquipmentListPage() {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
+      <Headbar />
       <Sider
         width={250}
         style={{

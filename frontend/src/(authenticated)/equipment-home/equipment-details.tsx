@@ -82,6 +82,7 @@ export default function EquipmentDetailPage() {
 
   return (
     <Layout>
+      <Headbar />
       <Layout style={{ minHeight: '100vh' }}>
         <Sider
           width={250}
@@ -90,7 +91,7 @@ export default function EquipmentDetailPage() {
             position: 'fixed',
             height: '100vh',
             left: 0,
-            top: 0,
+            top: 64,
           }}
         >
           <Sidebar />
