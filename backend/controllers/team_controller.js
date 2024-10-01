@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 
 const teamService = require("../services/team_service");
 const borrowHistoryService = require("../services/borrow_history_service");
+const teamRepository = require("../repositories/team_repository");
 
 // next error handling과 res.send() error handling이 같이 쓰이는데 이거 기준이 뭔가요?
 
@@ -133,3 +134,23 @@ exports.team_borrow_list = asyncHandler(async (req, res, next) => {
 exports.team_delete = asyncHandler(async (req, res, next) => {
     res.send("NOT IMPLEMENTED: team delete");
 });
+
+exports.update_current_team_password = asyncHandler(async (req, res, next) => {
+    // newName: dfd, currentPassword, newPassword: dsfs, 
+    console.log(req.body, req.username);
+    //const [] = req.body;
+    //console.log(currentPassword, newPassword, "hi")
+    const currentPassword = req.body.currentPassword;
+    const newPassword = req.body.newPassword;
+    console.log(currentPassword, newPassword)
+    const currentUser = await teamRepository.findTeamByName(req.username);
+    console.log(currentUser);
+
+    const match = await bcrypt.compare(currentPassword, currentUser.password);
+    if(!match) return res.status(401).send("Current Password does not match");
+    const hashedPwd = await bcrypt.hash(newPassword, 10);
+    currentUser.password = hashedPwd;
+    await currentUser.save();
+    res.status(200).send("Successful change");
+
+})
