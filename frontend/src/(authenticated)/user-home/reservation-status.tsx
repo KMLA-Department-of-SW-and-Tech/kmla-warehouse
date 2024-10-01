@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Typography, Card, Row, Col, Spin, Layout } from 'antd';
 import { CalendarOutlined, UnorderedListOutlined } from '@ant-design/icons'; // Import the icon
 import Sidebar from '../../components/equipment/equipment-bar';
-import Headbar from '../../components/header.tsx';
-import { itemService } from '../../api/itemService'; // Import the itemService
+import { itemService } from '../../api/itemService.ts'; // Import the itemService
 import { teamService } from "../../api/teamService.ts";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -35,24 +34,18 @@ export default function ReservationStatus() {
     const fetchReservationAndEquipment = async () => {
       try {
         const userInfo = await teamService.getUserInfo();
-        console.log('Fetched user info:', currentUserId);
+        console.log('Fetched user info:', userInfo);
         setCurrentUserId(userInfo);
 
         const items = await itemService.getAll();
         console.log('Fetched items:', items);
         setEquipmentList(items);
         
-        const reservations = await itemService.getReservations();
-        const reservationData = reservations.filter(
-          reservation => reservation.team === currentUserId
-        );
+        const reservations = await itemService.getReservations(userInfo._id);
         console.log('Fetched reservations:', reservations);
-        setReservationList(reservationData);
+        setReservationList(reservations);
       } catch (error) {
-        console.log("Failed to fetch User info, Reservation list, Equipment list:", error)
-        setEquipmentList([]);
-        setReservationList([]);
-        setCurrentUserId('');
+        console.log("Failed to fetch:", error)
       } finally {
         console.log(equipmentList);
         console.log(reservationList);
