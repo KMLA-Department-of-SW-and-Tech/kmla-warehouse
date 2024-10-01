@@ -58,12 +58,9 @@ export default function EquipmentListPage() {
       >
         <Sidebar />
       </Sider>
-
-      {/* Main content */}
       <Layout style={{ marginLeft: 250 }}>
-        <Content style={{ padding: '40px', width: 'calc(100vw - 250px)' }}>
+        <Content style={{ padding: '40px', width: 'calc(98vw - 250px)' }}>
           
-          {/* Title with icon */}
           <Title level={2} style={{ display: 'flex', alignItems: 'center' }}>
             <UnorderedListOutlined style={{ marginRight: '10px' }} />
             물품목록 전체보기
