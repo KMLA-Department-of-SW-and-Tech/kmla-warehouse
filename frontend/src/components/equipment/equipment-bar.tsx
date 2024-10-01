@@ -32,7 +32,7 @@ const MenuBar: React.FC = () => {
       children: [
         {
           key: 'kmla-warehouse/reservation-status',
-          icon: <Badge size="small" count={99}><HistoryOutlined /></Badge>,
+          icon: <Badge size="small"><HistoryOutlined /></Badge>,
           label: '예약현황',
         },
         {
