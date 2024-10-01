@@ -51,6 +51,8 @@ POST 팀 생성 /api/team/
 PUT 팀 업데이트 /api/team/:id
 DELETE 팀 삭제 /api/team/:id
 
+GET 대여물품 리스트 /api/team/:id/borrow-list
+
 Auth
 GET 현재 로그인된 유저 정보 가져오기 /api/auth
 POST 로그인 /auth/login

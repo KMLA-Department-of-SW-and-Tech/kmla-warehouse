@@ -34,7 +34,8 @@ exports.getTeamDetail = async (teamId) => {
         if(err.message == "Team not found") {
             throw err;
         }
-        throw new Error("Failed to get team data from database");
+        // throw new Error("Failed to get team data from database");
+        throw err;
     }
 };
 

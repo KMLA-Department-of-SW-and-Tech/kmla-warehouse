@@ -14,7 +14,8 @@ router.route("/:id")
     .put(verifyJWT, teamController.team_update_put)
     .delete(verifyJWT, teamController.team_delete);
 
-
+router.route("/:id/borrow-list")
+    .get(verifyJWT, teamController.team_borrow_list);
 
 module.exports = router;
 

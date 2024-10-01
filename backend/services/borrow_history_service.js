@@ -10,7 +10,7 @@ const itemService = require("../services/item_service");
 
 exports.getBorrowHistoryList = async () => {
     try {
-        const borrowHistoryList = await borrowHistoryRepository.getAllBoroHistory();
+        const borrowHistoryList = await borrowHistoryRepository.getAllBorrowHistory();
         if(borrowHistoryList == null) {
             throw new Error("Borrow history not found");
         }
@@ -124,3 +124,18 @@ exports.returnItem = async (logId, username) => {
         throw err;
     }
 };
+
+exports.getBorrowList = async (userId) => {
+    try {
+        const borrowHistoryList = await borrowHistoryRepository.getUserBorrowHistory(userId);
+        if(borrowHistoryList == null) {
+            throw new Error("Borrow history not found");
+        }
+        return borrowHistoryList;
+    } catch (err) {
+        if(err.message == "Borrow history not found") {
+            throw err;
+        }
+        throw new Error("Failed to get borrow list from database");
+    }
+}
