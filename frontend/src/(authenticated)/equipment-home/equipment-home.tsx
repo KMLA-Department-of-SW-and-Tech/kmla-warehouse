@@ -27,8 +27,6 @@ export default function EquipmentListPage() {
         const items = await itemService.getAll();  // Fetch all items from the API
         console.log('Fetched items:', items); // Add this line to check the response
         setEquipmentList(items);
-        
-
       } catch (error) {
         console.error('Failed to fetch equipment list:', error);
         setEquipmentList([]); // Handle error by setting empty array
@@ -74,7 +72,7 @@ export default function EquipmentListPage() {
           {loading ? (
             <Spin size="large" />
           ) : (
-            <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
+            <Row gutter={[16, 30]} style={{ marginTop: '20px' }}>
               {equipmentList.length > 0 ? (
                 equipmentList.map((equipment, index) => (
                   <Col xs={24} sm={12} md={8} lg={5} key={equipment._id}>
@@ -108,7 +106,7 @@ export default function EquipmentListPage() {
                           onClick={() => handleViewDetails(equipment._id)}
                         />,
                       ]}
-                      style={{ maxWidth: '220px', height: '270px' }}
+                      style={{ maxWidth: '220px', height: '300px' }}
                     >
                       <Card.Meta
                         title={equipment.name}

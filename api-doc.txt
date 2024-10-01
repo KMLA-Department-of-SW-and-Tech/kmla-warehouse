@@ -11,7 +11,9 @@ GET 로그 정보 /api/borrow-history/:id
 POST 로그 생성 /api/borrow-history/
   body: item(String), quantity(Number), borrower(ObjectId), borrow_date(Date), return_date(Date)
 DELETE 로그 삭제 /api/borrow-history/:id
-cd
+
+PUT 물품 반납 /api/borrow-history/:id/return
+
 Category
 GET 전체 리스트 /api/category/list
 POST 카테고리 생성 /api/category/
@@ -26,8 +28,12 @@ GET 물품 정보 /api/item/:id
 POST 물품 생성 /api/item/
   body: name(String), description(String), quantity(Number), location(String)
 PUT 물품 업데이트 /api/item/:id
+  body: name(String), description(String), tags(Array of ObjectId), totalQuantity(Number), availableQuantity(Number), location(String), category(ObjectId), status(String)
 PATCH 물품 업데이트 /api/item/:id
 DELETE 물품 삭제 /api/item/:id
+
+PUT 물품 대여 /api/item/:id/borrow
+  body: quantity(Number)
 
 Tag
 GET 전체 리스트 /api/tag/list
@@ -45,12 +51,30 @@ POST 팀 생성 /api/team/
 PUT 팀 업데이트 /api/team/:id
 DELETE 팀 삭제 /api/team/:id
 
+Auth
+GET 현재 로그인된 유저 정보 가져오기 /api/auth
+POST 로그인 /auth/login
+POST 로그아웃 /auth/logout
+
+Refresh
+GET 새 리프래쉬 토큰 /api/refresh
+
 
 // Create Team example
 Request with CURL in Windows!!
 curl -X POST http://localhost:3000/api/team/ -H "Content-Type: application/json" -d "{""username"" : ""LoginTestUsername"", ""password"" : ""LoginTestPassword"", ""name"" : ""LoginTestName""}"
 Request with CURL in MacOS!!
 curl -X POST http://localhost:3000/api/team/ -H 'Content-Type: application/json' -d '{"username" : "LoginTestUsername", "password" : "LoginTestPassword", "name" : "LoginTestName"}'
+
+
+
+
+*****Important*****
+use authService or axiosPrivate for requests or you will get auth errors
+
+
+
+
 
 Request with Axios // just an example, do not use it in this form, use async and send multiple requests at once (Promise.all)
 axios.post('/api/team/', {

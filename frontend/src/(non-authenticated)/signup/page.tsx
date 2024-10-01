@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { PageLayout } from '../../layouts/page-layout'; 
+import { PageLayout } from '../../layouts/page-layout'; // Assume this is the correct path
+import axios from 'axios';
+
 const SignUpPage: React.FC = () => {
-  const [teamName, setTeamName] = useState('');
-  const [nickname, setNickname] = useState('');
+  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password.length < 4) {
       setPasswordError('비밀번호는 4자 이상이어야 합니다.');
@@ -17,7 +19,12 @@ const SignUpPage: React.FC = () => {
       setPasswordError('비밀번호가 일치하지 않습니다.');
       return;
     }
-    console.log('회원가입 정보:', { teamName, nickname, password });
+    const res = await axios.post("/api/team/", {
+        username: username,
+        name: name,
+        password: password,
+    });
+    console.log(res);
   };
 
   return (
@@ -26,6 +33,18 @@ const SignUpPage: React.FC = () => {
         <h2 className="text-center text-4xl font-bold text-gray-900 mb-8">KMLA WAREHOUSE</h2>
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
+          <div>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                className="w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-black placeholder-gray-500 text-gray-900 sm:text-lg"
+                placeholder="융프명"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
             <div>
               <input
                 id="team-name"
@@ -33,21 +52,9 @@ const SignUpPage: React.FC = () => {
                 type="text"
                 required
                 className="w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-black placeholder-gray-500 text-gray-900 sm:text-lg"
-                placeholder="팀 이름"
-                value={teamName}
-                onChange={(e) => setTeamName(e.target.value)}
-              />
-            </div>
-            <div>
-              <input
-                id="nickname"
-                name="nickname"
-                type="text"
-                required
-                className="w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-black placeholder-gray-500 text-gray-900 sm:text-lg"
-                placeholder="닉네임"
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
+                placeholder="아이디"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div>
