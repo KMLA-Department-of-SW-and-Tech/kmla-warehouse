@@ -1,15 +1,14 @@
 const Team = require("../models/team");
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
+const cookieMutex = require("../config/cookieMutex");
 require("dotenv").config();
-
 
 exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
     const cookies = req.cookies;
     if(!cookies?.jwt) return res.sendStatus(401);
     const refreshToken = cookies.jwt;
     console.log(refreshToken);
-    res.clearCookie('jwt', { httpOnly: true, /* secure: true, */ /* sameSite: 'None' */ });
     
     const foundUser = await Team.findOne({refreshToken: refreshToken}).exec();
     console.log(foundUser, refreshToken, "Ha gotcha")
@@ -71,8 +70,9 @@ exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
             foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken ];
             console.log("Going to update", foundUser, "r", refreshToken, "n", newRefreshToken)
             /* const response =  */await foundUser.save();
+            res.clearCookie('jwt', { httpOnly: true, /* secure: true, */ /* sameSite: 'None' */ });
             res.cookie('jwt', newRefreshToken, { path: "/", httpOnly: true, maxAge: 24 * 60 * 60 * 1000, /* secure: true, */ /* sameSite: 'None' */ }); // max age same as token expiration(1d)
-            
+
             res.json( { /* roles,  */accessToken} )
         }
     );

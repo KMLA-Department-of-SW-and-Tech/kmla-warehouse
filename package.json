@@ -20,11 +20,8 @@
     "@ant-design/pro-components": "^2.7.19",
     "antd": "^5.20.6",
     "antd-data-table": "^1.0.1",
-<<<<<<< HEAD
     "cors": "^2.8.5",
-=======
     "express": "^5.0.0",
->>>>>>> 090296a14381a3875fdc51711b72988b496fc74b
     "typescript": "^5.6.2"
   }
 }
