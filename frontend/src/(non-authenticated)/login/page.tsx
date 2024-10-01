@@ -20,7 +20,7 @@ const LoginPage = () => {
       try { // example of axiosPrivate usage
         const response = await axiosPrivate.get("/api/auth/");
         console.log(response);
-        // navigate("/kmla-warehouse/home"); //살려라!!!
+        navigate("/kmla-warehouse/home"); //살려라!!!
       } catch (err) {
         console.log(err);
       }
@@ -74,7 +74,7 @@ const LoginPage = () => {
           await authService.logout();
         }
       }>Logout</button>
-      <button onClick={
+      {/* <button onClick={
         async () => {
           try {
             await axiosPrivate.delete('/api/item/66f8218b5743d574b5f90936');
@@ -82,7 +82,7 @@ const LoginPage = () => {
             console.error(err.response.data);
           }
         }
-      }>Click Me</button>
+      }>Click Me</button> */}
       
         </div>
       </div>
