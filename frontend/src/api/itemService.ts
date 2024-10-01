@@ -114,7 +114,8 @@ borrowRequest: async (id: string, quantity: number ): Promise<Item> => {
   // 예약 데이터 가져오기
   getReservations: async (userInfo) => {
     try {
-      const response = await axiosPrivate.get(`/api/borrow-history/${userInfo}/return`); // 예약 데이터를 가져오는 API
+      const response = await axiosPrivate.get(`/api/team/${userInfo}/borrow-list`); // 예약 데이터를 가져오는 API
+      console.log(response.data)
       return response.data; // 예약 데이터 반환
     } catch (error) {
       console.error('Error fetching reservations:', error.message);

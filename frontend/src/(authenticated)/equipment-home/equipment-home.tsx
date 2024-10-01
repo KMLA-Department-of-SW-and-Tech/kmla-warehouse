@@ -72,7 +72,7 @@ export default function EquipmentListPage() {
             <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
               {equipmentList.length > 0 ? (
                 equipmentList.map((equipment, index) => (
-                  <Col xs={24} sm={12} md={8} lg={5} key={equipment._id}>
+                  <Col xs={24} sm={12} md={8} lg={4} key={equipment._id}>
                     <Card
                       hoverable
                       cover={

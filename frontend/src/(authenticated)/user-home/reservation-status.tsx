@@ -19,9 +19,13 @@ interface Item {
 }
 
 interface Reservation {
-  item: string;
-  team: string;
+  _id: string;
+  item: Item;
+  quantity: number;
+  user: object;
+  timestamp: Date;
 }
+
 
 export default function ReservationStatus() {
   const [loading, setLoading] = useState(true);
@@ -35,22 +39,22 @@ export default function ReservationStatus() {
       try {
           //aware current user information
         const userInfo = await teamService.getUserInfo();
-        //console.log('Fetched user info:', userInfo);
+        console.log('Fetched user info:', userInfo);
         setCurrentUserId(userInfo);
           //fetch all item
         const items = await itemService.getAll();
-        //console.log('Fetched items:', items);
+        console.log('Fetched items:', items);
         setEquipmentList(items);
           //fetch reservation list
         const reservations = await itemService.getReservations(userInfo._id);
-        //console.log('Fetched reservations:', reservations);
+        console.log('Fetched reservations:', reservations);
         setReservationList(reservations);
       } catch (error) {
         console.log("Failed to fetch:", error)
       } finally {
-        //console.log(equipmentList);
-        //console.log(reservationList);
-        //console.log(currentUserId);
+        console.log(equipmentList);
+        console.log(reservationList);
+        console.log(currentUserId);
         setLoading(false)
       }
     }
@@ -77,12 +81,9 @@ export default function ReservationStatus() {
       >
         <Sidebar />
       </Sider>
-
-      {/* Main content */}
       <Layout style={{ marginLeft: 250 }}>
-        <Content style={{ padding: '40px', width: 'calc(100vw - 250px)' }}>
-          
-          {/* Title with icon */}
+        <Content style={{ padding: '40px', width: 'calc(98vw - 250px)' }}>
+
           <Title level={2} style={{ display: 'flex', alignItems: 'center' }}>
             <UnorderedListOutlined style={{ marginRight: '10px' }} />
             예약현황 보기
@@ -92,52 +93,56 @@ export default function ReservationStatus() {
             <Spin size="large" />
           ) : (
             <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
-              {equipmentList?.map((equipment) => (
-                <Col xs={24} sm={12} md={8} lg={5} key={equipment._id}>
-                  <Card
-                    hoverable
-                    cover={
-                      <div
+              {reservationList.length > 0 ? (
+                reservationList?.map((equipment) => (
+                  <Col xs={24} sm={12} md={8} lg={4} key={equipment._id}>
+                    <Card
+                      hoverable
+                      cover={
+                        <div
+                          style={{
+                            width: '100%',
+                            height: '150px',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: '#f0f0f0',
+                          }}
+                        >
+                          {equipment.item.photoUrl ? (
+                            <img
+                              src={equipment.item.photoUrl}
+                              alt={equipment.item.name}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                          ) : (
+                            <Typography.Text>이미지 없음</Typography.Text>
+                          )}
+                        </div>
+                      }
+                      actions={[
+                        <CalendarOutlined
+                          key="view"
+                          onClick={() => handleViewDetails(equipment._id)}
+                        />,
+                      ]}
+                      style={{ maxWidth: '220px', height: '300px' }}
+                    >
+                      <Card.Meta
+                        title={equipment.item.name}
+                        description={`${equipment.item.location} / ${new Date(equipment.timestamp).toLocaleDateString()}`}
                         style={{
-                          width: '100%',
-                          height: '150px',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          backgroundColor: '#f0f0f0',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
                         }}
-                      >
-                        {equipment.photoUrl ? (
-                          <img
-                            src={equipment.photoUrl}
-                            alt={equipment.name}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                          />
-                        ) : (
-                          <Typography.Text>이미지 없음</Typography.Text>
-                        )}
-                      </div>
-                    }
-                    actions={[
-                      <CalendarOutlined
-                        key="view"
-                        onClick={() => handleViewDetails(equipment._id)}
-                      />,
-                    ]}
-                    style={{ maxWidth: '220px', height: '270px' }}
-                  >
-                    <Card.Meta
-                      title={equipment.name}
-                      description={equipment.location}
-                      style={{
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                      }}
-                    />
-                  </Card>
-                </Col>
-              ))}
+                      />
+                    </Card>
+                  </Col>
+                ))
+              ) : (
+                <Typography.Text>데이터가 없습니다.</Typography.Text>
+              )}
             </Row>
           )}
         </Content>
