@@ -45,6 +45,14 @@ POST 팀 생성 /api/team/
 PUT 팀 업데이트 /api/team/:id
 DELETE 팀 삭제 /api/team/:id
 
+Auth
+GET 현재 로그인된 유저 정보 가져오기 /api/auth
+POST 로그인 /auth/login
+POST 로그아웃 /auth/logout
+
+Refresh
+GET 새 리프래쉬 토큰 /api/refresh
+
 
 // Create Team example
 Request with CURL in Windows!!
