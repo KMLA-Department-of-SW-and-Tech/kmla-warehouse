@@ -1,5 +1,4 @@
 import axios from 'axios';
-import authService from '../api/authService';
 
 // use try catch
 
