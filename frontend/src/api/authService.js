@@ -24,7 +24,6 @@ const authService = {
           console.error(err);
         }
     },
-<<<<<<< HEAD
     changePassword: async (currentPassword, newPassword) => {
       try {
         
@@ -35,8 +34,6 @@ const authService = {
         console.log(err);
       }
     }
-=======
->>>>>>> ba4af10bd3ecae764ed8e74ec8b4514fbb0a767d
 }
 
 
