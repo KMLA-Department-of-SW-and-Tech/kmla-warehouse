@@ -15,8 +15,6 @@ const app = express();
 
 // connect to mongodb
 const mongoose = require("mongoose");
-const corsOptions = require('./config/corsOptions');
-const credentials = require('./middleware/credentials');
 mongoose.set("strictQuery", false);
 const mongoDB = "mongodb+srv://kwagi:q4VQtadoiPgXgqBo@cluster0.s1ckl.mongodb.net/kmla_storage?retryWrites=true&w=majority&appName=Cluster0";
 
