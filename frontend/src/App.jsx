@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-//import axios from 'axios';
 
 import Login from "./(non-authenticated)/login/page.tsx"; 
 import Signup from "./(non-authenticated)/signup/page.tsx"; 
@@ -13,6 +12,7 @@ import AdminHistoryPage from "./admin/reservation-page.tsx";
 import AdminTeamPage from "./admin/manage-team-page.tsx";
 import AdminSettingPage from "./admin/admin-setting.tsx";
 import { ProtectedRoute } from "./components/protected-routes.jsx";
+import AccountSettings from "./(authenticated)/user-home/user-setting.tsx";
 
 
 
@@ -26,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/kmla-warehouse/signup",
     element: <Signup />,
+  },
+  {
+    path: "/kmla-warehouse/account-settings",
+    element: <AccountSettings />
   },
   // Home page
   {

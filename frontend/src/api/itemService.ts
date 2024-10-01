@@ -42,12 +42,12 @@ export const itemService = {
 
 borrowRequest: async (id: string, quantity: number ): Promise<Item> => {
   try {
-    console.log('Making POST request to borrow item:', id, 'with quantity:', quantity);
+   
     
     const response = await axiosPrivate.post(`/api/item/${id}/borrow`, { quantity });
-    console.log('Response from server:', response); // Check the actual structure
     
-    if (!response.data || !response.data.item) {
+    
+    if (!response.data) {
       throw new Error('Failed to borrow item: Invalid response from server');
     }
     return response.data.item;

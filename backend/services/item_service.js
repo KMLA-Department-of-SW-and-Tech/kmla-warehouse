@@ -106,6 +106,7 @@ exports.borrowItem = async (itemId, quantity, username) => {
         }
         throw err;
     }
+
     // get item
     let item = null;
     try {

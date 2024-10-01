@@ -26,8 +26,8 @@ const authService = {
         } catch (err) {
           console.error(err);
         }
-      }
-      ,
+    },
 }
+
 
 export default authService;
