@@ -1,23 +1,13 @@
 /* eslint-disable */
 import { Navigate } from "react-router-dom";
-import Cookies from 'js-cookie';
 import axiosPrivate from "../hooks/axiosPrivate";
 import { useEffect, useRef, useState } from "react";
-
-
-/* export async function protectedRouteLoader() {
-    try {
-        await axiosPrivate.refreshRequest();
-    } catch (err) {
-        console.log("Protected Routes refresh error", err);
-    } finally {
-        return { isLoggedIn: axiosPrivate.accessToken !== "" };
-    }
-} */
+/* import { Spin } from 'antd'
+ */
   
 export const ProtectedRoute = ({ children }) => {
     const [loading, setLoading] = useState(true);
-    const isRefreshRequestSent = useRef(false);
+    const isRefreshRequestSent = useRef(false); // tracks wheter a refresh request was sent
   
     // code for react frontend double rendering --> cookie reading issue
     useEffect(() => {
@@ -35,12 +25,12 @@ export const ProtectedRoute = ({ children }) => {
           };
         const init = async () => {
             try {
-                if(!isRefreshRequestSent.current) {
+                if(!isRefreshRequestSent.current) { // if no requests are in process
                     isRefreshRequestSent.current = true;
                     await axiosPrivate.refreshRequest();
-                } else {
+                } else { // if there already is a request in process
                     console.log("Waiting for the previous request to complete...");
-                    await waitForRefreshRequestCompletion();  // Wait for the flag to be reset
+                    await waitForRefreshRequestCompletion();  // Wait until the request is resolved
                     console.log("Previos request completed");
                     isRefreshRequestSent.current = true;
                     await axiosPrivate.refreshRequest();
@@ -56,7 +46,7 @@ export const ProtectedRoute = ({ children }) => {
     }, []);
     return (
         loading
-        ? <>loading</>
+        ?  <></>
         : (
             axiosPrivate.accessToken === ""
             ? <Navigate to="/kmla-warehouse/login" />
