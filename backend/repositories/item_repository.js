@@ -18,6 +18,12 @@ exports.getItemById = async (itemId) => {
     return item;
 };
 
+exports.getItemByIdWithoutPopulate = async (itemId) => {
+    const item = await Item.findById(itemId)
+    .exec();
+    return item;
+};
+
 // Will implement search
 
 exports.getItemByName = async (name) => {

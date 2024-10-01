@@ -58,12 +58,9 @@ export default function EquipmentListPage() {
       >
         <Sidebar />
       </Sider>
-
-      {/* Main content */}
       <Layout style={{ marginLeft: 250 }}>
-        <Content style={{ padding: '40px', width: 'calc(100vw - 250px)' }}>
+        <Content style={{ padding: '40px', width: 'calc(98vw - 250px)' }}>
           
-          {/* Title with icon */}
           <Title level={2} style={{ display: 'flex', alignItems: 'center' }}>
             <UnorderedListOutlined style={{ marginRight: '10px' }} />
             물품목록 전체보기
@@ -72,7 +69,7 @@ export default function EquipmentListPage() {
           {loading ? (
             <Spin size="large" />
           ) : (
-            <Row gutter={[16, 30]} style={{ marginTop: '20px' }}>
+            <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
               {equipmentList.length > 0 ? (
                 equipmentList.map((equipment, index) => (
                   <Col xs={24} sm={12} md={8} lg={5} key={equipment._id}>

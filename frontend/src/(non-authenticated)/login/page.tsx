@@ -76,7 +76,11 @@ const LoginPage = () => {
       }>Logout</button>
       <button onClick={
         async () => {
-          await axiosPrivate.get('/api/team/66f5e847eccf4b831081cfcd/borrow-list');
+          try {
+            await axiosPrivate.delete('/api/item/66f8218b5743d574b5f90936');
+          } catch (err) {
+            console.error(err.response.data);
+          }
         }
       }>Click Me</button>
       
