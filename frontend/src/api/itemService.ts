@@ -89,10 +89,20 @@ export const itemService = {
   // 예약 데이터 가져오기
   getReservations: async () => {
     try {
-      const response = await axios.get('/api/borrow-histroy/list'); // 예약 데이터를 가져오는 API
+      const response = await axiosPrivate.get(''); // 예약 데이터를 가져오는 API
       return response.data; // 예약 데이터 반환
     } catch (error) {
       console.error('Error fetching reservations:', error.message);
+      throw error;
+    }
+  },
+
+  getUserInfo : async () => {
+    try{
+      const response = await axiosPrivate.get(`/api/auth`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching userInfo:', error.message);
       throw error;
     }
   },

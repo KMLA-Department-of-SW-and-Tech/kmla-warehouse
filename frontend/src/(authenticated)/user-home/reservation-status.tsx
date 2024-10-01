@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Typography, Card, Row, Col, Spin, Layout } from 'antd';
 import { CalendarOutlined, UnorderedListOutlined } from '@ant-design/icons'; // Import the icon
 import Sidebar from '../../components/equipment/equipment-bar';
+import Headbar from '../../components/header.tsx';
 import { itemService } from '../../api/itemService'; // Import the itemService
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import axiosPrivate from "../../hooks/axiosPrivate.js";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -11,55 +14,55 @@ const { Title } = Typography;
 interface Item {
   _id: string;
   name: string;
-  status: string;
+  location: string;
   photoUrl?: string;
 }
 
 interface Reservation {
-  _id: string;
-  item: string;  // item ID
+  item: string;
+  team: string;
   quantity: number;
-  borrower: string;
 }
 
-export default function ReservationStatus({ currentUserId }: {currentUserId: string}) {
-  const [loading, setLoading] = useState(true); // Start loading as true
-  const [equipmentList, setEquipmentList] = useState<Item[]>([]); // Empty list initially
+export default function ReservationStatus() {
+  const [loading, setLoading] = useState(true);
+  const [currentUserId, setCurrentUserId] = useState("")
+  const [equipmentList, setEquipmentList] = useState<Item[]>([]);
   const [reservationList, setReservationList] = useState<Reservation[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchReservationsAndItems = async () => {
+  useEffect(()=>{
+    const fetchReservationAndEquipment = async () => {
       try {
-        // 모든 예약 데이터를 불러옴, API에서 getReservations로 정보 받아오기
-        const reservationData: Reservation[] = await itemService.getReservations();
-        // 현재 사용자의 예약만 필터링
-        const userReservations = reservationData.filter(
-          reservation => reservation.borrower === currentUserId
-        );
-        setReservationList(userReservations);
+        const userInfo = await itemService.getUserInfo();
+        console.log('Fetched user info:', currentUserId);
+        setCurrentUserId(userInfo);
 
-        // 모든 아이템 정보를 가져옴
         const items = await itemService.getAll();
-        // 아이템의 id를 _id로 변환
-        const itemsWithId = items.map(item => ({
-          ...item,
-          _id: item.id // id를 _id로 변환
-        }));
-        // 예약된 아이템 ID와 매칭되는 아이템만 필터링
-        const reservedItems = items.filter(item => 
-          userReservations.some(reservation => reservation.item === item.id)
+        console.log('Fetched items:', items);
+        setEquipmentList(items);
+        
+        const reservations = await itemService.getReservations();
+        const reservationData = reservations.filter(
+          reservation => reservation.team === currentUserId
         );
-        setEquipmentList(reservedItems);
+        console.log('Fetched reservations:', reservations);
+        setReservationList(reservationData);
       } catch (error) {
-        console.error('Failed to fetch reservation and item data:', error);
+        console.log("Failed to fetch Reservation list, Equipment list:", error)
+        setEquipmentList([]);
+        setReservationList([]);
+        setCurrentUserId('');
       } finally {
-        setLoading(false);
+        console.log(equipmentList);
+        console.log(reservationList);
+        console.log(currentUserId);
+        setLoading(false)
       }
-    };
+    }
 
-    fetchReservationsAndItems();
-  }, [currentUserId]);
+    fetchReservationAndEquipment();
+  },[]);
 
   const handleViewDetails = (equipmentId: string) => {
     navigate(`/kmla-warehouse/item/${equipmentId}`); // Navigate to the details page
@@ -131,7 +134,7 @@ export default function ReservationStatus({ currentUserId }: {currentUserId: str
                   >
                     <Card.Meta
                       title={equipment.name}
-                      description={equipment.status}
+                      description={equipment.location}
                       style={{
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
