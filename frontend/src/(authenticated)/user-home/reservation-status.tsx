@@ -33,23 +33,24 @@ export default function ReservationStatus() {
   useEffect(()=>{
     const fetchReservationAndEquipment = async () => {
       try {
+          //aware current user information
         const userInfo = await teamService.getUserInfo();
-        console.log('Fetched user info:', userInfo);
+        //console.log('Fetched user info:', userInfo);
         setCurrentUserId(userInfo);
-
+          //fetch all item
         const items = await itemService.getAll();
-        console.log('Fetched items:', items);
+        //console.log('Fetched items:', items);
         setEquipmentList(items);
-        
+          //fetch reservation list
         const reservations = await itemService.getReservations(userInfo._id);
-        console.log('Fetched reservations:', reservations);
+        //console.log('Fetched reservations:', reservations);
         setReservationList(reservations);
       } catch (error) {
         console.log("Failed to fetch:", error)
       } finally {
-        console.log(equipmentList);
-        console.log(reservationList);
-        console.log(currentUserId);
+        //console.log(equipmentList);
+        //console.log(reservationList);
+        //console.log(currentUserId);
         setLoading(false)
       }
     }

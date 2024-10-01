@@ -51,8 +51,8 @@ export const itemService = {
   
 
   // 물품 생성
-  create: (item: Item): Promise<Item> => {
-    return axios.post(`/api/item`, item)
+  create: (item: Omit<Item, 'id'>): Promise<Item> => {
+    return axiosPrivate.post(`/api/item`, item)
       .then(response => response.data)
       .catch(error => {
         console.error(error.message);
@@ -93,26 +93,13 @@ export const itemService = {
       });
   },
 
-
-
-
   // 예약 데이터 가져오기
-  getReservations: async () => {
+  getReservations: async (userInfo) => {
     try {
-      const response = await axiosPrivate.get(''); // 예약 데이터를 가져오는 API
+      const response = await axiosPrivate.get(`/api/borrow-history/${userInfo}/return`); // 예약 데이터를 가져오는 API
       return response.data; // 예약 데이터 반환
     } catch (error) {
       console.error('Error fetching reservations:', error.message);
-      throw error;
-    }
-  },
-
-  getUserInfo : async () => {
-    try{
-      const response = await axiosPrivate.get(`/api/auth`);
-      return response.data;
-    } catch (error) {`x`
-      console.error('Error fetching userInfo:', error.message);
       throw error;
     }
   },
