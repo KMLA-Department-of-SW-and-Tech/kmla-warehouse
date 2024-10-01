@@ -21,6 +21,11 @@ const items1: MenuProps['items'] = [
     type: 'group',
     children: [
       {
+        key: 'kmla-warehouse/admin/equipment',
+        icon: <ProductOutlined />,
+        label: '물품관리',
+      },
+      {
         key: 'kmla-warehouse/admin/team',
         icon: <TeamOutlined />,
         label: '팀관리',
@@ -30,16 +35,11 @@ const items1: MenuProps['items'] = [
         icon: <Badge size='small' count={5}><HistoryOutlined /></Badge>,
         label: '신청관리',
       },
-      {
-        key: 'kmla-warehouse/admin/equipment',
-        icon: <ProductOutlined />,
-        label: '물품관리',
-      },
     ],
   },
   {
     key: 'categories',
-    label: '마이페이지',
+    label: '마이 페이지',
     type: 'group',
     children: [
       {
@@ -61,8 +61,15 @@ const handleMenuClick = (e: {key: string}) => {
       defaultSelectedKeys={['home']}
       onClick={handleMenuClick}
       items={items1}
-      style={{ height: '100vh', paddingTop: '10px'}}
-      
+      style={{
+        height: '100vh',
+        paddingTop: '10px',
+        position: 'fixed', // 사이드바 고정
+        top: 0,
+        left: 0,
+        width: '200px', // 너비를 설정하여 고정
+        boxShadow: '2px 0 5px rgba(0, 0, 0, 0.1)', // 그림자 추가
+      }}
     />
   );
 };
