@@ -69,11 +69,11 @@ const LoginPage = () => {
             </button>
 
           </form>
-          <button onClick={
+          {/* <button onClick={
         async () => {
           await authService.logout();
         }
-      }>Logout</button>
+      }>Logout</button> */}
       {/* <button onClick={
         async () => {
           try {
