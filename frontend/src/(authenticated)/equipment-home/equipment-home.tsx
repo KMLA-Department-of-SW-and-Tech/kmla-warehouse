@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Card, Row, Col, Spin, Layout } from 'antd';
+import { Typography, Card, Row, Col, Spin, Layout, Input } from 'antd';
 import { CalendarOutlined, UnorderedListOutlined } from '@ant-design/icons'; 
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/equipment/equipment-bar';
@@ -8,6 +8,7 @@ import Headbar from '../../components/header';
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
+const { Search } = Input;
 
 interface Item {
   _id: string;
@@ -19,6 +20,8 @@ interface Item {
 export default function EquipmentListPage() {
   const [loading, setLoading] = useState(true); // Start loading as true
   const [equipmentList, setEquipmentList] = useState<Item[]>([]); // Empty list initially
+  const [filteredEquipmentList, setFilteredEquipmentList] = useState<Item[]>([]);
+  const [searchQuery, setSearchQuery] = useState(''); // State for search query
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,11 +31,11 @@ export default function EquipmentListPage() {
         const items = await itemService.getAll();  // Fetch all items from the API
         console.log('Fetched items:', items); // Add this line to check the response
         setEquipmentList(items);
+        setFilteredEquipmentList(items); // Initialize filtered list
       } catch (error) {
         console.error('Failed to fetch equipment list:', error);
         setEquipmentList([]); // Handle error by setting empty array
       } finally {
-        console.log(equipmentList)
         setLoading(false); // Stop loading once the data is fetched
       }
     };
@@ -40,9 +43,21 @@ export default function EquipmentListPage() {
     fetchEquipmentList();
   }, []);
 
+  useEffect(() => {
+    // Filter equipment list based on search query
+    if (searchQuery) {
+      const filteredItems = equipmentList.filter(item =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.location.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredEquipmentList(filteredItems);
+    } else {
+      setFilteredEquipmentList(equipmentList); // Show all items if query is empty
+    }
+  }, [searchQuery, equipmentList]);
+
   const handleViewDetails = (equipmentId: string) => {
     navigate(`/kmla-warehouse/item/${equipmentId}`); 
-    console.log(equipmentId);
   };
 
   return (
@@ -67,13 +82,21 @@ export default function EquipmentListPage() {
             <UnorderedListOutlined style={{ marginRight: '10px' }} />
             물품목록 전체보기
           </Title>
+
+          {/* Search input below the title */}
+          <Search
+            placeholder="이름 또는 위치로 검색"
+            onChange={(e) => setSearchQuery(e.target.value)} // Update search query
+            style={{ marginBottom: '20px', maxWidth: '400px' }}
+            allowClear
+          />
           
           {loading ? (
             <Spin size="large" />
           ) : (
             <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
-              {equipmentList.length > 0 ? (
-                equipmentList.map((equipment, index) => (
+              {filteredEquipmentList.length > 0 ? (
+                filteredEquipmentList.map((equipment, index) => (
                   <Col xs={24} sm={12} md={8} lg={4} key={equipment._id}>
                     <Card
                       hoverable

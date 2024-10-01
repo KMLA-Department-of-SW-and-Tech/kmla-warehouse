@@ -6,6 +6,7 @@ const verifyRoles = require("../../middleware/verifyRoles"); // in case of admin
 const teamController = require("../../controllers/team_controller");
 
 router.post("/", teamController.team_create);
+router.patch("/update-password", verifyJWT, teamController.update_current_team_password)
 
 router.get("/list", /*verifyJWT,*/ teamController.team_list);
 

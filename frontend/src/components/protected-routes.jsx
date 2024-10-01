@@ -2,7 +2,7 @@
 import { Navigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import axiosPrivate from "../hooks/axiosPrivate";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 
 /* export async function protectedRouteLoader() {
@@ -17,10 +17,12 @@ import { useEffect, useState } from "react";
   
 export const ProtectedRoute = ({ children }) => {
     const [loading, setLoading] = useState(true);
+    const isRefreshRequestSent = useRef(false);
     useEffect(() => {
         const init = async () => {
             try {
-                await axiosPrivate.refreshRequest();
+                if(!isRefreshRequestSent.current) await axiosPrivate.refreshRequest();
+                isRefreshRequestSent.current = true;
             } catch (err) {
                 console.log("Protected Routes refresh error", err);
             } finally {

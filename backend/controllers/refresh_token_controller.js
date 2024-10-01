@@ -1,15 +1,14 @@
 const Team = require("../models/team");
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
-const cookieMutex = require("../config/cookieMutex");
 require("dotenv").config();
+
 
 exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
     const cookies = req.cookies;
     if(!cookies?.jwt) return res.sendStatus(401);
     const refreshToken = cookies.jwt;
     console.log(refreshToken);
-    
     const foundUser = await Team.findOne({refreshToken: refreshToken}).exec();
     console.log(foundUser, refreshToken, "Ha gotcha")
     
@@ -24,7 +23,7 @@ exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
                 const hackedUser = await Team.findOne({username: decoded.UserInfo.username}).exec();
                 console.log("hacked user", hackedUser, refreshToken, decoded)
                 hackedUser.refreshToken = [];
-                const result = await hackedUser.save();
+                await hackedUser.save();
             }
         );
         return res.sendStatus(403); // forbidden 
