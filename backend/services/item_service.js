@@ -23,6 +23,26 @@ exports.getItemList = async () => {
     }
 };
 
+exports.searchItemList = async (query) => {
+    try {
+        console.log(query);
+        const itemList = await itemRepository.searchItems(query);
+        if(itemList == null) {
+           throw new Error("Items not found");
+        } 
+        return itemList;
+    } catch (err) {
+        if(err.message == "Items not found") {
+            throw err;
+        }
+        console.log(err);
+        throw err;
+        throw new Error("Failed to get item list fron database");
+    }
+};
+
+
+
 const getItemDetail = async(itemId) => {
     try {
         const item = await itemRepository.getItemById(itemId);

@@ -26,6 +26,27 @@ exports.item_list = asyncHandler(async (req, res, next) => {
     }
 });
 
+exports.item_search = asyncHandler(async (req, res, next) => {
+    // const itemList = await itemService.searchItemList("hi");
+    const itemList = await itemService.searchItemList(req.params.query);
+    res.status(200).send(itemList);
+    try {
+        // return;
+    } catch (err) {
+        if(err.message == "Items not found") {
+            res.status(404).send(err);
+            return;
+        }
+        if(err.message == "Failed to get item list fron database") {
+            res.status(404).send(err);
+            return;
+        }
+        // res.status(500).send({error: "Internal Server Error"});
+        res.status(500).send(err);
+        return;
+    }
+});
+
 exports.item_detail = asyncHandler(async (req, res, next) => {
     try {
         const item = await itemService.getItemDetail(req.params.id);

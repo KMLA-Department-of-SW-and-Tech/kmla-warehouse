@@ -84,9 +84,12 @@ const LoginPage = () => {
             // await axiosPrivate.post('/api/item/66f81dfc1c40becece185d1b/borrow', {
             //   quantity: 4,
             // });
-            console.log(await axiosPrivate.get('/api/team/66f5e847eccf4b831081cfcd/borrow-list', {}));
+            // console.log(await axiosPrivate.get('/api/team/66f5e847eccf4b831081cfcd/borrow-list', {}));
+            // console.log(await axiosPrivate.get('/api/item/search/post'), {
+
+            // });
           } catch (err) {
-            console.error(err.response.data);
+            console.error(err);
           }
         }
       }>Click Me</button> */}
