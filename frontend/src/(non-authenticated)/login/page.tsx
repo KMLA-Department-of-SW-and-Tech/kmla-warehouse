@@ -15,6 +15,7 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       await authService.login(username, password);
+      console.log(axiosPrivate);
       console.log("Successful login");
       try { // example of axiosPrivate usage
         const response = await axiosPrivate.get("/api/auth/");
