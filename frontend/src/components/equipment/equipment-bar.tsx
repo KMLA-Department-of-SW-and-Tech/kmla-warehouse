@@ -58,7 +58,7 @@ const MenuBar: React.FC = () => {
       defaultSelectedKeys={['home']}
       onClick={handleMenuClick}
       items={items1}
-      style={{ height: '100vh', paddingTop: '10px' }}
+      style={{ height: '100vh', paddingTop: '10px', boxShadow: '2px 0 5px rgba(0, 0, 0, 0.1)', }}
     />
   );
 };
