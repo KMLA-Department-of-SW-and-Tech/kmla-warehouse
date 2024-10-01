@@ -11,9 +11,13 @@ exports.getAllBoroHistory = async () => {
     return borrowHistoryList;
 };
 
-exports.borrow_history_detail = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: borrow_history detail");
-});
+exports.getHistoryById = async (logId) => {
+    const borrowHistory = await BorrowHistory.findById(logId)
+    .populate('item')
+    .populate('user')
+    .exec();
+    return borrowHistory;
+};
 
 // Will implement search
 

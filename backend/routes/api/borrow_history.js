@@ -13,4 +13,7 @@ router.route("/:id")
     .get(verifyJWT, borrowHistoryController.borrow_history_detail)
     .delete(verifyJWT, borrowHistoryController.borrow_history_delete);
 
+router.route("/:id/return")
+    .post(verifyJWT, borrowHistoryController.item_return);
+
 module.exports = router;
