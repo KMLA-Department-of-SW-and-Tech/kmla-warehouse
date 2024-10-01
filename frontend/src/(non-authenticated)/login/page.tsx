@@ -20,7 +20,7 @@ const LoginPage = () => {
       try { // example of axiosPrivate usage
         const response = await axiosPrivate.get("/api/auth/");
         console.log(response);
-        // navigate("/kmla-warehouse/home"); //살려라!!!
+        navigate("/kmla-warehouse/home"); //살려라!!!
       } catch (err) {
         console.log(err);
       }
