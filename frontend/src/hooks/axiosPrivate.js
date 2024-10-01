@@ -40,15 +40,19 @@ const axiosPrivate = {
         }
     },
     post: async (apiUrl, requestData, axiosConfig) => {
+        console.log("running post");
         try {
+            console.log("before response", apiUrl, requestData);
             const response = await axios.post(apiUrl, requestData, {
                 ...axiosConfig,
                 headers: {
                     Authorization: `Bearer ${axiosPrivate.accessToken}`
                 }
             });
+            console.log("after response", response);
             return response;
         } catch (err) {
+            console.log("catch at post");
             if(err.response.data == "Invalid access token") {
                 try {
                     await axiosPrivate.refreshRequest();
