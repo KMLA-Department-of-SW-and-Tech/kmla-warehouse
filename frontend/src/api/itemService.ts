@@ -111,7 +111,7 @@ export const itemService = {
     try{
       const response = await axiosPrivate.get(`/api/auth`);
       return response.data;
-    } catch (error) {
+    } catch (error) {`x`
       console.error('Error fetching userInfo:', error.message);
       throw error;
     }

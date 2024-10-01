@@ -21,7 +21,6 @@ interface Item {
 interface Reservation {
   item: string;
   team: string;
-  quantity: number;
 }
 
 export default function ReservationStatus() {
@@ -49,7 +48,7 @@ export default function ReservationStatus() {
         console.log('Fetched reservations:', reservations);
         setReservationList(reservationData);
       } catch (error) {
-        console.log("Failed to fetch Reservation list, Equipment list:", error)
+        console.log("Failed to fetch User info, Reservation list, Equipment list:", error)
         setEquipmentList([]);
         setReservationList([]);
         setCurrentUserId('');
