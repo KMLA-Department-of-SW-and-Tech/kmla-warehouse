@@ -39,6 +39,16 @@ export const itemService = {
       throw e;
     }
   },
+  borrowRequest: async (id: string, quantity: number): Promise<Item> => {
+    try {
+      const response = await axiosPrivate.put(`/api/item/${id}/borrow`, { quantity });
+      return response.data.item;
+    } catch (e) {
+      console.error(e.message);
+      throw e;
+    }
+  },
+  
 
   // 물품 생성
   create: (item: Omit<Item, 'id'>): Promise<Item> => {
