@@ -74,13 +74,13 @@ const LoginPage = () => {
           await authService.logout();
         }
       }>Logout</button>
-      <button onClick={
+      {/* <button onClick={
         async () => {
           await axiosPrivate.post('/api/borrow-history/66fb474f588ddf8a65fe8ea9/return', {
             quantity: 2,
           });
         }
-      }>Click Me</button>
+      }>Click Me</button> */}
       <div className="p-8 bg-white rounded shadow-md w-96">
         <h2 className="mb-6 text-2xl font-bold text-center">로그인</h2>
         <form onSubmit={handleSubmit}>
