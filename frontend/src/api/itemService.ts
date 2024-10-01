@@ -1,9 +1,7 @@
 
-
-import axios from 'axios';
 import axiosPrivate from '../hooks/axiosPrivate';
 
-interface Item {
+export interface Item {
   _id: string;
   name: string;
   description: string;
@@ -32,7 +30,6 @@ export const itemService = {
   // 물품 정보 가져오기
   getById: async (id: string): Promise<Item> => {
     try {
-      console.log("a")
       const response = await axiosPrivate.get(`/api/item/${id}`);
       console.log("b")
       return response.data.item;

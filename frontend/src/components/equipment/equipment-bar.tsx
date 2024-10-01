@@ -3,13 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { Menu, MenuProps, Badge } from 'antd';
 import {
   AppstoreOutlined,
-  HomeOutlined,
   HistoryOutlined,
-  ToolOutlined,
   UserOutlined,
-  StarOutlined,
-  ContainerOutlined,
-  DesktopOutlined
+
 } from '@ant-design/icons';
 
 const MenuBar: React.FC = () => {
