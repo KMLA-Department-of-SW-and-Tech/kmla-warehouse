@@ -66,7 +66,7 @@ const handleMenuClick = (e: {key: string}) => {
       defaultSelectedKeys={['home']}
       onClick={handleMenuClick}
       items={items1}
-      style={{ height: '100vh', paddingTop: '10px' }}
+      style={{ height: '100vh', paddingTop: '10px'}}
       
     />
   );
