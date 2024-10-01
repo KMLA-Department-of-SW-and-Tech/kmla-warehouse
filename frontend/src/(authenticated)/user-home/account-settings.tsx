@@ -3,12 +3,14 @@ import { Form, Input, Button, message, Layout } from 'antd';
 import authService from '../../api/authService';
 import Sidebar from '../../components/equipment/equipment-bar'; // Assuming this is your sidebar component
 import Headbar from '../../components/header'; // Assuming you have a header component like in the EquipmentListPage
+import { useNavigate } from 'react-router-dom';
 
 const { Sider, Content } = Layout;
 
 const AccountSettings = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(''); // State to hold error messages
+  const navigate = useNavigate();
   
   // Function to handle password change
   const handlePasswordChange = async (values) => {
@@ -33,6 +35,7 @@ const AccountSettings = () => {
     try {
       await authService.logout();
       message.success('Logged out successfully!');
+      navigate("/kmla-warehouse/login");
     } catch (error) {
       message.error('Failed to log out. Please try again.');
     } finally {

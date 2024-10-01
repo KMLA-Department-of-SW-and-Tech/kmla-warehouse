@@ -1,18 +1,18 @@
 import axios from 'axios';
-import authService from '../api/authService';
 
 // use try catch
 
 const axiosPrivate = {
     accessToken: "",
     refreshRequest: async () => { // internal function do not use outside
-        const result = await axios.get("/api/refresh");
+        const result = await axios.get("/api/refresh", { withCredentials: true });
         axiosPrivate.accessToken = result.data.accessToken;
     },
     get: async (apiUrl, axiosConfig) => {
         try {
             const response = await axios.get(apiUrl, {
                 ...axiosConfig,
+                withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${axiosPrivate.accessToken}`
                 }
@@ -25,6 +25,7 @@ const axiosPrivate = {
                     // successsful refresh
                     const response = await axios.get(apiUrl, {
                         ...axiosConfig,
+                        withCredentials: true,
                         headers: {
                             Authorization: `Bearer ${axiosPrivate.accessToken}`
                         }
@@ -45,6 +46,7 @@ const axiosPrivate = {
             console.log("before response", apiUrl, requestData);
             const response = await axios.post(apiUrl, requestData, {
                 ...axiosConfig,
+                withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${axiosPrivate.accessToken}`
                 }
@@ -59,6 +61,7 @@ const axiosPrivate = {
                     // successsful refresh
                     const response = await axios.post(apiUrl, requestData, {
                         ...axiosConfig,
+                        withCredentials: true,
                         headers: {
                             Authorization: `Bearer ${axiosPrivate.accessToken}`
                         }
@@ -77,6 +80,7 @@ const axiosPrivate = {
         try {
             const response = await axios.put(apiUrl, requestData, {
                 ...axiosConfig,
+                withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${axiosPrivate.accessToken}`
                 }
@@ -89,6 +93,7 @@ const axiosPrivate = {
                     // successsful refresh
                     const response = await axios.put(apiUrl, requestData, {
                         ...axiosConfig,
+                        withCredentials: true,
                         headers: {
                             Authorization: `Bearer ${axiosPrivate.accessToken}`
                         }
@@ -107,6 +112,7 @@ const axiosPrivate = {
         try {
             const response = await axios.patch(apiUrl, requestData, {
                 ...axiosConfig,
+                withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${axiosPrivate.accessToken}`
                 }
@@ -119,6 +125,7 @@ const axiosPrivate = {
                     // successsful refresh
                     const response = await axios.patch(apiUrl, requestData, {
                         ...axiosConfig,
+                        withCredentials: true,
                         headers: {
                             Authorization: `Bearer ${axiosPrivate.accessToken}`
                         }
@@ -137,6 +144,7 @@ const axiosPrivate = {
         try {
             const response = await axios.delete(apiUrl, {
                 ...axiosConfig,
+                withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${axiosPrivate.accessToken}`
                 }
@@ -149,6 +157,7 @@ const axiosPrivate = {
                     // successsful refresh
                     const response = await axios.delete(apiUrl, {
                         ...axiosConfig,
+                        withCredentials: true,
                         headers: {
                             Authorization: `Bearer ${axiosPrivate.accessToken}`
                         }

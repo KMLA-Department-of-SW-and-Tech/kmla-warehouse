@@ -12,7 +12,7 @@ import AdminHistoryPage from "./admin/reservation-page.tsx";
 import AdminTeamPage from "./admin/manage-team-page.tsx";
 import AdminSettingPage from "./admin/admin-setting.tsx";
 import { ProtectedRoute } from "./components/protected-routes.jsx";
-import AccountSettings from "./(authenticated)/user-home/user-setting.tsx";
+import AccountSettings from "./(authenticated)/user-home/account-settings.tsx";
 
 
 
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/kmla-warehouse/account-settings",
-    element: <AccountSettings />
+    element: <ProtectedRoute><AccountSettings /></ProtectedRoute>,
   },
   // Home page
   {
@@ -46,7 +46,6 @@ const router = createBrowserRouter([
     path: "/kmla-warehouse/reservation-status",
     element: <ProtectedRoute><ReservationStatus /></ProtectedRoute>,
   },
-  
   // Admin: add equipment page
   {
     path: "/kmla-warehouse/admin/equipment",
@@ -66,7 +65,7 @@ const router = createBrowserRouter([
   {
     path: "/kmla-warehouse/admin/setting",
     element: <ProtectedRoute><AdminSettingPage /></ProtectedRoute>,
-  }
+  }  
 ]);
 
 const App = () => {

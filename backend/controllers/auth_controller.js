@@ -53,13 +53,13 @@ exports.handle_login = asyncHandler(async (req, res, next) => {
                 newRefreshTokenArray = [];
             }
 
-            res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None' });
+            res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, /* secure: true, */ /* sameSite: 'None' */ });
         }
 
         // pass refress token to database
         foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken];
-        const result = await foundUser.save();
-        res.cookie('jwt', newRefreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, secure: true, sameSite: 'None' }); // max age same as token expiration(1d)
+        await foundUser.save();
+        res.cookie('jwt', newRefreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, /* secure: true, */ /* sameSite: 'None' */ }); // max age same as token expiration(1d)
         // http only to block attacks from sending cookies, but use secure to completely secure the cookie.(for late implementation)
         res.status(200).json({ accessToken });
     }
@@ -73,7 +73,6 @@ exports.handle_logout = asyncHandler(async (req, res, next) => {
     const cookies = req.cookies;
     if(!cookies?.jwt) return res.sendStatus(204); // no content
     const refreshToken = cookies.jwt;
-    console.log(cookies.jwt);
     const foundUser = await Team.findOne({refreshToken: refreshToken})
     if(!foundUser) {
         res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
@@ -81,16 +80,14 @@ exports.handle_logout = asyncHandler(async (req, res, next) => {
     }
     // Delete refreshToken in db
     foundUser.refreshToken = foundUser.refreshToken.filter(rt => rt !== refreshToken);
-    const result = await foundUser.save();
-    console.log(result);
-    res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None' });
+    await foundUser.save();
+    res.clearCookie('jwt', { httpOnly: true, /* secure: true, */ /* sameSite: 'None' */ });
     res.sendStatus(204);
 }); // handle login
 
 exports.get_user_info = asyncHandler(async (req, res, next) => {
     const cookies = req.cookies;
     if(!cookies?.jwt) return res.sendStatus(401);
-    console.log(cookies.jwt);
     const refreshToken = cookies.jwt;
 
     const foundUser = await Team.findOne({refreshToken: refreshToken}, "username name")
@@ -102,7 +99,6 @@ exports.get_user_info = asyncHandler(async (req, res, next) => {
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
         (err, decoded) => {
-            console.log(foundUser, decoded.UserInfo)
             if(err || foundUser.username !== decoded.UserInfo.username) return res.sendStatus(403);
             res.json(foundUser);
         }

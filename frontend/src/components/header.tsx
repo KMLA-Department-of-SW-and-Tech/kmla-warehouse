@@ -4,11 +4,11 @@ import currentUser from '../api/authService'
 
 // Header 컴포넌트 정의
 const Headbar: React.FC = () => {
-  const [currentUserName, setCurrentUserName] = useState<string>("John Doe");
+  const [currentUserName, setCurrentUserName] = useState<string | null>(null);
   useEffect( () => {
     const fetchCurrentUser = async () => {
       const data = await currentUser.currentUser();
-      console.log(data);
+      //console.log(data);
       setCurrentUserName(data);
     };
   fetchCurrentUser();
@@ -20,7 +20,7 @@ const Headbar: React.FC = () => {
           KMLA Warehouse
         </div>
         <div className="user-info">
-          <span>{currentUserName}</span> {/* 예시 사용자 이름 */}
+          <span>{currentUserName ? currentUserName : ""}</span> {/* 예시 사용자 이름 */}
         </div>
       </div>
     </header>
