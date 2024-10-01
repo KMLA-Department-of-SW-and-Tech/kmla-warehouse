@@ -119,4 +119,16 @@ borrowRequest: async (id: string, quantity: number ): Promise<Item> => {
       throw error;
     }
   },
+
+  // 물품 반납
+  returnItem: async(userInfo) => {
+    try {
+      const data = await axiosPrivate.post(`/api/borrow-history/${userInfo}/return`);
+      console.log(data.data);
+      return data.data;
+    } catch (error) {
+      console.error('Error posting item return:', error.message);
+      throw error;
+    }
+  },
 };
