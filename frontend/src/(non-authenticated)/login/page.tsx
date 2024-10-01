@@ -20,7 +20,7 @@ const LoginPage = () => {
       try { // example of axiosPrivate usage
         const response = await axiosPrivate.get("/api/auth/");
         console.log(response);
-        navigate("/kmla-warehouse/home"); //살려라!!!
+        // navigate("/kmla-warehouse/home"); //살려라!!!
       } catch (err) {
         console.log(err);
       }
@@ -74,15 +74,17 @@ const LoginPage = () => {
           await authService.logout();
         }
       }>Logout</button>
-      {/* <button onClick={
+      <button onClick={
         async () => {
           try {
-            await axiosPrivate.post('/api/item/66f81dfc1c40becece185d1b/borrow');
+            await axiosPrivate.post('/api/borrow-history/66fc00d405046747b2659cd7/return', {
+              
+            });
           } catch (err) {
             console.error(err.response.data);
           }
         }
-      }>Click Me</button> */}
+      }>Click Me</button>
       
         </div>
       </div>

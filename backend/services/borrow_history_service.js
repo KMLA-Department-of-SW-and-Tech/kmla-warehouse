@@ -121,7 +121,7 @@ exports.returnItem = async (logId, username) => {
         reference: logId,
     }
     try {
-        exports.createBorrowHistory(newEntry);
+        await exports.createBorrowHistory(newEntry);
     } catch (err) {
         throw err;
     }
