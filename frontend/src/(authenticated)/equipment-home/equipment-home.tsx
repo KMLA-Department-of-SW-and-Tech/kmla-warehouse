@@ -53,13 +53,13 @@ export default function EquipmentListPage() {
           position: 'fixed',
           height: '100vh',
           left: 0,
-          top: 0,
+          top: 64,
         }}
       >
         <Sidebar />
       </Sider>
       <Layout style={{ marginLeft: 250 }}>
-        <Content style={{ padding: '40px', width: 'calc(98vw - 250px)' }}>
+        <Content style={{ padding: '40px', marginTop: '64px', width: 'calc(98vw - 250px)' }}>
           
           <Title level={2} style={{ display: 'flex', alignItems: 'center' }}>
             <UnorderedListOutlined style={{ marginRight: '10px' }} />

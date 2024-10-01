@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Typography, Card, Row, Col, Spin, Layout } from 'antd';
 import { CalendarOutlined, UnorderedListOutlined } from '@ant-design/icons'; // Import the icon
 import Sidebar from '../../components/equipment/equipment-bar';
-import { itemService } from '../../api/itemService.ts'; // Import the itemService
 import { teamService } from "../../api/teamService.ts";
+import { itemService } from "../../api/itemService.ts";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import axiosPrivate from "../../hooks/axiosPrivate.js";
+import Headbar from "../../components/header.tsx";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -26,11 +25,9 @@ interface Reservation {
   timestamp: Date;
 }
 
-
 export default function ReservationStatus() {
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState("")
-  const [equipmentList, setEquipmentList] = useState<Item[]>([]);
   const [reservationList, setReservationList] = useState<Reservation[]>([]);
   const navigate = useNavigate();
 
@@ -41,10 +38,6 @@ export default function ReservationStatus() {
         const userInfo = await teamService.getUserInfo();
         console.log('Fetched user info:', userInfo);
         setCurrentUserId(userInfo);
-          //fetch all item
-        const items = await itemService.getAll();
-        console.log('Fetched items:', items);
-        setEquipmentList(items);
           //fetch reservation list
         const reservations = await itemService.getReservations(userInfo._id);
         console.log('Fetched reservations:', reservations);
@@ -52,9 +45,8 @@ export default function ReservationStatus() {
       } catch (error) {
         console.log("Failed to fetch:", error)
       } finally {
-        console.log(equipmentList);
-        console.log(reservationList);
-        console.log(currentUserId);
+        // console.log(reservationList);
+        // console.log(currentUserId);
         setLoading(false)
       }
     }
@@ -68,7 +60,7 @@ export default function ReservationStatus() {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      {/* Sidebar */}
+      <Headbar />
       <Sider
         width={250}
         style={{
@@ -76,13 +68,13 @@ export default function ReservationStatus() {
           position: 'fixed',
           height: '100vh',
           left: 0,
-          top: 0,
+          top: 64,
         }}
       >
         <Sidebar />
       </Sider>
       <Layout style={{ marginLeft: 250 }}>
-        <Content style={{ padding: '40px', width: 'calc(98vw - 250px)' }}>
+        <Content style={{ padding: '40px', marginTop: '64px', width: 'calc(98vw - 250px)' }}>
 
           <Title level={2} style={{ display: 'flex', alignItems: 'center' }}>
             <UnorderedListOutlined style={{ marginRight: '10px' }} />
