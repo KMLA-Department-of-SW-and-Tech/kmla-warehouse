@@ -1,7 +1,7 @@
+//admin-equipment-page
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
 import { Layout, Typography, Spin, message } from 'antd';
-import { EditableProTable } from '@ant-design/pro-components';
+import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from "../components/admin/admin-sidebar";
 import '../styles/admin-home.css';
 import Headbar from "../components/header"
@@ -79,40 +79,39 @@ const AdminEquipmentPage: React.FC = () => {
     }
   };
 
-  const columns = [
+  const columns: ProColumns<Item>[] = [
     {
       title: '물품명',
       dataIndex: 'name',
-      editable: true,
+  
     },
     {
       title: '설명',
       dataIndex: 'description',
-      editable: true,
+
     },
     {
       title: '총수량',
       dataIndex: 'totalQuantity',
-      editable: true,
+
     },
     {
       title: '사용 가능 수량',
       dataIndex: 'availableQuantity',
-      editable: true,
+
     },
     {
       title: '위치',
       dataIndex: 'location',
-      editable: true,
     },
     {
       title: 'Actions',
       valueType: 'option',
-      render: (_, record, action) => [
+      render: (text, record, action) => [
         <a
           key="editable"
           onClick={() => {
-            action?.startEditable?.(record._id);
+            //action?.startEditable?.(record._id);
           }}
         >
           Edit
@@ -148,13 +147,11 @@ const AdminEquipmentPage: React.FC = () => {
                   editable={{
                     type: 'multiple',
                     editableKeys,
-                    onSave: async (rowKey, newData) => {
-                      if (!newData._id) {
-                        // 새 아이템 추가
-                        await handleAddItem(newData as Item);
+                    onSave: async (rowKey, data, row) => {
+                      if (!data._id) {
+                        await handleAddItem(data as Item);
                       } else {
-                        // 기존 아이템 업데이트
-                        await handleUpdateItem(newData._id, newData as Item);
+                        await handleUpdateItem(data._id, data as Item);
                       }
                     },
                     onChange: setEditableRowKeys,
@@ -162,7 +159,7 @@ const AdminEquipmentPage: React.FC = () => {
                   recordCreatorProps={{
                     position: 'bottom',
                     record: () => ({
-                      _id: (Math.random() * 1000000).toFixed(0),
+                      _id: `${(Math.random() * 1000000).toFixed(0)}`,
                       name: '',
                       description: '',
                       totalQuantity: 0,

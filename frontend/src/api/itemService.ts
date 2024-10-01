@@ -1,9 +1,7 @@
 
-
-import axios from 'axios';
 import axiosPrivate from '../hooks/axiosPrivate';
 
-interface Item {
+export interface Item {
   _id: string;
   name: string;
   description: string;
@@ -32,7 +30,6 @@ export const itemService = {
   // 물품 정보 가져오기
   getById: async (id: string): Promise<Item> => {
     try {
-      console.log("a")
       const response = await axiosPrivate.get(`/api/item/${id}`);
       console.log("b")
       return response.data.item;
@@ -69,8 +66,8 @@ borrowRequest: async (id: string, quantity: number ): Promise<Item> => {
   
 
   // 물품 생성
-  create: (item: Item): Promise<Item> => {
-    return axios.post(`/api/item`, item)
+  create: (item: Omit<Item, 'id'>): Promise<Item> => {
+    return axiosPrivate.post(`/api/item`, item)
       .then(response => response.data)
       .catch(error => {
         console.error(error.message);
@@ -110,5 +107,15 @@ borrowRequest: async (id: string, quantity: number ): Promise<Item> => {
         throw error;
       });
   },
-};
 
+  // 예약 데이터 가져오기
+  getReservations: async (userInfo) => {
+    try {
+      const response = await axiosPrivate.get(`/api/borrow-history/${userInfo}/return`); // 예약 데이터를 가져오는 API
+      return response.data; // 예약 데이터 반환
+    } catch (error) {
+      console.error('Error fetching reservations:', error.message);
+      throw error;
+    }
+  },
+};

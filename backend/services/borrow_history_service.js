@@ -49,6 +49,7 @@ exports.createBorrowHistory = async (entry) => {
         user: entry.user,
         timestamp: entry.timestamp,
         type: entry.type,
+        reference: entry.reference,
     });
     try {
         const newBorrowHistory = await borrowHistoryRepository.saveBorrowHistory(newEntry);
@@ -117,6 +118,7 @@ exports.returnItem = async (logId, username) => {
         quantity: quantity,
         user: user._id,
         type: "return",
+        reference: logId,
     }
     try {
         exports.createBorrowHistory(newEntry);

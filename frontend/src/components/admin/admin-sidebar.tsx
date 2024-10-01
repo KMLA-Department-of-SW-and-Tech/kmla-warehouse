@@ -16,6 +16,21 @@ const Sidebar: React.FC = () => {
 
 const items1: MenuProps['items'] = [
   {
+    key: 'test1',
+    label: '',
+    type: 'group',
+  },
+  {
+    key: 'test2',
+    label: '',
+    type: 'group',
+  },
+  {
+    key: 'test3',
+    label: '',
+    type: 'group',
+  },
+  {
     key: 'manage',
     label: '관리 페이지',
     type: 'group',
