@@ -19,11 +19,14 @@ const authService = {
         }
     },
     currentUser: async () => {
+
       try {
         const response = await axios.post('/api/auth');
+        console.log(response.data);
         return response.data.username;
       } catch (err) {
         console.error(err);
+
       }
     },
     changePassword: async (currentPassword, newPassword) => {

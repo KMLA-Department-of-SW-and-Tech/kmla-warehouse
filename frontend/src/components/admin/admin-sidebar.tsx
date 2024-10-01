@@ -32,7 +32,7 @@ const items1: MenuProps['items'] = [
       },
       {
         key: 'kmla-warehouse/admin/reservation',
-        icon: <Badge size='small' count={5}><HistoryOutlined /></Badge>,
+        icon: <Badge size='small'><HistoryOutlined /></Badge>,
         label: '신청관리',
       },
     ],
