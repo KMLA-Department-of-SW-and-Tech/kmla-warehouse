@@ -34,8 +34,8 @@ const AdminTeamPage: React.FC = () => {
 
   const handleAddTeam = async (newTeam: Team) => {
     try {
-      const addedTeam = await teamService.createTeam(newTeam); // 새 아이템을 등록
-      setTeams([...teams, addedTeam]); // 테이블에 새 아이템 추가
+      const addedTeam = await teamService.create(newTeam);
+      setTeams([...teams, addedTeam]);
       message.success('Team added successfully');
     } catch (error) {
       message.error('Failed to add team');
@@ -45,8 +45,8 @@ const AdminTeamPage: React.FC = () => {
 
   const handleUpdateTeam = async (id: string, updatedTeam: Team) => {
     try {
-      const updated = await teamService.updateTeam(id, updatedTeam); 
-      setTeams(teams.map(team => (team.id === id ? updated : team))); 
+      const updated = await teamService.update(id, updatedTeam); 
+      setTeams(teams.map(team => (team._id === id ? updated : team))); 
       message.success('Team updated successfully');
     } catch (error) {
       message.error('Failed to update team');
@@ -56,8 +56,8 @@ const AdminTeamPage: React.FC = () => {
 
   const handleDeleteTeam = async (id: string) => {
     try {
-      await teamService.deleteTeam(id); 
-      setTeams(teams.filter(team => team.id !== id)); 
+      await teamService.delete(id); 
+      setTeams(teams.filter(team => team._id !== id)); 
       message.success('Team deleted successfully');
     } catch (error) {
       message.error('Failed to delete team');
@@ -67,28 +67,24 @@ const AdminTeamPage: React.FC = () => {
 
   const columns: ProColumns<Team>[] = [
     {
-      title: 'ID',
-      dataIndex: 'id',
-    },
-    {
       title: '팀명',
       dataIndex: 'name',
     },
     {
       title: 'Actions',
       valueType: 'option',
-      render: (text, record, action) => [
+      render: (text, record, _, action) => [
         <a
           key="editable"
           onClick={() => {
-            //action?.startEditable?.(record.id);
+            action?.startEditable?.(record._id);
           }}
         >
           Edit
         </a>,
         <a
           key="delete"
-          onClick={() => handleDeleteTeam(record.id.toString())} 
+          onClick={() => handleDeleteTeam(record._id)} 
         >
           Delete
         </a>,
@@ -118,10 +114,10 @@ const AdminTeamPage: React.FC = () => {
                     type: 'multiple',
                     editableKeys,
                     onSave: async (rowKey, data, row) => {
-                      if (!data.id) {
+                      if (!data._id) {
                         await handleAddTeam(data as Team);
                       } else {
-                        await handleUpdateTeam(data.id, data as Team);
+                        await handleUpdateTeam(data._id, data as Team);
                       }
                     },
                     onChange: setEditableRowKeys,
@@ -129,15 +125,8 @@ const AdminTeamPage: React.FC = () => {
                   recordCreatorProps={{
                     position: 'bottom',
                     record: () => ({
-                      id: `${(Math.random() * 1000000).toFixed(0)}`,
+                      _id: (Math.random() * 1000000).toString(),
                       name: '',
-                      description: '',
-                      totalQuantity: 0,
-                      availableQuantity: 0,
-                      location: '',
-                      tags: [],
-                      status: 'available',
-                      category: '',
                     }),
                   }}
                 />

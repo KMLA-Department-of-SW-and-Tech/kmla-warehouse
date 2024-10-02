@@ -35,7 +35,7 @@ const TeamSettingPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await teamService.updateTeam(Number(id), { name: teamName });
+      await teamService.update(Number(id), { name: teamName });
       alert('팀 정보가 성공적으로 수정되었습니다.');
     } catch (error) {
       setError('팀 정보를 수정하는 중 문제가 발생했습니다.');

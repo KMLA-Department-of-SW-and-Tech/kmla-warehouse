@@ -36,20 +36,27 @@ export const borrowHistoryService = {
   },
 
   //POST 히스토리 업로드하기
-  createBorrowHistory: async (borrowHistoryData: BorrowHistory): Promise<BorrowHistory> => {
+  create: async (borrowHistoryData: BorrowHistory): Promise<BorrowHistory> => {
     const response = await axiosPrivate.post("/api/borrow-history/", borrowHistoryData);
     return response.data;
   },
 
   //PUT 히스토리 업데이트하기
-  updateBorrowHistory: async (id: string, borrowHistoryData: Partial<BorrowHistory>): Promise<BorrowHistory> => {
+  update: async (id: string, borrowHistoryData: Partial<BorrowHistory>): Promise<BorrowHistory> => {
     const response = await axiosPrivate.put(`/api/borrow-history/${id}`, borrowHistoryData);
     return response.data;
   },
 
   //DELETE 히스토리 삭제하기
-  deleteBorrowHistory: async (id: string): Promise<void> => {
-    await axiosPrivate.delete(`/api/borrow-history/${id}`);
+  delete: async (id: string): Promise<void> => {
+    try{
+      const response = await axiosPrivate.delete(`/api/borrow-history/${id}`)
+      return response.data
+    }catch(e){
+      console.error(e);
+    }
+    ;
+    
   },
 
 };

@@ -1,7 +1,7 @@
 import axiosPrivate from '../hooks/axiosPrivate';
 
 export interface Team {
-  id: string;
+  _id: string;
   name: string;
 }
 
@@ -32,19 +32,19 @@ export const teamService = {
   },
 
   //POST 팀정보 업로드하기
-  createTeam: async (teamData: Team): Promise<Team> => {
+  create: async (teamData: Team): Promise<Team> => {
     const response = await axiosPrivate.post("/api/team/", teamData);
     return response.data;
   },
 
   //PUT 팀정보 업데이트하기
-  updateTeam: async (id: string, teamData: Partial<Team>): Promise<Team> => {
+  update: async (id: string, teamData: Partial<Team>): Promise<Team> => {
     const response = await axiosPrivate.put(`/api/team/${id}`, teamData);
     return response.data;
   },
 
   //DELETE 팀 삭제하기
-  deleteTeam: async (id: string): Promise<void> => {
+  delete: async (id: string): Promise<void> => {
     await axiosPrivate.delete(`/api/team/${id}`);
   },
 

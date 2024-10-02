@@ -14,6 +14,7 @@ export interface Item {
   category: string;  // ObjectId (represented as string)
 }
 
+
 export const itemService = {
   // 전체 리스트 가져오기
   getAll: async (): Promise<Item[]> => {
@@ -66,7 +67,7 @@ borrowRequest: async (id: string, quantity: number ): Promise<Item> => {
   
 
   // 물품 생성
-  create: (item: Omit<Item, 'id'>): Promise<Item> => {
+  create: (item: Item): Promise<Item> => {
     return axiosPrivate.post(`/api/item`, item)
       .then(response => response.data)
       .catch(error => {
@@ -97,15 +98,15 @@ borrowRequest: async (id: string, quantity: number ): Promise<Item> => {
   },
 
   // 물품 삭제
-  delete: (id: string): Promise<void> => {
-    return axiosPrivate.delete(`/api/item/${id}`)
-      .then(() => {
-        console.log(`Item with id ${id} deleted successfully.`);
-      })
-      .catch(error => {
-        console.error(error.message);
-        throw error;
-      });
+  delete: async (id: string): Promise<void> => {
+    try{
+      console.log('a');
+      const response = await axiosPrivate.get(`/api/item/${id}`);
+      console.log('b');
+      return response.data;
+    } catch(e){
+      console.error(e.message);
+    }
   },
 
   // 예약 데이터 가져오기

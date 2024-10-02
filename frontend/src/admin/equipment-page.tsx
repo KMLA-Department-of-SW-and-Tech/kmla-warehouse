@@ -5,24 +5,12 @@ import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from "../components/admin/admin-sidebar";
 import '../styles/admin-home.css';
 import Headbar from "../components/header"
-import { itemService } from "../api/itemService";
-//import EditEquipment from "../components/admin/admin-edit-equipment-table";
+import { Item, itemService } from "../api/itemService";
+
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
 
-interface Item {
-  _id: string;
-  name: string;
-  description: string;
-  totalQuantity: number;
-  availableQuantity: number;
-  location: string;
-  photoUrl?: string;
-  tags: string[];
-  status: 'available' | 'deleted';
-  category: string;
-}
 
 const AdminEquipmentPage: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
@@ -33,8 +21,9 @@ const AdminEquipmentPage: React.FC = () => {
     const fetchItems = async () => {
       setLoading(true);
       try {
-        const response = await itemService.getAll(); // 모든 아이템을 가져옴
-        setItems(response);
+        const response = await itemService.getAll(); 
+        const filteredItems = response.filter((item: Item) => item.status !== "deleted");
+        setItems(filteredItems);
       } catch (error) {
         message.error('Failed to fetch items');
         console.error(error);
@@ -47,9 +36,21 @@ const AdminEquipmentPage: React.FC = () => {
   }, []);
 
   const handleAddItem = async (newItem: Item) => {
+    const itemToAdd: Item ={
+      _id: `${(Math.random() * 1000000).toFixed(0)}`,
+      name: newItem.name,
+      description: newItem.description,
+      totalQuantity: newItem.totalQuantity,
+      availableQuantity: newItem.totalQuantity,
+      location: newItem.location,
+      photoUrl: "", 
+      tags: [], 
+      status: "available",
+      category: "", 
+    }
     try {
-      const addedItem = await itemService.create(newItem); // 새 아이템을 등록
-      setItems([...items, addedItem]); // 테이블에 새 아이템 추가
+      const addedItem = await itemService.create(itemToAdd); 
+      setItems([...items, addedItem]); 
       message.success('Item added successfully');
     } catch (error) {
       message.error('Failed to add item');
@@ -59,8 +60,8 @@ const AdminEquipmentPage: React.FC = () => {
 
   const handleUpdateItem = async (id: string, updatedItem: Item) => {
     try {
-      const updated = await itemService.update(id, updatedItem); // 아이템 업데이트
-      setItems(items.map(item => (item._id === id ? updated : item))); // 테이블 업데이트
+      const updated = await itemService.update(id, updatedItem); 
+      setItems(items.map(item => (item._id === id ? updated : item))); 
       message.success('Item updated successfully');
     } catch (error) {
       message.error('Failed to update item');
@@ -70,8 +71,8 @@ const AdminEquipmentPage: React.FC = () => {
 
   const handleDeleteItem = async (id: string) => {
     try {
-      await itemService.delete(id); // 아이템 삭제
-      setItems(items.filter(item => item._id !== id)); // 삭제된 아이템을 테이블에서 제거
+      await itemService.delete(id); 
+      setItems(items.filter(item => item._id !== id)); 
       message.success('Item deleted successfully');
     } catch (error) {
       message.error('Failed to delete item');
@@ -83,43 +84,34 @@ const AdminEquipmentPage: React.FC = () => {
     {
       title: '물품명',
       dataIndex: 'name',
+      
   
     },
     {
       title: '설명',
       dataIndex: 'description',
+      key: 'description'
 
     },
     {
       title: '총수량',
       dataIndex: 'totalQuantity',
-
-    },
-    {
-      title: '사용 가능 수량',
-      dataIndex: 'availableQuantity',
+      key: 'totalQauntity'
 
     },
     {
       title: '위치',
       dataIndex: 'location',
+      key: 'location'
     },
     {
       title: 'Actions',
       valueType: 'option',
-      render: (text, record, action) => [
-        <a
-          key="editable"
-          onClick={() => {
-            //action?.startEditable?.(record._id);
-          }}
-        >
+      render: (text, record, _, action) => [
+        <a key="editable" onClick={() => { action?.startEditable?.(record._id)}}>
           Edit
         </a>,
-        <a
-          key="delete"
-          onClick={() => handleDeleteItem(record._id)} // 삭제 요청
-        >
+        <a key="delete" onClick={() => handleDeleteItem(record._id)}>
           Delete
         </a>,
       ],
@@ -141,7 +133,7 @@ const AdminEquipmentPage: React.FC = () => {
             ) : (
               <>
                 <EditableProTable<Item>
-                  rowKey="_id"
+                  rowKey="id"
                   value={items}
                   columns={columns}
                   editable={{
@@ -149,7 +141,8 @@ const AdminEquipmentPage: React.FC = () => {
                     editableKeys,
                     onSave: async (rowKey, data, row) => {
                       if (!data._id) {
-                        await handleAddItem(data as Item);
+                        data.status = "available";
+                        await handleAddItem(data);
                       } else {
                         await handleUpdateItem(data._id, data as Item);
                       }
@@ -159,7 +152,7 @@ const AdminEquipmentPage: React.FC = () => {
                   recordCreatorProps={{
                     position: 'bottom',
                     record: () => ({
-                      _id: `${(Math.random() * 1000000).toFixed(0)}`,
+                      _id: '',
                       name: '',
                       description: '',
                       totalQuantity: 0,
