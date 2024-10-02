@@ -17,13 +17,22 @@ const authService = {
     },
     currentUser: async () => {
         try {
-          const response = await axios.get('/api/auth');
+          const response = await axios.get('/api/auth', { withCredentials: true });
           console.log(response.data);
           return response.data.username;
         } catch (err) {
           console.error(err);
         }
     },
+    changePassword: async (currentPassword, newPassword) => {
+      try {
+        const res = await axios.post('/api/team/update-password', { currentPassword, newPassword }, { withCredentials: true });
+        console.log(res);
+        return res;
+      } catch(err) {
+        console.log(err);
+      }
+    }
 }
 
 

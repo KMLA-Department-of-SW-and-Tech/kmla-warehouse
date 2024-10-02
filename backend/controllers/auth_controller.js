@@ -8,7 +8,7 @@ require("dotenv").config();
 
 exports.handle_login = asyncHandler(async (req, res, next) => {
     const cookies = req.cookies;
-    console.log(`Cookie available at login: ${JSON.stringify(cookies)}`);
+    //console.log(`Cookie available at login: ${JSON.stringify(cookies)}`);
     const { username, password } = req.body;
     if(!username || !password) return res.status(400).send("Username and Password are required");
     const foundUser = await Team.findOne({username: username})
