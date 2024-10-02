@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Card, Row, Col, Spin, Layout } from 'antd';
-import { CalendarOutlined, UnorderedListOutlined } from '@ant-design/icons'; // Import the icon
+import { Typography, Card, Row, Col, Spin, Layout, message } from 'antd';
+import { LoginOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import Sidebar from '../../components/equipment/equipment-bar';
-import { itemService } from '../../api/itemService.ts'; // Import the itemService
 import { teamService } from "../../api/teamService.ts";
+import { itemService } from "../../api/itemService.ts";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import axiosPrivate from "../../hooks/axiosPrivate.js";
+import Headbar from "../../components/header.tsx";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -19,52 +18,69 @@ interface Item {
 }
 
 interface Reservation {
-  item: string;
-  team: string;
+  _id: string;
+  item: Item;
+  quantity: number;
+  user: object;
+  timestamp: Date;
 }
 
 export default function ReservationStatus() {
   const [loading, setLoading] = useState(true);
-  const [currentUserId, setCurrentUserId] = useState("")
-  const [equipmentList, setEquipmentList] = useState<Item[]>([]);
+  const [currentUserId, setCurrentUserId] = useState("");
   const [reservationList, setReservationList] = useState<Reservation[]>([]);
   const navigate = useNavigate();
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchReservationAndEquipment = async () => {
       try {
-          //aware current user information
+        // Get current user information
         const userInfo = await teamService.getUserInfo();
-        //console.log('Fetched user info:', userInfo);
-        setCurrentUserId(userInfo);
-          //fetch all item
-        const items = await itemService.getAll();
-        //console.log('Fetched items:', items);
-        setEquipmentList(items);
-          //fetch reservation list
+        setCurrentUserId(userInfo._id);
+        // Fetch reservation list
         const reservations = await itemService.getReservations(userInfo._id);
-        //console.log('Fetched reservations:', reservations);
         setReservationList(reservations);
       } catch (error) {
-        console.log("Failed to fetch:", error)
+        console.error("Failed to fetch:", error);
       } finally {
-        //console.log(equipmentList);
-        //console.log(reservationList);
-        //console.log(currentUserId);
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
     fetchReservationAndEquipment();
-  },[]);
+  }, []);
 
-  const handleViewDetails = (equipmentId: string) => {
-    navigate(`/kmla-warehouse/item/${equipmentId}`); // Navigate to the details page
+  // 반납 처리 핸들러
+  const handleReturn = async (reservationId: string) => {
+    if (!reservationId) return;
+    try {
+      await itemService.returnItem(reservationId);
+      message.success('반납 요청이 성공적으로 처리되었습니다.');
+      setReservationList(prevList => prevList.filter(r => r._id !== reservationId));
+    } catch (error) {
+      console.error('Failed to return item:', error);
+      if (error.response) {
+        const status = error.response.status;
+        const messageText = error.response.data.message || error.message;
+
+        if (status === 404) {
+          message.error(messageText || '아이템을 찾을 수 없습니다.');
+        } else if (status === 400) {
+          message.error(messageText || '유효하지 않은 반납 요청입니다.');
+        } else if (status === 500) {
+          message.error(messageText || '서버 오류가 발생했습니다.');
+        } else {
+          message.error('반납 요청에 실패했습니다. 다시 시도해 주세요.');
+        }
+      } else {
+        message.error('반납 요청에 실패했습니다. 다시 시도해 주세요.');
+      }
+    }
   };
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      {/* Sidebar */}
+      <Headbar />
       <Sider
         width={250}
         style={{
@@ -72,72 +88,75 @@ export default function ReservationStatus() {
           position: 'fixed',
           height: '100vh',
           left: 0,
-          top: 0,
+          top: 64,
         }}
       >
         <Sidebar />
       </Sider>
-
-      {/* Main content */}
       <Layout style={{ marginLeft: 250 }}>
-        <Content style={{ padding: '40px', width: 'calc(100vw - 250px)' }}>
-          
-          {/* Title with icon */}
+        <Content style={{ padding: '40px', marginTop: '64px', width: 'calc(98vw - 250px)' }}>
           <Title level={2} style={{ display: 'flex', alignItems: 'center' }}>
             <UnorderedListOutlined style={{ marginRight: '10px' }} />
             예약현황 보기
           </Title>
-          
+
           {loading ? (
             <Spin size="large" />
           ) : (
             <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
-              {equipmentList?.map((equipment) => (
-                <Col xs={24} sm={12} md={8} lg={5} key={equipment._id}>
-                  <Card
-                    hoverable
-                    cover={
-                      <div
+              {reservationList.length > 0 ? (
+                reservationList?.map((reservation) => (
+                  <Col xs={24} sm={12} md={8} lg={4} key={reservation._id}>
+                    <Card
+                      hoverable
+                      cover={
+                        <div
+                          style={{
+                            width: '100%',
+                            height: '150px',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: '#f0f0f0',
+                          }}
+                        >
+                          {reservation.item.photoUrl ? (
+                            <img
+                              src={reservation.item.photoUrl}
+                              alt={reservation.item.name}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                          ) : (
+                            <Typography.Text>이미지 없음</Typography.Text>
+                          )}
+                        </div>
+                      }
+                      actions={[
+                        <LoginOutlined
+                          key="return"
+                          onClick={() => handleReturn(reservation._id)}
+                          style={{ color: 'initial', transition: 'color 0.3s' }}  // 기본 색상 및 부드러운 전환
+                          onMouseEnter={(e) => (e.currentTarget.style.color = 'red')}  // 호버 시 붉은색으로 변경
+                          onMouseLeave={(e) => (e.currentTarget.style.color = 'initial')}  // 마우스가 떠나면 원래 색상으로
+                        />,
+                      ]}
+                      style={{ maxWidth: '220px', height: '300px' }}
+                    >
+                      <Card.Meta
+                        title={reservation.item.name}
+                        description={`${reservation.item.location} / ${new Date(reservation.timestamp).toLocaleDateString()}`}
                         style={{
-                          width: '100%',
-                          height: '150px',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          backgroundColor: '#f0f0f0',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
                         }}
-                      >
-                        {equipment.photoUrl ? (
-                          <img
-                            src={equipment.photoUrl}
-                            alt={equipment.name}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                          />
-                        ) : (
-                          <Typography.Text>이미지 없음</Typography.Text>
-                        )}
-                      </div>
-                    }
-                    actions={[
-                      <CalendarOutlined
-                        key="view"
-                        onClick={() => handleViewDetails(equipment._id)}
-                      />,
-                    ]}
-                    style={{ maxWidth: '220px', height: '270px' }}
-                  >
-                    <Card.Meta
-                      title={equipment.name}
-                      description={equipment.location}
-                      style={{
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                      }}
-                    />
-                  </Card>
-                </Col>
-              ))}
+                      />
+                    </Card>
+                  </Col>
+                ))
+              ) : (
+                <Typography.Text>데이터가 없습니다.</Typography.Text>
+              )}
             </Row>
           )}
         </Content>

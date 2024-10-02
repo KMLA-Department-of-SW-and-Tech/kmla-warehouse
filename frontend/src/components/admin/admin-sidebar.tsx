@@ -16,21 +16,6 @@ const Sidebar: React.FC = () => {
 
 const items1: MenuProps['items'] = [
   {
-    key: 'test1',
-    label: '',
-    type: 'group',
-  },
-  {
-    key: 'test2',
-    label: '',
-    type: 'group',
-  },
-  {
-    key: 'test3',
-    label: '',
-    type: 'group',
-  },
-  {
     key: 'manage',
     label: '관리 페이지',
     type: 'group',
@@ -47,7 +32,7 @@ const items1: MenuProps['items'] = [
       },
       {
         key: 'kmla-warehouse/admin/reservation',
-        icon: <Badge size='small' count={5}><HistoryOutlined /></Badge>,
+        icon: <Badge size='small'><HistoryOutlined /></Badge>,
         label: '신청관리',
       },
     ],
@@ -80,7 +65,7 @@ const handleMenuClick = (e: {key: string}) => {
         height: '100vh',
         paddingTop: '10px',
         position: 'fixed', // 사이드바 고정
-        top: 0,
+        top: 60,
         left: 0,
         width: '200px', // 너비를 설정하여 고정
         boxShadow: '2px 0 5px rgba(0, 0, 0, 0.1)', // 그림자 추가

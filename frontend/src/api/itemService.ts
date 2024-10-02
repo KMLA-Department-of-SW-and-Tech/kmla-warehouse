@@ -43,12 +43,12 @@ export const itemService = {
 
 borrowRequest: async (id: string, quantity: number ): Promise<Item> => {
   try {
-    console.log('Making POST request to borrow item:', id, 'with quantity:', quantity);
+   
     
     const response = await axiosPrivate.post(`/api/item/${id}/borrow`, { quantity });
-    console.log('Response from server:', response); // Check the actual structure
     
-    if (!response.data || !response.data.item) {
+    
+    if (!response.data) {
       throw new Error('Failed to borrow item: Invalid response from server');
     }
     return response.data.item;
@@ -112,10 +112,23 @@ borrowRequest: async (id: string, quantity: number ): Promise<Item> => {
   // 예약 데이터 가져오기
   getReservations: async (userInfo) => {
     try {
-      const response = await axiosPrivate.get(`/api/borrow-history/${userInfo}/return`); // 예약 데이터를 가져오는 API
+      const response = await axiosPrivate.get(`/api/team/${userInfo}/borrow-list`); // 예약 데이터를 가져오는 API
+      console.log(response.data)
       return response.data; // 예약 데이터 반환
     } catch (error) {
       console.error('Error fetching reservations:', error.message);
+      throw error;
+    }
+  },
+
+  // 물품 반납
+  returnItem: async(userInfo) => {
+    try {
+      const data = await axiosPrivate.post(`/api/borrow-history/${userInfo}/return`);
+      console.log(data.data);
+      return data.data;
+    } catch (error) {
+      console.error('Error posting item return:', error.message);
       throw error;
     }
   },

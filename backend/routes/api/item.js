@@ -7,18 +7,19 @@ const deleteItem = require("../../middleware/delete_item");
 const itemController = require("../../controllers/item_controller");
 
 
-router.get("/list",/* verifyJWT,*/ itemController.item_list);
+router.get("/list", verifyJWT, itemController.item_list);
 
+router.get("/search/:query", itemController.item_search);
 
-router.post("/", /*verifyJWT,*/ itemController.item_create);
+router.post("/", verifyJWT, itemController.item_create);
 
 router.route("/:id")
-    .get(/*verifyJWT,*/ itemController.item_detail)
-    .put(/*verifyJWT,*/ itemController.item_update_put)
-    .patch(/*verifyJWT,*/ itemController.item_update_patch)
-    .delete(/*verifyJWT,*/ deleteItem, itemController.item_update_put);
+    .get(verifyJWT, itemController.item_detail)
+    .put(verifyJWT, itemController.item_update_put)
+    .patch(verifyJWT, itemController.item_update_patch)
+    .delete(verifyJWT, deleteItem, itemController.item_update_put);
 
 router.route("/:id/borrow")
-    .post(/*verifyJWT,*/ itemController.item_borrow);
+    .post(verifyJWT, itemController.item_borrow);
 
 module.exports = router;

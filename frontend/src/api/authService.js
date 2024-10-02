@@ -1,17 +1,15 @@
 import axios from 'axios';
 import axiosPrivate from '../hooks/axiosPrivate';
-import Cookies from 'js-cookie';
 
 const authService = {
     login: async (username, password) => { // returns true for successful login
-        const response = await axios.post('/api/auth/login', { username, password });
+        const response = await axios.post('/api/auth/login', { username, password }, {withCredentials: true});
         axiosPrivate.accessToken = response.data.accessToken;
-        Cookies.set("logged_in", true);
+        axiosPrivate.roles = response.data.roles;
     },
     logout: async () => {
         try {
-            Cookies.remove("logged_in");
-            await axios.post('/api/auth/logout');
+            await axios.post('/api/auth/logout', {}, {withCredentials: true});
             axiosPrivate.accessToken = "";
             console.log("Logged out");
         } catch (err) {
@@ -20,13 +18,17 @@ const authService = {
     },
     currentUser: async () => {
         try {
-          const response = await axios.post('/api/auth');
+          const response = await axiosPrivate.get('/api/auth', { withCredentials: true });
+          console.log(response.data);
           return response.data.username;
         } catch (err) {
           console.error(err);
         }
-      }
-      ,
+    },
+    changePassword: async (currentPassword, newPassword) => {
+      await axiosPrivate.patch('/api/team/update-password', { currentPassword, newPassword }, { withCredentials: true });
+    }
 }
+
 
 export default authService;
