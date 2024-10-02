@@ -18,7 +18,7 @@ const LoginPage = () => {
       console.log(axiosPrivate);
       console.log("Successful login");
       axiosPrivate.roles.includes("Admin")
-      ? navigate("/kmla-warehouse/admin/reservation")
+      ? navigate("/kmla-warehouse/admin/equipment")
       : navigate("/kmla-warehouse/home"); //살려라!!!
     } catch(err) {
       setError(err.response.data);
