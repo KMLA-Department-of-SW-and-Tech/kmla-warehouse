@@ -36,15 +36,12 @@ export default function ReservationStatus() {
       try {
         // Get current user information
         const userInfo = await teamService.getUserInfo();
-        console.log('Fetched user info:', userInfo);
-        setCurrentUserId(userInfo);
-        
+        setCurrentUserId(userInfo._id);
         // Fetch reservation list
         const reservations = await itemService.getReservations(userInfo._id);
-        console.log('Fetched reservations:', reservations);
         setReservationList(reservations);
       } catch (error) {
-        console.log("Failed to fetch:", error);
+        console.error("Failed to fetch:", error);
       } finally {
         setLoading(false);
       }
@@ -59,9 +56,7 @@ export default function ReservationStatus() {
     try {
       await itemService.returnItem(reservationId);
       message.success('반납 요청이 성공적으로 처리되었습니다.');
-
-      // 페이지 리로드하여 상태를 갱신
-      window.location.reload();
+      setReservationList(prevList => prevList.filter(r => r._id !== reservationId));
     } catch (error) {
       console.error('Failed to return item:', error);
       if (error.response) {
@@ -139,7 +134,10 @@ export default function ReservationStatus() {
                       actions={[
                         <LoginOutlined
                           key="return"
-                          onClick={() => handleReturn(reservation._id)} // 반납 요청 핸들러 호출
+                          onClick={() => handleReturn(reservation._id)}
+                          style={{ color: 'initial', transition: 'color 0.3s' }}  // 기본 색상 및 부드러운 전환
+                          onMouseEnter={(e) => (e.currentTarget.style.color = 'red')}  // 호버 시 붉은색으로 변경
+                          onMouseLeave={(e) => (e.currentTarget.style.color = 'initial')}  // 마우스가 떠나면 원래 색상으로
                         />,
                       ]}
                       style={{ maxWidth: '220px', height: '300px' }}
