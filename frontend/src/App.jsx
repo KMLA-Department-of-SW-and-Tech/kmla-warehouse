@@ -11,7 +11,7 @@ import AdminEquipmentPage from "./admin/equipment-page.tsx";
 import AdminHistoryPage from "./admin/reservation-page.tsx";  
 import AdminTeamPage from "./admin/manage-team-page.tsx";
 import AdminSettingPage from "./admin/admin-setting.tsx";
-import { ProtectedRoute } from "./components/protected-routes.jsx";
+import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./components/protected-routes.jsx";
 import AccountSettings from "./(authenticated)/user-home/account-settings.tsx";
 
 const router = createBrowserRouter([
@@ -27,42 +27,42 @@ const router = createBrowserRouter([
   },
   {
     path: "/kmla-warehouse/account-settings",
-    element: <ProtectedRoute><AccountSettings /></ProtectedRoute>,
+    element: <ProtectedRoute><ProtectedUser><AccountSettings /></ProtectedUser></ProtectedRoute>,
   },
   // Home page
   {
     path: "/kmla-warehouse/home",
-    element: <ProtectedRoute><Home /></ProtectedRoute>,
+    element: <ProtectedRoute><ProtectedUser><Home /></ProtectedUser></ProtectedRoute>,
   },
   // Equipment details page
   {
     path: "/kmla-warehouse/item/:id",
-    element: <ProtectedRoute><EquipmentDetails /></ProtectedRoute>,
+    element: <ProtectedRoute><ProtectedUser><EquipmentDetails /></ProtectedUser></ProtectedRoute>,
   },
   //Reservation Status page
   {
     path: "/kmla-warehouse/reservation-status",
-    element: <ProtectedRoute><ReservationStatus /></ProtectedRoute>,
+    element: <ProtectedRoute><ProtectedUser><ReservationStatus /></ProtectedUser></ProtectedRoute>,
   },
   // Admin: add equipment page
   {
     path: "/kmla-warehouse/admin/equipment",
-    element: <ProtectedRoute><AdminEquipmentPage /></ProtectedRoute>,
+    element: <ProtectedRoute><ProtectedAdmin><AdminEquipmentPage /></ProtectedAdmin></ProtectedRoute>,
   },
   // Admin: reservation page
   {
     path: "/kmla-warehouse/admin/reservation",
-    element: <ProtectedRoute><AdminHistoryPage /></ProtectedRoute>,
+    element: <ProtectedRoute><ProtectedAdmin><AdminHistoryPage /></ProtectedAdmin></ProtectedRoute>,
   },
   // Admin: mange team page
   {
     path: "/kmla-warehouse/admin/team",
-    element: <ProtectedRoute><AdminTeamPage /></ProtectedRoute>,
+    element: <ProtectedRoute><ProtectedAdmin><AdminTeamPage /></ProtectedAdmin></ProtectedRoute>,
   },
   // Admin: account setting page
   {
     path: "/kmla-warehouse/admin/setting",
-    element: <ProtectedRoute><AdminSettingPage /></ProtectedRoute>,
+    element: <ProtectedRoute><ProtectedAdmin><AdminSettingPage /></ProtectedAdmin></ProtectedRoute>,
   }  
 ]);
 

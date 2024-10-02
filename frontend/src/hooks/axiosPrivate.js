@@ -4,9 +4,11 @@ import axios from 'axios';
 
 const axiosPrivate = {
     accessToken: "",
+    roles: [],
     refreshRequest: async () => { // internal function do not use outside
         const result = await axios.get("/api/refresh", { withCredentials: true });
         axiosPrivate.accessToken = result.data.accessToken;
+        axiosPrivate.roles = result.data.roles;
     },
     get: async (apiUrl, axiosConfig) => {
         try {

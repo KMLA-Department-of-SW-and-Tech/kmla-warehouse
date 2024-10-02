@@ -17,14 +17,9 @@ const LoginPage = () => {
       await authService.login(username, password);
       console.log(axiosPrivate);
       console.log("Successful login");
-      try { // example of axiosPrivate usage
-        const response = await axiosPrivate.get("/api/auth/");
-        console.log(response);
-        navigate("/kmla-warehouse/home"); //살려라!!!
-      } catch (err) {
-        console.log(err);
-      }
-      //await authService.logout(); //example of logout
+      axiosPrivate.roles.includes("Admin")
+      ? navigate("/kmla-warehouse/admin/reservation")
+      : navigate("/kmla-warehouse/home"); //살려라!!!
     } catch(err) {
       setError(err.response.data);
     }
@@ -68,32 +63,7 @@ const LoginPage = () => {
               로그인
             </button>
 
-          </form>
-          {/* <button onClick={
-        async () => {
-          await authService.logout();
-        }
-      }>Logout</button> */}
-      {/* <button onClick={
-        async () => {
-          try {
-            // console.log("----------------------------------------------------------------");
-            // await axiosPrivate.post('/api/borrow-history/66fc02ee04b0e0dc2306146d/return', {
-
-            // });
-            // await axiosPrivate.post('/api/item/66f81dfc1c40becece185d1b/borrow', {
-            //   quantity: 4,
-            // });
-            // console.log(await axiosPrivate.get('/api/team/66f5e847eccf4b831081cfcd/borrow-list', {}));
-            // console.log(await axiosPrivate.get('/api/item/search/post'), {
-
-            // });
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      }>Click Me</button> */}
-      
+          </form>      
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ const authService = {
     login: async (username, password) => { // returns true for successful login
         const response = await axios.post('/api/auth/login', { username, password }, {withCredentials: true});
         axiosPrivate.accessToken = response.data.accessToken;
+        axiosPrivate.roles = response.data.roles;
     },
     logout: async () => {
         try {

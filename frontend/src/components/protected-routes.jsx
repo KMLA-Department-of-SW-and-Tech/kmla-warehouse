@@ -1,13 +1,12 @@
 /* eslint-disable */
 import { Navigate } from "react-router-dom";
 import axiosPrivate from "../hooks/axiosPrivate";
-import { useEffect, useRef, useState } from "react";
+import { cloneElement, useEffect, useRef, useState } from "react";
 /* import { Spin } from 'antd'*/
   
 export const ProtectedRoute = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const isRefreshRequestSent = useRef(false); // tracks wheter a refresh request was sent
-  
     // code for react frontend double rendering --> cookie reading issue
     useEffect(() => {
         const waitForRefreshRequestCompletion = () => {
@@ -43,13 +42,29 @@ export const ProtectedRoute = ({ children }) => {
         }
         init();
     }, []);
+    
     return (
         loading
         ?  <></>
         : (
             axiosPrivate.accessToken === ""
             ? <Navigate to="/kmla-warehouse/login" />
-            : children
+            : cloneElement(children, { roles: axiosPrivate.roles })
         )
     );
 };
+
+export const ProtectedUser  = ({ roles, children }) => {
+    return (
+        !roles.includes("User")
+        ? <Navigate to="/kmla-warehouse/login" />
+        : children
+    );
+}
+export const ProtectedAdmin  = ({ roles, children }) => {
+    return (
+        !roles.includes("Admin")
+        ? <Navigate to="/kmla-warehouse/login" />
+        : children
+    );
+}
