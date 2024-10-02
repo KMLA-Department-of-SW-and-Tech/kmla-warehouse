@@ -90,4 +90,9 @@
   .signup-button:hover {
     background-color: #2b6cb0;
   }
-  
+  .error-message {
+    color: red;
+    font-size: 12px; /* 작게 표시 */
+    margin-top: 10px; /* 폼과 간격 */
+  }
+    

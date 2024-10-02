@@ -15,15 +15,26 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       await authService.login(username, password);
-      console.log(axiosPrivate);
-      console.log("Successful login");
       axiosPrivate.roles.includes("Admin")
         ? navigate("/kmla-warehouse/admin/equipment")
         : navigate("/kmla-warehouse/home");
     } catch (err) {
-      setError(err.response.data);
+      let errorMessage = "로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.";
+      
+      if (err.response && err.response.data) {
+        // 백엔드의 에러 메시지를 분석하여 사용자에게 적합한 메시지를 설정
+        const serverMessage = err.response.data.message || "";
+        if (serverMessage.includes("password")) {
+          errorMessage = "비밀번호가 일치하지 않습니다.";
+        } else if (serverMessage.includes("username")) {
+          errorMessage = "아이디가 일치하지 않습니다.";
+        }
+      }
+      setError(errorMessage);
     }
   };
+  
+  
 
   // Navigate to sign up page
   const handleSignUp = () => {
@@ -62,7 +73,8 @@ const LoginPage = () => {
               로그인
             </button>
             {/* Show error message if any */}
-            {error && <div className="text-red-500 mt-2">{error}</div>}
+            {error && <div className="error-message">{error}</div>}
+
           </form>
 
           {/* Sign-up link */}
