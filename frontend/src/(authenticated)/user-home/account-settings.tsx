@@ -15,11 +15,12 @@ const AccountSettings = () => {
   // Function to handle password change
   const handlePasswordChange = async (values) => {
     setLoading(true);
-    setErrorMessage('현재 비밀번호가 일치하지 않습니다'); // Reset error message on new attempt
+    setErrorMessage(""); // Reset error message on new attempt
     try {
       await authService.changePassword(values.currentPassword, values.newPassword);
       message.success('Password changed successfully!');
     } catch (error) {
+      console.log(error);
       // If an error occurs, display the error message and prevent the success message from showing
       const responseMessage = error.response?.data || 'Failed to change password. Please try again.';
       setErrorMessage(responseMessage); // Set error message for display in the form

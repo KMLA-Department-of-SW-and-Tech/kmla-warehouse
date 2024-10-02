@@ -69,7 +69,7 @@ exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
             res.clearCookie('jwt', { httpOnly: true, /* secure: true, */ /* sameSite: 'None' */ });
             res.cookie('jwt', newRefreshToken, { path: "/", httpOnly: true, maxAge: 24 * 60 * 60 * 1000, /* secure: true, */ /* sameSite: 'None' */ }); // max age same as token expiration(1d)
 
-            res.json( { /* roles,  */accessToken} )
+            res.json( { roles, accessToken} )
         }
     );
 }); // handle login

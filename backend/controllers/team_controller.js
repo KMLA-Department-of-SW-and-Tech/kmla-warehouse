@@ -142,7 +142,7 @@ exports.update_current_team_password = asyncHandler(async (req, res, next) => {
     //console.log(currentPassword, newPassword, "hi")
     const currentPassword = req.body.currentPassword;
     const newPassword = req.body.newPassword;
-    console.log(currentPassword, newPassword)
+    console.log(currentPassword, newPassword, req.username);
     const currentUser = await teamRepository.findTeamByName(req.username);
     console.log(currentUser);
 

@@ -14,8 +14,6 @@ import AdminSettingPage from "./admin/admin-setting.tsx";
 import { ProtectedRoute } from "./components/protected-routes.jsx";
 import AccountSettings from "./(authenticated)/user-home/account-settings.tsx";
 
-
-
 const router = createBrowserRouter([
   // Login page
   {
