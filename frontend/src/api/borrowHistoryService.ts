@@ -15,7 +15,13 @@ export const borrowHistoryService = {
   getAll: async (): Promise<BorrowHistory[]> => {
     try {
       const response = await axiosPrivate.get(`/api/borrow-history/list`);
-      console.log(response);
+      const responseData = response.data;
+      console.log(responseData)
+      const result = responseData.map(data => {
+        data.item = data.item.name;
+        data.user = data.user.name;
+        return data;
+      })
       return response.data;
     } catch (e) {
       console.error(e.message);

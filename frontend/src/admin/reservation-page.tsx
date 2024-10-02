@@ -22,6 +22,7 @@ const AdminHistoryPage: React.FC = () => {
       setLoading(true);
       try {
         const response = await borrowHistoryService.getAll(); 
+        console.log(response);
         setBorrowHistories(response);
       } catch (error) {
         message.error('Failed to fetch items');
