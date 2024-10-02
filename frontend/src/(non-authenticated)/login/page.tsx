@@ -18,12 +18,18 @@ const LoginPage = () => {
       console.log(axiosPrivate);
       console.log("Successful login");
       axiosPrivate.roles.includes("Admin")
-      ? navigate("/kmla-warehouse/admin/equipment")
-      : navigate("/kmla-warehouse/home"); //살려라!!!
-    } catch(err) {
+        ? navigate("/kmla-warehouse/admin/equipment")
+        : navigate("/kmla-warehouse/home");
+    } catch (err) {
       setError(err.response.data);
     }
-  }
+  };
+
+  // Navigate to sign up page
+  const handleSignUp = () => {
+    navigate("/kmla-warehouse/signup");
+  };
+
   return (
     <div className="login-container">
       <div className="login-sidebar">
@@ -31,9 +37,7 @@ const LoginPage = () => {
           <h2 className="login-title">로그인</h2>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="username" className="form-label">
-                아이디
-              </label>
+              <label htmlFor="username" className="form-label">아이디</label>
               <input
                 type="text"
                 id="username"
@@ -44,9 +48,7 @@ const LoginPage = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="password" className="form-label">
-                비밀번호
-              </label>
+              <label htmlFor="password" className="form-label">비밀번호</label>
               <input
                 type="password"
                 id="password"
@@ -56,20 +58,30 @@ const LoginPage = () => {
                 required
               />
             </div>
-            <button
-              type="submit"
-              className="submit-button"
-            >
+            <button type="submit" className="submit-button">
               로그인
             </button>
+            {/* Show error message if any */}
+            {error && <div className="text-red-500 mt-2">{error}</div>}
+          </form>
 
-          </form>      
+          {/* Sign-up link */}
+          <div className="signup-redirect">
+            <p>
+              계정이 없으신가요?{' '}
+              <a
+                href="#"
+                className="signup-link"
+                onClick={handleSignUp}
+              >
+                회원가입
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default LoginPage; 
-
-
+export default LoginPage;

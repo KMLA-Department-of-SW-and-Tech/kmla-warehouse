@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { PageLayout } from '../../layouts/page-layout'; // Assume this is the correct path
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './page.css'; // Assuming the same CSS structure as in LoginPage
 
 const SignUpPage: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -8,6 +9,9 @@ const SignUpPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,85 +23,115 @@ const SignUpPage: React.FC = () => {
       setPasswordError('비밀번호가 일치하지 않습니다.');
       return;
     }
-    const res = await axios.post("/api/team/", {
-        username: username,
-        name: name,
-        password: password,
-    });
-    console.log(res);
+    try {
+      const res = await axios.post("/api/team/", {
+        username,
+        name,
+        password,
+      });
+      console.log(res);
+      setSuccessMessage('회원가입이 성공적으로 완료되었습니다.');
+      setShowConfirmation(true); // Show the confirmation prompt
+    } catch (err) {
+      console.error("Error during signup", err);
+    }
+  };
+
+  // 로그인 페이지로 이동하는 함수
+  const handleNavigateToLogin = () => {
+    navigate("/kmla-warehouse/login");
   };
 
   return (
-    <PageLayout layout="narrow" isCentered={true}>
-      <div className="bg-white rounded-xl shadow-lg p-10 w-full">
-        <h2 className="text-center text-4xl font-bold text-gray-900 mb-8">KMLA WAREHOUSE</h2>
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-4">
-          <div>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                className="w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-black placeholder-gray-500 text-gray-900 sm:text-lg"
-                placeholder="융프명"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-            <div>
-              <input
-                id="team-name"
-                name="team-name"
-                type="text"
-                required
-                className="w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-black placeholder-gray-500 text-gray-900 sm:text-lg"
-                placeholder="아이디"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                className="w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-black placeholder-gray-500 text-gray-900 sm:text-lg"
-                placeholder="비밀번호"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <div>
-              <input
-                id="confirm-password"
-                name="confirm-password"
-                type="password"
-                required
-                className="w-full border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-black placeholder-gray-500 text-gray-900 sm:text-lg"
-                placeholder="비밀번호 확인"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div>
-          </div>
-
-          {passwordError && (
-            <div className="text-red-500 text-sm">{passwordError}</div>
+    <div className="signup-container">
+      <div className="signup-sidebar">
+        <div className="signup-box">
+          <h2 className="signup-title">회원가입</h2>
+          
+          {/* Conditionally render the signup form and button only if showConfirmation is false */}
+          {!showConfirmation && (
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="name" className="form-label">이름</label>
+                <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="form-input"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="username" className="form-label">아이디</label>
+                <input
+                  type="text"
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="form-input"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password" className="form-label">비밀번호</label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="form-input"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="confirm-password" className="form-label">비밀번호 확인</label>
+                <input
+                  type="password"
+                  id="confirm-password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="form-input"
+                  required
+                />
+              </div>
+              {passwordError && <div className="text-red-500 text-sm">{passwordError}</div>}
+              <button type="submit" className="submit-button">회원가입</button>
+            </form>
           )}
 
-          <div>
-            <button
-              type="submit"
-              className="w-full py-3 text-lg font-medium text-white bg-black rounded-lg hover:bg-gray-800 focus:outline-none"
-            >
-              회원가입
-            </button>
-          </div>
-        </form>
+          {successMessage && (
+            <div className="text-green-500 text-sm mt-4">{successMessage}</div>
+          )}
+
+          {/* 로그인 페이지로 이동할 수 있는 텍스트 링크 */}
+          {!showConfirmation && (
+            <div className="signup-login-link">
+              <p>이미 계정이 있으신가요?{' '}
+                <a
+                  href="#"
+                  className="login-link"
+                  onClick={handleNavigateToLogin}
+                >
+                  로그인
+                </a>
+              </p>
+            </div>
+          )}
+
+          {/* Show the confirmation box when signup is successful */}
+          {showConfirmation && (
+            <div className="confirmation-box mt-4">
+              <p className="confirmation-text">로그인 페이지로 이동하시겠습니까?</p>
+              <div className="confirmation-buttons">
+                <button onClick={handleNavigateToLogin} className="submit-button">예</button>
+                <button onClick={() => setShowConfirmation(false)} className="cancel-button">아니요</button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-    </PageLayout>
+    </div>
   );
 };
 
