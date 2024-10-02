@@ -24,6 +24,16 @@ const authService = {
           console.error(err);
         }
     },
+    changePassword: async (currentPassword, newPassword) => {
+      try {
+        
+          return await axios.post('/api/team/update-password', { currentPassword, newPassword });
+        
+       
+      } catch(err) {
+        console.log(err);
+      }
+    }
 }
 
 
