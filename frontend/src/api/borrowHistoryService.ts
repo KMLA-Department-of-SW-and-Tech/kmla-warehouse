@@ -56,8 +56,9 @@ export const borrowHistoryService = {
   //DELETE 히스토리 삭제하기
   delete: async (id: string): Promise<void> => {
     try{
-      const response = await axiosPrivate.delete(`/api/borrow-history/${id}`)
-      return response.data
+      console.log(id)
+      const response = await axiosPrivate.delete(`/api/borrow-history/${id}`);
+      return response.data;
     }catch(e){
       console.error(e);
     }

@@ -9,7 +9,8 @@ exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
     if(!cookies?.jwt) return res.sendStatus(401);
     const refreshToken = cookies.jwt;
     const foundUser = await Team.findOne({refreshToken: refreshToken}).exec();
-    
+    res.clearCookie('jwt', { httpOnly: true, /* secure: true, */ /* sameSite: 'None' */ });
+
     // refresh token reuse detection
     if(!foundUser) {
         jwt.verify(
@@ -66,7 +67,6 @@ exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
             // pass refress token to database
             foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken ];
             /* const response =  */await foundUser.save();
-            res.clearCookie('jwt', { httpOnly: true, /* secure: true, */ /* sameSite: 'None' */ });
             res.cookie('jwt', newRefreshToken, { path: "/", httpOnly: true, maxAge: 24 * 60 * 60 * 1000, /* secure: true, */ /* sameSite: 'None' */ }); // max age same as token expiration(1d)
 
             res.json( { roles, accessToken} )

@@ -93,6 +93,8 @@ exports.team_update_put = [
             // const {username, password, name, refreshToken} = req.body;
             const id = req.params.id;
             try {
+                // const foundUser = teamService.findTeamByUsername(req.body.username) // 유찬이의 recommendation --> for 정창운
+                // newbody = { username: !req.body.username ? foundUser.usernmae: req.body.username ... }
                 const updatedTeam = await teamService.updateTeam(req.body, id);
             } catch (err) {
                 if(err.message == "Team not found") {
