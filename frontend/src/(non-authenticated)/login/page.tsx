@@ -48,7 +48,7 @@ const LoginPage = () => {
           <h2 className="login-title">로그인</h2>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="username" className="form-label">아이디</label>
+              <label htmlFor="username" className="form-label">id</label>
               <input
                 type="text"
                 id="username"
