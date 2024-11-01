@@ -3,16 +3,16 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./(non-authenticated)/login/page.tsx"; 
 import Signup from "./(non-authenticated)/signup/page.tsx"; 
 
-import Home from "./(authenticated)/equipment-home/equipment-home.tsx"; 
-import EquipmentDetails from "./(authenticated)/equipment-home/equipment-details.tsx"; 
-import ReservationStatus from "./(authenticated)/user-home/reservation-status.tsx";
+import Home from "./(authenticated)/equipment/equipment-home.tsx"; 
+import EquipmentDetails from "./(authenticated)/equipment/equipment-details.tsx"; 
+import ReservationStatus from "./(authenticated)/user/reservation-status.tsx";
  
 import AdminEquipmentPage from "./admin/equipment-page.tsx"; 
 import AdminHistoryPage from "./admin/reservation-page.tsx";  
 import AdminTeamPage from "./admin/manage-team-page.tsx";
 import AdminSettingPage from "./admin/admin-setting.tsx";
 import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./components/protected-routes.jsx";
-import AccountSettings from "./(authenticated)/user-home/account-settings.tsx";
+import AccountSettings from "./(authenticated)/user/account-settings.tsx";
 
 const router = createBrowserRouter([
   // Login page

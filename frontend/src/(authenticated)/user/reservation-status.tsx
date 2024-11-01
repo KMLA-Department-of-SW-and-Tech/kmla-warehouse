@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Card, Row, Col, Spin, Layout, message } from 'antd';
 import { LoginOutlined, UnorderedListOutlined } from '@ant-design/icons';
-import Sidebar from '../../components/equipment/equipment-bar';
+import Sidebar from '../../components/equipment-bar.tsx';
 import { teamService } from "../../api/teamService.ts";
 import { itemService } from "../../api/itemService.ts";
 import { useNavigate } from "react-router-dom";

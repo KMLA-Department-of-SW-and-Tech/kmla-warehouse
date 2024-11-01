@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Typography, Spin, Layout, Button, message, Form, InputNumber } from 'antd'; 
 import { useParams } from 'react-router-dom';
 import { itemService } from '../../api/itemService';
-import Sidebar from '../../components/equipment/equipment-bar';
+import Sidebar from '../../components/equipment-bar';
 import Headbar from '../../components/header';
 
 const { Sider, Content } = Layout;
