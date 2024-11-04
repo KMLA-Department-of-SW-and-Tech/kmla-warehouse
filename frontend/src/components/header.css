@@ -9,20 +9,18 @@
     height: 60px;
     color: black;
   }
-  /* 헤더 내용물의 최대 너비 설정과 중앙 정렬 */
-  .header-container {
-    display: flex;
-    justify-content: space-between; /* 로고와 사용자 정보 양쪽 배치 */
-    align-items: center;
-    /*max-width: 1200px; /* 헤더의 최대 너비를 설정 */
-    /*margin: 0 auto; /* 가운데 정렬 */
-    width: 100%; /* 헤더 컨텐츠가 전체 너비를 차지 */
-  }
-  .logo {
-    font-size: 1.5em;
-    font-weight: bold;
-  }
-  .user-info {
-    font-size: 1em;
-    color: #d3d3d3; /* 사용자 정보 색상 */
-  }
+/* 헤더 내용물의 최대 너비 설정과 중앙 정렬 */
+.header-container {
+  display: flex;
+  justify-content: space-between; /* 로고와 사용자 정보 양쪽 배치 */
+  align-items: center;
+  width: 100%; /* 헤더 컨텐츠가 전체 너비를 차지 */
+}
+.logo {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.user-info {
+  font-size: 1em;
+  color: #d3d3d3; /* 사용자 정보 색상 */
+}

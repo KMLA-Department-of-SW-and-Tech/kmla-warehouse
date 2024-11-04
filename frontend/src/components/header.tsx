@@ -20,7 +20,7 @@ const Headbar: React.FC = () => {
           KMLA Warehouse
         </div>
         <div className="user-info">
-          <span>{currentUserName ? currentUserName : ""}</span> {/* 예시 사용자 이름 */}
+          <span>{currentUserName ? currentUserName : ""}</span> {/* 사용자 이름 */}
         </div>
       </div>
     </header>
