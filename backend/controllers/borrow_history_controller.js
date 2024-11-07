@@ -89,6 +89,27 @@ exports.item_return = [
     }),
 ];
 
-exports.borrow_history_delete = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: borrow_history delete");
-});
+exports.borrow_history_delete = [
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            res.send(errors.array());
+            return;
+        }
+        else {
+            const id = req.params.id;
+            try {
+                const deletedEntry = await borrowHistoryService.deleteEntry(id);
+                res.status(200).send("Successfully deleted entry");
+                return deletedEntry;
+            } catch (err) {
+                if(err.message == "Entry not found") {
+                    res.status(404).send(err);
+                    return;
+                }
+                res.status(500).send(err);
+                return;
+            }
+        }
+    }),
+];

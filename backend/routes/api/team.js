@@ -5,6 +5,8 @@ const verifyRoles = require("../../middleware/verifyRoles"); // in case of admin
 
 const teamController = require("../../controllers/team_controller");
 
+const deleteTeam = require("../../middleware/delete_team");
+
 router.post("/", teamController.team_create);
 router.patch("/update-password", verifyJWT, teamController.update_current_team_password)
 
@@ -13,7 +15,7 @@ router.get("/list", verifyJWT, teamController.team_list);
 router.route("/:id")
     .get(verifyJWT, teamController.team_detail)
     .put(verifyJWT, teamController.team_update_put)
-    .delete(verifyJWT, teamController.team_delete);
+    .delete(verifyJWT, deleteTeam, teamController.team_update_put);
 
 router.route("/:id/borrow-list")
     .get(verifyJWT, teamController.team_borrow_list);

@@ -35,6 +35,7 @@ exports.getUserBorrowHistory = async (userId) => {
     return borrowHistoryList;
 };
 
-exports.borrow_history_delete = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: borrow_history delete");
-});
+exports.findByIdAndUpdate = async (entry, id) => {
+    entry._id = id;
+    return await BorrowHistory.findByIdAndUpdate(id, entry, {});
+};

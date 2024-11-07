@@ -8,6 +8,7 @@ const teamSchema = new Schema({
     name: {type: String, required: true, maxLength: 100},
     roles: {type: [String], required: true},
     refreshToken: { type: [String], required: false },
+    status: {type: String, enum: ["valid", "deleted"], default: "valid"}
 });
 
 module.exports = mongoose.model("Team", teamSchema);

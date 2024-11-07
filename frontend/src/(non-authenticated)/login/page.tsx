@@ -69,6 +69,16 @@ const LoginPage = () => {
                 required
               />
             </div>
+            {/* <button onClick={
+              async () => {
+                try {
+                  console.log(await axiosPrivate.get('/api/borrow-history/list'));
+                  console.log("push!");
+                } catch (err) {
+                  console.error(err.response.data);
+                }
+              }
+            }>Click Me</button> */}
             <button type="submit" className="submit-button">
               로그인
             </button>

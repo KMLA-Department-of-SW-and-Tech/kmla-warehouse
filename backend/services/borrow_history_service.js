@@ -157,3 +157,19 @@ exports.getBorrowList = async (userId) => {
         throw new Error("Failed to get borrow list from database");
     }
 }
+
+exports.deleteEntry = async (id) => {
+    try {
+        const entry = await borrowHistoryRepository.getHistoryById(id);
+        if(entry == null) {
+            throw new Error("Borrow history not found");
+        }
+        entry.status = "deleted";
+        return await borrowHistoryRepository.findByIdAndUpdate(entry, id);
+    } catch (err) {
+        if(err.message == "Borrow history not found") {
+            throw err;
+        }
+        throw new Error("Unexpected error: " + err.message);
+    }
+}

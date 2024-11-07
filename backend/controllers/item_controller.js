@@ -132,7 +132,7 @@ exports.item_update_patch = asyncHandler(async (req, res, next) => {
 });
 
 exports.item_delete = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Item delete");
+    
 });
 
 exports.item_borrow = [
