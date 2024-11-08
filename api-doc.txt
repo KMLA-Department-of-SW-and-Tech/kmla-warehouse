@@ -25,8 +25,8 @@ Item
 GET 전체 리스트 /api/item/list
 GET 검색
 GET 물품 정보 /api/item/:id
-POST 물품 생성 /api/item/
-  body: name(String), description(String), quantity(Number), location(String)
+POST 물품 생성 /api/item/ - request format: form
+  body: name(String), description(String), quantity(Number), location(String), image(Image file)
 PUT 물품 업데이트 /api/item/:id
   body: name(String), description(String), tags(Array of ObjectId), totalQuantity(Number), availableQuantity(Number), location(String), category(ObjectId), status(String)
 PATCH 물품 업데이트 /api/item/:id
@@ -109,3 +109,6 @@ async {
 
 PUT 사용 시 유의점!
 각 데이터 종류에 대해 그것이 가지는 *모든* 하위 항목에 대한 정보를 줘야 함. Ex) Item 고칠거면 name, description, tags, category, location, status, availableQuantity, totalQuantity
+
+Item Image 사용 방법
+Get 하면 ImageUrl 값이 있음. 그 값을 img 태그의 src 링크에 넣으면 됨.
