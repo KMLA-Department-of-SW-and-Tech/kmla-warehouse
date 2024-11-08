@@ -79,7 +79,10 @@ exports.item_create = [
         }
         else {
             try {
-                const item = await itemService.createItem(req.body);
+                const imageUrl = req.file.location;
+                const newItem = req.body;
+                newItem.imageUrl = imageUrl;
+                const item = await itemService.createItem(newItem);
                 res.status(201).send("Successfully created item");
                 return;
             } catch (err) {

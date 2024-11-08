@@ -85,6 +85,7 @@ exports.createItem = async (item) => {
         status: "available",
         tags: [],
         category: null,
+        imageUrl: item.imageUrl,
     });
     try {
         const createdItem = await itemRepository.saveItem(newItem);
