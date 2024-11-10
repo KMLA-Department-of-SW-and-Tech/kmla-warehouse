@@ -14,7 +14,7 @@ interface Item {
   _id: string;
   name: string;
   location: string;
-  photoUrl?: string;
+  imageUrl?: string;
 }
 
 export default function EquipmentListPage() {
@@ -111,9 +111,9 @@ export default function EquipmentListPage() {
                             backgroundColor: '#f0f0f0',
                           }}
                         >
-                          {equipment.photoUrl ? (
+                          {equipment.imageUrl ? (
                             <img
-                              src={equipment.photoUrl}
+                              src={equipment.imageUrl}
                               alt={equipment.name}
                               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />

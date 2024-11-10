@@ -15,7 +15,7 @@ interface Item {
   totalQuantity: number;
   availableQuantity: number;
   location: string;
-  photoUrl?: string;
+  imageUrl?: string;
   tags: string[];
   status: 'available' | 'deleted';
   category: string;
@@ -31,7 +31,7 @@ export default function EquipmentDetailPage() {
     if (!id) return;
     try {
       const fetchedItem = await itemService.getById(id);
-      console.log('Fetched item:', fetchedItem);
+      console.log('Image URL:', fetchedItem.imageUrl); // ImageUrl 확인용 로그
       setItem(fetchedItem);
     } catch (error) {
       console.error('Failed to fetch item details:', error);
@@ -78,7 +78,6 @@ export default function EquipmentDetailPage() {
       }
     }
   };
-  
 
   return (
     <Layout>
@@ -109,7 +108,7 @@ export default function EquipmentDetailPage() {
               <Spin size="large" />
             ) : item ? (
               <div style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', flexDirection: 'row' }}>
-                {/* Left side: Image */}
+               
                 <div style={{ width: '50%', position: 'relative' }}>
                   <div
                     style={{
@@ -123,9 +122,9 @@ export default function EquipmentDetailPage() {
                       position: 'relative',
                     }}
                   >
-                    {item.photoUrl ? (
+                    {item.imageUrl ? (
                       <img
-                        src={item.photoUrl}
+                        src={item.imageUrl}
                         alt={item.name}
                         style={{
                           position: 'absolute',
@@ -150,18 +149,7 @@ export default function EquipmentDetailPage() {
                     )}
                   </div>
 
-                  {/* Placeholder for additional images */}
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      marginTop: '20px',
-                    }}
-                  >
-                    <div style={{ width: '30%', backgroundColor: '#f0f0f0', height: '50px' }} />
-                    <div style={{ width: '30%', backgroundColor: '#f0f0f0', height: '50px' }} />
-                    <div style={{ width: '30%', backgroundColor: '#f0f0f0', height: '50px' }} />
-                  </div>
+                  
                 </div>
 
                 {/* Right side: Text content */}

@@ -8,7 +8,7 @@ export interface Item {
   totalQuantity: number;
   availableQuantity: number;
   location: string;
-  photoUrl?: string;
+  imageUrl?: string;
   tags: string[];  // Array of ObjectId (represented as strings)
   status: "available" | "deleted";  // Enum for status
   category: string;  // ObjectId (represented as string)
