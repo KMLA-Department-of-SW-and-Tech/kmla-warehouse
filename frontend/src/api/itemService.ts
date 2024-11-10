@@ -20,7 +20,8 @@ export const itemService = {
     try {
       const response = await axiosPrivate.get(`/api/item/list`);
       console.log(response);
-      return response.data;
+      // Filter out items where the status is 'available'
+      return response.data.filter((item: Item) => item.status === 'available');
     } catch (e) {
       console.error(e.message);
       return [];
