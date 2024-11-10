@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './equipment-details.css'; 
 import { Typography, Spin, Layout, Button, message, Form, InputNumber } from 'antd'; 
 import { useParams } from 'react-router-dom';
 import { itemService } from '../../api/itemService';
@@ -7,7 +8,6 @@ import Headbar from '../../components/header';
 
 const { Sider, Content } = Layout;
 const { Title, Text } = Typography;
-
 interface Item {
   _id: string;
   name: string;
@@ -31,7 +31,6 @@ export default function EquipmentDetailPage() {
     if (!id) return;
     try {
       const fetchedItem = await itemService.getById(id);
-      console.log('Image URL:', fetchedItem.imageUrl); // ImageUrl 확인용 로그
       setItem(fetchedItem);
     } catch (error) {
       console.error('Failed to fetch item details:', error);
@@ -82,89 +81,34 @@ export default function EquipmentDetailPage() {
   return (
     <Layout>
       <Headbar />
-      <Layout style={{ minHeight: '100vh' }}>
-        <Sider
-          width={250}
-          style={{
-            background: '#fff',
-            position: 'fixed',
-            height: '100vh',
-            left: 0,
-            top: 64,
-          }}
-        >
+      <Layout className="layout">
+        <Sider className="sider">
           <Sidebar />
         </Sider>
-
         <Layout style={{ marginLeft: 250 }}>
-          <Content 
-            style={{ 
-              padding: '40px', 
-              marginTop: '64px', // 헤더 높이만큼 여백을 추가해서 겹침 방지
-              width: 'calc(100vw - 250px)', 
-            }}
-          >
+          <Content className="content">
             {loading ? (
               <Spin size="large" />
             ) : item ? (
-              <div style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', flexDirection: 'row' }}>
-               
-                <div style={{ width: '50%', position: 'relative' }}>
-                  <div
-                    style={{
-                      width: '100%',
-                      height: '0',
-                      paddingTop: '100%',
-                      backgroundColor: '#f0f0f0',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      position: 'relative',
-                    }}
-                  >
+              <div className="content-wrapper">
+                <div className="image-container">
+                  <div className="image-placeholder">
                     {item.imageUrl ? (
-                      <img
-                        src={item.imageUrl}
-                        alt={item.name}
-                        style={{
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                        }}
-                      />
+                      <img src={item.imageUrl} alt={item.name} className="image" />
                     ) : (
-                      <Typography.Text
-                        style={{
-                          position: 'absolute',
-                          textAlign: 'center',
-                          color: '#888',
-                          fontSize: '16px',
-                        }}
-                      >
-                        이미지 없음
-                      </Typography.Text>
+                      <Typography.Text className="no-image-text">이미지를 불러올 수 없음</Typography.Text>
                     )}
                   </div>
-
-                  
                 </div>
-
-                {/* Right side: Text content */}
-                <div style={{ width: '50%', paddingLeft: '50px' }}>
+                <div className="text-content">
                   <Title level={1}>{item.name}</Title>
                   <Text>남은 수량 {item.availableQuantity} 개</Text>
-
                   <div style={{ marginTop: '10px' }}>
                     <Text>위치 {item.location}</Text>
-                    <Title level={5}>[제품 설명]</Title>
+                    <Title level={5}>물품 설명</Title>
                     <Text>{item.description}</Text>
                   </div>
-
-                  {/* Borrow form */}
-                  <Form layout="vertical" style={{ marginTop: '20px' }}>
+                  <Form layout="vertical" className="borrow-form">
                     <Form.Item label="대여할 수량을 선택하세요">
                       <InputNumber
                         min={1}
@@ -174,15 +118,12 @@ export default function EquipmentDetailPage() {
                         style={{ width: '100%' }}
                       />
                     </Form.Item>
-
-                    <Button type="primary" onClick={handleBorrow}>
-                      대여하기
-                    </Button>
+                    <Button type="primary" onClick={handleBorrow}>대여하기</Button>
                   </Form>
                 </div>
               </div>
             ) : (
-              <Typography.Text>아이템 정보를 불러오지 못했습니다.</Typography.Text>
+              <Typography.Text>아이템 정보를 불러오지 못했습니다. 과학기술부에 문의하세요.</Typography.Text>
             )}
           </Content>
         </Layout>

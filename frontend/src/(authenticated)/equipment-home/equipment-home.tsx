@@ -15,6 +15,7 @@ interface Item {
   name: string;
   location: string;
   imageUrl?: string;
+
 }
 
 export default function EquipmentListPage() {
@@ -94,58 +95,55 @@ export default function EquipmentListPage() {
           {loading ? (
             <Spin size="large" />
           ) : (
-            <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
-              {filteredEquipmentList.length > 0 ? (
-                filteredEquipmentList.map((equipment, index) => (
-                  <Col xs={24} sm={12} md={8} lg={4} key={equipment._id}>
-                    <Card
-                      hoverable
-                      cover={
-                        <div
-                          style={{
-                            width: '100%',
-                            height: '150px',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            backgroundColor: '#f0f0f0',
-                          }}
-                        >
-                          {equipment.imageUrl ? (
-                            <img
-                              src={equipment.imageUrl}
-                              alt={equipment.name}
-                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                            />
-                          ) : (
-                            <Typography.Text>이미지 없음</Typography.Text>
-                          )}
-                        </div>
-                      }
-                      actions={[
-                        <CalendarOutlined
-                          key="view"
-                          onClick={() => handleViewDetails(equipment._id)}
-                        />,
-                      ]}
-                      style={{ maxWidth: '220px', height: '300px' }}
-                    >
-                      <Card.Meta
-                        title={equipment.name}
-                        description={equipment.location}
-                        style={{
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                        }}
-                      />
-                    </Card>
-                  </Col>
-                ))
+<Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
+  {filteredEquipmentList.length > 0 ? (
+    filteredEquipmentList.map((equipment, index) => (
+      <Col xs={24} sm={12} md={8} lg={4} key={equipment._id}>
+        <Card
+          hoverable
+          onClick={() => handleViewDetails(equipment._id)} // Make the entire card clickable
+          cover={
+            <div
+              style={{
+                width: '100%',
+                height: '150px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#f0f0f0',
+              }}
+            >
+              {equipment.imageUrl ? (
+                <img
+                  src={equipment.imageUrl}
+                  alt={equipment.name}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
               ) : (
-                <Typography.Text>데이터가 없습니다.</Typography.Text>
+                <Typography.Text>이미지 없음</Typography.Text>
               )}
-            </Row>
+            </div>
+          }
+          style={{ maxWidth: '220px', height: '260px' }} // Reduced height here
+        >
+          <Card.Meta
+            title={equipment.name}
+            description={equipment.location}
+            style={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          />
+        </Card>
+      </Col>
+    ))
+  ) : (
+    <Typography.Text>데이터가 없습니다.</Typography.Text>
+  )}
+</Row>
+
+
           )}
         </Content>
       </Layout>
