@@ -29,15 +29,13 @@ export default function EquipmentListPage() {
     // Fetch equipment list from API
     const fetchEquipmentList = async () => {
       try {
-        const items = await itemService.getAll();  // Fetch all items from the API
-        console.log('Fetched items:', items); // Add this line to check the response
+        const items = await itemService.getAll();  
         setEquipmentList(items);
-        setFilteredEquipmentList(items); // Initialize filtered list
       } catch (error) {
         console.error('Failed to fetch equipment list:', error);
-        setEquipmentList([]); // Handle error by setting empty array
+        setEquipmentList([]); 
       } finally {
-        setLoading(false); // Stop loading once the data is fetched
+        setLoading(false); 
       }
     };
 
@@ -45,7 +43,6 @@ export default function EquipmentListPage() {
   }, []);
 
   useEffect(() => {
-    // Filter equipment list based on search query
     if (searchQuery) {
       const filteredItems = equipmentList.filter(item =>
         item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -53,7 +50,7 @@ export default function EquipmentListPage() {
       );
       setFilteredEquipmentList(filteredItems);
     } else {
-      setFilteredEquipmentList(equipmentList); // Show all items if query is empty
+      setFilteredEquipmentList(equipmentList); 
     }
   }, [searchQuery, equipmentList]);
 
@@ -83,11 +80,9 @@ export default function EquipmentListPage() {
             <UnorderedListOutlined style={{ marginRight: '10px' }} />
             물품목록 전체보기
           </Title>
-
-          {/* Search input below the title */}
           <Search
             placeholder="이름 또는 위치로 검색"
-            onChange={(e) => setSearchQuery(e.target.value)} // Update search query
+            onChange={(e) => setSearchQuery(e.target.value)} 
             style={{ marginBottom: '20px', maxWidth: '400px' }}
             allowClear
           />
@@ -101,7 +96,7 @@ export default function EquipmentListPage() {
       <Col xs={24} sm={12} md={8} lg={4} key={equipment._id}>
         <Card
           hoverable
-          onClick={() => handleViewDetails(equipment._id)} // Make the entire card clickable
+          onClick={() => handleViewDetails(equipment._id)} 
           cover={
             <div
               style={{
@@ -124,7 +119,7 @@ export default function EquipmentListPage() {
               )}
             </div>
           }
-          style={{ maxWidth: '220px', height: '260px' }} // Reduced height here
+          style={{ maxWidth: '220px', height: '260px' }} 
         >
           <Card.Meta
             title={equipment.name}
@@ -142,8 +137,6 @@ export default function EquipmentListPage() {
     <Typography.Text>데이터가 없습니다.</Typography.Text>
   )}
 </Row>
-
-
           )}
         </Content>
       </Layout>

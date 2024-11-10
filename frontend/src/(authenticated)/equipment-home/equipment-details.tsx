@@ -53,8 +53,6 @@ export default function EquipmentDetailPage() {
     try {
       await itemService.borrowRequest(id, borrowQuantity);
       message.success('대여 요청이 성공적으로 처리되었습니다.');
-  
-      // Reload the page to refresh item details
       window.location.reload();
   
     } catch (error) {

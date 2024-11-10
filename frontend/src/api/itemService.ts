@@ -19,18 +19,16 @@ export const itemService = {
   getAll: async (): Promise<Item[]> => {
     try {
       const response = await axiosPrivate.get(`/api/item/list`);
-      console.log(response);
-      // Filter out items where the status is 'available'
       return response.data.filter((item: Item) => item.status === 'available');
     } catch (e) {
       console.error(e.message);
       return [];
     }
   },
+
   getById: async (id: string): Promise<Item> => {
     try {
       const response = await axiosPrivate.get(`/api/item/${id}`);
-      console.log("b")
       return response.data.item;
     } catch (e) {
       console.error(e.message);
@@ -80,32 +78,26 @@ borrowRequest: async (id: string, quantity: number ): Promise<Item> => {
   },
   delete: async (id: string): Promise<void> => {
     try{
-      console.log('a');
       const response = await axiosPrivate.get(`/api/item/${id}`);
-      console.log('b');
       return response.data;
     } catch(e){
       console.error(e.message);
     }
   },
 
-  // 예약 데이터 가져오기
   getReservations: async (userInfo) => {
     try {
-      const response = await axiosPrivate.get(`/api/team/${userInfo}/borrow-list`); // 예약 데이터를 가져오는 API
-      console.log(response.data)
-      return response.data; // 예약 데이터 반환
+      const response = await axiosPrivate.get(`/api/team/${userInfo}/borrow-list`); 
+      return response.data; 
     } catch (error) {
       console.error('Error fetching reservations:', error.message);
       throw error;
     }
   },
 
-  // 물품 반납
   returnItem: async(userInfo) => {
     try {
       const data = await axiosPrivate.post(`/api/borrow-history/${userInfo}/return`);
-      console.log(data.data);
       return data.data;
     } catch (error) {
       console.error('Error posting item return:', error.message);

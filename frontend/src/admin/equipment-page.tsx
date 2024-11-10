@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Layout, Typography, Spin, message } from 'antd';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from "../components/admin/admin-sidebar";
-import '../styles/admin-home.css';
+import './admin-home.css';
 import Headbar from "../components/header"
 import { Item, itemService } from "../api/itemService";
 
