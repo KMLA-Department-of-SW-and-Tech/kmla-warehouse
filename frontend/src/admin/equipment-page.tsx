@@ -84,7 +84,7 @@ const AdminEquipmentPage: React.FC = () => {
     {
       title: '물품명',
       dataIndex: 'name',
-      
+      key: 'name'
   
     },
     {

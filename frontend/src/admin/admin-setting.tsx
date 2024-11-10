@@ -114,7 +114,7 @@ const AdminSettingPage = () => {
               </Form.Item>
             </Form>
 
-            <Button type="danger" onClick={handleLogout} loading={loading}>
+            <Button onClick={handleLogout} loading={loading}>
               Logout
             </Button>
           </div>

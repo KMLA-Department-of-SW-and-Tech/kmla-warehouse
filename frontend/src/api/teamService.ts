@@ -45,9 +45,7 @@ export const teamService = {
 
   //DELETE 팀 삭제하기
   delete: async (id: string): Promise<void> => {
-    console.log("deleting api after");
     await axiosPrivate.delete(`/api/team/${id}`);
-    console.log("deleting api before ");
   },
 
   //유저 정보 가져오기
