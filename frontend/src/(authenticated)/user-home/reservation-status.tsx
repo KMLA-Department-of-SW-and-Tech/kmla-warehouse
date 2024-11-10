@@ -14,7 +14,7 @@ interface Item {
   _id: string;
   name: string;
   location: string;
-  photoUrl?: string;
+  imageUrl?: string;
 }
 
 interface Reservation {
@@ -120,9 +120,9 @@ export default function ReservationStatus() {
                             backgroundColor: '#f0f0f0',
                           }}
                         >
-                          {reservation.item.photoUrl ? (
+                          {reservation.item.imageUrl ? (
                             <img
-                              src={reservation.item.photoUrl}
+                              src={reservation.item.imageUrl}
                               alt={reservation.item.name}
                               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
