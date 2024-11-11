@@ -3,7 +3,7 @@ import { Layout, Typography, Spin, message, ConfigProvider } from 'antd';
 import enUS from 'antd/lib/locale/en_US';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from "../components/admin/admin-sidebar";
-import '../styles/admin-home.css';
+import './admin-home.css';
 import Headbar from "../components/header";
 import { teamService, Team } from "../api/teamService";
 
