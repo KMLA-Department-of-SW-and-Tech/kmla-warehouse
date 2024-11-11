@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Card, Row, Col, Spin, Layout, message } from 'antd';
-import { LoginOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { Typography, Card, Row, Col, Spin, Layout, message, Button } from 'antd';
 import Sidebar from '../../components/equipment/equipment-bar';
 import { teamService } from "../../api/teamService.ts";
 import { itemService } from "../../api/itemService.ts";
 import { useNavigate } from "react-router-dom";
 import Headbar from "../../components/header.tsx";
+import { UnorderedListOutlined } from '@ant-design/icons';
+
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -14,7 +15,7 @@ interface Item {
   _id: string;
   name: string;
   location: string;
-  photoUrl?: string;
+  imageUrl?: string;
 }
 
 interface Reservation {
@@ -34,10 +35,8 @@ export default function ReservationStatus() {
   useEffect(() => {
     const fetchReservationAndEquipment = async () => {
       try {
-        // Get current user information
         const userInfo = await teamService.getUserInfo();
         setCurrentUserId(userInfo._id);
-        // Fetch reservation list
         const reservations = await itemService.getReservations(userInfo._id);
         setReservationList(reservations);
       } catch (error) {
@@ -50,7 +49,6 @@ export default function ReservationStatus() {
     fetchReservationAndEquipment();
   }, []);
 
-  // 반납 처리 핸들러
   const handleReturn = async (reservationId: string) => {
     if (!reservationId) return;
     try {
@@ -120,9 +118,9 @@ export default function ReservationStatus() {
                             backgroundColor: '#f0f0f0',
                           }}
                         >
-                          {reservation.item.photoUrl ? (
+                          {reservation.item.imageUrl ? (
                             <img
-                              src={reservation.item.photoUrl}
+                              src={reservation.item.imageUrl}
                               alt={reservation.item.name}
                               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
@@ -131,15 +129,6 @@ export default function ReservationStatus() {
                           )}
                         </div>
                       }
-                      actions={[
-                        <LoginOutlined
-                          key="return"
-                          onClick={() => handleReturn(reservation._id)}
-                          style={{ color: 'initial', transition: 'color 0.3s' }}  // 기본 색상 및 부드러운 전환
-                          onMouseEnter={(e) => (e.currentTarget.style.color = 'red')}  // 호버 시 붉은색으로 변경
-                          onMouseLeave={(e) => (e.currentTarget.style.color = 'initial')}  // 마우스가 떠나면 원래 색상으로
-                        />,
-                      ]}
                       style={{ maxWidth: '220px', height: '300px' }}
                     >
                       <Card.Meta
@@ -151,6 +140,20 @@ export default function ReservationStatus() {
                           textOverflow: 'ellipsis',
                         }}
                       />
+                      
+                      <Button
+                        type="primary"
+                        onClick={() => handleReturn(reservation._id)}
+                        style={{
+                          marginTop: '10px',
+                          width: '100%',
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        
+                        반납하기
+                      </Button>
                     </Card>
                   </Col>
                 ))

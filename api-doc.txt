@@ -76,8 +76,6 @@ use authService or axiosPrivate for requests or you will get auth errors
 
 
 
-
-
 Request with Axios // just an example, do not use it in this form, use async and send multiple requests at once (Promise.all)
 axios.post('/api/team/', {
     username: "LoginTestUsername",
@@ -111,4 +109,4 @@ PUT 사용 시 유의점!
 각 데이터 종류에 대해 그것이 가지는 *모든* 하위 항목에 대한 정보를 줘야 함. Ex) Item 고칠거면 name, description, tags, category, location, status, availableQuantity, totalQuantity
 
 Item Image 사용 방법
-Get 하면 ImageUrl 값이 있음. 그 값을 img 태그의 src 링크에 넣으면 됨.
+Get 하면 imageUrl 값이 있음. 그 값을 img 태그의 src 링크에 넣으면 됨.
