@@ -7,6 +7,7 @@ export interface BorrowHistory {
   type: "borrow" | "return";
   user: string;
   timestamp: string;
+  status: string;
 }
 
 export const borrowHistoryService = {

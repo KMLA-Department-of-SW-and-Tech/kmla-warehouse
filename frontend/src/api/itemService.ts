@@ -67,13 +67,14 @@ borrowRequest: async (id: string, quantity: number ): Promise<Item> => {
   
 
   // 물품 생성
-  create: (item: Item): Promise<Item> => {
-    return axiosPrivate.post(`/api/item`, item)
-      .then(response => response.data)
-      .catch(error => {
-        console.error(error.message);
-        throw error;
-      });
+  post: async (newItem: Item) => {
+    try{
+      const response = await axiosPrivate.post('/api/item', newItem);
+      return response.data;
+    } catch(e){
+      console.error(e.message);
+      throw e;
+    }
   },
 
   // 물품 업데이트 (PUT)
@@ -101,7 +102,7 @@ borrowRequest: async (id: string, quantity: number ): Promise<Item> => {
   delete: async (id: string): Promise<void> => {
     try{
       console.log('a');
-      const response = await axiosPrivate.get(`/api/item/${id}`);
+      const response = await axiosPrivate.delete(`/api/item/${id}`);
       console.log('b');
       return response.data;
     } catch(e){

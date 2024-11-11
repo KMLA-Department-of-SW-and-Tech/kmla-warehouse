@@ -1,4 +1,3 @@
-//admin-reservation-page
 import React, { useState, useEffect } from 'react';
 import { Layout, Typography, Spin, message } from 'antd';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
@@ -7,10 +6,8 @@ import "../styles/admin-home.css";
 import Headbar from "../components/header";
 import { borrowHistoryService, BorrowHistory } from '../api/borrowHistoryService';
 
-
 const { Content, Sider } = Layout;
 const { Title } = Typography;
-
 
 const AdminHistoryPage: React.FC = () => {
   const [borrowHistories, setBorrowHistories] = useState<BorrowHistory[]>([]);
@@ -18,87 +15,64 @@ const AdminHistoryPage: React.FC = () => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
 
   useEffect(() => {
-    const fetchBorrowHistories = async () => {
-      setLoading(true);
-      try {
-        const response = await borrowHistoryService.getAll(); 
-        console.log(response);
-        setBorrowHistories(response);
-      } catch (error) {
-        message.error('Failed to fetch items');
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchBorrowHistories();
   }, []);
 
-  const handleAddBorrowHistory = async (newBorrowHistory: BorrowHistory) => {
+  const fetchBorrowHistories = async () => {
+    setLoading(true);
     try {
-      const addedBorrowHistory = await borrowHistoryService.create(newBorrowHistory); 
-      setBorrowHistories([...borrowHistories, addedBorrowHistory]); 
-      message.success('Borrow history added successfully');
+      const response = await borrowHistoryService.getAll();
+      const filteredBorrowHistories = response.filter(
+        (borrowHistory) => borrowHistory.status !== "deleted"
+      );
+      setBorrowHistories(filteredBorrowHistories);
     } catch (error) {
-      message.error('Failed to add borrow history');
+      message.error("Failed to fetch items");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUpdateBorrowHistory = async (id: string, updatedBorrowHistory: BorrowHistory) => {
+    try {
+      const updated = await borrowHistoryService.update(id, updatedBorrowHistory);
+      setBorrowHistories(borrowHistories.map((bh) => (bh._id === id ? updated : bh)));
+      message.success("Borrow history updated successfully");
+      fetchBorrowHistories(); // 데이터 갱신
+    } catch (error) {
+      message.error("Failed to update borrow history");
       console.error(error);
     }
   };
 
-
   const handleDeleteBorrowHistory = async (id: string) => {
     try {
-      await borrowHistoryService.delete(id); 
-      setBorrowHistories(borrowHistories.filter(borrowHistory => borrowHistory._id !== id)); 
-      message.success('Borrow history deleted successfully');
+      await borrowHistoryService.delete(id);
+      setBorrowHistories(borrowHistories.filter((borrowHistory) => borrowHistory._id !== id));
+      message.success("Borrow history deleted successfully");
     } catch (error) {
-      message.error('Failed to delete borrow history');
+      message.error("Failed to delete borrow history");
       console.error(error);
     }
   };
 
   const columns: ProColumns<BorrowHistory>[] = [
+    { title: "팀명", dataIndex: "user", key: "user" },
+    { title: "신청물품", dataIndex: "item", key: "item" },
+    { title: "수량", dataIndex: "quantity", key: "quantity" },
+    { title: "상태", dataIndex: "type", key: "type" },
+    { title: "시간", dataIndex: "timestamp", key: "timestamp" },
     {
-      title: '팀명',
-      dataIndex: 'user',
-      key: 'user',
-    },
-    {
-      title: '신청물품',
-      dataIndex: 'item',
-      key: 'item',
-    },
-    {
-      title: '수량',
-      dataIndex: 'quantity',
-      key: 'quantity',
-    },
-    {
-      title: '상태',
-      dataIndex: 'type',
-      key: 'type',
-    },
-    {
-      title: '시간',
-      dataIndex: "timestamp", 
-      key: 'timestamp',
-  
-    },
-    {
-      title: 'Actions',
-      valueType: 'option',
-      render: (text, record, action) => [
-        <a
-          key="delete"
-          onClick={() => handleDeleteBorrowHistory(record._id)} 
-        >
+      title: "Actions",
+      valueType: "option",
+      render: (text, record) => [
+        <a key="delete" onClick={() => handleDeleteBorrowHistory(record._id)}>
           Delete
         </a>,
       ],
     },
   ];
-  
 
   return (
     <Layout className="layout">
@@ -108,37 +82,25 @@ const AdminHistoryPage: React.FC = () => {
           <Sidebar />
         </Sider>
         <Layout>
-        <Content className="content">
+          <Content className="content">
             <Title level={3}>예약현황</Title>
             {loading ? (
               <Spin />
             ) : (
-              <>
-                <EditableProTable<BorrowHistory>
-                  rowKey="id"
-                  value={borrowHistories}
-                  columns={columns}
-                  editable={{
-                    type: 'multiple',
-                    editableKeys,
-                    onSave: async (rowKey, data, row) => {
-                        await handleAddBorrowHistory(data as BorrowHistory);
-                    },
-                    onChange: setEditableRowKeys,
-                  }}
-                  recordCreatorProps={{
-                    position: 'bottom',
-                    record: () => ({
-                      _id: `${(Math.random() * 1000000).toFixed(0)}`,
-                      user: '',
-                      item: '',
-                      quantity: 0,
-                      type: "borrow",
-                      timestamp: '',
-                    }),
-                  }}
-                />
-              </>
+              <EditableProTable<BorrowHistory>
+                rowKey="_id"
+                value={borrowHistories}
+                columns={columns}
+                editable={{
+                  type: "multiple",
+                  editableKeys,
+                  onSave: async (rowKey, data) => {
+                    await handleUpdateBorrowHistory(data._id, data as BorrowHistory);
+                  },
+                  onChange: setEditableRowKeys,
+                }}
+                
+              />
             )}
           </Content>
         </Layout>

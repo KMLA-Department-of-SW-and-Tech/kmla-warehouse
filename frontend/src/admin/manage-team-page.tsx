@@ -1,41 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Typography, Spin, message } from 'antd';
+import { Layout, Typography, Spin, message, ConfigProvider } from 'antd';
+import enUS from 'antd/lib/locale/en_US';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from "../components/admin/admin-sidebar";
 import '../styles/admin-home.css';
-import Headbar from "../components/header"
+import Headbar from "../components/header";
 import { teamService, Team } from "../api/teamService";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
-
 
 const AdminTeamPage: React.FC = () => {
   const [teams, setTeams] = useState<Team[]>([]);
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
 
-  useEffect(() => {
-    const fetchTeams = async () => {
-      setLoading(true);
-      try {
-        const response = await teamService.getAll(); 
-        setTeams(response);
-      } catch (error) {
-        message.error('Failed to fetch items');
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchTeams = async () => {
+    setLoading(true);
+    try {
+      const response = await teamService.getAll();
+      const filteredTeams = response.filter(team => team.status !== "deleted");
+      setTeams(filteredTeams);
+    } catch (error) {
+      message.error('Failed to fetch items');
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchTeams();
   }, []);
 
   const handleAddTeam = async (newTeam: Team) => {
     try {
       const addedTeam = await teamService.create(newTeam);
-      setTeams([...teams, addedTeam]);
+      setTeams(prevTeams => [...prevTeams, addedTeam]);
       message.success('Team added successfully');
     } catch (error) {
       message.error('Failed to add team');
@@ -45,8 +46,8 @@ const AdminTeamPage: React.FC = () => {
 
   const handleUpdateTeam = async (id: string, updatedTeam: Team) => {
     try {
-      const updated = await teamService.update(id, updatedTeam); 
-      setTeams(teams.map(team => (team._id === id ? updated : team))); 
+      const updated = await teamService.update(id, updatedTeam);
+      setTeams(teams.map(team => (team._id === id ? updated : team)));
       message.success('Team updated successfully');
     } catch (error) {
       message.error('Failed to update team');
@@ -56,8 +57,8 @@ const AdminTeamPage: React.FC = () => {
 
   const handleDeleteTeam = async (id: string) => {
     try {
-      await teamService.delete(id); 
-      setTeams(teams.filter(team => team._id !== id)); 
+      await teamService.delete(id);
+      setTeams(teams.filter(team => team._id !== id));
       message.success('Team deleted successfully');
     } catch (error) {
       message.error('Failed to delete team');
@@ -84,7 +85,7 @@ const AdminTeamPage: React.FC = () => {
         </a>,
         <a
           key="delete"
-          onClick={() => handleDeleteTeam(record._id)} 
+          onClick={() => handleDeleteTeam(record._id)}
         >
           Delete
         </a>,
@@ -93,28 +94,28 @@ const AdminTeamPage: React.FC = () => {
   ];
 
   return (
-    <Layout className="layout">
-      <Headbar />
-      <Layout>
-        <Sider>
-          <Sidebar />
-        </Sider>
+    <ConfigProvider locale={enUS}>
+      <Layout className="layout">
+        <Headbar />
         <Layout>
-          <Content className="content">
-            <Title level={3}>팀관리</Title>
-            {loading ? (
-              <Spin />
-            ) : (
-              <>
+          <Sider>
+            <Sidebar />
+          </Sider>
+          <Layout>
+            <Content className="content">
+              <Title level={3}>팀관리</Title>
+              {loading ? (
+                <Spin />
+              ) : (
                 <EditableProTable<Team>
-                  rowKey="id"
+                  rowKey="_id"
                   value={teams}
                   columns={columns}
                   editable={{
                     type: 'multiple',
                     editableKeys,
-                    onSave: async (rowKey, data, row) => {
-                      if (!data._id) {
+                    onSave: async (rowKey, data) => {
+                      if (data._id=='default') {
                         await handleAddTeam(data as Team);
                       } else {
                         await handleUpdateTeam(data._id, data as Team);
@@ -125,17 +126,18 @@ const AdminTeamPage: React.FC = () => {
                   recordCreatorProps={{
                     position: 'bottom',
                     record: () => ({
-                      _id: (Math.random() * 1000000).toString(),
+                      _id: 'default',
                       name: '',
+                      status: 'available',
                     }),
                   }}
                 />
-              </>
-            )}
-          </Content>
+              )}
+            </Content>
+          </Layout>
         </Layout>
       </Layout>
-    </Layout>
+    </ConfigProvider>
   );
 };
 

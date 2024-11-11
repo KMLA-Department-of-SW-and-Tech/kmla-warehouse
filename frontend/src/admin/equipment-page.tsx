@@ -1,16 +1,14 @@
-//admin-equipment-page
 import React, { useEffect, useState } from "react";
-import { Layout, Typography, Spin, message } from 'antd';
+import { Layout, Typography, Spin, message, ConfigProvider } from 'antd';
+import enUS from 'antd/lib/locale/en_US';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from "../components/admin/admin-sidebar";
 import '../styles/admin-home.css';
-import Headbar from "../components/header"
+import Headbar from "../components/header";
 import { Item, itemService } from "../api/itemService";
-
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
-
 
 const AdminEquipmentPage: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
@@ -18,7 +16,7 @@ const AdminEquipmentPage: React.FC = () => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
 
   useEffect(() => {
-    const fetchItems = async () => {
+    const fetchItem = async () => {
       setLoading(true);
       try {
         const response = await itemService.getAll(); 
@@ -32,24 +30,13 @@ const AdminEquipmentPage: React.FC = () => {
       }
     };
 
-    fetchItems();
+    fetchItem();
   }, []);
 
   const handleAddItem = async (newItem: Item) => {
-    const itemToAdd: Item ={
-      _id: `${(Math.random() * 1000000).toFixed(0)}`,
-      name: newItem.name,
-      description: newItem.description,
-      totalQuantity: newItem.totalQuantity,
-      availableQuantity: newItem.totalQuantity,
-      location: newItem.location,
-      photoUrl: "", 
-      tags: [], 
-      status: "available",
-      category: "", 
-    }
+    console.log(newItem);
     try {
-      const addedItem = await itemService.create(itemToAdd); 
+      const addedItem = await itemService.post(newItem); 
       setItems([...items, addedItem]); 
       message.success('Item added successfully');
     } catch (error) {
@@ -82,33 +69,26 @@ const AdminEquipmentPage: React.FC = () => {
 
   const columns: ProColumns<Item>[] = [
     {
-      title: '물품명',
-      dataIndex: 'name',
-      key: 'name'
-  
+      title: '사진',
+      dataIndex: 'imageUrl',
+      key: 'imageUrl',
+      render: (text) => (
+        text ? (
+          <img src={String(text)} alt="img" style={{ width: 30, height: 30, objectFit: 'cover' }} />
+        ) : (
+          <span>No image</span>
+        )
+      ),
     },
-    {
-      title: '설명',
-      dataIndex: 'description',
-      key: 'description'
-
-    },
-    {
-      title: '총수량',
-      dataIndex: 'totalQuantity',
-      key: 'totalQauntity'
-
-    },
-    {
-      title: '위치',
-      dataIndex: 'location',
-      key: 'location'
-    },
+    { title: '물품명', dataIndex: 'name', key: 'name' },
+    { title: '설명', dataIndex: 'description', key: 'description' },
+    { title: '총수량', dataIndex: 'totalQuantity', key: 'totalQuantity' },
+    { title: '위치', dataIndex: 'location', key: 'location' },
     {
       title: 'Actions',
       valueType: 'option',
       render: (text, record, _, action) => [
-        <a key="editable" onClick={() => { action?.startEditable?.(record._id)}}>
+        <a key="editable" onClick={() => { action?.startEditable?.(record._id) }}>
           Edit
         </a>,
         <a key="delete" onClick={() => handleDeleteItem(record._id)}>
@@ -119,32 +99,36 @@ const AdminEquipmentPage: React.FC = () => {
   ];
 
   return (
-    <Layout className="layout">
-      <Headbar />
-      <Layout>
-        <Sider>
-          <Sidebar />
-        </Sider>
+    <ConfigProvider locale={enUS}>
+      <Layout className="layout">
+        <Headbar />
         <Layout>
-          <Content className="content">
-            <Title level={3}>물품관리</Title>
-            {loading ? (
-              <Spin />
-            ) : (
-              <>
+          <Sider>
+            <Sidebar />
+          </Sider>
+          <Layout>
+            <Content className="content">
+              <Title level={3}>물품관리</Title>
+              {loading ? (
+                <Spin />
+              ) : (
                 <EditableProTable<Item>
-                  rowKey="id"
+                  rowKey="_id"
                   value={items}
                   columns={columns}
                   editable={{
                     type: 'multiple',
                     editableKeys,
-                    onSave: async (rowKey, data, row) => {
-                      if (!data._id) {
-                        data.status = "available";
+                    onSave: async (rowKey, data) => {
+                      if ('index' in data) {
+                        delete data.index; // index 속성 제거
+                      }
+
+                      if (data._id=='default') {
+                        data._id = `${Date.now()}`;
                         await handleAddItem(data);
                       } else {
-                        await handleUpdateItem(data._id, data as Item);
+                        await handleUpdateItem(data._id, data);
                       }
                     },
                     onChange: setEditableRowKeys,
@@ -152,24 +136,25 @@ const AdminEquipmentPage: React.FC = () => {
                   recordCreatorProps={{
                     position: 'bottom',
                     record: () => ({
-                      _id: '',
+                      _id: 'default', 
                       name: '',
                       description: '',
                       totalQuantity: 0,
                       availableQuantity: 0,
                       location: '',
+                      imageUrl: '',
                       tags: [],
                       status: 'available',
                       category: '',
                     }),
                   }}
                 />
-              </>
-            )}
-          </Content>
+              )}
+            </Content>
+          </Layout>
         </Layout>
       </Layout>
-    </Layout>
+    </ConfigProvider>
   );
 };
 
