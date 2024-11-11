@@ -56,7 +56,7 @@ borrowRequest: async (id: string, quantity: number ): Promise<Item> => {
   
 
   // 물품 생성
-  create: (item: Item): Promise<Item> => {
+  post: (item: Item): Promise<Item> => {
     return axiosPrivate.post(`/api/item`, item)
       .then(response => response.data)
       .catch(error => {
