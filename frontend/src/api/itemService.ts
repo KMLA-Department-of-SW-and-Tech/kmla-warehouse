@@ -5,13 +5,18 @@ export interface Item {
   _id: string;
   name: string;
   description: string;
-  totalQuantity: number;
-  availableQuantity: number;
+  quantity: number;
   location: string;
   imageUrl?: string;
-  tags: string[];  
   status: "available" | "deleted";  
-  category: string;  
+}
+
+export interface AddItem {
+  name: string;
+  description: string; 
+  quantity: number;
+  location: string;
+  imageUrl?: string;
 }
 
 
@@ -55,14 +60,18 @@ borrowRequest: async (id: string, quantity: number ): Promise<Item> => {
 
   
 
-  // 물품 생성
-  post: (item: Item): Promise<Item> => {
-    return axiosPrivate.post(`/api/item`, item)
-      .then(response => response.data)
-      .catch(error => {
-        console.error(error.message);
-        throw error;
+  // create item
+  create: async (item: FormData): Promise<Item> => {
+    try {
+      const response = await axiosPrivate.post("/api/item", item, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
+      return response.data; 
+    } catch (error) {
+      throw new Error("Failed to create item");
+    }
   },
   update: (id: string, item: Item): Promise<Item> => {
     return axiosPrivate.put(`/api/item/${id}`, item)

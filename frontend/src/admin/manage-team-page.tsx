@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Typography, Spin, message, ConfigProvider } from 'antd';
+import { Layout, Typography, Spin, message, ConfigProvider, Form, Input, Button  } from 'antd';
 import enUS from 'antd/lib/locale/en_US';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from "../components/admin/admin-sidebar";
 import './admin-home.css';
 import Headbar from "../components/header";
-import { teamService, Team } from "../api/teamService";
+import { teamService, Team, AddTeam } from "../api/teamService";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
 
 const AdminTeamPage: React.FC = () => {
   const [teams, setTeams] = useState<Team[]>([]);
+  const [newTeams, addTeams] = useState<AddTeam[]>([]);
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
+  const [form] = Form.useForm();
 
   const fetchTeams = async () => {
     setLoading(true);
@@ -33,10 +35,10 @@ const AdminTeamPage: React.FC = () => {
     fetchTeams();
   }, []);
 
-  const handleAddTeam = async (newTeam: Team) => {
+  const handleAddTeam = async (newTeam: AddTeam) => {
     try {
       const addedTeam = await teamService.create(newTeam);
-      setTeams(prevTeams => [...prevTeams, addedTeam]);
+      addTeams(prevTeams => [...prevTeams, addedTeam]);
       message.success('Team added successfully');
     } catch (error) {
       message.error('Failed to add team');
@@ -49,6 +51,9 @@ const AdminTeamPage: React.FC = () => {
       const updated = await teamService.update(id, updatedTeam);
       setTeams(teams.map(team => (team._id === id ? updated : team)));
       message.success('Team updated successfully');
+
+      setEditableRowKeys(prevKeys => prevKeys.filter(key => key !== id));
+      fetchTeams();
     } catch (error) {
       message.error('Failed to update team');
       console.error(error);
@@ -70,6 +75,10 @@ const AdminTeamPage: React.FC = () => {
     {
       title: '팀명',
       dataIndex: 'name',
+    },
+    {
+      title: '생성자',
+      dataIndex: 'username',
     },
     {
       title: 'Actions',
@@ -104,6 +113,38 @@ const AdminTeamPage: React.FC = () => {
           <Layout>
             <Content className="content">
               <Title level={3}>팀관리</Title>
+
+              <Form
+                form={form}
+                layout="inline"
+                onFinish={handleAddTeam}
+                style={{ marginBottom: 20 }}
+              >
+                <Form.Item
+                  name="username"
+                  rules={[{ required: true, message: 'Please input the username!' }]}
+                >
+                  <Input placeholder="Username" />
+                </Form.Item>
+                <Form.Item
+                  name="password"
+                  rules={[{ required: true, message: 'Please input the password!' }]}
+                >
+                  <Input.Password placeholder="Password" />
+                </Form.Item>
+                <Form.Item
+                  name="name"
+                  rules={[{ required: true, message: 'Please input the team name!' }]}
+                >
+                  <Input placeholder="Team Name" />
+                </Form.Item>
+                <Form.Item>
+                  <Button type="primary" htmlType="submit">
+                    Add Team
+                  </Button>
+                </Form.Item>
+              </Form>
+
               {loading ? (
                 <Spin />
               ) : (
@@ -115,22 +156,12 @@ const AdminTeamPage: React.FC = () => {
                     type: 'multiple',
                     editableKeys,
                     onSave: async (rowKey, data) => {
-                      if (data._id=='default') {
-                        await handleAddTeam(data as Team);
-                      } else {
-                        await handleUpdateTeam(data._id, data as Team);
-                      }
+                      await handleUpdateTeam(data._id, data as Team);
+                      console.log("Existing Team updated: ", data);
                     },
                     onChange: setEditableRowKeys,
                   }}
-                  recordCreatorProps={{
-                    position: 'bottom',
-                    record: () => ({
-                      _id: 'default',
-                      name: '',
-                      status: 'available',
-                    }),
-                  }}
+                  recordCreatorProps={false}
                 />
               )}
             </Content>

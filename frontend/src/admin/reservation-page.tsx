@@ -99,7 +99,7 @@ const AdminHistoryPage: React.FC = () => {
                   },
                   onChange: setEditableRowKeys,
                 }}
-                
+                recordCreatorProps={false}
               />
             )}
           </Content>
