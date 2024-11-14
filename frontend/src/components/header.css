@@ -1,4 +1,4 @@
-.header {
+.head {
     background-color: white; /* 배경색과 동일한 색상으로 설정 */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* 아래 그림자 */
     padding: 10px 20px;
@@ -10,7 +10,7 @@
     color: black;
   }
   /* 헤더 내용물의 최대 너비 설정과 중앙 정렬 */
-  .header-container {
+  .head-container {
     display: flex;
     justify-content: space-between; /* 로고와 사용자 정보 양쪽 배치 */
     align-items: center;
