@@ -57,6 +57,8 @@ const AdminEquipmentPage: React.FC = () => {
       const addedItem = await itemService.create(formData); 
       setItems([...items, addedItem]); 
       message.success('Item added successfully');
+
+      fetchItem();
     } catch (error) {
       message.error('Failed to add item');
       console.error(error);
