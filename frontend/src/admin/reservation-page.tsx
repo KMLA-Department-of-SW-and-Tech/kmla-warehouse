@@ -5,6 +5,7 @@ import Sidebar from '../components/admin/admin-sidebar';
 import "./admin-home.css";
 import Headbar from "../components/header";
 import { borrowHistoryService, BorrowHistory } from '../api/borrowHistoryService';
+import { DeleteOutlined } from '@ant-design/icons';
 
 const { Content, Sider } = Layout;
 const { Title } = Typography;
@@ -68,7 +69,7 @@ const AdminHistoryPage: React.FC = () => {
       valueType: "option",
       render: (text, record) => [
         <a key="delete" onClick={() => handleDeleteBorrowHistory(record._id)}>
-          Delete
+          <DeleteOutlined />
         </a>,
       ],
     },

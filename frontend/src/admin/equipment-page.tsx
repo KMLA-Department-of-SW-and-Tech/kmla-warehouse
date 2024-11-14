@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Layout, Typography, Spin, message, ConfigProvider, Upload, Button, Form, Input, InputNumber } from 'antd';
 import enUS from 'antd/lib/locale/en_US';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
-import { UploadOutlined } from "@ant-design/icons";
+import { CloseOutlined, DeleteOutlined, EditOutlined, SaveOutlined, UploadOutlined } from "@ant-design/icons";
 import Sidebar from "../components/admin/admin-sidebar";
 import './admin-home.css';
 import Headbar from "../components/header";
@@ -128,12 +128,23 @@ const AdminEquipmentPage: React.FC = () => {
       title: 'Actions',
       valueType: 'option',
       render: (text, record, _, action) => [
-        <a key="editable" onClick={() => { action?.startEditable?.(record._id) }}>
-          Edit
-        </a>,
-        <a key="delete" onClick={() => handleDeleteItem(record._id)}>
-          Delete
-        </a>,
+        <Button
+          key="editable"
+          icon={<EditOutlined />}
+          onClick={() => {
+            action?.startEditable?.(record._id);
+          }}
+          type="link"
+        >
+        </Button>,
+        <Button
+        key="delete"
+        icon={<DeleteOutlined />}
+        onClick={() => handleDeleteItem(record._id)}
+        type="link"
+        danger
+      >
+      </Button>,
       ],
     },
   ];
@@ -211,6 +222,9 @@ const AdminEquipmentPage: React.FC = () => {
                       await handleUpdateItem(data._id, data);
                     },
                     onChange: setEditableRowKeys,
+                    saveText: <Button icon={<SaveOutlined/>}></Button>,
+                    cancelText: <Button icon={<CloseOutlined/>}></Button>,
+                    deleteText: <Button danger icon={<DeleteOutlined/>}></Button>,
                   }}
                   recordCreatorProps={false}
                 />

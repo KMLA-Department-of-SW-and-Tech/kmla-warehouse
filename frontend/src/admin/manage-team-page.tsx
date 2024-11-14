@@ -6,6 +6,7 @@ import Sidebar from "../components/admin/admin-sidebar";
 import './admin-home.css';
 import Headbar from "../components/header";
 import { teamService, Team, AddTeam } from "../api/teamService";
+import { EditOutlined, DeleteOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons'; 
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -84,20 +85,23 @@ const AdminTeamPage: React.FC = () => {
       title: 'Actions',
       valueType: 'option',
       render: (text, record, _, action) => [
-        <a
+        <Button
           key="editable"
+          icon={<EditOutlined />}
           onClick={() => {
             action?.startEditable?.(record._id);
           }}
+          type="link"
         >
-          Edit
-        </a>,
-        <a
-          key="delete"
-          onClick={() => handleDeleteTeam(record._id)}
-        >
-          Delete
-        </a>,
+        </Button>,
+        <Button
+        key="delete"
+        icon={<DeleteOutlined />}
+        onClick={() => handleDeleteTeam(record._id)}
+        type="link"
+        danger
+      >
+      </Button>,
       ],
     },
   ];
@@ -160,7 +164,11 @@ const AdminTeamPage: React.FC = () => {
                       console.log("Existing Team updated: ", data);
                     },
                     onChange: setEditableRowKeys,
+                    saveText: <Button icon={<SaveOutlined/>}></Button>,
+                    cancelText: <Button icon={<CloseOutlined/>}></Button>,
+                    deleteText: <Button danger icon={<DeleteOutlined/>}></Button>,
                   }}
+                  
                   recordCreatorProps={false}
                 />
               )}
