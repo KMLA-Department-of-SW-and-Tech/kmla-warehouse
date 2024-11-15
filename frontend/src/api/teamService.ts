@@ -6,6 +6,12 @@ export interface Team {
   status: string;
 }
 
+export interface AddTeam{
+  username: string;
+  password: string;
+  name: string;
+}
+
 export const teamService = {
 
   //GET 팀리스트
@@ -33,7 +39,7 @@ export const teamService = {
   },
 
   //POST 팀정보 업로드하기
-  create: async (teamData: Team): Promise<Team> => {
+  create: async (teamData: AddTeam): Promise<AddTeam> => {
     const response = await axiosPrivate.post("/api/team/", teamData);
     return response.data;
   },

@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Typography, Spin, message } from 'antd';
+import { Layout, Typography, Spin, message, Grid } from 'antd';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from '../components/admin/admin-sidebar';
 import "./admin-home.css";
 import Headbar from "../components/header";
 import { borrowHistoryService, BorrowHistory } from '../api/borrowHistoryService';
+import { DeleteOutlined } from '@ant-design/icons';
 
 const { Content, Sider } = Layout;
 const { Title } = Typography;
+const { useBreakpoint } = Grid;
 
 const AdminHistoryPage: React.FC = () => {
+  const screens = useBreakpoint();
   const [borrowHistories, setBorrowHistories] = useState<BorrowHistory[]>([]);
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
@@ -68,7 +71,7 @@ const AdminHistoryPage: React.FC = () => {
       valueType: "option",
       render: (text, record) => [
         <a key="delete" onClick={() => handleDeleteBorrowHistory(record._id)}>
-          Delete
+          <DeleteOutlined />
         </a>,
       ],
     },
@@ -78,9 +81,12 @@ const AdminHistoryPage: React.FC = () => {
     <Layout className="layout">
       <Headbar />
       <Layout>
-        <Sider>
-          <Sidebar />
-        </Sider>
+        {!screens.xs  && (
+          <Sider>
+            <Sidebar />
+          </Sider>
+        )}
+        
         <Layout>
           <Content className="content">
             <Title level={3}>예약현황</Title>
@@ -99,7 +105,7 @@ const AdminHistoryPage: React.FC = () => {
                   },
                   onChange: setEditableRowKeys,
                 }}
-                
+                recordCreatorProps={false}
               />
             )}
           </Content>

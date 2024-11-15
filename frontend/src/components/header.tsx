@@ -14,8 +14,8 @@ const Headbar: React.FC = () => {
   fetchCurrentUser();
   }, [] )
   return (
-    <header className="header">
-      <div className="header-container">
+    <header className="head">
+      <div className="head-container">
         <div className="logo">
           KMLA Warehouse
         </div>
