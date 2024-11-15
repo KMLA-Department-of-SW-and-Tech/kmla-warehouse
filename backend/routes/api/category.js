@@ -5,7 +5,7 @@ const verifyRoles = require("../../middleware/verifyRoles"); // in case of admin
 
 const categoryController = require("../../controllers/category_controller");
 
-router.get("/list", verifyJWT, categoryController.category_list);
+router.get("/list", /* verifyJWT,  */categoryController.category_list);
 
 router.post("/", verifyJWT, categoryController.category_create);
 

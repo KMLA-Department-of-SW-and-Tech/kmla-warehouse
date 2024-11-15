@@ -4,7 +4,7 @@ const verifyJWT = require("../../middleware/verifyJWT");
 
 const tagController = require("../../controllers/tag_controller");
 
-router.get("/list", verifyJWT, tagController.tag_list);
+router.get("/list", /* verifyJWT,  */tagController.tag_list);
 
 router.post("/", verifyJWT, tagController.tag_create);
 

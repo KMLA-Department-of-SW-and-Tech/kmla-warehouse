@@ -8,14 +8,14 @@ const upload = require('../../middleware/upload'); // Import the multer upload c
 const itemController = require("../../controllers/item_controller");
 
 
-router.get("/list", verifyJWT, itemController.item_list);
+router.get("/list", /* verifyJWT,  */itemController.item_list);
 
-router.get("/search/:query", itemController.item_search);
+router.get("/search/:query", /* verifyJWT,  */itemController.item_search);
 
 router.post("/", verifyJWT, upload.single('image'), itemController.item_create);
 
 router.route("/:id")
-    .get(verifyJWT, itemController.item_detail)
+    .get(/* verifyJWT,  */itemController.item_detail)
     .put(verifyJWT, itemController.item_update_put)
     .patch(verifyJWT, itemController.item_update_patch)
     .delete(verifyJWT, deleteItem, itemController.item_update_put);
