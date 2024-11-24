@@ -28,7 +28,7 @@ GET 물품 정보 /api/item/:id
 POST 물품 생성 /api/item/ - request format: form
   body: name(String), description(String), quantity(Number), location(String), image(Image file)
 PUT 물품 업데이트 /api/item/:id
-  body: name(String), description(String), tags(Array of ObjectId), totalQuantity(Number), availableQuantity(Number), location(String), category(ObjectId), status(String)
+  body: name(String), description(String), tags(Array of ObjectId), totalQuantity(Number), availableQuantity(Number), location(String), category(ObjectId), status(String), image(Image file)
 PATCH 물품 업데이트 /api/item/:id
 DELETE 물품 삭제 /api/item/:id
 

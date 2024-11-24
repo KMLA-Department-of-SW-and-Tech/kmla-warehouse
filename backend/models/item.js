@@ -12,7 +12,8 @@ const itemSchema = new Schema({
     // photo will be added later
     category: {type: Schema.Types.ObjectId, ref: "Category"},
     status: {type: String, enum: ["available", "deleted"], default: "available"},
-    imageUrl: {type: String}
+    imageUrl: {type: String},
+    imageKey: {type: String}
 });
 
 module.exports = mongoose.model("Item", itemSchema);

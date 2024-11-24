@@ -79,9 +79,11 @@ exports.item_create = [
         }
         else {
             try {
-                const imageUrl = req.file.location;
+                const imageUrl = req.file ? req.file.location : null;
+                const imageKey = req.file ? req.file.key : null;
                 const newItem = req.body;
                 newItem.imageUrl = imageUrl;
+                newItem.imageKey = imageKey
                 const item = await itemService.createItem(newItem);
                 res.status(201).send("Successfully created item");
                 return;
@@ -115,9 +117,22 @@ exports.item_update_put = [
         else {
             const id = req.params.id;
             try {
-                const updatedItem = await itemService.updateItem(req.body, id);
-                res.status(200).send("Successfully updated item");
-                return;
+                let imageUrl = null;
+                let imageKey = null;
+                let prevKey = null;
+                if(req.file) {
+                    imageUrl = req.file.location;
+                    imageKey = req.file.key;
+                    const prevItemDetail = await itemService.getItemDetail(id);
+                    prevKey = prevItemDetail.imageKey;
+                }
+                const newItem = req.body;
+                newItem.imageUrl = imageUrl;
+                newItem.imageKey = imageKey
+                const updatedItem = await itemService.updateItem(newItem, id);
+                console.log(prevKey);
+                req.body.prevKey = prevKey;
+                return next();
             } catch (err) {
                 if(err.message == "Item not found") {
                     res.status(404).send(err);
