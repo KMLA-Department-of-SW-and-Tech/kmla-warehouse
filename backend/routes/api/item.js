@@ -17,7 +17,7 @@ router.post("/", upload, itemController.item_create);
 
 router.route("/:id")
     .get(verifyJWT, itemController.item_detail)
-    .put(verifyJWT, itemController.item_update_put, deleteImage)
+    .put(verifyJWT, upload, itemController.item_update_put, deleteImage)
     .patch(verifyJWT, itemController.item_update_patch)
     .delete(deleteItem, itemController.item_update_put);
 
