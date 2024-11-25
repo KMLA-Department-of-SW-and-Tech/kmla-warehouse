@@ -8,25 +8,17 @@ import Headbar from '../../components/header';
 
 const { Sider, Content } = Layout;
 const { Title, Text } = Typography;
-interface Item {
-  _id: string;
-  name: string;
-  description: string;
-  totalQuantity: number;
-  availableQuantity: number;
-  location: string;
-  imageUrl?: string;
-  tags: string[];
-  status: 'available' | 'deleted';
-  category: string;
-}
 
 export default function EquipmentDetailPage() {
+  // State to manage loading status, item details, and borrowing quantity
   const [loading, setLoading] = useState(true);
   const [item, setItem] = useState<Item | null>(null);
   const [borrowQuantity, setBorrowQuantity] = useState<number>(1);
+
+  // Retrieve the item ID from route parameters
   const { id } = useParams<{ id: string }>();
 
+  // Fetch item details by ID
   const fetchItemDetails = async () => {
     if (!id) return;
     try {
@@ -40,27 +32,29 @@ export default function EquipmentDetailPage() {
     }
   };
 
+  // Load item details when component mounts or ID changes
   useEffect(() => {
     fetchItemDetails();
   }, [id]);
 
+  // Handle the borrow request
   const handleBorrow = async () => {
     if (!id) return;
     if (borrowQuantity < 1) {
-      message.error('유효한 수량을 입력하세요.');
+      message.error('유효한 수량을 입력하세요.'); // Error message for invalid quantity
       return;
     }
     try {
-      await itemService.borrowRequest(id, borrowQuantity);
-      message.success('대여 요청이 성공적으로 처리되었습니다.');
-      window.location.reload();
-  
+      await itemService.borrowRequest(id, borrowQuantity); // Send borrow request
+      message.success('대여 요청이 성공적으로 처리되었습니다.'); // Success message
+      window.location.reload(); // Reload page to reflect updated status
     } catch (error) {
       console.error('Failed to borrow item:', error);
       if (error.response) {
-        const status = error.response.status;
-        const messageText = error.response.data.message || error.message;
-  
+        const status = error.response.status; // HTTP status code
+        const messageText = error.response.data.message || error.message; // Error message from server
+
+        // Display error messages based on HTTP status codes
         if (status === 404) {
           message.error(messageText || '아이템을 찾을 수 없습니다.');
         } else if (status === 400) {
@@ -78,19 +72,22 @@ export default function EquipmentDetailPage() {
 
   return (
     <Layout>
-      <Headbar />
+      <Headbar /> {/* Header bar */}
       <Layout className="layout">
         <Sider className="sider">
-          <Sidebar />
+          <Sidebar /> {/* Sidebar for navigation */}
         </Sider>
         <Layout style={{ marginLeft: 250 }}>
           <Content className="content">
+            {/* Show spinner while loading */}
             {loading ? (
               <Spin size="large" />
             ) : item ? (
+              // Display item details if fetched successfully
               <div className="content-wrapper">
                 <div className="image-container">
                   <div className="image-placeholder">
+                    {/* Display item image if available */}
                     {item.imageUrl ? (
                       <img src={item.imageUrl} alt={item.name} className="image" />
                     ) : (
@@ -99,15 +96,17 @@ export default function EquipmentDetailPage() {
                   </div>
                 </div>
                 <div className="text-content">
-                  <Title level={1}>{item.name}</Title>
-                  <Text>남은 수량 {item.availableQuantity} 개</Text>
+                  <Title level={1}>{item.name}</Title> {/* Item name */}
+                  <Text>남은 수량 {item.availableQuantity} 개</Text> {/* Available quantity */}
                   <div style={{ marginTop: '10px' }}>
-                    <Text>위치 {item.location}</Text>
+                    <Text>위치 {item.location}</Text> {/* Item location */}
                     <Title level={5}>물품 설명</Title>
-                    <Text>{item.description}</Text>
+                    <Text>{item.description}</Text> {/* Item description */}
                   </div>
+                  {/* Borrow form */}
                   <Form layout="vertical" className="borrow-form">
                     <Form.Item label="대여할 수량을 선택하세요">
+                      {/* Input for borrowing quantity */}
                       <InputNumber
                         min={1}
                         max={item.availableQuantity}
@@ -121,6 +120,7 @@ export default function EquipmentDetailPage() {
                 </div>
               </div>
             ) : (
+              // Fallback message if item details couldn't be loaded
               <Typography.Text>아이템 정보를 불러오지 못했습니다. 과학기술부에 문의하세요.</Typography.Text>
             )}
           </Content>

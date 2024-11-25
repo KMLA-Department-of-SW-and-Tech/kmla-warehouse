@@ -5,9 +5,9 @@ import { useParams } from 'react-router-dom';
 import { Typography, Spin, Layout, Button } from 'antd';
 
 const TeamSettingPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>(); // URL에서 팀 ID를 가져옴
+  const { id } = useParams<{ id: string }>(); 
   const [teamName, setTeamName] = useState('');
-  const [nickname, setNickname] = useState(''); // 이게 팀 설정에 필요한지는 상황에 따라 다름
+  const [nickname, setNickname] = useState(''); 
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [team, setTeam] = useState<Team | null>(null);
@@ -19,7 +19,6 @@ const TeamSettingPage: React.FC = () => {
         const teamData = await teamService.getTeamInfo(Number(id));
         setTeam(teamData);
         setTeamName(teamData.name);
-        // 필요한 경우 다른 필드도 설정
       } catch (error) {
         setError('팀 정보를 불러오는 중 문제가 발생했습니다.');
       } finally {
@@ -64,7 +63,7 @@ const TeamSettingPage: React.FC = () => {
                   onChange={(e) => setTeamName(e.target.value)}
                 />
               </div>
-              {/* 추가 필드가 필요하다면 여기 추가 */}
+       
             </div>
 
             <div>
