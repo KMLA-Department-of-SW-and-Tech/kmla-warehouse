@@ -19,9 +19,9 @@ const LoginPage = () => {
         : navigate("/kmla-warehouse/home");
     } catch (err) {
       let errorMessage = "로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.";
-
+      console.log(err.response);
       if (err.response && err.response.data) {
-        const serverMessage = err.response.data.message || "";
+        const serverMessage = err.response.data || "";
         if (serverMessage.includes("password")) {
           errorMessage = "비밀번호가 일치하지 않습니다.";
         } else if (serverMessage.includes("username")) {

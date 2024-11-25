@@ -1,17 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu, MenuProps, Badge, Modal } from 'antd';
-import {
-  AppstoreOutlined,
-  HistoryOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
+import { AppstoreOutlined, HistoryOutlined, UserOutlined } from '@ant-design/icons';
+import currentUser from '../../api/authService';
 
 const MenuBar: React.FC = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
   const [isModalVisible, setIsModalVisible] = useState(false); // 모달 표시 여부
   const [redirectPath, setRedirectPath] = useState<string | null>(null); // 이동 경로 저장
+
+  useEffect(() => {
+    // 현재 로그인된 사용자 정보 확인
+    const checkLoginStatus = async () => {
+      try {
+        const user = await currentUser.currentUser();
+        setIsLoggedIn(!!user); // user가 존재하면 로그인 상태로 설정
+      } catch (error) {
+        console.error('Error fetching user:', error);
+        setIsLoggedIn(false); // 에러 발생 시 로그아웃 상태로 설정
+      }
+    };
+
+    checkLoginStatus();
+  }, []);
 
   const items1: MenuProps['items'] = [
     {
@@ -50,8 +62,8 @@ const MenuBar: React.FC = () => {
   ];
 
   const handleMenuClick = (e: { key: string }) => {
-    // 홈 페이지는 로그인 없이도 접근 가능
     if (e.key === 'kmla-warehouse/home') {
+      // 홈 페이지는 로그인 없이도 접근 가능
       navigate(`/${e.key}`);
     } else if (!isLoggedIn) {
       // 로그인 필요 시 확인 팝업 표시
@@ -85,11 +97,13 @@ const MenuBar: React.FC = () => {
         onClick={handleMenuClick}
         items={items1}
         style={{
+          width: '250px',
           height: '100vh',
           paddingTop: '10px',
-          boxShadow: '2px 0 5px rgba(0, 0, 0, 0.1)',
+          boxShadow: '2px 0 5px rgba(0, 0, 23, 0)',
         }}
       />
+
       <Modal
         title="로그인이 필요합니다"
         visible={isModalVisible}

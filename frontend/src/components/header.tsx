@@ -8,7 +8,6 @@ const Headbar: React.FC = () => {
   useEffect( () => {
     const fetchCurrentUser = async () => {
       const data = await currentUser.currentUser();
-      //console.log(data);
       setCurrentUserName(data);
     };
   fetchCurrentUser();
@@ -20,7 +19,7 @@ const Headbar: React.FC = () => {
           KMLA Warehouse
         </div>
         <div className="user-info">
-          <span>{currentUserName ? currentUserName : ""}</span> {/* 예시 사용자 이름 */}
+          <span>{currentUserName ? currentUserName : ""}</span> 
         </div>
       </div>
     </header>
