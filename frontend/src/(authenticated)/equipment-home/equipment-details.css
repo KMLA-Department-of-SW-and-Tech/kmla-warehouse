@@ -12,10 +12,9 @@
   }
   
   .content {
-    padding: 40px;
+   
     margin-top: 64px;
     width: calc(100vw - 250px);
-    margin-left: 250px; /* Aligns the content next to the sidebar */
     position: relative;
   }
   

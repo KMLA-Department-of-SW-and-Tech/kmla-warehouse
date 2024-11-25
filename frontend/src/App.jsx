@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import Login from "./(non-authenticated)/login/page.tsx"; 
 import Signup from "./(non-authenticated)/signup/page.tsx"; 
@@ -63,7 +64,11 @@ const router = createBrowserRouter([
   {
     path: "/kmla-warehouse/admin/setting",
     element: <ProtectedRoute><ProtectedAdmin><AdminSettingPage /></ProtectedAdmin></ProtectedRoute>,
-  }  
+  },  
+  {
+    path: "/",
+    element: <Navigate to="/kmla-warehouse/home" replace />,
+},
 ]);
 
 const App = () => {
