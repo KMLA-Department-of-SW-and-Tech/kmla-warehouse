@@ -25,4 +25,6 @@
   .user-info {
     font-size: 1em;
     color: #d3d3d3; /* 사용자 정보 색상 */
+    margin-right: 25px; /* 오른쪽 마진 추가 */
   }
+  

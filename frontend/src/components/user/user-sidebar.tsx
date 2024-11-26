@@ -34,7 +34,7 @@ const MenuBar: React.FC = () => {
         {
           key: 'kmla-warehouse/home',
           icon: <AppstoreOutlined />,
-          label: '전체보기',
+          label: '전체 목록보기',
         },
       ],
     },
@@ -50,12 +50,12 @@ const MenuBar: React.FC = () => {
               <HistoryOutlined />
             </Badge>
           ),
-          label: '예약현황',
+          label: '반납하기',
         },
         {
           key: 'kmla-warehouse/account-settings',
           icon: <UserOutlined />,
-          label: '계정설정',
+          label: '계정 및 로그아웃',
         },
       ],
     },
