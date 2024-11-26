@@ -64,7 +64,7 @@ const MenuBar: React.FC = () => {
   const handleMenuClick = (e: { key: string }) => {
     if (e.key === '/home') {
       // 홈 페이지는 로그인 없이도 접근 가능
-      navigate(`/${e.key}`);
+      navigate(`${e.key}`);
     } else if (!isLoggedIn) {
       // 로그인 필요 시 확인 팝업 표시
       setRedirectPath(`/${e.key}`);
