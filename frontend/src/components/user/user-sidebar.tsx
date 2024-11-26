@@ -18,7 +18,7 @@ const MenuBar: React.FC = () => {
         const user = await currentUser.currentUser();
         setIsLoggedIn(!!user); // user가 존재하면 로그인 상태로 설정
       } catch (error) {
-        console.error('Error fetching user:', error);
+        //console.error('Error fetching user:', error);
         setIsLoggedIn(false); // 에러 발생 시 로그아웃 상태로 설정
       }
     };
