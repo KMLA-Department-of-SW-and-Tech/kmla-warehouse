@@ -15,7 +15,7 @@ import AdminSettingPage from "./routes/(authenticated)/admin/account-settings.ts
 import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./components/protected-routes.jsx";
 import AccountSettings from "./routes/(authenticated)/user/account-settings.tsx";
 
-const intermediatePath = "/kmla-warehouse" // make it an empty string if no intermediate path
+const intermediatePath = "" // /kmla-warehouse possible
 
 const router = createBrowserRouter([
   {
