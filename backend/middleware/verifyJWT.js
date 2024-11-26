@@ -1,8 +1,7 @@
-const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-const verifyJWT = asyncHandler(async (req, res, next) => {
+const verifyJWT = async (req, res, next) => {
     const authHeader = req.headers.authorization || req.headers.Authorization;
     if(!authHeader?.startsWith('Bearer')) return res.status(401).send("Invalid header request regarding authorization");
     const token = authHeader.split(' ')[1];
@@ -16,6 +15,6 @@ const verifyJWT = asyncHandler(async (req, res, next) => {
             next();
         }
     );
-});
+};
 
 module.exports = verifyJWT;

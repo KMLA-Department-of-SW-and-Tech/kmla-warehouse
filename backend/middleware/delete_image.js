@@ -1,7 +1,6 @@
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const s3 = require('../config/s3'); // Import the S3 client from s3.js
-const asyncHandler = require("express-async-handler");
 require('dotenv').config();
 const { DeleteObjectCommand } = require('@aws-sdk/client-s3');
 

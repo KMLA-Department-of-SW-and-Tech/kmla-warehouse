@@ -1,12 +1,11 @@
 const Team = require("../models/team");
-const asyncHandler = require("express-async-handler");
 //const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 
-exports.handle_login = asyncHandler(async (req, res, next) => {
+exports.handle_login = async (req, res, next) => {
     const cookies = req.cookies;
     //console.log(`Cookie available at login: ${JSON.stringify(cookies)}`);
     const { username, password } = req.body;
@@ -67,9 +66,9 @@ exports.handle_login = asyncHandler(async (req, res, next) => {
     else {
         res.status(401).send("Invalid password");
     }
-}); // handle login
+}; // handle login
 
-exports.handle_logout = asyncHandler(async (req, res, next) => {
+exports.handle_logout = async (req, res, next) => {
     // On client delete the accessToken!!!! --> did this
     const cookies = req.cookies;
     if(!cookies?.jwt) return res.sendStatus(204); // no content
@@ -84,9 +83,9 @@ exports.handle_logout = asyncHandler(async (req, res, next) => {
     await foundUser.save();
     res.clearCookie('jwt', { httpOnly: true, /* secure: true, */ /* sameSite: 'None' */ });
     res.sendStatus(204);
-}); // handle login
+}; // handle login
 
-exports.get_user_info = asyncHandler(async (req, res, next) => {
+exports.get_user_info = async (req, res, next) => {
     const cookies = req.cookies;
     if(!cookies?.jwt) return res.sendStatus(401);
     const refreshToken = cookies.jwt;
@@ -105,5 +104,5 @@ exports.get_user_info = asyncHandler(async (req, res, next) => {
         }
     );
     
-})
+};
 // Same site + Cors haven't implemented yet (Security)
