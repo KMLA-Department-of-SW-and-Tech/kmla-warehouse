@@ -52,7 +52,7 @@ const SignUpPage: React.FC = () => {
           {!showConfirmation && (
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <label htmlFor="name" className="form-label">이름</label>
+                <label htmlFor="name" className="form-label">융합프로젝트 팀 이름</label>
                 <input
                   type="text"
                   id="name"

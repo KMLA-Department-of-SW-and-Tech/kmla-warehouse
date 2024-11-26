@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Menu, MenuProps, Badge, Modal } from 'antd';
 import { AppstoreOutlined, HistoryOutlined, UserOutlined } from '@ant-design/icons';
 import currentUser from '../../api/authService';
+import './user-sidebar.css'; // CSS 파일을 가져옵니다.
 
 const MenuBar: React.FC = () => {
   const navigate = useNavigate();
@@ -96,12 +97,7 @@ const MenuBar: React.FC = () => {
         defaultSelectedKeys={['home']}
         onClick={handleMenuClick}
         items={items1}
-        style={{
-          width: '250px',
-          height: '100vh',
-          paddingTop: '10px',
-          boxShadow: '2px 0 5px rgba(0, 0, 23, 0)',
-        }}
+        className="menu-bar" // CSS 클래스 추가
       />
 
       <Modal

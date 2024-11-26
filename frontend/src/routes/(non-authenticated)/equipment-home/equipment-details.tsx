@@ -72,7 +72,7 @@ export default function EquipmentDetailPage() {
 
   return (
     <Layout>
-      <Headbar /> {/* Header bar */}
+      <Headbar /> 
       <Layout className="layout">
         <Sider className="sider">
           <Sidebar /> {/* Sidebar for navigation */}
