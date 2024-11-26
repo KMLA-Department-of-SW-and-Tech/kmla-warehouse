@@ -11,7 +11,7 @@ const teamRouter = require("./team");
 const tagRouter = require("./tag");
 const categoryRouter = require("./category");
 const borrowHistoryRouter = require("./borrow_history");
-const adminRouter = require("./admin");
+/* const adminRouter = require("./admin"); */
 const authRouter = require("./auth")
 const refreshRouter = require("./refresh")
 

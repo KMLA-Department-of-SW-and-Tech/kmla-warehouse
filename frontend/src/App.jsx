@@ -33,7 +33,7 @@ const router = createBrowserRouter([
   // Home page
   {
     path: "/kmla-warehouse/home",
-    element: <ProtectedRoute><ProtectedUser><Home /></ProtectedUser></ProtectedRoute>,
+    element: <Home />
   },
   // Equipment details page
   {
@@ -66,7 +66,7 @@ const router = createBrowserRouter([
     element: <ProtectedRoute><ProtectedAdmin><AdminSettingPage /></ProtectedAdmin></ProtectedRoute>,
   },  
   {
-    path: "/",
+    path: "/kmla-warehouse",
     element: <Navigate to="/kmla-warehouse/home" replace />,
 },
 ]);
