@@ -22,7 +22,7 @@ const Headbar: React.FC = () => {
   }, []);
 
   const handleLogoClick = () => {
-    navigate('/kmla-warehouse/home'); // 로고 클릭 시 홈 화면으로 이동
+    navigate('/home'); // 로고 클릭 시 홈 화면으로 이동
   };
 
   return (

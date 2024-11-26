@@ -36,7 +36,7 @@ const AccountSettings = () => {
     try {
       await authService.logout();
       message.success('로그아웃이 성공적으로 완료되었습니다.');
-      navigate("/kmla-warehouse/home");
+      navigate("/home");
     } catch (error) {
       message.error('로그아웃하는데 실패하였습니다. 다시 시도해주세요.');
     } finally {

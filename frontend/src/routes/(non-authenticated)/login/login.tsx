@@ -21,8 +21,8 @@ const LoginPage = () => {
 
       // 로그인 성공 시 역할에 따라 페이지를 이동
       axiosPrivate.roles.includes("Admin")
-        ? navigate("/kmla-warehouse/admin/equipment") // 관리자 페이지로 이동
-        : navigate("/kmla-warehouse/home"); // 일반 사용자 홈 페이지로 이동
+        ? navigate("/admin/equipment") // 관리자 페이지로 이동
+        : navigate("/home"); // 일반 사용자 홈 페이지로 이동
     } catch (err) {
       // 기본 에러 메시지 설정
       let errorMessage = "로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.";
@@ -41,7 +41,7 @@ const LoginPage = () => {
 
   // 회원가입 페이지로 이동하는 함수
   const handleSignUp = () => {
-    navigate("/kmla-warehouse/signup");
+    navigate("/signup");
   };
 
   return (

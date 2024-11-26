@@ -55,7 +55,7 @@ export default function EquipmentListPage() {
   }, [searchQuery, equipmentList]);
 
   const handleViewDetails = (equipmentId: string) => {
-    navigate(`/kmla-warehouse/item/${equipmentId}`); 
+    navigate(`/item/${equipmentId}`); 
   };
 
   return (

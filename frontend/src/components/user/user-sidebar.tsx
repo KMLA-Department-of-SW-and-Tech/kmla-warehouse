@@ -32,7 +32,7 @@ const MenuBar: React.FC = () => {
       type: 'group',
       children: [
         {
-          key: 'kmla-warehouse/home',
+          key: '/home',
           icon: <AppstoreOutlined />,
           label: '전체 목록보기',
         },
@@ -44,7 +44,7 @@ const MenuBar: React.FC = () => {
       type: 'group',
       children: [
         {
-          key: 'kmla-warehouse/reservation',
+          key: '/reservation',
           icon: (
             <Badge size="small">
               <HistoryOutlined />
@@ -53,7 +53,7 @@ const MenuBar: React.FC = () => {
           label: '반납하기',
         },
         {
-          key: 'kmla-warehouse/account-settings',
+          key: '/account-settings',
           icon: <UserOutlined />,
           label: '계정 및 로그아웃',
         },
@@ -62,7 +62,7 @@ const MenuBar: React.FC = () => {
   ];
 
   const handleMenuClick = (e: { key: string }) => {
-    if (e.key === 'kmla-warehouse/home') {
+    if (e.key === '/home') {
       // 홈 페이지는 로그인 없이도 접근 가능
       navigate(`/${e.key}`);
     } else if (!isLoggedIn) {
@@ -79,7 +79,7 @@ const MenuBar: React.FC = () => {
     // "확인"을 클릭하면 로그인 화면으로 이동
     setIsModalVisible(false);
     if (redirectPath) {
-      navigate('/kmla-warehouse/login');
+      navigate('/login');
     }
   };
 
