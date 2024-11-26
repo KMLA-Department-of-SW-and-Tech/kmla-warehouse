@@ -82,22 +82,13 @@ export const itemService = {
       });
   },
 
-  // Partially update an existing item by ID
-  partialUpdate: async (id: string, partialItem: Partial<Item>): Promise<Item> => {
-    try {
-      const response = await axiosPrivate.patch(`/api/item/${id}`, partialItem);
-      return response.data;
-    } catch (e) {
-      console.error(e.message);
-      throw e;
-    }
-  },
+ 
 
   // Delete an item
   delete: async (id: string): Promise<void> => {
     try {
       console.log('a');
-      const response = await axiosPrivate.get(`/api/item/${id}`); // This should likely be a DELETE request
+      const response = await axiosPrivate.put(`/api/item/${id}`); // This should likely be a DELETE request
       console.log('b');
       return response.data;
     } catch (e) {

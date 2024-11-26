@@ -30,7 +30,7 @@ export default function ReservationStatus() {
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState("");
   const [reservationList, setReservationList] = useState<Reservation[]>([]);
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchReservationAndEquipment = async () => {
@@ -133,7 +133,13 @@ export default function ReservationStatus() {
                     >
                       <Card.Meta
                         title={reservation.item.name}
-                        description={`${reservation.item.location} / ${new Date(reservation.timestamp).toLocaleDateString()}`}
+                        description={
+                          <>
+                            <span> {reservation.quantity}</span>
+                            <span> / {reservation.item.location} / {new Date(reservation.timestamp).toLocaleDateString()}`</span>
+                          </>
+                          
+                        }
                         style={{
                           whiteSpace: 'nowrap',
                           overflow: 'hidden',
