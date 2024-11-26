@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Card, Row, Col, Spin, Layout, Input } from 'antd';
 import { CalendarOutlined, UnorderedListOutlined } from '@ant-design/icons'; 
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../../../components/equipment/equipment-bar';
+import Sidebar from '../../../components/equipment/user-sidebar';
 import { itemService } from '../../../api/itemService'; 
 import Headbar from '../../../components/header';
 
