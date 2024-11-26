@@ -1,9 +1,3 @@
-Admin
-GET 어드민 정보 /api/admin/:id
-POST 어드민 생성 /api/admin/
-PUT 어드민 업데이트 /api/admin/:id
-DELETE 어드민 삭제 /api/admin/:id
-
 Borrow-History
 GET 전체 리스트 /api/borrow-history/list
 GET 검색 
@@ -14,33 +8,18 @@ DELETE 로그 삭제 /api/borrow-history/:id
 
 POST 물품 반납 /api/borrow-history/:id/return
 
-Category
-GET 전체 리스트 /api/category/list
-POST 카테고리 생성 /api/category/
-  body: name(String)
-PUT 카테고리 업데이트 /api/category/:id
-DELETE 카테고리 삭제 /api/category/:id
-
 Item
 GET 전체 리스트 /api/item/list
 GET 검색
 GET 물품 정보 /api/item/:id
 POST 물품 생성 /api/item/ - request format: form
   body: name(String), description(String), quantity(Number), location(String), image(Image file)
-PUT 물품 업데이트 /api/item/:id
-  body: name(String), description(String), tags(Array of ObjectId), totalQuantity(Number), availableQuantity(Number), location(String), category(ObjectId), status(String), image(Image file)
-PATCH 물품 업데이트 /api/item/:id
+PUT 물품 업데이트 /api/item/:id - request format: form
+  body: name(String), description(String), quantity(Number), location(String), image(Image file)
 DELETE 물품 삭제 /api/item/:id
 
 POST 물품 대여 /api/item/:id/borrow
   body: quantity(Number)
-
-Tag
-GET 전체 리스트 /api/tag/list
-POST 태그 생성 /api/tag/
-  body: name(String)
-PUT 태그 업데이트 /api/tag/:id
-DELETE 팀 삭제 /api/tag/:id
 
 Team
 GET 전체 리스트 /api/team/list
