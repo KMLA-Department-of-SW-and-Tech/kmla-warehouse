@@ -43,7 +43,7 @@ const items1: MenuProps['items'] = [
     type: 'group',
     children: [
       {
-        key: 'kmla-warehouse/admin/setting',
+        key: 'kmla-warehouse/admin/account-settings',
         icon: <UserOutlined />,
         label: '계정설정',
       },

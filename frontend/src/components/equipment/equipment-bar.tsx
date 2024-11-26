@@ -44,7 +44,7 @@ const MenuBar: React.FC = () => {
       type: 'group',
       children: [
         {
-          key: 'kmla-warehouse/reservation-status',
+          key: 'kmla-warehouse/reservation',
           icon: (
             <Badge size="small">
               <HistoryOutlined />

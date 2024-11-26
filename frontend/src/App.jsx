@@ -52,7 +52,7 @@ const router = createBrowserRouter([
   },
   //Reservation Status page
   {
-    path: `${intermediatePath}/reservation-status`,
+    path: `${intermediatePath}/reservation`,
     element: <ProtectedRoute><ProtectedUser><ReservationStatus /></ProtectedUser></ProtectedRoute>,
   },
   // Admin: add equipment page
@@ -72,7 +72,7 @@ const router = createBrowserRouter([
   },
   // Admin: account setting page
   {
-    path: `${intermediatePath}/admin/setting`,
+    path: `${intermediatePath}/admin/account-settings`,
     element: <ProtectedRoute><ProtectedAdmin><AdminSettingPage /></ProtectedAdmin></ProtectedRoute>,
   },  
 ]);
