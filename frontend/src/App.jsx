@@ -6,14 +6,14 @@ import Signup from "./(non-authenticated)/signup/page.tsx";
 
 import Home from "./(non-authenticated)/equipment-home/equipment-home.tsx"; 
 import EquipmentDetails from "./(non-authenticated)/equipment-home/equipment-details.tsx"; 
-import ReservationStatus from "./(authenticated)/user-home/reservation-status.tsx";
+import ReservationStatus from "./(authenticated)/user/reservation-status.tsx";
  
-import AdminEquipmentPage from "./admin/equipment-page.tsx"; 
-import AdminHistoryPage from "./admin/reservation-page.tsx";  
-import AdminTeamPage from "./admin/manage-team-page.tsx";
-import AdminSettingPage from "./admin/admin-account-settings.tsx";
+import AdminEquipmentPage from "./(authenticated)/admin/equipment-page.tsx"; 
+import AdminHistoryPage from "./(authenticated)/admin/reservation-page.tsx";  
+import AdminTeamPage from "./(authenticated)/admin/manage-team-page.tsx";
+import AdminSettingPage from "./(authenticated)/admin/admin-account-settings.tsx";
 import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./components/protected-routes.jsx";
-import AccountSettings from "./(authenticated)/user-home/account-settings.tsx";
+import AccountSettings from "./(authenticated)/user/account-settings.tsx";
 
 const intermediatePath = "/kmla-warehouse" // make it an empty string if no intermediate path
 

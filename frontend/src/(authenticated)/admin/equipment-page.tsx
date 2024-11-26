@@ -3,10 +3,10 @@ import { Layout, Typography, Spin, message, ConfigProvider, Upload, Button, Form
 import enUS from 'antd/lib/locale/en_US';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import { CloseOutlined, DeleteOutlined, EditOutlined, SaveOutlined, UploadOutlined } from "@ant-design/icons";
-import Sidebar from "../components/admin/admin-sidebar";
+import Sidebar from "../../components/admin/admin-sidebar";
 import './admin.css';
-import Headbar from "../components/header";
-import { Item, itemService, AddItem } from "../api/itemService";
+import Headbar from "../../components/header";
+import { Item, itemService, AddItem } from "../../api/itemService";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;

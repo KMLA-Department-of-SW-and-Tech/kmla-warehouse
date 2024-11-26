@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, message, Layout } from 'antd';
-import Sidebar from '../components/admin/admin-sidebar';
-import Headbar from '../components/header'; // Assuming you have a header component like in the EquipmentListPage
+import Sidebar from '../../components/admin/admin-sidebar';
+import Headbar from '../../components/header'; // Assuming you have a header component like in the EquipmentListPage
 import { useNavigate } from 'react-router-dom';
-import authService from '../api/authService';
+import authService from '../../api/authService';
 
 const { Sider, Content } = Layout;
 
