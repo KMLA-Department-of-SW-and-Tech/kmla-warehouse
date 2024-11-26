@@ -4,8 +4,8 @@ import { Navigate } from "react-router-dom";
 import Login from "./(non-authenticated)/login/page.tsx"; 
 import Signup from "./(non-authenticated)/signup/page.tsx"; 
 
-import Home from "./(authenticated)/equipment-home/equipment-home.tsx"; 
-import EquipmentDetails from "./(authenticated)/equipment-home/equipment-details.tsx"; 
+import Home from "./(non-authenticated)/equipment-home/equipment-home.tsx"; 
+import EquipmentDetails from "./(non-authenticated)/equipment-home/equipment-details.tsx"; 
 import ReservationStatus from "./(authenticated)/user-home/reservation-status.tsx";
  
 import AdminEquipmentPage from "./admin/equipment-page.tsx"; 
