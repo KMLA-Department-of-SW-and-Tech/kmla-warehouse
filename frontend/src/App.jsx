@@ -11,7 +11,7 @@ import ReservationStatus from "./(authenticated)/user-home/reservation-status.ts
 import AdminEquipmentPage from "./admin/equipment-page.tsx"; 
 import AdminHistoryPage from "./admin/reservation-page.tsx";  
 import AdminTeamPage from "./admin/manage-team-page.tsx";
-import AdminSettingPage from "./admin/admin-setting.tsx";
+import AdminSettingPage from "./admin/admin-account-settings.tsx";
 import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./components/protected-routes.jsx";
 import AccountSettings from "./(authenticated)/user-home/account-settings.tsx";
 

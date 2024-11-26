@@ -4,7 +4,7 @@ import enUS from 'antd/lib/locale/en_US';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import { CloseOutlined, DeleteOutlined, EditOutlined, SaveOutlined, UploadOutlined } from "@ant-design/icons";
 import Sidebar from "../components/admin/admin-sidebar";
-import './admin-home.css';
+import './admin.css';
 import Headbar from "../components/header";
 import { Item, itemService, AddItem } from "../api/itemService";
 

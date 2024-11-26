@@ -3,7 +3,7 @@ import { Layout, Typography, Spin, message, ConfigProvider, Form, Input, Button 
 import enUS from 'antd/lib/locale/en_US';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from "../components/admin/admin-sidebar";
-import './admin-home.css';
+import './admin.css';
 import Headbar from "../components/header";
 import { teamService, Team, AddTeam } from "../api/teamService";
 import { EditOutlined, DeleteOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons'; 
