@@ -23,6 +23,7 @@ const AdminEquipmentPage: React.FC = () => {
     fetchItem();
   }, []);
 
+  // reload the items
   const fetchItem = async () => {
     setLoading(true);
     try {
@@ -37,11 +38,13 @@ const AdminEquipmentPage: React.FC = () => {
     }
   };
 
+  
   const handleImageUpload = (file: File) => {
     setImageFile(file);
     return false; // Prevent auto-upload
   };
 
+  
   const handleAddItem = async (newItem: AddItem) => {    
     const formData = new FormData();
     formData.append("name", newItem.name);
@@ -104,7 +107,7 @@ const AdminEquipmentPage: React.FC = () => {
         )
       ),
       renderFormItem: (_, { isEditable }) => {
-        if (!isEditable) return null; // 편집 모드에서만 업로드 활성화
+        if (!isEditable) return null;
   
         return (
           <Upload
@@ -213,6 +216,7 @@ const AdminEquipmentPage: React.FC = () => {
               {loading ? (
                 <Spin />
               ) : (
+                // properties in editable state on each row cell
                 <EditableProTable<Item>
                   rowKey="_id"
                   value={items}

@@ -25,13 +25,17 @@ const Headbar: React.FC = () => {
     navigate('/home'); // 로고 클릭 시 홈 화면으로 이동
   };
 
+  const handleHelloClick = () => {
+    navigate('/account-settings');
+  }
+
   return (
     <header className="head">
       <div className="head-container">
         <div className="logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
           KMLA Warehouse
         </div>
-        <div className="user-info">
+        <div className="user-info" onClick={handleHelloClick} style={{cursor: 'pointer'}}>
           {currentUserName ? (
             <span>{currentUserName}님, KMLA WAREHOUSE에 오신 것을 환영합니다</span>
           ) : (

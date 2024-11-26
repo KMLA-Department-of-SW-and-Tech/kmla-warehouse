@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu, MenuProps, Badge } from 'antd';
 import { 
-  HomeOutlined, 
   HistoryOutlined, 
   ProductOutlined, 
   TeamOutlined,
@@ -10,10 +9,10 @@ import {
 } from '@ant-design/icons';
 
 
-
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
 
+// menu of admin sidebar
 const items1: MenuProps['items'] = [
   {
     key: 'manage',
@@ -52,6 +51,7 @@ const items1: MenuProps['items'] = [
   
 ];
 
+// go to page you clicked on the sidebar
 const handleMenuClick = (e: {key: string}) => {
   navigate(`${e.key}`);
 };
