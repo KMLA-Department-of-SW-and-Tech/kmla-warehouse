@@ -3,7 +3,7 @@ import './equipment-details.css';
 import { Typography, Spin, Layout, Button, message, Form, InputNumber } from 'antd'; 
 import { useParams } from 'react-router-dom';
 import { itemService } from '../../../api/itemService';
-import Sidebar from '../../../components/equipment/equipment-bar';
+import Sidebar from '../../../components/user/user-sidebar';
 import Headbar from '../../../components/header';
 
 const { Sider, Content } = Layout;

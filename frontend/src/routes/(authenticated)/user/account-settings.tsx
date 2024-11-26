@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, message, Layout } from 'antd';
 import authService from '../../../api/authService';
-import Sidebar from '../../../components/equipment/equipment-bar';
+import Sidebar from '../../../components/user/user-sidebar';
 import Headbar from '../../../components/header'; 
 import { useNavigate } from 'react-router-dom';
 
