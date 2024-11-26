@@ -36,7 +36,7 @@ const AdminSettingPage = () => {
     try {
       await authService.logout();
       message.success('Logged out successfully!');
-      navigate("/kmla-warehouse/home");
+      navigate("/home");
     } catch (error) {
       message.error('Failed to log out. Please try again.');
     } finally {

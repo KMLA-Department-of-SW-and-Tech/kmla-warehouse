@@ -21,17 +21,17 @@ const items1: MenuProps['items'] = [
     type: 'group',
     children: [
       {
-        key: 'kmla-warehouse/admin/equipment',
+        key: '/admin/equipment',
         icon: <ProductOutlined />,
         label: '물품관리',
       },
       {
-        key: 'kmla-warehouse/admin/team',
+        key: '/admin/team',
         icon: <TeamOutlined />,
         label: '팀관리',
       },
       {
-        key: 'kmla-warehouse/admin/reservation',
+        key: '/admin/reservation',
         icon: <Badge size='small'><HistoryOutlined /></Badge>,
         label: '신청관리',
       },
@@ -43,7 +43,7 @@ const items1: MenuProps['items'] = [
     type: 'group',
     children: [
       {
-        key: 'kmla-warehouse/admin/account-settings',
+        key: '/admin/account-settings',
         icon: <UserOutlined />,
         label: '계정설정',
       },
@@ -53,7 +53,7 @@ const items1: MenuProps['items'] = [
 ];
 
 const handleMenuClick = (e: {key: string}) => {
-  navigate(`/${e.key}`);
+  navigate(`${e.key}`);
 };
   return (
     <Menu

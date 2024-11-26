@@ -39,7 +39,7 @@ const SignUpPage: React.FC = () => {
 
   // 로그인 페이지로 이동하는 함수
   const handleNavigateToLogin = () => {
-    navigate("/kmla-warehouse/login");
+    navigate("/login");
   };
 
   return (
