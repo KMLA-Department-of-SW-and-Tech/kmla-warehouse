@@ -1,5 +1,6 @@
 .equipment-layout {
     min-height: 100vh;
+    
   }
   
   .equipment-sider {
@@ -13,12 +14,14 @@
   
   .equipment-content-layout {
     margin-left: 250px;
+    
   }
   
   .equipment-content {
     padding: 40px;
     margin-top: 64px;
     width: calc(98vw - 250px);
+    
   }
   
   .equipment-title {
@@ -57,6 +60,7 @@
   .equipment-card {
     max-width: 220px;
     height: 300px;
+    
   }
   
   .equipment-meta {
