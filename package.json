@@ -10,11 +10,11 @@
     "dev:frontend": "npm run dev --workspace frontend",
     "dev:backend": "npm run dev --workspace backend",
     "dev": "concurrently -c cyan,yellow \"npm run dev:*\"",
-    "lint": "npm run lint --workspaces"
+    "lint": "npm run lint --workspace frontend"
   },
   "devDependencies": {
     "concurrently": "^9.0.0",
-    "eslint": "^9.9.0"
+    "eslint": "^9.15.0"
   },
   "dependencies": {
     "@ant-design/icons": "^5.5.1",
