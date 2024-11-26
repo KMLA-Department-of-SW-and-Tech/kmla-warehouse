@@ -48,7 +48,7 @@ export const ProtectedRoute = ({ children }) => {
         ?  <></>
         : (
             axiosPrivate.accessToken === ""
-            ? <Navigate to="/kmla-warehouse/login" />
+            ? <Navigate to="/login" />
             : cloneElement(children, { roles: axiosPrivate.roles })
         )
     );
@@ -57,14 +57,14 @@ export const ProtectedRoute = ({ children }) => {
 export const ProtectedUser  = ({ roles, children }) => {
     return (
         !roles.includes("User")
-        ? <Navigate to="/kmla-warehouse/login" />
+        ? <Navigate to="/login" />
         : children
     );
 }
 export const ProtectedAdmin  = ({ roles, children }) => {
     return (
         !roles.includes("Admin")
-        ? <Navigate to="/kmla-warehouse/login" />
+        ? <Navigate to="/login" />
         : children
     );
 }
