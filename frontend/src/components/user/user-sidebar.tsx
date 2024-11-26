@@ -67,11 +67,11 @@ const MenuBar: React.FC = () => {
       navigate(`${e.key}`);
     } else if (!isLoggedIn) {
       // 로그인 필요 시 확인 팝업 표시
-      setRedirectPath(`/${e.key}`);
+      setRedirectPath(`${e.key}`);
       setIsModalVisible(true);
     } else {
       // 로그인된 경우 바로 이동
-      navigate(`/${e.key}`);
+      navigate(`${e.key}`);
     }
   };
 
