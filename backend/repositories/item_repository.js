@@ -6,7 +6,6 @@ const { body, validationResult } = require("express-validator");
 
 exports.getAllItems = async () => {
     const itemList = await Item.find({})
-    .populate('tags')
     .sort({name: 1})
     .exec();
     return itemList;
@@ -27,7 +26,6 @@ exports.searchItems = async (query) => {
     const itemList = await Item.find({
         $or: allQueries,
     })
-    .populate('tags')
     .sort({name: 1})
     .exec();
     return itemList;
@@ -35,7 +33,6 @@ exports.searchItems = async (query) => {
 
 exports.getItemById = async (itemId) => {
     const item = await Item.findById(itemId)
-    .populate('tags')
     .exec();
     return item;
 };
