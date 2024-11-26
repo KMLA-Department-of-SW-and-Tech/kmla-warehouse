@@ -36,15 +36,16 @@ const router = createBrowserRouter([
     path: `${intermediatePath}/signup`,
     element: <Signup />,
   },
-  {
-    path: `${intermediatePath}/account-settings`,
-    element: <ProtectedRoute><ProtectedUser><AccountSettings /></ProtectedUser></ProtectedRoute>,
-  },
   // Home page
   {
     path: `${intermediatePath}/home`,
     element: <Home />
   },
+  {
+    path: `${intermediatePath}/account-settings`,
+    element: <ProtectedRoute><ProtectedUser><AccountSettings /></ProtectedUser></ProtectedRoute>,
+  },
+
   // Equipment details page
   {
     path: `${intermediatePath}/item/:id`,
