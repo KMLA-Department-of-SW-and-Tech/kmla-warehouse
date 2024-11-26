@@ -21,7 +21,8 @@ const axiosPrivate = {
             });
             return response;
         } catch (err) {
-            if(err.response.data == "Invalid access token") {
+            if(apiUrl == "/api/auth") throw err; // for current user requests
+            else if(err.response.data == "Invalid access token") {
                 try {
                     await axiosPrivate.refreshRequest();
                     // successsful refresh

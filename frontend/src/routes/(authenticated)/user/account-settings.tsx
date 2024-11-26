@@ -67,7 +67,7 @@ const AccountSettings = () => {
 
             <Form layout="vertical" onFinish={handlePasswordChange}>
               <Form.Item
-                label="Current Password"
+                label="현재 비밀번호"
                 name="currentPassword"
                 rules={[{ required: true, message: '현재 비밀번호를 입력해주세요' }]}
               >
@@ -75,24 +75,24 @@ const AccountSettings = () => {
               </Form.Item>
 
               <Form.Item
-                label="New Password"
+                label="새 비밀번호"
                 name="newPassword"
-                rules={[{ required: true, message: '새로운 비밀번호를 입력해주세요' }]}
+                rules={[{ required: true, message: '새 비밀번호를 입력해주세요' }]}
               >
                 <Input.Password />
               </Form.Item>
 
               <Form.Item
-                label="Confirm New Password"
+                label="새 비밀번호 확인"
                 name="confirmNewPassword"
                 rules={[
-                  { required: true, message: '새로운 비밀번호를 다시 한 번 입력해주세요' },
+                  { required: true, message: '새 비밀번호를 다시 한 번 입력해주세요' },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
                       if (!value || getFieldValue('newPassword') === value) {
                         return Promise.resolve();
                       }
-                      return Promise.reject(new Error('새로운 비밀번호 두 개가 일치하지 않습니다.'));
+                      return Promise.reject(new Error('새 비밀번호 두 개가 일치하지 않습니다.'));
                     },
                   }),
                 ]}
@@ -112,6 +112,7 @@ const AccountSettings = () => {
                 </Button>
               </Form.Item>
             </Form>
+
 
             <Button onClick={handleLogout} loading={loading}>
               로그아웃

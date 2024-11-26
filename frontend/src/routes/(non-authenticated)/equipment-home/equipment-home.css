@@ -1,71 +1,68 @@
 .equipment-layout {
-    min-height: 100vh;
-    
-  }
-  
-  .equipment-sider {
-    background: #fff;
-    position: fixed;
-    height: 100vh;
-    left: 0;
-    top: 64px;
-    width: 250px;
-  }
-  
-  .equipment-content-layout {
-    margin-left: 250px;
-    
-  }
-  
-  .equipment-content {
-    padding: 40px;
-    margin-top: 64px;
-    width: calc(98vw - 250px);
-    
-  }
-  
-  .equipment-title {
-    display: flex;
-    align-items: center;
-  }
-  
-  .equipment-icon {
-    margin-right: 10px;
-  }
-  
-  .equipment-search {
-    margin-bottom: 20px;
-    max-width: 400px;
-  }
-  
-  .equipment-row {
-    margin-top: 20px;
-  }
-  
-  .equipment-image-container {
-    width: 100%;
-    height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f0f0f0;
-  }
-  
-  .equipment-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .equipment-card {
-    max-width: 220px;
-    height: 300px;
-    
-  }
-  
-  .equipment-meta {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
+  min-height: 100vh;
+}
+
+.equipment-sider {
+  background: #fff;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 64px;
+  width: 250px;
+}
+
+.equipment-content-layout {
+  margin-left: 0px;
+}
+
+.equipment-content {
+  padding: 40px;
+  margin-top: 64px;
+  width: calc(98vw - 250px);
+}
+
+.equipment-title {
+  display: flex;
+  align-items: center;
+}
+
+.equipment-icon {
+  margin-right: 10px;
+}
+
+.equipment-search {
+  margin-bottom: 20px;
+  max-width: 400px;
+}
+
+.equipment-row {
+  margin-top: 20px;
+}
+
+.equipment-image-container {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+}
+
+.equipment-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.equipment-card {
+  max-width: 220px;
+  height: 300px;
+}
+
+.equipment-meta {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+

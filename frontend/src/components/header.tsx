@@ -14,7 +14,7 @@ const Headbar: React.FC = () => {
         const data = await currentUser.currentUser();
         setCurrentUserName(data);
       } catch (error) {
-        console.error('Error fetching user info:', error);
+        //console.error('Error fetching user info:', error);
         setCurrentUserName(null); // 에러 발생 시 로그인 상태를 비로그인으로 처리
       }
     };
