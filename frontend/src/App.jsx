@@ -16,6 +16,14 @@ import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./components/prot
 import AccountSettings from "./(authenticated)/user-home/account-settings.tsx";
 
 const router = createBrowserRouter([
+  {
+    path: "/kmla-warehouse",
+    element: <Navigate to="/kmla-warehouse/home" replace />,
+  },
+  {
+    path: "/",
+    element: <Navigate to="/kmla-warehouse/home" replace />,
+  },
   // Login page
   {
     path: "/kmla-warehouse/login",
@@ -65,10 +73,6 @@ const router = createBrowserRouter([
     path: "/kmla-warehouse/admin/setting",
     element: <ProtectedRoute><ProtectedAdmin><AdminSettingPage /></ProtectedAdmin></ProtectedRoute>,
   },  
-  {
-    path: "/kmla-warehouse",
-    element: <Navigate to="/kmla-warehouse/home" replace />,
-},
 ]);
 
 const App = () => {
