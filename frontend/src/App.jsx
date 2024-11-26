@@ -1,19 +1,19 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
-import Login from "./(non-authenticated)/login/login.tsx"; 
-import Signup from "./(non-authenticated)/signup/signup.tsx"; 
+import Login from "./routes/(non-authenticated)/login/login.tsx"; 
+import Signup from "./routes/(non-authenticated)/signup/signup.tsx"; 
 
-import Home from "./(non-authenticated)/equipment-home/equipment-home.tsx"; 
-import EquipmentDetails from "./(non-authenticated)/equipment-home/equipment-details.tsx"; 
-import ReservationStatus from "./(authenticated)/user/reservation.tsx";
+import Home from "./routes/(non-authenticated)/equipment-home/equipment-home.tsx"; 
+import EquipmentDetails from "./routes/(non-authenticated)/equipment-home/equipment-details.tsx"; 
+import ReservationStatus from "./routes/(authenticated)/user/reservation.tsx";
  
-import AdminEquipmentPage from "./(authenticated)/admin/equipment.tsx"; 
-import AdminHistoryPage from "./(authenticated)/admin/reservation.tsx";  
-import AdminTeamPage from "./(authenticated)/admin/manage-team.tsx";
-import AdminSettingPage from "./(authenticated)/admin/account-settings.tsx";
+import AdminEquipmentPage from "./routes/(authenticated)/admin/equipment.tsx"; 
+import AdminHistoryPage from "./routes/(authenticated)/admin/reservation.tsx";  
+import AdminTeamPage from "./routes/(authenticated)/admin/manage-team.tsx";
+import AdminSettingPage from "./routes/(authenticated)/admin/account-settings.tsx";
 import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./components/protected-routes.jsx";
-import AccountSettings from "./(authenticated)/user/account-settings.tsx";
+import AccountSettings from "./routes/(authenticated)/user/account-settings.tsx";
 
 const intermediatePath = "/kmla-warehouse" // make it an empty string if no intermediate path
 

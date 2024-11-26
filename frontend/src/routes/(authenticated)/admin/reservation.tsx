@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Typography, Spin, message, Grid } from 'antd';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
-import Sidebar from '../../components/admin/admin-sidebar';
+import Sidebar from '../../../components/admin/admin-sidebar';
 import "./admin.css";
-import Headbar from "../../components/header";
-import { borrowHistoryService, BorrowHistory } from '../../api/borrowHistoryService';
+import Headbar from "../../../components/header";
+import { borrowHistoryService, BorrowHistory } from '../../../api/borrowHistoryService';
 import { DeleteOutlined } from '@ant-design/icons';
 
 const { Content, Sider } = Layout;

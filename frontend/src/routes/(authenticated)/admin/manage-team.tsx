@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Layout, Typography, Spin, message, ConfigProvider, Form, Input, Button  } from 'antd';
 import enUS from 'antd/lib/locale/en_US';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
-import Sidebar from "../../components/admin/admin-sidebar";
+import Sidebar from "../../../components/admin/admin-sidebar";
 import './admin.css';
-import Headbar from "../../components/header";
-import { teamService, Team, AddTeam } from "../../api/teamService";
+import Headbar from "../../../components/header";
+import { teamService, Team, AddTeam } from "../../../api/teamService";
 import { EditOutlined, DeleteOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons'; 
 
 const { Sider, Content } = Layout;

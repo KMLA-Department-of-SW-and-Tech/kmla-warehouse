@@ -1,44 +1,44 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, message, Layout } from 'antd';
-import Sidebar from '../../components/admin/admin-sidebar';
-import Headbar from '../../components/header'; // Assuming you have a header component like in the EquipmentListPage
+import authService from '../../../api/authService';
+import Sidebar from '../../../components/equipment/equipment-bar';
+import Headbar from '../../../components/header'; 
 import { useNavigate } from 'react-router-dom';
-import authService from '../../api/authService';
 
 const { Sider, Content } = Layout;
 
-const AdminSettingPage = () => {
+const AccountSettings = () => {
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(''); // State to hold error messages
+  const [errorMessage, setErrorMessage] = useState(''); 
   const navigate = useNavigate();
   
-  // Function to handle password change
+  
   const handlePasswordChange = async (values) => {
     setLoading(true);
-    setErrorMessage(""); // Reset error message on new attempt
+    setErrorMessage(""); 
     try {
       await authService.changePassword(values.currentPassword, values.newPassword);
-      message.success('Password changed successfully!');
+      message.success('비밀번호가 성공적으로 변경되었습니다');
     } catch (error) {
       console.log(error);
-      // If an error occurs, display the error message and prevent the success message from showing
-      const responseMessage = error.response?.data || 'Failed to change password. Please try again.';
-      setErrorMessage(responseMessage); // Set error message for display in the form
-      message.error('Failed to change password.'); // Display error notification
+      
+      const responseMessage = error.response?.data || '비밀번호를 변경하는데 실패하였습니다. 다시 시도해 주세요.';
+      setErrorMessage(responseMessage);
+      message.error('비밀번호를 변경하는데 실패하였습니다.'); 
     } finally {
       setLoading(false);
     }
   };
 
-  // Function to handle logout
+ 
   const handleLogout = async () => {
     setLoading(true);
     try {
       await authService.logout();
-      message.success('Logged out successfully!');
+      message.success('로그아웃이 성공적으로 완료되었습니다.');
       navigate("/kmla-warehouse/home");
     } catch (error) {
-      message.error('Failed to log out. Please try again.');
+      message.error('로그아웃하는데 실패하였습니다. 다시 시도해주세요.');
     } finally {
       setLoading(false);
     }
@@ -46,7 +46,7 @@ const AdminSettingPage = () => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Headbar /> {/* Header component */}
+      <Headbar />
       <Sider
         width={250}
         style={{
@@ -54,22 +54,22 @@ const AdminSettingPage = () => {
           position: 'fixed',
           height: '100vh',
           left: 0,
-          top: 64, // If you have a fixed header
+          top: 64,
         }}
       >
-        <Sidebar /> {/* Sidebar component */}
+        <Sidebar /> 
       </Sider>
       
       <Layout style={{ marginLeft: 250 }}>
         <Content style={{ padding: '40px', marginTop: '64px', width: 'calc(100vw - 250px)' }}>
           <div style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>
-            <h2>Account Settings</h2>
+            <h2>계정 설정</h2>
 
             <Form layout="vertical" onFinish={handlePasswordChange}>
               <Form.Item
                 label="Current Password"
                 name="currentPassword"
-                rules={[{ required: true, message: 'Please enter your current password!' }]}
+                rules={[{ required: true, message: '현재 비밀번호를 입력해주세요' }]}
               >
                 <Input.Password />
               </Form.Item>
@@ -77,7 +77,7 @@ const AdminSettingPage = () => {
               <Form.Item
                 label="New Password"
                 name="newPassword"
-                rules={[{ required: true, message: 'Please enter your new password!' }]}
+                rules={[{ required: true, message: '새로운 비밀번호를 입력해주세요' }]}
               >
                 <Input.Password />
               </Form.Item>
@@ -86,13 +86,13 @@ const AdminSettingPage = () => {
                 label="Confirm New Password"
                 name="confirmNewPassword"
                 rules={[
-                  { required: true, message: 'Please confirm your new password!' },
+                  { required: true, message: '새로운 비밀번호를 다시 한 번 입력해주세요' },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
                       if (!value || getFieldValue('newPassword') === value) {
                         return Promise.resolve();
                       }
-                      return Promise.reject(new Error('The two passwords do not match!'));
+                      return Promise.reject(new Error('새로운 비밀번호 두 개가 일치하지 않습니다.'));
                     },
                   }),
                 ]}
@@ -100,7 +100,6 @@ const AdminSettingPage = () => {
                 <Input.Password />
               </Form.Item>
 
-              {/* Display error message */}
               {errorMessage && (
                 <div style={{ color: 'red', marginBottom: '16px' }}>
                   {errorMessage}
@@ -109,13 +108,13 @@ const AdminSettingPage = () => {
 
               <Form.Item>
                 <Button type="primary" htmlType="submit" loading={loading}>
-                  Change Password
+                  비밀번호 변경
                 </Button>
               </Form.Item>
             </Form>
 
             <Button onClick={handleLogout} loading={loading}>
-              Logout
+              로그아웃
             </Button>
           </div>
         </Content>
@@ -124,4 +123,4 @@ const AdminSettingPage = () => {
   );
 };
 
-export default AdminSettingPage;
+export default AccountSettings;
