@@ -68,7 +68,7 @@ export default function EquipmentListPage() {
       setIsModalVisible(true);
     } else {
       // Navigate to the details page on larger screens
-      navigate(`/kmla-warehouse/item/${equipmentId}`);
+      navigate(`/item/${equipmentId}`);
     }
   };
 
@@ -78,7 +78,7 @@ export default function EquipmentListPage() {
 
   const handleOk = () => {
     if (selectedItemId) {
-      navigate(`/kmla-warehouse/home`);
+      navigate(`/home`);
       setIsModalVisible(false);
     }
   };
