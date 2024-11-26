@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './page.css'; // Assuming the same CSS structure as in LoginPage
+import './signup.css'; // Assuming the same CSS structure as in LoginPage
 
 const SignUpPage: React.FC = () => {
   const [username, setUsername] = useState('');

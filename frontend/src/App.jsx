@@ -1,17 +1,17 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
-import Login from "./(non-authenticated)/login/page.tsx"; 
-import Signup from "./(non-authenticated)/signup/page.tsx"; 
+import Login from "./(non-authenticated)/login/login.tsx"; 
+import Signup from "./(non-authenticated)/signup/signup.tsx"; 
 
 import Home from "./(non-authenticated)/equipment-home/equipment-home.tsx"; 
 import EquipmentDetails from "./(non-authenticated)/equipment-home/equipment-details.tsx"; 
-import ReservationStatus from "./(authenticated)/user/reservation-status.tsx";
+import ReservationStatus from "./(authenticated)/user/reservation.tsx";
  
-import AdminEquipmentPage from "./(authenticated)/admin/equipment-page.tsx"; 
-import AdminHistoryPage from "./(authenticated)/admin/reservation-page.tsx";  
-import AdminTeamPage from "./(authenticated)/admin/manage-team-page.tsx";
-import AdminSettingPage from "./(authenticated)/admin/admin-account-settings.tsx";
+import AdminEquipmentPage from "./(authenticated)/admin/equipment.tsx"; 
+import AdminHistoryPage from "./(authenticated)/admin/reservation.tsx";  
+import AdminTeamPage from "./(authenticated)/admin/manage-team.tsx";
+import AdminSettingPage from "./(authenticated)/admin/account-settings.tsx";
 import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./components/protected-routes.jsx";
 import AccountSettings from "./(authenticated)/user/account-settings.tsx";
 
