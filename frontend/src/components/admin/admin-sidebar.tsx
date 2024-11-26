@@ -53,7 +53,7 @@ const items1: MenuProps['items'] = [
 ];
 
 const handleMenuClick = (e: {key: string}) => {
-  navigate(`/${e.key}`);
+  navigate(`${e.key}`);
 };
   return (
     <Menu
