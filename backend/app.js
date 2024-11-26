@@ -7,6 +7,8 @@ const cors = require('cors');
 require('dotenv').config();
 
 
+const env = process.env.NODE_ENV || 'development';
+
 // const indexRouter = require('./routes/index');
 // const usersRouter = require('./routes/users');
 const apiRouter = require('./routes/api');
@@ -28,7 +30,7 @@ async function main() {
 
 // view engine setup
 
-app.use(logger('dev'));
+app.use(logger(env === 'development'? 'dev' : 'combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -38,7 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 /* app.use(credentials);
 app.use(cors(corsOptions)); */
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: env === 'development'? 'http://localhost:5173' : 'https://kmla-warehouse.netlify.app',
   credentials: true,
   
 }))
