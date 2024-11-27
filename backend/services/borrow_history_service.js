@@ -1,5 +1,4 @@
 const BorrowHistory = require("../models/borrow_history");
-const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
 const borrowHistoryRepository = require("../repositories/borrow_history_repository");
@@ -60,9 +59,9 @@ exports.createBorrowHistory = async (entry) => {
     }
 };
 
-exports.borrow_history_delete = asyncHandler(async (req, res, next) => {
+exports.borrow_history_delete = async (req, res, next) => {
     res.send("NOT IMPLEMENTED: borrow_history delete");
-});
+};
 
 exports.returnItem = async (logId, username) => {
     // get log data

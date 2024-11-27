@@ -1,5 +1,4 @@
 const BorrowHistory = require("../models/borrow_history");
-const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
 exports.getAllBorrowHistory = async () => {

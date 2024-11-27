@@ -1,13 +1,10 @@
-
-
 const Item = require("../models/item");
 const BorrowHistory = require("../models/borrow_history");
-const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
 const itemService = require("../services/item_service");
 
-exports.item_list = asyncHandler(async (req, res, next) => {
+exports.item_list = async (req, res, next) => {
     try {
         const itemList = await itemService.getItemList();
         res.status(200).send(itemList);
@@ -24,9 +21,9 @@ exports.item_list = asyncHandler(async (req, res, next) => {
         res.status(500).send({error: "Internal Server Error"});
         return;
     }
-});
+};
 
-exports.item_search = asyncHandler(async (req, res, next) => {
+exports.item_search = async (req, res, next) => {
     // const itemList = await itemService.searchItemList("hi");
     const itemList = await itemService.searchItemList(req.params.query);
     res.status(200).send(itemList);
@@ -45,9 +42,9 @@ exports.item_search = asyncHandler(async (req, res, next) => {
         res.status(500).send(err);
         return;
     }
-});
+};
 
-exports.item_detail = asyncHandler(async (req, res, next) => {
+exports.item_detail = async (req, res, next) => {
     try {
         const item = await itemService.getItemDetail(req.params.id);
         // const lastItemHistory = await BorrowHistory.find({item: req.params.id, return_date: null}).exec();
@@ -66,12 +63,12 @@ exports.item_detail = asyncHandler(async (req, res, next) => {
         res.status(500).send({error: "Internal Server Error"});
         return;
     }
-});
+};
 
 // Will implement search
 
 exports.item_create = [
-    asyncHandler(async (req, res, next) => {
+    async (req, res, next) => {
         const errors = validationResult(req);
         if(!errors.isEmpty()) {
             res.send(errors.array());
@@ -104,11 +101,11 @@ exports.item_create = [
                 return;
             }
         }
-    }),
+    },
 ]
 
 exports.item_update_put = [
-    asyncHandler(async (req, res, next) => {
+    async (req, res, next) => {
         const errors = validationResult(req);
         if(!errors.isEmpty()) {
             res.send(errors.array());
@@ -142,19 +139,19 @@ exports.item_update_put = [
                 return;
             }
         }
-    }),
+    },
 ];
 
-exports.item_update_patch = asyncHandler(async (req, res, next) => {
+exports.item_update_patch = async (req, res, next) => {
     res.send("NOT IMPLEMENTED: Item update patch");
-});
+};
 
-exports.item_delete = asyncHandler(async (req, res, next) => {
+exports.item_delete = async (req, res, next) => {
     
-});
+};
 
 exports.item_borrow = [
-    asyncHandler(async (req, res, next) => {
+    async (req, res, next) => {
         try {
             await itemService.borrowItem(req.params.id, req.body.quantity, req.username);
             res.status(200).send("Sucessfully borrowed item");
@@ -182,5 +179,5 @@ exports.item_borrow = [
             }
             res.status(500).send(err);
         }
-    }),
+    },
 ];

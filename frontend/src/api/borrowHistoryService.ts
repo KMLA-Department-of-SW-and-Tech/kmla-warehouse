@@ -38,7 +38,7 @@ export const borrowHistoryService = {
 
   //GET 팀별 히스토리 정보
   getBorrowHistoryInfo: async (id: string): Promise<BorrowHistory> => {
-    const response = await axiosPrivate.get(`$/api/borrow-history/${id}`);
+    const response = await axiosPrivate.get(`/api/borrow-history/${id}`);
     return response.data;
   },
 

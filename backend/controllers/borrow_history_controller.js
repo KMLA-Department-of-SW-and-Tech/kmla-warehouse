@@ -1,10 +1,9 @@
 const BorrowHistory = require("../models/borrow_history");
-const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
 const borrowHistoryService = require("../services/borrow_history_service");
 
-exports.borrow_history_list = asyncHandler(async (req, res, next) => {
+exports.borrow_history_list = async (req, res, next) => {
     try {
         const borrowHistoryList = await borrowHistoryService.getBorrowHistoryList();
         res.status(200).send(borrowHistoryList);
@@ -21,16 +20,16 @@ exports.borrow_history_list = asyncHandler(async (req, res, next) => {
         res.status(500).send({error: "Internal Server Error"});
         return;
     }
-});
+};
 
-exports.borrow_history_detail = asyncHandler(async (req, res, next) => {
+exports.borrow_history_detail = async (req, res, next) => {
     res.send("NOT IMPLEMENTED: borrow_history detail");
-});
+};
 
 // Will implement search
 
 exports.borrow_history_create = [
-    asyncHandler(async (req, res, next) => {
+    async (req, res, next) => {
         const errors = validationResult(req);
         if(!errors.isEmpty()) {
             res.send(errors.array());
@@ -49,11 +48,11 @@ exports.borrow_history_create = [
                 return;
             }
         }
-    })
+    }
 ]
 
 exports.item_return = [
-    asyncHandler(async (req, res, next) => {
+    async (req, res, next) => {
         try {
             await borrowHistoryService.returnItem(req.params.id, req.username);
             res.status(200).send("Sucessfully returned item");
@@ -86,11 +85,11 @@ exports.item_return = [
             res.status(500).send(err);
             return;
         }
-    }),
+    },
 ];
 
 exports.borrow_history_delete = [
-    asyncHandler(async (req, res, next) => {
+    async (req, res, next) => {
         const errors = validationResult(req);
         if(!errors.isEmpty()) {
             res.send(errors.array());
@@ -111,5 +110,5 @@ exports.borrow_history_delete = [
                 return;
             }
         }
-    }),
+    },
 ];

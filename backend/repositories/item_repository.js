@@ -1,6 +1,5 @@
 const Item = require("../models/item");
 const BorrowHistory = require("../models/borrow_history");
-const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
 
@@ -62,16 +61,16 @@ exports.findByIdAndUpdate = async (item, id) => {
     return await Item.findByIdAndUpdate(id, item, {});
 };
 
-exports.item_update_patch = asyncHandler(async (req, res, next) => {
+exports.item_update_patch = async (req, res, next) => {
     res.send("NOT IMPLEMENTED: Item update patch");
-});
+};
 
-exports.item_delete = asyncHandler(async (req, res, next) => {
+exports.item_delete = async (req, res, next) => {
     res.send("NOT IMPLEMENTED: Item delete");
-});
+};
 
 exports.item_borrow = [
-    asyncHandler(async (req, res, next) => {
+    async (req, res, next) => {
         
-    }),
+    },
 ];

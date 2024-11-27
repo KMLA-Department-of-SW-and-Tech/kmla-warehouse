@@ -1,7 +1,6 @@
-const asyncHandler = require("express-async-handler");
 const itemRepository = require("../repositories/item_repository");
 
-const deleteItem = asyncHandler(async (req, res, next) => {
+const deleteItem = async (req, res, next) => {
     let item = null;
     try {
         item = await itemRepository.getItemByIdWithoutPopulate(req.params.id);
@@ -15,6 +14,6 @@ const deleteItem = asyncHandler(async (req, res, next) => {
     req.body = item;
     req.body.status = "deleted";
     next();
-});
+};
 
 module.exports = deleteItem;

@@ -1,10 +1,9 @@
 const Team = require("../models/team");
-const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 
-exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
+exports.handle_refresh_token = async (req, res, next) => {
     const cookies = req.cookies;
     if(!cookies?.jwt) return res.sendStatus(401);
     const refreshToken = cookies.jwt;
@@ -72,6 +71,6 @@ exports.handle_refresh_token = asyncHandler(async (req, res, next) => {
             res.json( { roles, accessToken} )
         }
     );
-}); // handle login
+}; // handle login
 
 

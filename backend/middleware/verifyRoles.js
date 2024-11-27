@@ -1,9 +1,8 @@
-const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const verifyRoles = (...allowedRoles) => { // will be needed in future applications
-    return asyncHandler(async(req, res, next) => {
+    return async(req, res, next) => {
         if(!req.roles) return res.sendStatus(401);
         const rolesArray = [...allowedRoles];
         console.log(rolesArray);
@@ -11,7 +10,7 @@ const verifyRoles = (...allowedRoles) => { // will be needed in future applicati
         const result = req.roles.map(role => rolesArray.includes(role)).find(val => val === true);
         if(!result) return res.sendStatus(401);
         next();
-    });
+    };
 }
 
 module.exports = verifyRoles;
