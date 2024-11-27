@@ -12,6 +12,7 @@ const axiosPrivate = {
     },
     get: async (apiUrl, axiosConfig) => {
         try {
+            console.log("ihi", axiosPrivate.accessToken);
             const response = await axios.get(apiUrl, {
                 ...axiosConfig,
                 withCredentials: true,

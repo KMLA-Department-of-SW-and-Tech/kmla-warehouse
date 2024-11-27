@@ -17,12 +17,11 @@ const authService = {
         }
     },
     currentUser: async () => {
-      const response = await axiosPrivate.get('/api/auth', { withCredentials: true });
-      console.log(response.data);
-      return response.data.username;
+        const response = await axiosPrivate.get('/api/auth', { withCredentials: true });
+        return response.data.username;
     },
     changePassword: async (currentPassword, newPassword) => {
-      await axiosPrivate.patch('/api/team/update-password', { currentPassword, newPassword }, { withCredentials: true });
+        await axiosPrivate.patch('/api/team/update-password', { currentPassword, newPassword }, { withCredentials: true });
     }
 }
 

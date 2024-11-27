@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // 페이지 이동을 위한 훅
 import './header.css';
-import currentUser from '../api/authService';
+import authService from '../api/authService';
 
 // Header 컴포넌트 정의
 const Headbar: React.FC = () => {
@@ -11,7 +11,7 @@ const Headbar: React.FC = () => {
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
-        const data = await currentUser.currentUser();
+        const data = await authService.currentUser();
         setCurrentUserName(data);
       } catch (error) {
         //console.error('Error fetching user info:', error);
