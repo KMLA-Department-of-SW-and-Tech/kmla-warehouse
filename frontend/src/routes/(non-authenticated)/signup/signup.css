@@ -3,7 +3,7 @@
     justify-content: flex-end;
     width: 100vw;
     height: 100vh;
-    background-image: url('../../../images/login-page.jpg'); /* Add your image path */
+    background-image: url('../../../../images/login-page.jpg'); /* Add your image path */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
