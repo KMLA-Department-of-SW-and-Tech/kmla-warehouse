@@ -1,16 +1,27 @@
 const Team = require("../models/team");
-const { validationResult } = require("express-validator");
+const { validationResult, body } = require("express-validator");
+const expressAsyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+const validateUserInput = [
+    body('username')
+        .exists().withMessage('Username is required')
+        .isString().withMessage('Username must be a string')
+        .notEmpty().withMessage('Username cannot be empty'),
+    body('password')
+        .exists().withMessage('Password is required')
+        .isString().withMessage('Password must be a string')
+        .notEmpty().withMessage('Password cannot be empty'),
+];
 
-exports.handle_login = async (req, res, next) => {
+exports.handle_login = expressAsyncHandler(validateUserInput, async (req, res, next) => {
     const cookies = req.cookies;
     //console.log(`Cookie available at login: ${JSON.stringify(cookies)}`);
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
-        res.status(200).send(errors.array());
+        res.status(400).send(errors.array());
         return;
     }
     const { username, password } = req.body;
@@ -71,7 +82,7 @@ exports.handle_login = async (req, res, next) => {
     else {
         res.status(401).send("Invalid password");
     }
-}; // handle login
+}); // handle login
 
 exports.handle_logout = async (req, res, next) => {
     // On client delete the accessToken!!!! --> did this
