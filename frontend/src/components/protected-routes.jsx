@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import axiosPrivate from "../hooks/axiosPrivate";
 import { cloneElement, useEffect, useRef, useState } from "react";
 
-export const ProtectedRoute = ({ children, accessToken,roles }) => {
+export const ProtectedRoute = ({ children, accessToken, roles }) => {
     // wait for refresh request on page refresh necessarily first
     return (
         accessToken === ""
