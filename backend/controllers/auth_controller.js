@@ -1,6 +1,5 @@
 const Team = require("../models/team");
 const { validationResult, body } = require("express-validator");
-const expressAsyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -16,7 +15,7 @@ const validateUserInput = [
         .notEmpty().withMessage('Password cannot be empty'),
 ];
 
-exports.handle_login = expressAsyncHandler(validateUserInput, async (req, res, next) => {
+exports.handle_login = [validateUserInput, async (req, res, next) => {
     const cookies = req.cookies;
     //console.log(`Cookie available at login: ${JSON.stringify(cookies)}`);
     const errors = validationResult(req);
@@ -82,7 +81,7 @@ exports.handle_login = expressAsyncHandler(validateUserInput, async (req, res, n
     else {
         res.status(401).send("Invalid password");
     }
-}); // handle login
+}]; // handle login
 
 exports.handle_logout = async (req, res, next) => {
     // On client delete the accessToken!!!! --> did this
