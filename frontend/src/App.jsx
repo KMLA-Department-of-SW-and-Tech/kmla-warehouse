@@ -14,12 +14,13 @@ import AdminTeamPage from "./routes/(authenticated)/admin/manage-team.tsx";
 import AdminSettingPage from "./routes/(authenticated)/admin/account-settings.tsx";
 import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./components/protected-routes.jsx";
 import AccountSettings from "./routes/(authenticated)/user/account-settings.tsx";
+import { WaitRefreshRequestOnPageRefresh } from "./components/wait-for-refresh-request-on-page-refresh.jsx";
 
 const intermediatePath = "" // /kmla-warehouse possible
 
 const router = createBrowserRouter([
   {
-    path: `${intermediatePath}`,
+    path: `${intermediatePath}/`,
     element: <Navigate to={`${intermediatePath}/home`} replace />,
   },
   {
@@ -39,42 +40,88 @@ const router = createBrowserRouter([
   // Home page
   {
     path: `${intermediatePath}/home`,
-    element: <Home />
+    element: (
+      <WaitRefreshRequestOnPageRefresh>
+        <Home />
+      </WaitRefreshRequestOnPageRefresh>
+    ),
   },
   {
     path: `${intermediatePath}/account-settings`,
-    element: <ProtectedRoute><ProtectedUser><AccountSettings /></ProtectedUser></ProtectedRoute>,
+    element: (
+        <WaitRefreshRequestOnPageRefresh>
+          <ProtectedRoute><ProtectedUser>
+            <AccountSettings />
+          </ProtectedUser></ProtectedRoute>
+        </WaitRefreshRequestOnPageRefresh>
+      ),
   },
 
   // Equipment details page
   {
     path: `${intermediatePath}/item/:id`,
-    element: <ProtectedRoute><ProtectedUser><EquipmentDetails /></ProtectedUser></ProtectedRoute>,
+    element: (
+      <WaitRefreshRequestOnPageRefresh>
+        <ProtectedRoute><ProtectedUser>
+          <EquipmentDetails />
+        </ProtectedUser></ProtectedRoute>
+      </WaitRefreshRequestOnPageRefresh>
+    ),
   },
   //Reservation Status page
   {
     path: `${intermediatePath}/reservation`,
-    element: <ProtectedRoute><ProtectedUser><ReservationStatus /></ProtectedUser></ProtectedRoute>,
+    element: (
+      <WaitRefreshRequestOnPageRefresh>
+        <ProtectedRoute><ProtectedUser>
+          <ReservationStatus />
+        </ProtectedUser></ProtectedRoute>
+      </WaitRefreshRequestOnPageRefresh>
+    ),
   },
   // Admin: add equipment page
   {
     path: `${intermediatePath}/admin/equipment`,
-    element: <ProtectedRoute><ProtectedAdmin><AdminEquipmentPage /></ProtectedAdmin></ProtectedRoute>,
+    element: (
+      <WaitRefreshRequestOnPageRefresh>
+        <ProtectedRoute><ProtectedAdmin>
+          <AdminEquipmentPage />
+        </ProtectedAdmin></ProtectedRoute>
+      </WaitRefreshRequestOnPageRefresh>
+    ),
   },
   // Admin: reservation page
   {
     path: `${intermediatePath}/admin/reservation`,
-    element: <ProtectedRoute><ProtectedAdmin><AdminHistoryPage /></ProtectedAdmin></ProtectedRoute>,
+    element: (
+      <WaitRefreshRequestOnPageRefresh>
+        <ProtectedRoute><ProtectedAdmin>
+          <AdminHistoryPage />
+        </ProtectedAdmin></ProtectedRoute>
+      </WaitRefreshRequestOnPageRefresh>
+    ),
   },
   // Admin: mange team page
   {
     path: `${intermediatePath}/admin/team`,
-    element: <ProtectedRoute><ProtectedAdmin><AdminTeamPage /></ProtectedAdmin></ProtectedRoute>,
+    element: (
+      <WaitRefreshRequestOnPageRefresh>
+        <ProtectedRoute><ProtectedAdmin>
+          <AdminTeamPage />
+        </ProtectedAdmin></ProtectedRoute>
+      </WaitRefreshRequestOnPageRefresh>
+    ),
   },
   // Admin: account setting page
   {
     path: `${intermediatePath}/admin/account-settings`,
-    element: <ProtectedRoute><ProtectedAdmin><AdminSettingPage /></ProtectedAdmin></ProtectedRoute>,
+    element: (
+      <WaitRefreshRequestOnPageRefresh>
+        <ProtectedRoute><ProtectedAdmin>
+          <AdminSettingPage />
+        </ProtectedAdmin></ProtectedRoute>
+      </WaitRefreshRequestOnPageRefresh>
+    ),
   },  
 ]);
 

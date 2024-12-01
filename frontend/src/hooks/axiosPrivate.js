@@ -12,7 +12,6 @@ const axiosPrivate = {
     },
     get: async (apiUrl, axiosConfig) => {
         try {
-            console.log("ihi", axiosPrivate.accessToken);
             const response = await axios.get(apiUrl, {
                 ...axiosConfig,
                 withCredentials: true,
@@ -22,8 +21,7 @@ const axiosPrivate = {
             });
             return response;
         } catch (err) {
-            if(apiUrl == "/api/auth") throw err; // for current user requests
-            else if(err.response.data == "Invalid access token") {
+            if(err.response.data == "Invalid access token") {
                 try {
                     await axiosPrivate.refreshRequest();
                     // successsful refresh
