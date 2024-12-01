@@ -14,7 +14,7 @@ exports.handle_login = async (req, res, next) => {
         return;
     }
     const { username, password } = req.body;
-    if(!username || !password) return res.status(400).send("Username and Password are required");
+    //if(!username || !password) return res.status(400).send("Username and Password are required");
     const foundUser = await Team.findOne({username: username})
     .collation({ locale: "en_US", strength: 2 })
     .exec();
