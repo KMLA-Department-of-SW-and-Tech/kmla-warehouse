@@ -3,7 +3,7 @@ import axiosPrivate from '../hooks/axiosPrivate';
 
 const authService = {
     login: async (username, password) => { // returns true for successful login
-        const response = await axios.post('/api/auth/login', { username, password }, {withCredentials: true});
+        const response = await axios.post('/api/auth/login', { username, password }, {withCredentials: true, headers: {'Content-Type': 'application/json'}});
         axiosPrivate.accessToken = response.data.accessToken;
         axiosPrivate.roles = response.data.roles;
     },
