@@ -24,6 +24,7 @@ exports.handle_login = [/*validateUserInput, */async (req, res, next) => {
     //     return;
     // }
     // console.log(JSON.parse(req.body));
+    console.log(req.body);
     const { username, password } = JSON.parse(req.body);
     if(!username || !password) return res.status(400).send("Username and Password are required");
     const foundUser = await Team.findOne({username: username})
