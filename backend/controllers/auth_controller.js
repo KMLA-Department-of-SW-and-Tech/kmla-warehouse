@@ -15,14 +15,15 @@ const validateUserInput = [
         .notEmpty().withMessage('Password cannot be empty'),
 ];
 
-exports.handle_login = [validateUserInput, async (req, res, next) => {
+exports.handle_login = [/*validateUserInput, */async (req, res, next) => {
     const cookies = req.cookies;
     //console.log(`Cookie available at login: ${JSON.stringify(cookies)}`);
-    const errors = validationResult(req);
-    if(!errors.isEmpty()) {
-        res.status(400).send(errors.array());
-        return;
-    }
+    // const errors = validationResult(req);
+    // if(!errors.isEmpty()) {
+    //     res.status(400).send(errors.array());
+    //     return;
+    // }
+    console.log(req.body);
     const { username, password } = req.body;
     //if(!username || !password) return res.status(400).send("Username and Password are required");
     const foundUser = await Team.findOne({username: username})
