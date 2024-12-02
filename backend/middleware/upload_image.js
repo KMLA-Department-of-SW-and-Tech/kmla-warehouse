@@ -1,6 +1,7 @@
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 const s3 = require('../config/s3'); // Import the S3 client from s3.js
+require('dotenv').config(); // Load environment variables from .env
 
 // Configure Multer-S3 Storage
 const upload = multer({
@@ -34,25 +35,26 @@ const upload = multer({
 * Adds imageUrl and imageKey to the request object upon success.
 */
 const handleImageUpload = (req, res, next) => {
-  upload.single('image')(req, res, function (err) {
-      if (err instanceof multer.MulterError) {
-          // A Multer error occurred when uploading
-          console.error('Multer Error:', err.message);
-          return res.status(400).json({ error: err.message });
-      } else if (err) {
-          // An unknown error occurred when uploading
-          console.error('Unknown Error:', err);
-          return res.status(500).json({ error: 'An error occurred while uploading the image.' });
-      }
+    const uploadSingle = upload.single('image');
+    uploadSingle(req, res, async (err) => {
+    if (err instanceof multer.MulterError) {
+        // A Multer error occurred when uploading
+        console.error('Multer Error:', err.message);
+        return res.status(400).json({ error: err.message });
+    } else if (err) {
+        // An unknown error occurred when uploading
+        console.error('Unknown Error:', err);
+        return res.status(500).json({ error: 'An error occurred while uploading the image.' });
+    }
 
-      // Check if file is uploaded
-      if (!req.file) {
-          return res.status(400).json({ error: 'No file uploaded.' });
-      }
+    // Check if file is uploaded
+    if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded.' });
+    }
 
-      // File uploaded successfully
-      console.log('Image uploaded to S3:', req.file);
-      next();
+    // File uploaded successfully
+    console.log('Image uploaded to S3:', req.file);
+    next();
   });
 };
 

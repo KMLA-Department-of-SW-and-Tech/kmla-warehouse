@@ -5,7 +5,6 @@ GET 로그 정보 /api/borrow-history/:id
 POST 로그 생성 /api/borrow-history/
   body: item(String), quantity(Number), borrower(ObjectId), borrow_date(Date), return_date(Date)
 DELETE 로그 삭제 /api/borrow-history/:id
-
 POST 물품 반납 /api/borrow-history/:id/return
 
 Item

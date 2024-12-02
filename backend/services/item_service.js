@@ -1,10 +1,8 @@
 const Item = require("../models/item");
 const BorrowHistory = require("../models/borrow_history");
 const { body, validationResult } = require("express-validator");
-
 const itemRepository = require("../repositories/item_repository");
 const teamRepository = require("../repositories/team_repository");
-
 const borrowHistoryService = require("../services/borrow_history_service");
 
 exports.getItemList = async () => {
@@ -40,9 +38,7 @@ exports.searchItemList = async (query) => {
     }
 };
 
-
-
-const getItemDetail = async(itemId) => {
+exports.getItemDetail = async(itemId) => {
     try {
         const item = await itemRepository.getItemById(itemId);
         if(item == null) {
@@ -56,8 +52,6 @@ const getItemDetail = async(itemId) => {
         throw new Error("Failed to get item data from database");
     }
 };
-
-exports.getItemDetail = getItemDetail;
 
 // Will implement search
 
@@ -82,8 +76,6 @@ exports.createItem = async (item) => {
         availableQuantity: item.quantity,
         location: item.location,
         status: "available",
-        tags: [],
-        category: null,
         imageUrl: item.imageUrl,
         imageKey: item.imageKey,
     });
@@ -131,7 +123,7 @@ exports.borrowItem = async (itemId, quantity, username) => {
     // get item
     let item = null;
     try {
-        item = await getItemDetail(itemId);
+        item = await exports.getItemDetail(itemId);
     } catch(err) {
         throw err;
     }
