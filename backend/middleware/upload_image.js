@@ -7,7 +7,7 @@ require('dotenv').config(); // Load environment variables from .env
 const upload = multer({
   storage: multerS3({
       s3: s3,
-      bucket: process.env.AWS_BUCKET_NAME,
+      bucket: process.env.MY_AWS_BUCKET_NAME,
       contentType: multerS3.AUTO_CONTENT_TYPE, // Automatically set Content-Type
       metadata: (req, file, cb) => {
           cb(null, { fieldName: file.fieldname });
