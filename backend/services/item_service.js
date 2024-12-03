@@ -92,11 +92,11 @@ const updateItem = async (item, id) => {
     try {
         updatedItem = await itemRepository.findByIdAndUpdate(item, id);
         if (updatedItem == null) {
-            throw new Error("Item not found");
+            throw new Error("Failed to update item");
         }
         return updatedItem;
     } catch (err) {
-        if(err.message == "Item not found") {
+        if(err.message == "Failed to update item") {
             throw err;
         }
         throw err;

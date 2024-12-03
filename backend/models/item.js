@@ -9,7 +9,6 @@ const itemSchema = new Schema({
     totalQuantity: {type: Number, required: true},
     availableQuantity: {type: Number, required: true},
     location: {type: String, maxLength: 100},
-    // photo will be added later
     /* category: {type: Schema.Types.ObjectId, ref: "Category"}, */
     status: {type: String, enum: ["available", "deleted"], default: "available"},
     imageUrl: {type: String},

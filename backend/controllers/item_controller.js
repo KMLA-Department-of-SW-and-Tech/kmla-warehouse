@@ -114,22 +114,23 @@ exports.item_update_put = [
         else {
             const id = req.params.id;
             try {
-                let imageUrl = null;
-                let imageKey = null;
-                let prevKey = null;
-                if(req.file) {
-                    imageUrl = req.file.location;
-                    imageKey = req.file.key;
-                    const prevItemDetail = await itemService.getItemDetail(id);
-                    prevKey = prevItemDetail.imageKey;
+                const currentItem = await itemService.getItemDetail(id);
+                const prevKey = currentItem.imageKey;
+                const newItem = {
+                    name: req.body.name,
+                    description: req.body.description,
+                    totalQuantity: req.body.quantity,
+                    availableQuantity: currentItem.availableQuantity,
+                    location: req.body.location,
+                    status: req.body.status ? req.body.status : currentItem.status,
+                    imageUrl: req.body.imageUrl ? req.body.imageUrl : (req.file ? req.file.location : null),
+                    imageKey: req.body.imageKey ? req.body.imageKey: (req.file ? req.file.key : null),
+                    _id: id,
                 }
-                const newItem = req.body;
-                newItem.imageUrl = imageUrl;
-                newItem.imageKey = imageKey
+                // console.log(id, currentItem, newItem);
                 const updatedItem = await itemService.updateItem(newItem, id);
-                console.log(prevKey);
                 req.body.prevKey = prevKey;
-                return next();
+                return req.body.status ? res.status(200).send("sucessfully deleted") : next();
             } catch (err) {
                 if(err.message == "Item not found") {
                     res.status(404).send(err);

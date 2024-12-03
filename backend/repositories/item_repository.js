@@ -57,7 +57,6 @@ exports.saveItem = async (item) => {
 };
 
 exports.findByIdAndUpdate = async (item, id) => {
-    item._id = id;
     return await Item.findByIdAndUpdate(id, item, {});
 };
 

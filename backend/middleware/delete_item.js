@@ -1,19 +1,25 @@
 const itemRepository = require("../repositories/item_repository");
 
 const deleteItem = async (req, res, next) => {
-    let item = null;
     try {
-        item = await itemRepository.getItemByIdWithoutPopulate(req.params.id);
-        if(item == null) {
+        const currentItem = await itemRepository.getItemById(req.params.id);
+        if(currentItem == null) {
             throw new Error("Item not Found");
         }
+        const newItem = {
+            name: currentItem.name,
+            description: currentItem.description,
+            quantity: currentItem.quantity,
+            location: currentItem.location,
+            imageUrl: currentItem.imageUrl,
+            imageKey: currentItem.imageKey,
+            status: 'deleted',
+        }
+        req.body = newItem;
+        next();
     } catch (err) {
         return next(err);
     }
-    console.log(item);
-    req.body = item;
-    req.body.status = "deleted";
-    next();
 };
 
 module.exports = deleteItem;

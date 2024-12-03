@@ -13,11 +13,11 @@ router.get("/list", /* verifyJWT,  */itemController.item_list);
 
 router.get("/search/:query", /* verifyJWT,  */itemController.item_search);
 
-router.post("/", upload, itemController.item_create);
+router.post("/", verifyJWT, upload, itemController.item_create);
 
 router.route("/:id")
-    .get(verifyJWT, itemController.item_detail)
-    .put(verifyJWT, upload, itemController.item_update_put, deleteImage)
+    .get(itemController.item_detail)
+    .put(upload, itemController.item_update_put, deleteImage)
     .patch(verifyJWT, itemController.item_update_patch)
     .delete(deleteItem, itemController.item_update_put);
 
