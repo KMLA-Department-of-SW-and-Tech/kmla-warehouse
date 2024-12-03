@@ -7,7 +7,7 @@ const { DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const deleteImageMiddleware = async (req, res, next) => {
     // Extract bucketName and objectKey from request
     // You can choose to get these from req.body, req.query, or req.params
-    const bucketName = process.env.MY_AWS_BUCKET_NAME;
+    const bucketName = process.env.AWS_BUCKET_NAME;
     const objectKey = req.body.prevKey;
 
     // Validate input

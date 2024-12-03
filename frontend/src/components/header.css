@@ -37,16 +37,6 @@
   margin-right: 25px; /* 오른쪽 마진 추가 */
 }
 
-    background-color: white; /* 배경색과 동일한 색상으로 설정 */
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* 아래 그림자 */
-    padding: 10px 20px;
-    position: fixed; /* 스크롤 시 상단에 고정 */
-    top: 0;
-    z-index: 1000;
-    width: 100vw; /* 화면 전체 너비 */
-    height: 60px;
-    color: black;
-  }
   /* 헤더 내용물의 최대 너비 설정과 중앙 정렬 */
   .head-container {
     display: flex;
