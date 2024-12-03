@@ -73,13 +73,15 @@ export const itemService = {
   },
 
   // Update an existing item by ID
-  update: (id: string, item: Item): Promise<Item> => {
-    return axiosPrivate.put(`/api/item/${id}`, item)
-      .then(response => response.data)
-      .catch(error => {
-        console.error(error.message);
-        throw error;
+  update: async (id: string, item: FormData): Promise<Item> => {
+    try{
+      const response = await axiosPrivate.put(`/api/item/${id}`, item, {
+        headers: {'Content-Type': 'multipart/form-data'},
       });
+      return response.data;
+    } catch (error){
+      throw new Error("Failed to update item");
+    }
   },
 
  

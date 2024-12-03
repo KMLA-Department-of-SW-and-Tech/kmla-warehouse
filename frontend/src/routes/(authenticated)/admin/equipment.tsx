@@ -69,11 +69,21 @@ const AdminEquipmentPage: React.FC = () => {
   };
 
   const handleUpdateItem = async (id: string, updatedItem: Item) => {
+    const formData = new FormData();
+    formData.append('name', updatedItem.name);
+    formData.append('description', updatedItem.description);
+    formData.append('quantity', updatedItem.quantity.toString());
+    formData.append('location', updatedItem.location);
+
+    if (imageFile) {
+      formData.append('image', imageFile);
+    }
+
     try {
-      const updated = await itemService.update(id, updatedItem); 
+      const updated = await itemService.update(id, formData); 
       setItems(items.map(item => (item._id === id ? updated : item))); 
       message.success('Item updated successfully');
-
+      setEditableRowKeys((prev) => prev.filter((key) => key !== id)); // ??
       fetchItem();
       setEditableRowKeys(prevKeys => prevKeys.filter(key => key !== id));
     } catch (error) {
