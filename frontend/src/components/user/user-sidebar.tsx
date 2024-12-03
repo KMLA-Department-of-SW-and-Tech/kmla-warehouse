@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu, MenuProps, Badge, Modal } from 'antd';
 import { AppstoreOutlined, HistoryOutlined, UserOutlined } from '@ant-design/icons';
-import currentUser from '../../api/authService';
+import authService from '../../api/authService';
 import './user-sidebar.css'; // CSS 파일을 가져옵니다.
 
 const MenuBar: React.FC = () => {
@@ -15,7 +15,7 @@ const MenuBar: React.FC = () => {
     // 현재 로그인된 사용자 정보 확인
     const checkLoginStatus = async () => {
       try {
-        const user = await currentUser.currentUser();
+        const user = await authService.currentUser();
         setIsLoggedIn(!!user); // user가 존재하면 로그인 상태로 설정
       } catch (error) {
         //console.error('Error fetching user:', error);
