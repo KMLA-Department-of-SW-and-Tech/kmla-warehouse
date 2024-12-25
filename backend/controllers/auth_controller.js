@@ -1,33 +1,30 @@
 const Team = require("../models/team");
-// const { validationResult, body } = require("express-validator");
+const { validationResult, body } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-// const validateUserInput = [
-//     body('username')
-//         .exists().withMessage('Username is required')
-//         .isString().withMessage('Username must be a string')
-//         .notEmpty().withMessage('Username cannot be empty'),
-//     body('password')
-//         .exists().withMessage('Password is required')
-//         .isString().withMessage('Password must be a string')
-//         .notEmpty().withMessage('Password cannot be empty'),
-// ];
+const validateUserInput = [
+    body('username')
+        .exists().withMessage('Username is required')
+        .isString().withMessage('Username must be a string')
+        .notEmpty().withMessage('Username cannot be empty'),
+    body('password')
+        .exists().withMessage('Password is required')
+        .isString().withMessage('Password must be a string')
+        .notEmpty().withMessage('Password cannot be empty'),
+];
 
-exports.handle_login = [/*validateUserInput, */async (req, res, next) => {
+exports.handle_login = [validateUserInput, async (req, res, next) => {
     try {
         const cookies = req.cookies;
         //console.log(`Cookie available at login: ${JSON.stringify(cookies)}`);
-        // const errors = validationResult(req);
-        // if(!errors.isEmpty()) {
-        //     res.status(400).send(errors.array());
-        //     return;
-        // }
-        // console.log(JSON.parse(req.body));
-        console.log(req.body, typeof req.body, req.headers);
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            res.status(400).send(errors.array());
+            return;
+        }
         const { username, password } = req.body;
-        if(!username || !password) return res.status(400).send("Username and Password are required");
         const foundUser = await Team.findOne({username: username})
         .collation({ locale: "en_US", strength: 2 })
         .exec();
