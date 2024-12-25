@@ -19,6 +19,7 @@ exports.handle_login = [validateUserInput, async (req, res, next) => {
     try {
         const cookies = req.cookies;
         //console.log(`Cookie available at login: ${JSON.stringify(cookies)}`);
+        console.log(req.body);
         const errors = validationResult(req);
         if(!errors.isEmpty()) {
             res.status(400).send(errors.array());
