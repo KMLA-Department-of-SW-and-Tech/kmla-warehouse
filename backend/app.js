@@ -29,10 +29,20 @@ async function main() {
 }
 
 // view engine setup
+const rawBodySaver = (req, res, buf, encoding) => {
+  if (buf && buf.length) {
+    req.rawBody = buf.toString(encoding || 'utf8');
+  }
+};
 
+app.use(express.json({
+  verify: rawBodySaver
+}));
+app.use(express.urlencoded({
+  extended: true,
+  verify: rawBodySaver
+}));
 app.use(logger(env === 'development'? 'dev' : 'combined'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
