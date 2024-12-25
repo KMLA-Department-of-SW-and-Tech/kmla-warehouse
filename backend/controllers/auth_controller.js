@@ -16,73 +16,78 @@ require("dotenv").config();
 // ];
 
 exports.handle_login = [/*validateUserInput, */async (req, res, next) => {
-    const cookies = req.cookies;
-    //console.log(`Cookie available at login: ${JSON.stringify(cookies)}`);
-    // const errors = validationResult(req);
-    // if(!errors.isEmpty()) {
-    //     res.status(400).send(errors.array());
-    //     return;
-    // }
-    // console.log(JSON.parse(req.body));
-    console.log(req.body, JSON.parse(req.body));
-    const { username, password } = JSON.parse(req.body);
-    if(!username || !password) return res.status(400).send("Username and Password are required");
-    const foundUser = await Team.findOne({username: username})
-    .collation({ locale: "en_US", strength: 2 })
-    .exec();
-    if(!foundUser) return res.status(401).send("No team with matching username");
-    // evaluate password
-    const match = await bcrypt.compare(password, foundUser.password);
-    if(match) {
-        // create JWTs
-        const accessToken = jwt.sign(
-            { 
-                "UserInfo": {
-                    "username": foundUser.username,
-                    "roles": foundUser.roles
-                }
-            },
-            process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: '5min' }
-        );
-        const newRefreshToken = jwt.sign(
-            { 
-                "UserInfo": {
-                    "username": foundUser.username,
-                    "roles": foundUser.roles
-                }
-            },
-            process.env.REFRESH_TOKEN_SECRET,
-            { expiresIn: '1d' }
-        );
+    try {
+        const cookies = req.cookies;
+        //console.log(`Cookie available at login: ${JSON.stringify(cookies)}`);
+        // const errors = validationResult(req);
+        // if(!errors.isEmpty()) {
+        //     res.status(400).send(errors.array());
+        //     return;
+        // }
+        // console.log(JSON.parse(req.body));
+        console.log(req.body, typeof req.body, req.headers);
+        const { username, password } = req.body;
+        if(!username || !password) return res.status(400).send("Username and Password are required");
+        const foundUser = await Team.findOne({username: username})
+        .collation({ locale: "en_US", strength: 2 })
+        .exec();
+        if(!foundUser) return res.status(401).send("No team with matching username");
+        // evaluate password
+        const match = await bcrypt.compare(password, foundUser.password);
+        if(match) {
+            // create JWTs
+            const accessToken = jwt.sign(
+                { 
+                    "UserInfo": {
+                        "username": foundUser.username,
+                        "roles": foundUser.roles
+                    }
+                },
+                process.env.ACCESS_TOKEN_SECRET,
+                { expiresIn: '5min' }
+            );
+            const newRefreshToken = jwt.sign(
+                { 
+                    "UserInfo": {
+                        "username": foundUser.username,
+                        "roles": foundUser.roles
+                    }
+                },
+                process.env.REFRESH_TOKEN_SECRET,
+                { expiresIn: '1d' }
+            );
 
-        let newRefreshTokenArray = 
-            !cookies?.jwt
-                ? foundUser.refreshToken
-                : foundUser.refreshToken.filter(rt => rt !== cookies.jwt);
-        if(cookies?.jwt) {
-            const refreshToken = cookies.jwt;
-            const foundToken = await Team.findOne({refreshToken: refreshToken}).exec();
+            let newRefreshTokenArray = 
+                !cookies?.jwt
+                    ? foundUser.refreshToken
+                    : foundUser.refreshToken.filter(rt => rt !== cookies.jwt);
+            if(cookies?.jwt) {
+                const refreshToken = cookies.jwt;
+                const foundToken = await Team.findOne({refreshToken: refreshToken}).exec();
 
-            if(!foundToken) {
-                console.log("Attempted refresh token reuse at login");
-                newRefreshTokenArray = [];
+                if(!foundToken) {
+                    console.log("Attempted refresh token reuse at login");
+                    newRefreshTokenArray = [];
+                }
+
+                res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, /* secure: true, */ /* sameSite: 'None' */ });
             }
 
-            res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, /* secure: true, */ /* sameSite: 'None' */ });
+            // pass refress token to database
+            foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken];
+            const roles = foundUser.roles;
+            await foundUser.save();
+            res.cookie('jwt', newRefreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, /* secure: true, */ /* sameSite: 'None' */ }); // max age same as token expiration(1d)
+            // http only to block attacks from sending cookies, but use secure to completely secure the cookie.(for late implementation)
+            res.status(200).json({ roles, accessToken });
         }
-
-        // pass refress token to database
-        foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken];
-        const roles = foundUser.roles;
-        await foundUser.save();
-        res.cookie('jwt', newRefreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, /* secure: true, */ /* sameSite: 'None' */ }); // max age same as token expiration(1d)
-        // http only to block attacks from sending cookies, but use secure to completely secure the cookie.(for late implementation)
-        res.status(200).json({ roles, accessToken });
+        else {
+            res.status(401).send("Invalid password");
+        }
+    } catch (error) {
+        console.log(error);
     }
-    else {
-        res.status(401).send("Invalid password");
-    }
+    
 }]; // handle login
 
 exports.handle_logout = async (req, res, next) => {
