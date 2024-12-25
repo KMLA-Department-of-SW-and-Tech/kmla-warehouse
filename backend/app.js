@@ -29,6 +29,10 @@ async function main() {
 }
 
 // view engine setup
+app.use((req, res, next) => {
+  console.log("check",Buffer.isBuffer(req.body))
+  next();
+})
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger(env === 'development'? 'dev' : 'combined'));
