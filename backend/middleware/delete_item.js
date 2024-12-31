@@ -16,6 +16,7 @@ const deleteItem = async (req, res, next) => {
             status: 'deleted',
         }
         req.body = newItem;
+        console.log("wow", newItem);
         next();
     } catch (err) {
         return next(err);

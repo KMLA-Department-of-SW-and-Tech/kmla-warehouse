@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Typography, Spin, message, ConfigProvider, Form, Input, Button  } from 'antd';
+import { Layout, Typography, Spin, message, ConfigProvider, Form, Input, Button, Modal  } from 'antd';
 import enUS from 'antd/lib/locale/en_US';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from "../../../components/admin/admin-sidebar";
@@ -61,6 +61,17 @@ const AdminTeamPage: React.FC = () => {
     }
   };
 
+  const handleDeleteConfirmation = (id: string) => {
+    Modal.confirm({
+      title: '팀 삭제 확인',
+      content: '이 팀을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.',
+      okText: '삭제',
+      okType: 'danger',
+      cancelText: '취소',
+      onOk: () => handleDeleteTeam(id),
+    });
+  };
+
   const handleDeleteTeam = async (id: string) => {
     try {
       await teamService.delete(id);
@@ -80,6 +91,7 @@ const AdminTeamPage: React.FC = () => {
     {
       title: '생성자',
       dataIndex: 'username',
+      editable: false,
     },
     {
       title: 'Actions',
@@ -97,7 +109,7 @@ const AdminTeamPage: React.FC = () => {
         <Button
         key="delete"
         icon={<DeleteOutlined />}
-        onClick={() => handleDeleteTeam(record._id)}
+        onClick={() => handleDeleteConfirmation(record._id)}
         type="link"
         danger
       >
@@ -161,12 +173,15 @@ const AdminTeamPage: React.FC = () => {
                     editableKeys,
                     onSave: async (rowKey, data) => {
                       await handleUpdateTeam(data._id, data as Team);
-                      console.log("Existing Team updated: ", data);
                     },
                     onChange: setEditableRowKeys,
                     saveText: <Button icon={<SaveOutlined/>}></Button>,
                     cancelText: <Button icon={<CloseOutlined/>}></Button>,
-                    deleteText: <Button danger icon={<DeleteOutlined/>}></Button>,
+                    actionRender: (row, config, defaultDom) => {
+                      const { save, cancel } = defaultDom; 
+                      return [save, cancel];
+                    },
+                    //deleteText: <Button danger icon={<DeleteOutlined/>}></Button>,
                   }}
                   
                   recordCreatorProps={false}

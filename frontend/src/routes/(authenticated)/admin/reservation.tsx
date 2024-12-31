@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Typography, Spin, message, Grid } from 'antd';
+import { Layout, Typography, Spin, message, Grid, Modal } from 'antd';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from '../../../components/admin/admin-sidebar';
 import "./admin.css";
@@ -21,13 +21,17 @@ const AdminHistoryPage: React.FC = () => {
     fetchBorrowHistories();
   }, []);
 
+
   const fetchBorrowHistories = async () => {
     setLoading(true);
     try {
       const response = await borrowHistoryService.getAll();
-      const filteredBorrowHistories = response.filter(
-        (borrowHistory) => borrowHistory.status !== "deleted"
-      );
+      const filteredBorrowHistories = response
+      .filter((borrowHistory) => borrowHistory.status !== "deleted")
+      .map((borrowHistory) => ({
+        ...borrowHistory,
+        timestamp: formatTimestamp(borrowHistory.timestamp), // 시간 형식 변환
+      }));
       setBorrowHistories(filteredBorrowHistories);
     } catch (error) {
       message.error("Failed to fetch items");
@@ -35,6 +39,17 @@ const AdminHistoryPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const formatTimestamp = (timestamp: string) => {
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+    return `${year}-${month}-${day}-${hours}:${minutes}:${seconds}`;
   };
 
   const handleUpdateBorrowHistory = async (id: string, updatedBorrowHistory: BorrowHistory) => {
@@ -49,16 +64,6 @@ const AdminHistoryPage: React.FC = () => {
     }
   };
 
-  const handleDeleteBorrowHistory = async (id: string) => {
-    try {
-      await borrowHistoryService.delete(id);
-      setBorrowHistories(borrowHistories.filter((borrowHistory) => borrowHistory._id !== id));
-      message.success("Borrow history deleted successfully");
-    } catch (error) {
-      message.error("Failed to delete borrow history");
-      console.error(error);
-    }
-  };
 
   const columns: ProColumns<BorrowHistory>[] = [
     { title: "팀명", dataIndex: "user", key: "user" },
@@ -66,15 +71,6 @@ const AdminHistoryPage: React.FC = () => {
     { title: "수량", dataIndex: "quantity", key: "quantity" },
     { title: "상태", dataIndex: "type", key: "type" },
     { title: "시간", dataIndex: "timestamp", key: "timestamp" },
-    {
-      title: "Actions",
-      valueType: "option",
-      render: (text, record) => [
-        <a key="delete" onClick={() => handleDeleteBorrowHistory(record._id)}>
-          <DeleteOutlined />
-        </a>,
-      ],
-    },
   ];
 
   return (

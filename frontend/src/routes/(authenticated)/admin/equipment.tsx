@@ -14,6 +14,7 @@ const { Title } = Typography;
 
 const AdminEquipmentPage: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
+  const [addedItems, addItems] = useState<AddItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [form] = Form.useForm();
@@ -41,7 +42,7 @@ const AdminEquipmentPage: React.FC = () => {
   
   const handleImageUpload = (file: File) => {
     setImageFile(file);
-    return false; // Prevent auto-upload
+    return false;
   };
 
   
@@ -58,14 +59,14 @@ const AdminEquipmentPage: React.FC = () => {
 
     try {
       const addedItem = await itemService.create(formData); 
-      setItems([...items, addedItem]); 
+      addItems(prevItems => [...prevItems, addedItem]); 
       message.success('Item added successfully');
-
-      fetchItem();
     } catch (error) {
       message.error('Failed to add item');
       console.error(error);
     }
+
+    fetchItem();
   };
 
   const handleUpdateItem = async (id: string, updatedItem: Item) => {
@@ -83,9 +84,7 @@ const AdminEquipmentPage: React.FC = () => {
       const updated = await itemService.update(id, formData); 
       setItems(items.map(item => (item._id === id ? updated : item))); 
       message.success('Item updated successfully');
-      setEditableRowKeys((prev) => prev.filter((key) => key !== id)); // ??
       fetchItem();
-      setEditableRowKeys(prevKeys => prevKeys.filter(key => key !== id));
     } catch (error) {
       message.error('Failed to update item');
       console.error(error);
@@ -235,12 +234,16 @@ const AdminEquipmentPage: React.FC = () => {
                     type: 'multiple',
                     editableKeys,
                     onSave: async (rowKey, data) => {
-                      await handleUpdateItem(data._id, data);
+                      await handleUpdateItem(data._id, data as Item);
+                      setEditableRowKeys((prevKeys) => prevKeys.filter((key) => key !== rowKey));
                     },
                     onChange: setEditableRowKeys,
                     saveText: <Button icon={<SaveOutlined/>}></Button>,
                     cancelText: <Button icon={<CloseOutlined/>}></Button>,
-                    deleteText: <Button danger icon={<DeleteOutlined/>}></Button>,
+                    actionRender: (row, config, defaultDom) => {
+                      const { save, cancel } = defaultDom; 
+                      return [save, cancel];
+                    },
                   }}
                   recordCreatorProps={false}
                 />

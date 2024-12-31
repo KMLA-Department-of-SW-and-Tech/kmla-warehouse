@@ -7,7 +7,7 @@ export interface Item {
   quantity: number; // Available quantity of the item
   location: string; // Location of the item
   imageUrl?: string; // Optional image URL for the item
-  status: "available" | "deleted"; // Availability status
+  status?: "available" | "deleted"; // Availability status
 }
 
 export interface AddItem {
@@ -89,9 +89,7 @@ export const itemService = {
   // Delete an item
   delete: async (id: string): Promise<void> => {
     try {
-      console.log('a');
-      const response = await axiosPrivate.put(`/api/item/${id}`); // This should likely be a DELETE request
-      console.log('b');
+      const response = await axiosPrivate.delete(`/api/item/${id}`); 
       return response.data;
     } catch (e) {
       console.error(e.message);
