@@ -12,7 +12,7 @@ const { Sider, Content } = Layout;
 const { Title } = Typography;
 
 const AdminTeamPage: React.FC = () => {
-  const [teams, setTeams] = useState<Team[]>([]);
+  const [teams, setTeams] = useState<Team[] | any>([]); // needs type fixing I'm bad at ts
   const [newTeams, addTeams] = useState<AddTeam[]>([]);
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
@@ -39,7 +39,7 @@ const AdminTeamPage: React.FC = () => {
   const handleAddTeam = async (newTeam: AddTeam) => {
     try {
       const addedTeam = await teamService.create(newTeam);
-      addTeams(prevTeams => [...prevTeams, addedTeam]);
+      setTeams(prevTeams => [ addedTeam, ...prevTeams]);
       message.success('Team added successfully');
     } catch (error) {
       message.error('Failed to add team');

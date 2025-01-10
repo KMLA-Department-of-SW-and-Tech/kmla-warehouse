@@ -59,7 +59,10 @@ exports.team_create = [
             const { username, password, name } = req.body;
             try {
                 const newTeam = await teamService.createTeam(username, password, name);
-                res.status(201).send("Successfully registered team");
+                console.log(
+                    "new team", newTeam
+                )
+                res.status(201).json({ newTeam });
                 return;
             } catch (err) {
                 if(err.message == "Failed to get team data from database") {

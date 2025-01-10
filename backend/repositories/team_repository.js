@@ -37,6 +37,7 @@ exports.findTeamByName = async (username) => {
 
 exports.saveTeam = async (team) => {
     const newTeam = await team.save();
+    console.log(newTeam)
     return newTeam;
 }
 
