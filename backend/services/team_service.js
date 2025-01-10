@@ -42,7 +42,7 @@ exports.getTeamDetail = async (teamId) => {
 
 exports.createTeam = async (username, password, name) => {
     try {
-        const teamExists = await teamRepository.findTeamByName(username);
+        const teamExists = await teamRepository.findNotDeletedTeamByName(username);
         if(teamExists) {
             throw new Error("A Team with the same username already exists");
         }

@@ -35,6 +35,13 @@ exports.findTeamByName = async (username) => {
     return team;
 };
 
+exports.findNotDeletedTeamByName = async (username) => {
+    const team = await Team.findOne({username: username, status: "valid"})
+    .collation({ locale: "en_US", strength: 2 })
+    .exec();
+    return team;
+};
+
 exports.saveTeam = async (team) => {
     const newTeam = await team.save();
     console.log(newTeam)
