@@ -3,7 +3,7 @@ import { Layout, Typography, Spin, message, Grid, Modal } from 'antd';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from '../../../components/admin/admin-sidebar';
 import "./admin.css";
-import Headbar from "../../../components/header";
+import Headbar from "../../../components/admin/admin-header";
 import { borrowHistoryService, BorrowHistory } from '../../../api/borrowHistoryService';
 import { DeleteOutlined } from '@ant-design/icons';
 

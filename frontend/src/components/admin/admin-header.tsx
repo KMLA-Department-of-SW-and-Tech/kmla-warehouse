@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // 페이지 이동을 위한 훅
-import './header.css';
-import authService from '../api/authService';
+import './admin-header.css';
+import authService from '../../api/authService';
 
 // Header 컴포넌트 정의
 const Headbar: React.FC = () => {
@@ -25,11 +25,11 @@ const Headbar: React.FC = () => {
   }, []);
 
   const handleLogoClick = () => {
-    navigate('/home'); // 로고 클릭 시 홈 화면으로 이동
+    navigate('/admin/equipment'); // admin main page
   };
 
   const handleHelloClick = () => {
-    navigate('/account-settings');
+    navigate('/admin/account-settings');
   }
 
   return (
