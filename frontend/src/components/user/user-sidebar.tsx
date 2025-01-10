@@ -7,23 +7,8 @@ import './user-sidebar.css'; // CSS 파일을 가져옵니다.
 
 const MenuBar: React.FC = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 관리
   const [isModalVisible, setIsModalVisible] = useState(false); // 모달 표시 여부
   const [redirectPath, setRedirectPath] = useState<string | null>(null); // 이동 경로 저장
-
-  const checkLoginStatus = async () => {
-    try {
-      const user = await authService.currentUser();
-      setIsLoggedIn(!!user); // user가 존재하면 로그인 상태로 설정
-    } catch (error) {
-      //console.error('Error fetching user:', error);
-      setIsLoggedIn(false); // 에러 발생 시 로그아웃 상태로 설정
-    }
-  };
-  useEffect(() => {
-    // 현재 로그인된 사용자 정보 확인
-    checkLoginStatus();
-  }, []);
   
   const items1: MenuProps['items'] = [
     {
@@ -62,11 +47,14 @@ const MenuBar: React.FC = () => {
   ];
 
   const handleMenuClick = async (e: { key: string }) => {
-    await checkLoginStatus();
+
     if (e.key === '/home') {
       // 홈 페이지는 로그인 없이도 접근 가능
       navigate(`${e.key}`);
-    } else if (!isLoggedIn) {
+    }
+    const user = await authService.currentUser();
+    const isLoggedIn = !!user;
+    if (!isLoggedIn) {
       // 로그인 필요 시 확인 팝업 표시
       setRedirectPath(`${e.key}`);
       setIsModalVisible(true);
