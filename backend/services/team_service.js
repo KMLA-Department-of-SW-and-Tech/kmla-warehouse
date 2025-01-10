@@ -59,6 +59,7 @@ exports.createTeam = async (username, password, name) => {
         username: username, 
         password: hashedPwd,
         name: name,
+        roles: ["User", ],
     });
     try {
         const createdTeam = await teamRepository.saveTeam(newTeam);
