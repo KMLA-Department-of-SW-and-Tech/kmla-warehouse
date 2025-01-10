@@ -52,9 +52,13 @@ const MenuBar: React.FC = () => {
       // 홈 페이지는 로그인 없이도 접근 가능
       navigate(`${e.key}`);
     }
-    const user = await authService.currentUser();
-    const isLoggedIn = !!user;
-    console.log(user);
+    let isLoggedIn: boolean = false;
+    try {
+      await authService.currentUser();
+      isLoggedIn = true;
+    } catch(e) {
+      isLoggedIn = false;
+    }
     if (!isLoggedIn) {
       // 로그인 필요 시 확인 팝업 표시
       setRedirectPath(`${e.key}`);
