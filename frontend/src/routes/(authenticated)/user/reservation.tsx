@@ -89,7 +89,7 @@ export default function ReservationStatus() {
           top: 64,
         }}
       >
-        <Sidebar />
+      <Sidebar />
       </Sider>
       <Layout style={{ marginLeft: 250 }}>
         <Content style={{ padding: '40px', marginTop: '64px', width: 'calc(98vw - 250px)' }}>
