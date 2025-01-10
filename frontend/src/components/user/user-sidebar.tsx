@@ -54,6 +54,7 @@ const MenuBar: React.FC = () => {
     }
     const user = await authService.currentUser();
     const isLoggedIn = !!user;
+    console.log(user);
     if (!isLoggedIn) {
       // 로그인 필요 시 확인 팝업 표시
       setRedirectPath(`${e.key}`);

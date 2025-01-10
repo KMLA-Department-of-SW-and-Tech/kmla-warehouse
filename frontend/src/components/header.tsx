@@ -38,7 +38,7 @@ const Headbar: React.FC = () => {
         <div className="logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
           KMLA Warehouse
         </div>
-        <div>Check for deployment - 1</div>
+        <div>Check for deployment - 2</div>
         <div className="user-info" onClick={handleHelloClick} style={{cursor: 'pointer'}}>
           {loading ? <span></span> : currentUserName ? (
             <span>{currentUserName}님, KMLA WAREHOUSE에 오신 것을 환영합니다</span>
