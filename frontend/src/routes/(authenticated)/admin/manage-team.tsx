@@ -41,6 +41,7 @@ const AdminTeamPage: React.FC = () => {
       const addedTeam = await teamService.create(newTeam);
       setTeams(prevTeams => [ addedTeam, ...prevTeams]);
       message.success('Team added successfully');
+      form.resetFields();
     } catch (error) {
       message.error('Failed to add team');
       console.error(error);

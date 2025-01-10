@@ -14,7 +14,6 @@ const { Title } = Typography;
 
 const AdminEquipmentPage: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
-  const [addedItems, addItems] = useState<AddItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [form] = Form.useForm();
@@ -59,14 +58,13 @@ const AdminEquipmentPage: React.FC = () => {
 
     try {
       const addedItem = await itemService.create(formData); 
-      addItems(prevItems => [...prevItems, addedItem]); 
+      setItems(prevItems => [addedItem, ...prevItems]); 
       message.success('Item added successfully');
+      form.resetFields();
     } catch (error) {
       message.error('Failed to add item');
       console.error(error);
     }
-
-    fetchItem();
   };
 
   const handleUpdateItem = async (id: string, updatedItem: Item) => {

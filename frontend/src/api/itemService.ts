@@ -66,7 +66,7 @@ export const itemService = {
           "Content-Type": "multipart/form-data",
         },
       });
-      return response.data;
+      return response.data.newItem;
     } catch (error) {
       throw new Error("Failed to create item");
     }
