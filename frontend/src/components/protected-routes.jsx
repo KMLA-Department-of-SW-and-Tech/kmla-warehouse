@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Navigate } from "react-router-dom";
-import axiosPrivate from "../hooks/axiosPrivate";
+//import axiosPrivate from "../hooks/axiosPrivate";
 import { cloneElement, useEffect, useRef, useState } from "react";
 
 export const ProtectedRoute = ({ children, accessToken, roles }) => {

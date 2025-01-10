@@ -11,21 +11,20 @@ const MenuBar: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false); // 모달 표시 여부
   const [redirectPath, setRedirectPath] = useState<string | null>(null); // 이동 경로 저장
 
+  const checkLoginStatus = async () => {
+    try {
+      const user = await authService.currentUser();
+      setIsLoggedIn(!!user); // user가 존재하면 로그인 상태로 설정
+    } catch (error) {
+      //console.error('Error fetching user:', error);
+      setIsLoggedIn(false); // 에러 발생 시 로그아웃 상태로 설정
+    }
+  };
   useEffect(() => {
     // 현재 로그인된 사용자 정보 확인
-    const checkLoginStatus = async () => {
-      try {
-        const user = await authService.currentUser();
-        setIsLoggedIn(!!user); // user가 존재하면 로그인 상태로 설정
-      } catch (error) {
-        //console.error('Error fetching user:', error);
-        setIsLoggedIn(false); // 에러 발생 시 로그아웃 상태로 설정
-      }
-    };
-
     checkLoginStatus();
   }, []);
-
+  
   const items1: MenuProps['items'] = [
     {
       key: 'categories',
@@ -62,7 +61,8 @@ const MenuBar: React.FC = () => {
     },
   ];
 
-  const handleMenuClick = (e: { key: string }) => {
+  const handleMenuClick = async (e: { key: string }) => {
+    await checkLoginStatus();
     if (e.key === '/home') {
       // 홈 페이지는 로그인 없이도 접근 가능
       navigate(`${e.key}`);
