@@ -41,7 +41,7 @@ exports.handle_login = [validateUserInput, async (req, res, next) => {
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '2s' }
+                { expiresIn: '5min' }
             );
             const newRefreshToken = jwt.sign(
                 { 
@@ -51,7 +51,7 @@ exports.handle_login = [validateUserInput, async (req, res, next) => {
                     }
                 },
                 process.env.REFRESH_TOKEN_SECRET,
-                { expiresIn: '30s' }
+                { expiresIn: '1d' }
             );
 
             let newRefreshTokenArray = 
@@ -67,7 +67,7 @@ exports.handle_login = [validateUserInput, async (req, res, next) => {
                     newRefreshTokenArray = [];
                 }
 
-                res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, /* secure: true, */ /* sameSite: 'None' */ });
+                res.clearCookie('jwt', { httpOnly: true, /* secure: true, */ /* sameSite: 'None' */ });
             }
 
             // pass refress token to database

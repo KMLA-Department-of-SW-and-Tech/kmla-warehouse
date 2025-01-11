@@ -50,7 +50,7 @@ exports.handle_refresh_token = async (req, res, next) => {
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '2s' }
+                { expiresIn: '5min' }
             );
 
             const newRefreshToken = jwt.sign(
@@ -61,7 +61,7 @@ exports.handle_refresh_token = async (req, res, next) => {
                     }
                 },
                 process.env.REFRESH_TOKEN_SECRET,
-                { expiresIn: '30s' }
+                { expiresIn: '1d' }
             );
             // pass refress token to database
             foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken ];
