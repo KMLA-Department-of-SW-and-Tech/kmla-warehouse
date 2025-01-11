@@ -41,7 +41,7 @@ exports.handle_login = [validateUserInput, async (req, res, next) => {
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '5min' }
+                { expiresIn: '2s' }
             );
             const newRefreshToken = jwt.sign(
                 { 
@@ -51,7 +51,7 @@ exports.handle_login = [validateUserInput, async (req, res, next) => {
                     }
                 },
                 process.env.REFRESH_TOKEN_SECRET,
-                { expiresIn: '1d' }
+                { expiresIn: '30s' }
             );
 
             let newRefreshTokenArray = 
