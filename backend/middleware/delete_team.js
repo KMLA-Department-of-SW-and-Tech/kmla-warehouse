@@ -1,4 +1,4 @@
-const teamRepository = require("../repositories_legacy/team_repository");
+const teamRepository = require("../repositories/team_repository");
 
 const deleteTeam = async (req, res, next) => {
     let team = null;

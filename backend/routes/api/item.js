@@ -6,7 +6,7 @@ const deleteItem = require("../../middleware/delete_item");
 const deleteImage = require("../../middleware/delete_image");
 const upload = require('../../middleware/upload_image'); // Import the multer upload configuration
 
-const itemController = require("../../controllers_legacy/item_controller");
+const itemController = require("../../controllers/item_controller");
 
 
 router.get("/list", /* verifyJWT,  */itemController.item_list);

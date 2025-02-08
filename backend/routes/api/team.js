@@ -3,7 +3,7 @@ const router = express.Router();
 const verifyJWT = require("../../middleware/verifyJWT");
 const verifyRoles = require("../../middleware/verifyRoles"); // in case of admin secrurity
 
-const teamController = require("../../controllers_legacy/team_controller");
+const teamController = require("../../controllers/team_controller");
 
 const deleteTeam = require("../../middleware/delete_team");
 
