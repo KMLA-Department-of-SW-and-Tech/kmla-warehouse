@@ -1,9 +1,9 @@
 const Item = require("../models/item");
 const BorrowHistory = require("../models/borrow_history");
 const { body, validationResult } = require("express-validator");
-const itemRepository = require("../repositories/item_repository");
-const teamRepository = require("../repositories/team_repository");
-const borrowHistoryService = require("../services/borrow_history_service");
+const itemRepository = require("../repositories_legacy/item_repository");
+const teamRepository = require("../repositories_legacy/team_repository");
+const borrowHistoryService = require("./borrow_history_service");
 
 exports.getItemList = async () => {
     try {

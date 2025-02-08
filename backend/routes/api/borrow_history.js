@@ -5,12 +5,12 @@ const verifyRoles = require("../../middleware/verifyRoles"); // in case of admin
 
 const borrowHistoryController = require("../../controllers/borrow_history_controller");
 
-router.get("/list", /* verifyJWT,  */borrowHistoryController.borrow_history_list);
+router.get("/list", borrowHistoryController.borrow_history_list);
 
-router.post("/", verifyJWT, borrowHistoryController.borrow_history_create);
+router.post("/", borrowHistoryController.borrow_history_create);
 
 router.route("/:id")
-    .get(/* verifyJWT,  */borrowHistoryController.borrow_history_detail)
+    .get(borrowHistoryController.borrow_history_detail)
     .delete(verifyJWT, borrowHistoryController.borrow_history_delete);
 
 router.route("/:id/return")

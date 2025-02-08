@@ -2,9 +2,9 @@ const Team = require("../models/team");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 
-const teamService = require("../services/team_service");
-const borrowHistoryService = require("../services/borrow_history_service");
-const teamRepository = require("../repositories/team_repository");
+const teamService = require("../services_legacy/team_service");
+const borrowHistoryService = require("../services_legacy/borrow_history_service");
+const teamRepository = require("../repositories_legacy/team_repository");
 
 // next error handling과 res.send() error handling이 같이 쓰이는데 이거 기준이 뭔가요?
 

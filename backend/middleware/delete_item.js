@@ -1,4 +1,4 @@
-const itemRepository = require("../repositories/item_repository");
+const itemRepository = require("../repositories_legacy/item_repository");
 
 const deleteItem = async (req, res, next) => {
     try {

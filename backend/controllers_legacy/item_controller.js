@@ -2,7 +2,7 @@ const Item = require("../models/item");
 const BorrowHistory = require("../models/borrow_history");
 const { body, validationResult } = require("express-validator");
 
-const itemService = require("../services/item_service");
+const itemService = require("../services_legacy/item_service");
 
 exports.item_list = async (req, res, next) => {
     try {
