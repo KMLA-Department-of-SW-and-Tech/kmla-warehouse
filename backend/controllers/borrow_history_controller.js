@@ -1,6 +1,6 @@
 const BorrowHistory = require("../models/borrow_history.js");
 
-const borrowHistoryService = require("../services-new/borrow_history_service.js");
+const borrowHistoryService = require("../services/borrow_history_service.js");
 
 exports.borrow_history_list = async (req, res, next) => {
     try {
