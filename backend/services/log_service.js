@@ -1,8 +1,8 @@
-const borrowHistory = require("../models/logs");
+const Log = require("../models/logs");
 
 exports.getAll = async () => {
     try {
-        return await borrowHistory.find({}).exec();
+        return await Log.find({});
     } catch (e) {
         switch(e.message) {
             default:
@@ -13,7 +13,11 @@ exports.getAll = async () => {
 
 exports.getOne = async (id) => {
     try {
-        return await borrowHistory.findById(id).exec();
+        const log = await Log.findById(id);
+        if(!log) {
+            throw new Error("Log not found");
+        } 
+        return log;
     } catch (e) {
         switch(e.message) {
             default:
@@ -27,9 +31,7 @@ exports.createOne = async (body) => {
         timestamp: Date.now(),
         status: "valid",
     });
-    const entry = new borrowHistory(args);
-
-    console.log(entry);
+    const entry = new Log(args);
 
     try {
         return await entry.save();
@@ -41,7 +43,21 @@ exports.createOne = async (body) => {
     }
 }
 
+exports.deleteOne = async (id) => {
+    try {
+        const log = await Log.findByIdAndDelete(id);
+        if(!log) {
+            throw new Error("Log not found");
+        }
 
+        return;
+    } catch (e) {
+        switch(e.message) {
+            default:
+                throw e;
+        }
+    }
+}
 
 
 

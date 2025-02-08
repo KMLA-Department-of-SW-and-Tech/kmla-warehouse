@@ -5,7 +5,7 @@
 로그 정보 | /api/logs/:id
 #### POST
 로그 생성 | /api/logs/ | user(ObjectId), item(String), quantity(Number), type(String), reference(ObjectId)
-물품 반납 | /api/logs/:id/return
+물품 반납 | /api/logs/:id/return ??? 필요한지 잘 모르겠..
 
 #### DELETE
 로그 삭제 | /api/logs/:id
