@@ -51,6 +51,13 @@ exports.getItemByName = async (name) => {
     return item;
 }
 
+exports.getNotDeletedItemByName = async (name) => {
+    const item = await Item.findOne({name: name, status: "available"})
+    .collation({ locale: "ko", strength: 2 })
+    .exec();
+    return item;
+}
+
 exports.saveItem = async (item) => {
     const newItem = await item.save();
     return newItem;

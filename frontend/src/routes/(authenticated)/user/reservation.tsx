@@ -3,8 +3,7 @@ import { Typography, Card, Row, Col, Spin, Layout, message, Button } from 'antd'
 import Sidebar from '../../../components/user/user-sidebar.tsx';
 import { teamService } from "../../../api/teamService.ts";
 import { itemService } from "../../../api/itemService.ts";
-import { useNavigate } from "react-router-dom";
-import Headbar from "../../../components/header.tsx";
+import Headbar from "../../../components/user/header.tsx";
 import { UnorderedListOutlined } from '@ant-design/icons';
 
 
@@ -89,7 +88,7 @@ export default function ReservationStatus() {
           top: 64,
         }}
       >
-        <Sidebar />
+      <Sidebar />
       </Sider>
       <Layout style={{ marginLeft: 250 }}>
         <Content style={{ padding: '40px', marginTop: '64px', width: 'calc(98vw - 250px)' }}>

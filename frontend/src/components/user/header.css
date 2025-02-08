@@ -1,0 +1,60 @@
+.head {
+  background-color: white; /* 배경색과 동일한 색상으로 설정 */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* 아래 그림자 */
+  padding: 10px 20px;
+  position: fixed; /* 스크롤 시 상단에 고정 */
+  top: 0;
+  z-index: 1000;
+  width: 100vw; /* 화면 전체 너비 */
+  height: 60px; /* 기본 헤더 높이 */
+  color: black;
+}
+
+/* 모바일 화면에서 헤더 높이 증가 */
+@media (max-width: 768px) {
+  .head {
+    height: 80px; /* 모바일에서 헤더 높이 증가 */
+  }
+
+
+}
+
+.head-container {
+  display: flex;
+  justify-content: space-between; /* 로고와 사용자 정보 양쪽 배치 */
+  align-items: center;
+  width: 100%; /* 헤더 컨텐츠가 전체 너비를 차지 */
+}
+
+.logo {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.user-info {
+  font-size: 1em;
+  color: #d3d3d3; /* 사용자 정보 색상 */
+  margin-right: 25px; /* 오른쪽 마진 추가 */
+}
+
+  /* 헤더 내용물의 최대 너비 설정과 중앙 정렬 */
+  .head-container {
+    display: flex;
+    justify-content: space-between; /* 로고와 사용자 정보 양쪽 배치 */
+    align-items: center;
+    /*max-width: 1200px; /* 헤더의 최대 너비를 설정 */
+    /*margin: 0 auto; /* 가운데 정렬 */
+    width: 100%; /* 헤더 컨텐츠가 전체 너비를 차지 */
+  }
+  .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  .user-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1em;
+    color: #d3d3d3; /* 사용자 정보 색상 */
+  }
+  

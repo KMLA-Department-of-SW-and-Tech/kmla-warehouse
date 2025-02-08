@@ -27,6 +27,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <Navigate to={`${intermediatePath}/home`} replace />,
   },
+  {
+    path: "/admin",
+    element: <Navigate to={`${intermediatePath}/admin/equipment`} replace />,
+  },
   // Login page
   {
     path: `${intermediatePath}/login`,

@@ -35,13 +35,14 @@ export const teamService = {
   //GET 아이디별 팀정보
   getTeamInfo: async (id: string): Promise<Team> => {
     const response = await axiosPrivate.get(`/api/team/${id}`);
-    return response.data;
+    console.log(response.data.newTeam)
+    return response.data.newTeam;
   },
 
   //POST 팀정보 업로드하기
   create: async (teamData: AddTeam): Promise<AddTeam> => {
     const response = await axiosPrivate.post("/api/team/", teamData);
-    return response.data;
+    return response.data.newTeam;
   },
 
   //PUT 팀정보 업데이트하기

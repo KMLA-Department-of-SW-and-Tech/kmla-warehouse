@@ -1,5 +1,6 @@
 const Team = require("../models/team");
 const jwt = require("jsonwebtoken");
+const predefinedConstants = require("../config/predefined_constants");
 require("dotenv").config();
 
 
@@ -50,7 +51,7 @@ exports.handle_refresh_token = async (req, res, next) => {
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '5min' }
+                { expiresIn: predefinedConstants.ACCESS_LIFETIME }
             );
 
             const newRefreshToken = jwt.sign(
@@ -61,12 +62,12 @@ exports.handle_refresh_token = async (req, res, next) => {
                     }
                 },
                 process.env.REFRESH_TOKEN_SECRET,
-                { expiresIn: '1d' }
+                { expiresIn: predefinedConstants.REFRESH_LIFETIME }
             );
             // pass refress token to database
             foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken ];
             /* const response =  */await foundUser.save();
-            res.cookie('jwt', newRefreshToken, { path: "/", httpOnly: true, maxAge: 24 * 60 * 60 * 1000, /* secure: true, */ /* sameSite: 'None' */ }); // max age same as token expiration(1d)
+            res.cookie('jwt', newRefreshToken, { path: "/", httpOnly: true, maxAge: predefinedConstants.COOKIE_LIFETIME, /* secure: true, */ /* sameSite: 'None' */ }); // max age same as token expiration(1d)
 
             res.json( { roles, accessToken} )
         }

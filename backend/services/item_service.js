@@ -57,7 +57,7 @@ exports.getItemDetail = async(itemId) => {
 
 exports.createItem = async (item) => {
     try {
-        const itemExists = await itemRepository.getItemByName(item.name);
+        const itemExists = await itemRepository.getNotDeletedItemByName(item.name);
         if(itemExists) {
             throw new Error("An item with the same name already exists");
         }

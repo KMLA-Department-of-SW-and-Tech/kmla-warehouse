@@ -4,7 +4,7 @@ import { Typography, Spin, Layout, Button, message, Form, InputNumber } from 'an
 import { useParams } from 'react-router-dom';
 import { itemService } from '../../../api/itemService';
 import Sidebar from '../../../components/user/user-sidebar';
-import Headbar from '../../../components/header';
+import Headbar from '../../../components/user/header';
 
 const { Sider, Content } = Layout;
 const { Title, Text } = Typography;

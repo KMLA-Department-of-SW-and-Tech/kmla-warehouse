@@ -1,6 +1,8 @@
 import axios from 'axios';
 import axiosPrivate from '../hooks/axiosPrivate';
 
+// if server is slow get error in sidebar shifting
+
 const authService = {
     login: async (username, password) => { // returns true for successful login
         const response = await axios.post('/api/auth/login', { username: username, password: password }, {withCredentials: true, headers: {'content-type': 'application/json'}});

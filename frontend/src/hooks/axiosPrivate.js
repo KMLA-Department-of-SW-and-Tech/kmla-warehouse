@@ -6,6 +6,7 @@ const axiosPrivate = {
     accessToken: "",
     roles: [],
     refreshRequest: async () => { // internal function do not use outside
+        console.log("Refreshing...");
         const result = await axios.get("/api/refresh", { withCredentials: true });
         axiosPrivate.accessToken = result.data.accessToken;
         axiosPrivate.roles = result.data.roles;

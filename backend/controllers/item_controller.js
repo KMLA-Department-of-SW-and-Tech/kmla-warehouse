@@ -82,7 +82,7 @@ exports.item_create = [
                 newItem.imageUrl = imageUrl;
                 newItem.imageKey = imageKey
                 const item = await itemService.createItem(newItem);
-                res.status(201).send("Successfully created item");
+                res.status(201).json({ newItem: item });
                 return;
             } catch (err) {
                 if(err.message == "An item with the same name already exists") {

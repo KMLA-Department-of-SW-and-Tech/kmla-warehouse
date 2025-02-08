@@ -46,6 +46,7 @@ export const WaitRefreshRequestOnPageRefresh = ({ children }) => {
                 }
             } catch (err) {
                 console.log("Protected Routes refresh error", err);
+                axiosPrivate.accessToken = "";
             } finally {
                 isRefreshRequestSent.current = false;
                 setLoading(false);
