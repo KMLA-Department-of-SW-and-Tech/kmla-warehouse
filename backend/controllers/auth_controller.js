@@ -2,6 +2,7 @@ const Team = require("../models/team");
 const { validationResult, body } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const predefinedConstants = require("../config/predefined_constants");
 require("dotenv").config();
 
 const validateUserInput = [
@@ -41,7 +42,7 @@ exports.handle_login = [validateUserInput, async (req, res, next) => {
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET,
-                { expiresIn: '5min' }
+                { expiresIn: predefinedConstants.ACCESS_LIFETIME }
             );
             const newRefreshToken = jwt.sign(
                 { 
@@ -51,7 +52,7 @@ exports.handle_login = [validateUserInput, async (req, res, next) => {
                     }
                 },
                 process.env.REFRESH_TOKEN_SECRET,
-                { expiresIn: '1d' }
+                { expiresIn: predefinedConstants.REFRESH_LIFETIME }
             );
 
             let newRefreshTokenArray = 
@@ -74,7 +75,7 @@ exports.handle_login = [validateUserInput, async (req, res, next) => {
             foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken];
             const roles = foundUser.roles;
             await foundUser.save();
-            res.cookie('jwt', newRefreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000, /* secure: true, */ /* sameSite: 'None' */ }); // max age same as token expiration(1d)
+            res.cookie('jwt', newRefreshToken, { httpOnly: true, maxAge: predefinedConstants.COOKIE_LIFETIME, /* secure: true, */ /* sameSite: 'None' */ }); // max age same as token expiration(1d)
             // http only to block attacks from sending cookies, but use secure to completely secure the cookie.(for late implementation)
             res.status(200).json({ roles, accessToken });
         }
@@ -94,7 +95,7 @@ exports.handle_logout = async (req, res, next) => {
     const refreshToken = cookies.jwt;
     const foundUser = await Team.findOne({refreshToken: refreshToken})
     if(!foundUser) {
-        res.clearCookie('jwt', { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+        res.clearCookie('jwt', { httpOnly: true, maxAge: predefinedConstants.COOKIE_LIFETIME });
         return res.sendStatus(204); // no content
     }
     // Delete refreshToken in db
