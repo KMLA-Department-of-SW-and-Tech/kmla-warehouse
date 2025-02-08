@@ -1,4 +1,4 @@
-const BorrowHistory = require("../models/borrow_history.js");
+const BorrowHistory = require("../models/logs.js");
 
 const borrowHistoryService = require("../services/borrow_history_service.js");
 

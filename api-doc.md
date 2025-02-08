@@ -1,42 +1,49 @@
-Borrow-History
-GET 전체 리스트 /api/borrow-history/list
-GET 로그 정보 /api/borrow-history/:id
-POST 로그 생성 /api/borrow-history/
-  body: item(String), quantity(Number), user(ObjectId), type(String), reference(ObjectId)
-DELETE 로그 삭제 /api/borrow-history/:id
-POST 물품 반납 /api/borrow-history/:id/return
+# API Documentation for KMLA Warehouse v2.0
+## 1. Log
+#### GET
+전체 리스트 | /api/logs/list
+로그 정보 | /api/logs/:id
+#### POST
+로그 생성 | /api/logs/ | user(ObjectId), item(String), quantity(Number), type(String), reference(ObjectId)
+물품 반납 | /api/logs/:id/return
 
-Item
-GET 전체 리스트 /api/item/list
-GET 검색
-GET 물품 정보 /api/item/:id
-POST 물품 생성 /api/item/ - request format: form
-  body: name(String), description(String), quantity(Number), location(String), image(Image file)
-PUT 물품 업데이트 /api/item/:id - request format: form
-  body: name(String), description(String), quantity(Number), location(String), image(Image file)
-DELETE 물품 삭제 /api/item/:id
+#### DELETE
+로그 삭제 | /api/logs/:id
 
-POST 물품 대여 /api/item/:id/borrow
-  body: quantity(Number)
+## Item
+#### GET
+전체 리스트 | /api/item/list
+물품 정보 | /api/item/:id
+#### POST
+물품 생성 | /api/item/ | body: name(String), description(String), quantity(Number), location(String), image(Image file) [request format: form]
+물품 대여 | /api/item/:id/borrow | body: quantity(Number)
+#### PUT 
+물품 업데이트 | /api/item/:id | body: name(String), description(String), quantity(Number), location(String), image(Image file) [request format: form]
+#### DELETE 
+물품 삭제 | /api/item/:id
 
-Team
-GET 전체 리스트 /api/team/list
-GET 검색
-GET 팀 정보 /api/team/:id
-POST 팀 생성 /api/team/
-  body: username(String), password(String), name(String)
-PUT 팀 업데이트 /api/team/:id
-DELETE 팀 삭제 /api/team/:id
+## Team
+#### GET
+전체 리스트 | /api/team/list
+팀 정보 | /api/team/:id
+대여물품 리스트 | /api/team/:id/borrow-list
+#### POST
+팀 생성 | /api/team/ | body: username(String), password(String), name(String)
+#### PUT
+팀 업데이트 | /api/team/:id
+#### DELETE
+팀 삭제 | /api/team/:id
 
-GET 대여물품 리스트 /api/team/:id/borrow-list
+## Auth
+#### GET 
+현재 로그인된 유저 정보 가져오기 | /api/auth
+#### POST
+로그인 | /auth/login
+로그아웃 | /auth/logout
 
-Auth
-GET 현재 로그인된 유저 정보 가져오기 /api/auth
-POST 로그인 /auth/login
-POST 로그아웃 /auth/logout
-
-Refresh
-GET 새 리프래쉬 토큰 /api/refresh
+## Refresh
+#### GET
+새 리프래쉬 토큰 | /api/refresh
 
 
 // Create Team example

@@ -1,4 +1,4 @@
-const borrowHistory = require("../models/borrow_history");
+const borrowHistory = require("../models/logs");
 
 exports.getAll = async () => {
     try {
