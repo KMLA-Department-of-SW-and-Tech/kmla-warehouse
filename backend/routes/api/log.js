@@ -3,13 +3,13 @@ const router = express.Router();
 
 const logController = require("../../controllers/log_controller");
 
-router.get("/list", logController.log_list);
+router.get("/list", logController.list);
 
-router.post("/", logController.log_create);
+router.post("/", logController.create);
 
 router.route("/:id")
-    .get(logController.log_detail)
-    .delete(logController.log_delete);
+    .get(logController.detail)
+    .delete(logController.delete);
 
 router.route("/:id/return")
     .post(logController.item_return);

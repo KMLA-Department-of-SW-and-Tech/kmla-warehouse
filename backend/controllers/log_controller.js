@@ -1,8 +1,6 @@
-const BorrowHistory = require("../models/logs.js");
+const logService = require("../services/log_service");
 
-const logService = require("../services/log_service.js");
-
-exports.log_list = async (req, res, next) => {
+exports.list = async (req, res, next) => {
     try {
         return res.status(200).send(await logService.getAll());
     } catch (e) {
@@ -13,7 +11,7 @@ exports.log_list = async (req, res, next) => {
     }
 };
 
-exports.log_detail = async (req, res, next) => {
+exports.detail = async (req, res, next) => {
     try {
         const id = req.params.id;
 
@@ -28,7 +26,7 @@ exports.log_detail = async (req, res, next) => {
     }
 };
 
-exports.log_create = async (req, res, next) => {
+exports.create = async (req, res, next) => {
     try {
         return res.status(201).send(await logService.createOne(req.body));
     } catch (e) {
@@ -39,7 +37,7 @@ exports.log_create = async (req, res, next) => {
     }
 };
 
-exports.log_delete = async (req, res, next) => {
+exports.delete = async (req, res, next) => {
     try {
         const id  = req.params.id;
 
