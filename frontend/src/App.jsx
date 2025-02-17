@@ -16,34 +16,32 @@ import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./components/prot
 import AccountSettings from "./routes/(authenticated)/user/account-settings.tsx";
 import { WaitRefreshRequestOnPageRefresh } from "./components/wait-for-refresh-request-on-page-refresh.jsx";
 
-const intermediatePath = "" // /kmla-warehouse possible
-
 const router = createBrowserRouter([
   {
-    path: `${intermediatePath}/`,
-    element: <Navigate to={`${intermediatePath}/home`} replace />,
+    path: "/",
+    element: <Navigate to="/home" replace />,
   },
   {
     path: "/",
-    element: <Navigate to={`${intermediatePath}/home`} replace />,
+    element: <Navigate to="/home" replace />,
   },
   {
     path: "/admin",
-    element: <Navigate to={`${intermediatePath}/admin/equipment`} replace />,
+    element: <Navigate to="/admin/equipment" replace />,
   },
   // Login page
   {
-    path: `${intermediatePath}/login`,
+    path: "/login",
     element: <Login />,
   },
   // Signup page
   {
-    path: `${intermediatePath}/signup`,
+    path: "/signup",
     element: <Signup />,
   },
   // Home page
   {
-    path: `${intermediatePath}/home`,
+    path: "/home",
     element: (
       <WaitRefreshRequestOnPageRefresh>
         <Home />
@@ -51,7 +49,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: `${intermediatePath}/account-settings`,
+    path: "/account-settings",
     element: (
         <WaitRefreshRequestOnPageRefresh>
           <ProtectedRoute><ProtectedUser>
@@ -63,7 +61,7 @@ const router = createBrowserRouter([
 
   // Equipment details page
   {
-    path: `${intermediatePath}/item/:id`,
+    path: "/item/:id",
     element: (
       <WaitRefreshRequestOnPageRefresh>
         <ProtectedRoute><ProtectedUser>
@@ -74,7 +72,7 @@ const router = createBrowserRouter([
   },
   //Reservation Status page
   {
-    path: `${intermediatePath}/reservation`,
+    path: "/reservation",
     element: (
       <WaitRefreshRequestOnPageRefresh>
         <ProtectedRoute><ProtectedUser>
@@ -85,7 +83,7 @@ const router = createBrowserRouter([
   },
   // Admin: add equipment page
   {
-    path: `${intermediatePath}/admin/equipment`,
+    path: "/admin/equipment",
     element: (
       <WaitRefreshRequestOnPageRefresh>
         <ProtectedRoute><ProtectedAdmin>
@@ -96,7 +94,7 @@ const router = createBrowserRouter([
   },
   // Admin: reservation page
   {
-    path: `${intermediatePath}/admin/reservation`,
+    path: "/admin/reservation",
     element: (
       <WaitRefreshRequestOnPageRefresh>
         <ProtectedRoute><ProtectedAdmin>
@@ -107,7 +105,7 @@ const router = createBrowserRouter([
   },
   // Admin: mange team page
   {
-    path: `${intermediatePath}/admin/team`,
+    path: "/admin/team",
     element: (
       <WaitRefreshRequestOnPageRefresh>
         <ProtectedRoute><ProtectedAdmin>
@@ -118,7 +116,7 @@ const router = createBrowserRouter([
   },
   // Admin: account setting page
   {
-    path: `${intermediatePath}/admin/account-settings`,
+    path: "/admin/account-settings",
     element: (
       <WaitRefreshRequestOnPageRefresh>
         <ProtectedRoute><ProtectedAdmin>
