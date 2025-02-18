@@ -12,7 +12,7 @@ import AdminEquipmentPage from "./routes/(authenticated)/admin/equipment.tsx";
 import AdminHistoryPage from "./routes/(authenticated)/admin/reservation.tsx";  
 import AdminTeamPage from "./routes/(authenticated)/admin/manage-team.tsx";
 import AdminSettingPage from "./routes/(authenticated)/admin/account-settings.tsx";
-import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./components/protected-routes.jsx";
+// import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./components/protected-routes.jsx";
 import AccountSettings from "./routes/(authenticated)/user/account-settings.tsx";
 
 const router = createBrowserRouter([
