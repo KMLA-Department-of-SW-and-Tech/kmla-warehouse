@@ -14,7 +14,6 @@ import AdminTeamPage from "./routes/(authenticated)/admin/manage-team.tsx";
 import AdminSettingPage from "./routes/(authenticated)/admin/account-settings.tsx";
 import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./components/protected-routes.jsx";
 import AccountSettings from "./routes/(authenticated)/user/account-settings.tsx";
-import { WaitRefreshRequestOnPageRefresh } from "./components/wait-for-refresh-request-on-page-refresh.jsx";
 
 const router = createBrowserRouter([
   {
@@ -38,88 +37,42 @@ const router = createBrowserRouter([
   // Home page
   {
     path: "/home",
-    element: (
-      <WaitRefreshRequestOnPageRefresh>
-        <Home />
-      </WaitRefreshRequestOnPageRefresh>
-    ),
+    element: <Home />,
   },
   {
     path: "/account-settings",
-    element: (
-        <WaitRefreshRequestOnPageRefresh>
-          <ProtectedRoute><ProtectedUser>
-            <AccountSettings />
-          </ProtectedUser></ProtectedRoute>
-        </WaitRefreshRequestOnPageRefresh>
-      ),
+    element: <AccountSettings />,
   },
 
   // Equipment details page
   {
     path: "/item/:id",
-    element: (
-      <WaitRefreshRequestOnPageRefresh>
-        <ProtectedRoute><ProtectedUser>
-          <EquipmentDetails />
-        </ProtectedUser></ProtectedRoute>
-      </WaitRefreshRequestOnPageRefresh>
-    ),
+    element: <EquipmentDetails />,
   },
   //Reservation Status page
   {
     path: "/reservation",
-    element: (
-      <WaitRefreshRequestOnPageRefresh>
-        <ProtectedRoute><ProtectedUser>
-          <ReservationStatus />
-        </ProtectedUser></ProtectedRoute>
-      </WaitRefreshRequestOnPageRefresh>
-    ),
+    element: <ReservationStatus />,
   },
   // Admin: add equipment page
   {
     path: "/admin/equipment",
-    element: (
-      <WaitRefreshRequestOnPageRefresh>
-        <ProtectedRoute><ProtectedAdmin>
-          <AdminEquipmentPage />
-        </ProtectedAdmin></ProtectedRoute>
-      </WaitRefreshRequestOnPageRefresh>
-    ),
+    element: <AdminEquipmentPage />,
   },
   // Admin: reservation page
   {
     path: "/admin/reservation",
-    element: (
-      <WaitRefreshRequestOnPageRefresh>
-        <ProtectedRoute><ProtectedAdmin>
-          <AdminHistoryPage />
-        </ProtectedAdmin></ProtectedRoute>
-      </WaitRefreshRequestOnPageRefresh>
-    ),
+    element: <AdminHistoryPage />,
   },
   // Admin: mange team page
   {
     path: "/admin/team",
-    element: (
-      <WaitRefreshRequestOnPageRefresh>
-        <ProtectedRoute><ProtectedAdmin>
-          <AdminTeamPage />
-        </ProtectedAdmin></ProtectedRoute>
-      </WaitRefreshRequestOnPageRefresh>
-    ),
+    element: <AdminTeamPage />,
   },
   // Admin: account setting page
   {
     path: "/admin/account-settings",
-    element: (
-      <WaitRefreshRequestOnPageRefresh>
-        <ProtectedRoute><ProtectedAdmin>
-          <AdminSettingPage />
-        </ProtectedAdmin></ProtectedRoute>
-      </WaitRefreshRequestOnPageRefresh>
-    ),
+    element: <AdminSettingPage />,
   },  
 ]);
 
