@@ -3,17 +3,17 @@ import { Navigate } from "react-router-dom";
 
 import Login from "./routes/(non-authenticated)/login/login.tsx"; 
 import Signup from "./routes/(non-authenticated)/signup/signup.tsx"; 
-
 import Home from "./routes/(non-authenticated)/equipment-home/equipment-home.tsx"; 
 import EquipmentDetails from "./routes/(non-authenticated)/equipment-home/equipment-details.tsx"; 
+
 import ReservationStatus from "./routes/(authenticated)/user/reservation.tsx";
+import AccountSettings from "./routes/(authenticated)/user/account-settings.tsx";
  
 import AdminEquipmentPage from "./routes/(authenticated)/admin/equipment.tsx"; 
 import AdminHistoryPage from "./routes/(authenticated)/admin/reservation.tsx";  
 import AdminTeamPage from "./routes/(authenticated)/admin/manage-team.tsx";
 import AdminSettingPage from "./routes/(authenticated)/admin/account-settings.tsx";
 // import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./components/protected-routes.jsx";
-import AccountSettings from "./routes/(authenticated)/user/account-settings.tsx";
 
 const router = createBrowserRouter([
   {
