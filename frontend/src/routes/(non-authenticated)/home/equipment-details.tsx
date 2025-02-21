@@ -9,7 +9,7 @@ import Headbar from '../../../components/user/header';
 const { Sider, Content } = Layout;
 const { Title, Text } = Typography;
 
-export default function EquipmentDetailPage() {
+export default function EquipmentDetails() {
   // State to manage loading status, item details, and borrowing quantity
   const [loading, setLoading] = useState(true);
   const [item, setItem] = useState<Item | null>(null);

@@ -5,8 +5,8 @@ import { AuthProvider } from "./contexts/authContext/index.jsx";
 
 import Login from "./routes/(non-authenticated)/login/login.tsx"; 
 import Signup from "./routes/(non-authenticated)/signup/signup.tsx"; 
-import Home from "./routes/(non-authenticated)/equipment-home/equipment-home.tsx"; 
-import EquipmentDetails from "./routes/(non-authenticated)/equipment-home/equipment-details.tsx"; 
+import Home from "./routes/(non-authenticated)/home/home.tsx"; 
+import EquipmentDetails from "./routes/(non-authenticated)/home/equipment-details.tsx"; 
 
 import ReservationStatus from "./routes/(authenticated)/user/reservation.tsx";
 import AccountSettings from "./routes/(authenticated)/user/account-settings.tsx";
@@ -41,16 +41,17 @@ const router = createBrowserRouter([
     path: "/home",
     element: <Home />,
   },
-  {
-    path: "/account-settings",
-    element: <AccountSettings />,
-  },
-
   // Equipment details page
   {
     path: "/item/:id",
     element: <EquipmentDetails />,
   },
+  // under here needs authorization
+  {
+    path: "/account-settings",
+    element: <AccountSettings />,
+  },
+
   //Reservation Status page
   {
     path: "/reservation",

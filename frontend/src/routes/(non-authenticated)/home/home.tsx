@@ -6,6 +6,8 @@ import Sidebar from '../../../components/user/user-sidebar';
 import { itemService } from '../../../api/itemService'; 
 import Headbar from '../../../components/user/header';
 
+//import "./home.css"
+
 const { Sider, Content } = Layout;
 const { Title } = Typography;
 const { Search } = Input;
@@ -17,7 +19,7 @@ interface Item {
   imageUrl?: string;
 }
 
-export default function EquipmentListPage() {
+export default function Home() {
   const [loading, setLoading] = useState(true);
   const [equipmentList, setEquipmentList] = useState<Item[]>([]);
   const [filteredEquipmentList, setFilteredEquipmentList] = useState<Item[]>([]);
