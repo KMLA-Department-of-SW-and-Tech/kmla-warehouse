@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
+import { AuthProvider } from "./contexts/authContext/index.jsx";
+
 import Login from "./routes/(non-authenticated)/login/login.tsx"; 
 import Signup from "./routes/(non-authenticated)/signup/signup.tsx"; 
 import Home from "./routes/(non-authenticated)/equipment-home/equipment-home.tsx"; 
@@ -77,7 +79,11 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 };
 
 export default App;
