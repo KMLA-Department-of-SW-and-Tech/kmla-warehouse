@@ -6,7 +6,7 @@ import { AuthProvider } from "./contexts/authContext/index.jsx";
 import Login from "./routes/(non-authenticated)/login/login.tsx"; 
 import Signup from "./routes/(non-authenticated)/signup/signup.tsx"; 
 import Home from "./routes/(non-authenticated)/home/home.tsx"; 
-import EquipmentDetails from "./routes/(non-authenticated)/home/equipment-details.tsx"; 
+import EquipmentDetails from "./routes/(non-authenticated)/equpment-details/equipment-details.tsx"; 
 
 import ReservationStatus from "./routes/(authenticated)/user/reservation.tsx";
 import AccountSettings from "./routes/(authenticated)/user/account-settings.tsx";
