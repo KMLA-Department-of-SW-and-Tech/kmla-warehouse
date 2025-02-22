@@ -5,7 +5,7 @@ import React from "react";
 // import authService from "../../../api/authService"; 
 import './login.css';
 import { useAuth } from "../../../contexts/authContext";
-import { signUserIn } from "../../../../js/firebase/auth";
+import { signUserIn, signUserInWithGoogle } from "../../../../js/firebase/auth";
 
 const LoginPage = () => {
   const { userLoggedIn } = useAuth();
@@ -19,8 +19,8 @@ const LoginPage = () => {
   const handleGoogleLogin = async (e: React.MouseEvent<HTMLElement>) => {
     if(isSigningIn) return;
     setIsSigningIn(true);
-    
-
+    const res = await signUserInWithGoogle();
+    console.log(res);
     setIsSigningIn(false);
   }
  
@@ -32,7 +32,7 @@ const LoginPage = () => {
       const email = e.target[0].value;
       const pwd = e.target[1].value;
       const res = await signUserIn(email, pwd);
-
+      console.log(res);
     } catch (err) {
 
        // firebases authentication error 목록을 살펴보면서 고쳐야 함

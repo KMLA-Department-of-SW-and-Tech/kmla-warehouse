@@ -4,6 +4,7 @@ import { Form, Input, Button, message, Layout, Spin, Modal } from 'antd';
 import Sidebar from '../../../components/user/user-sidebar';
 import Headbar from '../../../components/user/header'; 
 import { useNavigate } from 'react-router-dom';
+import { signUserOut } from '../../../../js/firebase/auth';
 
 const { Sider, Content } = Layout;
 
@@ -32,7 +33,7 @@ const AccountSettings = () => {
   const handleLogout = async () => {
     setLoading(true);
     try {
-      await authService.logout();
+      await signUserOut();
       message.success('로그아웃이 성공적으로 완료되었습니다.');
       navigate("/home");
     } catch (error) {
