@@ -127,12 +127,6 @@ const LoginPage = () => {
               </svg>
               <div>{isSigningIn ? '로그인하는 중' : '구글로 계속하기'}</div>
             </button>
-            <button onClick={async () => {
-              const res = await changeUserPwd("helloWorlds");
-              console.log(res);
-            }}>
-              My func
-            </button>
           </div>
         </div>
 
