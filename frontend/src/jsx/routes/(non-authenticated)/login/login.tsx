@@ -5,7 +5,7 @@ import React from "react";
 // import authService from "../../../api/authService"; 
 import './login.css';
 import { useAuth } from "../../../contexts/authContext";
-import { signUserIn, signUserInWithGoogle } from "../../../../js/firebase/auth";
+import { changeUserPwd, signUserIn, signUserInWithGoogle } from "../../../../js/firebase/auth";
 
 const LoginPage = () => {
   const { userLoggedIn } = useAuth();
@@ -126,6 +126,12 @@ const LoginPage = () => {
                   </defs>
               </svg>
               <div>{isSigningIn ? '로그인하는 중' : '구글로 계속하기'}</div>
+            </button>
+            <button onClick={async () => {
+              const res = await changeUserPwd("helloWorlds");
+              console.log(res);
+            }}>
+              My func
             </button>
           </div>
         </div>
