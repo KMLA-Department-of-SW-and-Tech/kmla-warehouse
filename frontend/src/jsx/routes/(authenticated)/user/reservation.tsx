@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Card, Row, Col, Spin, Layout, message, Button } from 'antd';
 import Sidebar from '../../../components/user/user-sidebar.tsx';
-import { teamService } from "../../../api/teamService.ts";
-import { itemService } from "../../../api/itemService.ts";
+// import { teamService } from "../../../api/teamService.ts";
+// import { itemService } from "../../../api/itemService.ts";
 import Headbar from "../../../components/user/header.tsx";
 import { UnorderedListOutlined } from '@ant-design/icons';
 

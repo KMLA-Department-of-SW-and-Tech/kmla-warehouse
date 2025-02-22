@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
-import { AuthProvider } from "./jsx/authContext/index.jsx";
+import { AuthProvider } from "./jsx/contexts/authContext/index.jsx";
 
 import Login from "./jsx/routes/(non-authenticated)/login/login.tsx"; 
 import Signup from "./jsx/routes/(non-authenticated)/signup/signup.tsx"; 

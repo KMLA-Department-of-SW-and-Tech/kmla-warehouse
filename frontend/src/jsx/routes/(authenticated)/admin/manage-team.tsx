@@ -5,7 +5,7 @@ import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from "../../../components/admin/admin-sidebar";
 import './admin.css';
 import Headbar from "../../../components/admin/admin-header";
-import { teamService, Team, AddTeam } from "../../../api/teamService";
+// import { teamService, Team, AddTeam } from "../../../api/teamService";
 import { EditOutlined, DeleteOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons'; 
 
 const { Sider, Content } = Layout;
