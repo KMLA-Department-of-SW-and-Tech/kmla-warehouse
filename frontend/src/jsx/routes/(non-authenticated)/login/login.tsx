@@ -1,41 +1,57 @@
 import { useState } from "react"; 
-import { useNavigate } from "react-router-dom"; 
+import { Navigate, useNavigate } from "react-router-dom"; 
 import React from "react";
 // import axiosPrivate from "../../../hooks/axiosPrivate"; 
 // import authService from "../../../api/authService"; 
 import './login.css';
+import { useAuth } from "../../../contexts/authContext";
+import { signUserIn } from "../../../../js/firebase/auth";
 
 const LoginPage = () => {
+  const { userLoggedIn } = useAuth();
 
-  const [username, setUsername] = useState(""); 
+  const [userEmail, setUserEmail] = useState(""); 
   const [password, setPassword] = useState(""); 
   const [error, setError] = useState(""); 
+  const [isSigningIn, setIsSigningIn] = useState(false);
   const navigate = useNavigate(); 
 
- 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); 
-    try {
-      // 로그인 API 호출
-      await authService.login(username, password);
+  const handleGoogleLogin = async (e: React.MouseEvent<HTMLElement>) => {
+    if(isSigningIn) return;
+    setIsSigningIn(true);
+    
 
-      // 로그인 성공 시 역할에 따라 페이지를 이동
-      axiosPrivate.roles.includes("Admin")
-        ? navigate("/admin/equipment") // 관리자 페이지로 이동
-        : navigate("/home"); // 일반 사용자 홈 페이지로 이동
+    setIsSigningIn(false);
+  }
+ 
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); 
+    if(isSigningIn) return;
+    setIsSigningIn(true);
+    try {
+      const email = e.target[0].value;
+      const pwd = e.target[1].value;
+      const res = await signUserIn(email, pwd);
+
     } catch (err) {
-      // 기본 에러 메시지 설정
+
+       // firebases authentication error 목록을 살펴보면서 고쳐야 함
+
+
+      // previous code
       let errorMessage = "로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.";
-      if (err.response && err.response.data) {
-        // 서버로부터 전달받은 에러 메시지를 분석하여 사용자에게 적합한 메시지 표시
-        const serverMessage = err.response.data || "";
-        if (serverMessage.includes("password")) {
-          errorMessage = "비밀번호가 일치하지 않습니다.";
-        } else if (serverMessage.includes("username")) {
-          errorMessage = "아이디가 일치하지 않습니다.";
-        }
-      }
+      // if (err.response && err.response.data) {
+      //   // 서버로부터 전달받은 에러 메시지를 분석하여 사용자에게 적합한 메시지 표시
+      //   const serverMessage = err.response.data || "";
+      //   if (serverMessage.includes("password")) {
+      //     errorMessage = "비밀번호가 일치하지 않습니다.";
+      //   } else if (serverMessage.includes("userEmail")) {
+      //     errorMessage = "아이디가 일치하지 않습니다.";
+      //   }
+      // }
       setError(errorMessage); // 에러 메시지 상태 업데이트
+    } finally {
+      setIsSigningIn(false);
     }
   };
 
@@ -45,59 +61,80 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-container">
-      {/* 로그인 페이지 레이아웃 */}
-      <div className="login-sidebar">
-        <div className="login-box">
-          <h2 className="login-title">로그인</h2> {/* 페이지 제목 */}
+    <>
+      {userLoggedIn && (<Navigate to={'/home'} replace={true} />)}
+      <div className="login-container">
+        <div className="login-sidebar">
+          <div className="login-box">
+            <h2 className="login-title">로그인</h2>
 
-          {/* 로그인 폼 */}
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="username" className="form-label">팀 이름</label> {/* 사용자 ID 라벨 */}
-              <input
-                type="text"
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)} // 입력값 변경 처리
-                className="form-input"
-                required
-              />
+            <form onSubmit={onSubmit}>
+              <div className="form-group">
+                <label htmlFor="user-email" className="form-label">이메일</label>
+                <input
+                  type="text"
+                  id="user-email"
+                  value={userEmail}
+                  onChange={(e) => setUserEmail(e.target.value)}
+                  className="form-input"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password" className="form-label">비밀번호</label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="form-input"
+                  required
+                />
+              </div>
+              <button type="submit" className="submit-button" disabled={isSigningIn}>
+              {isSigningIn ? '로그인하는 중...' : '로그인'}
+              </button>
+              {error && <div className="error-message">{error}</div>}
+            </form>
+
+            <div className="signup-redirect">
+              <p>
+                계정이 없으신가요?{" "}
+                <a href="#" className="signup-link" onClick={handleSignUp}>
+                  회원가입
+                </a>
+              </p>
             </div>
-            <div className="form-group">
-              <label htmlFor="password" className="form-label">비밀번호</label> {/* 비밀번호 라벨 */}
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)} // 입력값 변경 처리
-                className="form-input"
-                required
-              />
+
+
+            {/* faulty css from here */}
+            <div style={{width: "100%", textAlign: "center"}}> {/* ------------OR------------ 느낌이면 좋을 듯 */}
+              OR
             </div>
-            <button type="submit" className="submit-button">
-              로그인 {/* 로그인 버튼 */}
+            <button disabled={isSigningIn} onClick={handleGoogleLogin} style={{backgroundColor: "white", border: "1px solid black", width: "100%",height: "40px", padding: "5px", display: "flex", flexDirection: "row", alignContent: "center", gap: "10px", justifyContent: "center"}} >
+              <svg style={{height: "30px"}} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clipPath="url(#clip0_17_40)">
+                      <path d="M47.532 24.5528C47.532 22.9214 47.3997 21.2811 47.1175 19.6761H24.48V28.9181H37.4434C36.9055 31.8988 35.177 34.5356 32.6461 36.2111V42.2078H40.3801C44.9217 38.0278 47.532 31.8547 47.532 24.5528Z" fill="#4285F4" />
+                      <path d="M24.48 48.0016C30.9529 48.0016 36.4116 45.8764 40.3888 42.2078L32.6549 36.2111C30.5031 37.675 27.7252 38.5039 24.4888 38.5039C18.2275 38.5039 12.9187 34.2798 11.0139 28.6006H3.03296V34.7825C7.10718 42.8868 15.4056 48.0016 24.48 48.0016Z" fill="#34A853" />
+                      <path d="M11.0051 28.6006C9.99973 25.6199 9.99973 22.3922 11.0051 19.4115V13.2296H3.03298C-0.371021 20.0112 -0.371021 28.0009 3.03298 34.7825L11.0051 28.6006Z" fill="#FBBC04" />
+                      <path d="M24.48 9.49932C27.9016 9.44641 31.2086 10.7339 33.6866 13.0973L40.5387 6.24523C36.2 2.17101 30.4414 -0.068932 24.48 0.00161733C15.4055 0.00161733 7.10718 5.11644 3.03296 13.2296L11.005 19.4115C12.901 13.7235 18.2187 9.49932 24.48 9.49932Z" fill="#EA4335" />
+                  </g>
+                  <defs>
+                      <clipPath id="clip0_17_40">
+                          <rect width="48" height="48" fill="white" />
+                      </clipPath>
+                  </defs>
+              </svg>
+              <div>{isSigningIn ? '로그인하는 중' : '구글로 계속하기'}</div>
             </button>
-            {error && <div className="error-message">{error}</div>} {/* 에러 메시지 출력 */}
-          </form>
-
-          {/* 회원가입 페이지로 이동 링크 */}
-          <div className="signup-redirect">
-            <p>
-              계정이 없으신가요?{" "}
-              <a href="#" className="signup-link" onClick={handleSignUp}>
-                회원가입 {/* 회원가입 링크 */}
-              </a>
-            </p>
           </div>
         </div>
-      </div>
 
-      {/* 페이지 하단에 표시할 추가 텍스트 */}
-      <div className="login-footer">
-        2024 과학기술부 제작, 사진 제공 28기 진수민
+        <div className="login-footer">
+          2024 과학기술부 제작, 사진 제공 28기 진수민
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
