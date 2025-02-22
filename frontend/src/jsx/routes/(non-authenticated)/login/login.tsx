@@ -97,14 +97,14 @@ const LoginPage = () => {
               {error && <div className="error-message">{error}</div>}
             </form>
 
-            <div className="signup-redirect">
+            {/* <div className="signup-redirect">
               <p>
                 계정이 없으신가요?{" "}
                 <a href="#" className="signup-link" onClick={handleSignUp}>
                   회원가입
                 </a>
               </p>
-            </div>
+            </div> */}
 
 
             {/* faulty css from here */}

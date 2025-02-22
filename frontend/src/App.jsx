@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import { AuthProvider } from "./jsx/contexts/authContext/index.jsx";
 
 import Login from "./jsx/routes/(non-authenticated)/login/login.tsx"; 
-import Signup from "./jsx/routes/(non-authenticated)/signup/signup.tsx"; 
+// import Signup from "./jsx/routes/(non-authenticated)/signup/signup.tsx"; 
 import Home from "./jsx/routes/(non-authenticated)/home/home.tsx"; 
 import EquipmentDetails from "./jsx/routes/(non-authenticated)/equpment-details/equipment-details.tsx"; 
 
@@ -31,11 +31,11 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
-  // Signup page
-  {
-    path: "/signup",
-    element: <Signup />,
-  },
+  // // Signup page
+  // {
+  //   path: "/signup",
+  //   element: <Signup />,
+  // },
   // Home page
   {
     path: "/home",

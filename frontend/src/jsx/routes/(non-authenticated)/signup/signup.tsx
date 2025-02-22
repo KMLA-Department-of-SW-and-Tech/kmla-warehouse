@@ -11,6 +11,7 @@ const SignUpPage: React.FC = () => {
   const [passwordError, setPasswordError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [isSigningUp, setIsSigningUp] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -96,7 +97,7 @@ const SignUpPage: React.FC = () => {
                 />
               </div>
               {passwordError && <div className="text-red-500 text-sm">{passwordError}</div>}
-              <button type="submit" className="submit-button">회원가입</button>
+              <button disabled={isSigningUp} type="submit" className="submit-button">{isSigningUp ? "회원가입 하는 중" : "회원가입"}</button>
             </form>
           )}
 
