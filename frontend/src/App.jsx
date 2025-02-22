@@ -1,21 +1,21 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
-import { AuthProvider } from "./contexts/authContext/index.jsx";
+import { AuthProvider } from "./js/contexts/authContext/index.jsx";
 
-import Login from "./routes/(non-authenticated)/login/login.tsx"; 
-import Signup from "./routes/(non-authenticated)/signup/signup.tsx"; 
-import Home from "./routes/(non-authenticated)/home/home.tsx"; 
-import EquipmentDetails from "./routes/(non-authenticated)/equpment-details/equipment-details.tsx"; 
+import Login from "./jsx/routes/(non-authenticated)/login/login.tsx"; 
+import Signup from "./jsx/routes/(non-authenticated)/signup/signup.tsx"; 
+import Home from "./jsx/routes/(non-authenticated)/home/home.tsx"; 
+import EquipmentDetails from "./jsx/routes/(non-authenticated)/equpment-details/equipment-details.tsx"; 
 
-import ReservationStatus from "./routes/(authenticated)/user/reservation.tsx";
-import AccountSettings from "./routes/(authenticated)/user/account-settings.tsx";
+import ReservationStatus from "./jsx/routes/(authenticated)/user/reservation.tsx";
+import AccountSettings from "./jsx/routes/(authenticated)/user/account-settings.tsx";
  
-import AdminEquipmentPage from "./routes/(authenticated)/admin/equipment.tsx"; 
-import AdminHistoryPage from "./routes/(authenticated)/admin/reservation.tsx";  
-import AdminTeamPage from "./routes/(authenticated)/admin/manage-team.tsx";
-import AdminSettingPage from "./routes/(authenticated)/admin/account-settings.tsx";
-// import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./components/protected-routes.jsx";
+import AdminEquipmentPage from "./jsx/routes/(authenticated)/admin/equipment.tsx"; 
+import AdminHistoryPage from "./jsx/routes/(authenticated)/admin/reservation.tsx";  
+import AdminTeamPage from "./jsx/routes/(authenticated)/admin/manage-team.tsx";
+import AdminSettingPage from "./jsx/routes/(authenticated)/admin/account-settings.tsx";
+// import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./jsx/components/protected-routes.jsx";
 
 const router = createBrowserRouter([
   {
