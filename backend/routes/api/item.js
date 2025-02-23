@@ -18,6 +18,5 @@ router.route("/:id")
 
 router.patch("/:id/borrow", upload, itemController.borrow);
 
-//     .post(verifyJWT, itemController.item_borrow);
 module.exports = router;
   

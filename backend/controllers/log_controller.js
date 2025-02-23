@@ -6,7 +6,7 @@ exports.list = async (req, res, next) => {
     } catch (e) {
         switch(e.message) {
             default:
-                return res.send(e);
+                return res.status(500).send(e);
         }
     }
 };
@@ -21,7 +21,7 @@ exports.detail = async (req, res, next) => {
             case "Log not found":
                 return res.status(404).send(e);
             default:
-                return res.send(e);
+                return res.status(500).send(e);
         }
     }
 };
@@ -32,14 +32,14 @@ exports.create = async (req, res, next) => {
     } catch (e) {
         switch(e.message) {
             default:
-                return res.send(e);
+                return res.status(500).send(e);
         }
     }
 };
 
 exports.delete = async (req, res, next) => {
     try {
-        const id  = req.params.id;
+        const id = req.params.id;
 
         return res.status(200).send(await logService.deleteOne(id));
     } catch (e) {
@@ -47,18 +47,23 @@ exports.delete = async (req, res, next) => {
             case "Log not found":
                 return res.status(404).send(e);
             default:
-                return res.send(e);
+                return res.status(500).send(e);
         }
     }
 };
 
 exports.item_return = async (req, res, next) => {
     try {
+        const id = req.params.id;
 
+        return res.status(201).send(await logService.return(id));
     } catch (e) {
         switch(e.message) {
+            case "Item not found":
+            case "Log not found":
+                return res.status(404).send(e);
             default:
-                return res.send(e);
+                return res.status(500).send(e);
         }
     }
 };

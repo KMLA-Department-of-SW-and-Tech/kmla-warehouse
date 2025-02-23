@@ -1,4 +1,5 @@
 const Log = require("../models/logs");
+const itemService = require("./item_service");
 
 exports.getAll = async () => {
     try {
@@ -27,14 +28,11 @@ exports.getOne = async (id) => {
 }
 
 exports.createOne = async (body, session=null) => {
-    const args = Object.assign(body, {
-        timestamp: Date.now(),
-        status: "valid",
-    });
+    const args = { ...body, timestamp: Date.now(), status: "valid" };
     const entry = new Log(args);
 
     try {
-        return await entry.save().session(session);
+        return await entry.save({session});
     } catch (e) {
         switch(e.message) {
             default:
@@ -59,6 +57,36 @@ exports.deleteOne = async (id) => {
     }
 }
 
+exports.return = async (id) => {
+    try {
+        const log = await exports.getOne(id);
+        if(!log) {
+            throw new Error("Log not found");
+        }
+
+        const item = await itemService.getOne(log.item);
+        if(!item) {
+            throw new Error("Item not found");
+        }
+
+        await itemService.editOne(log.item, {quantity: item.quantity + log.quantity});
+
+        console.log(log);
+
+        await exports.createOne({
+            user: log.user,
+            item: log.item,
+            quantity: log.quantity,
+            type: "return",
+        });
+
+        console.log("hey oh");
+
+        return;
+    } catch (e) {
+        throw e;
+    }
+}
 
 
 // try {
