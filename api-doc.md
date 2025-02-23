@@ -17,7 +17,7 @@
 #### POST
 물품 생성 | /api/item/ | body: name(String), description(String), quantity(Number), location(String), image(Image file) [request format: form]
 #### PATCH 
-물품 업데이트 | /api/item/:id | body: name(String), description(String), quantity(Number), location(String), image(Image file) [request format: form] *optional
+물품 수정 | /api/item/:id | body: name(String), description(String), quantity(Number), location(String), image(Image file) [request format: form] *optional
 물품 대여 | /api/item/:id/borrow | body: quantity(Number), user(String)
 #### DELETE 
 물품 삭제 | /api/item/:id

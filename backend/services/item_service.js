@@ -62,6 +62,22 @@ exports.editOne = async (id, updates, session=null) => {
     }
 }
 
+exports.deleteOne = async (id) => {
+    try {
+        const updatedItem = await Item.findByIdAndUpdate(id, {status: "deleted"});
+
+        if (!updatedItem) {
+            throw new Error("Item not found");
+        }
+
+        return;
+    } catch (e) {
+        switch(e.message) {
+            default:
+                throw e;
+        }
+    }
+}
 
 exports.borrow = async (id, body) => {
     // const session = await mongoose.startSession();

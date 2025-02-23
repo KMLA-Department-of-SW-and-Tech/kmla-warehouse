@@ -1,7 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const deleteItem = require("../../legacy/delete_item");
-const deleteImage = require("../../legacy/delete_image");
 const upload = require('../../middleware/upload_image.js'); // Import the multer upload configuration
 const printReq = require("../../middleware/print_req.js");
 
@@ -14,7 +12,7 @@ router.post("/", upload, itemController.create);
 router.route("/:id")
     .get(itemController.detail)
     .patch(upload, itemController.edit)
-//     .delete(deleteItem, itemController.item_update_put);
+    .delete(itemController.delete);
 
 router.patch("/:id/borrow", upload, itemController.borrow);
 
