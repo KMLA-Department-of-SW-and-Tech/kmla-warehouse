@@ -9,7 +9,7 @@ const logSchema = new Schema({
     timestamp: {type: Schema.Types.Date, required: true, default: Date.now()},
     type: {type: String, enum: ["borrow", "return", "delete"]},
     reference: {type: Schema.Types.ObjectId},
-    status: {type: String, enum: ["valid", "deleted"], default: "valid"},
+    status: {type: String, enum: ["active", "closed"], default: "active"},
 });
 
 module.exports = mongoose.model("Logs", logSchema);

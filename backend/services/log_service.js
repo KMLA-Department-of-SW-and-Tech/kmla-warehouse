@@ -27,8 +27,8 @@ exports.getOne = async (id) => {
     }
 }
 
-exports.createOne = async (body, session=null) => {
-    const args = { ...body, timestamp: Date.now(), status: "valid" };
+exports.createOne = async (body, status=null, session=null) => {
+    const args = { ...body, timestamp: Date.now(), status: status ? status : "active" };
     const entry = new Log(args);
 
     try {
@@ -57,29 +57,46 @@ exports.deleteOne = async (id) => {
     }
 }
 
+exports.editOne = async (id, updates, session=null) => {
+    try {
+        const updatedLog = await Log.findByIdAndUpdate(id, updates).session(session);
+
+        if (!updatedLog) {
+            throw new Error("Log not found");
+        }
+
+        return;
+    } catch (e) {
+        throw e;
+    }
+}
+
 exports.return = async (id) => {
     try {
         const log = await exports.getOne(id);
         if(!log) {
             throw new Error("Log not found");
         }
-
+        
         const item = await itemService.getOne(log.item);
         if(!item) {
             throw new Error("Item not found");
         }
-
+        
+        
+        await exports.editOne(id, {status: "closed"});
+        
+        console.log("yeets");
+        
         await itemService.editOne(log.item, {quantity: item.quantity + log.quantity});
-
-        console.log(log);
-
+        
         await exports.createOne({
             user: log.user,
             item: log.item,
             quantity: log.quantity,
             type: "return",
-        });
-
+        }, "closed");
+            
         console.log("hey oh");
 
         return;
