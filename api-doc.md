@@ -22,63 +22,28 @@
 #### DELETE 
 물품 삭제 | /api/item/:id
 
-## Auth
-#### GET 
-현재 로그인된 유저 정보 가져오기 | /api/auth
-#### POST
-로그인 | /auth/login
-로그아웃 | /auth/logout
+# 백엔드 설명 (for 프런트엔드)
+## 1. Item, Log Schema (DB상 구조)
+### Item:
+- name
+- description
+- totalQuantity (전체 수량)
+- quantity (잔여 수량)
+- location (예시: C-101)
+- status (valid는 대여 가능한 물품, deleted는 삭제된 / 대여 불가능한 물품)
+- imageUrl (물건 사진 링크, 이미지 표시할 때는 이 링크 사용하면 됨)
+- imageKey (DB 관련된 내용, 프런트엔드는 고려할 필요 X)
 
-## Refresh
-#### GET
-새 리프래쉬 토큰 | /api/refresh
+### Log:
+- user (대여 / 반납한 유저, String)
+- item (대여 / 반납된 물건, ObjectId)
+- quantity (대여 / 반납된 수량)
+- timestamp
+- type (borrow / return)
+- status (active는 borrow type의 로그가 가질 수 있으며, 그 로그에 해당하는 물품이 대여되었으나 반납은 않되었을 때의 상태임. 만약 유저가 물건을 반납하면 반납 로그와 그에 해당하는 대여 로그 모두 status가 closed로 바뀜.)
 
+## 2. API 사용 관련
+API 요청은 위의 API Docs를 참고하여 보내면 됨. 왠만하면 직접 create / delete 등 기초적인 API Call을 이용하기보다 borrow / return 등 더 편리한 API를 사용하면 프런트엔드 / 백엔드 모두 좋음. 뭔가 복잡한 로직이 필요하면 create / delete 등으로 구현하지 말고 백엔드 쪽에 만들어달라고 하면 만들어줄 것이고 그게 전체적으로 코드가 보기 예뻐짐.
 
-// Create Team example
-Request with CURL in Windows!!
-curl -X POST http://localhost:3000/api/team/ -H "Content-Type: application/json" -d "{""username"" : ""LoginTestUsername"", ""password"" : ""LoginTestPassword"", ""name"" : ""LoginTestName""}"
-Request with CURL in MacOS!!
-curl -X POST http://localhost:3000/api/team/ -H 'Content-Type: application/json' -d '{"username" : "LoginTestUsername", "password" : "LoginTestPassword", "name" : "LoginTestName"}'
-
-
-
-
-*****Important*****
-use authService or axiosPrivate for requests or you will get auth errors
-
-
-
-Request with Axios // just an example, do not use it in this form, use async and send multiple requests at once (Promise.all)
-axios.post('/api/team/', {
-    username: "LoginTestUsername",
-    password: "LoginTestPassword",
-    name: "LoginTestName",
-  })
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-
-
-axios.get("/api/team/list")
-
-
-async {
-  try {
-    const response = await <Promise>;
-
-  } catch(e) {
-    console.log(e.message);
-    
-  }
-}
-
-<Promise>.then(response => ).error(error => )
-
-PUT 사용 시 유의점!
-각 데이터 종류에 대해 그것이 가지는 *모든* 하위 항목에 대한 정보를 줘야 함. Ex) Item 고칠거면 name, description, tags, category, location, status, availableQuantity, totalQuantity
-
-Item Image 사용 방법
-Get 하면 imageUrl 값이 있음. 그 값을 img 태그의 src 링크에 넣으면 됨.
+## 3. 로그인 관련
+조유찬이 알려줄거임. 조유찬은 로그인 구현 완료되면 부디 여기에 간단한 설명 작성좀.

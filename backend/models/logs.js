@@ -7,8 +7,7 @@ const logSchema = new Schema({
     item: {type: Schema.Types.ObjectId, ref: "Item", required: true},
     quantity: {type: Number, required: true},
     timestamp: {type: Schema.Types.Date, required: true, default: Date.now()},
-    type: {type: String, enum: ["borrow", "return", "delete"]},
-    reference: {type: Schema.Types.ObjectId},
+    type: {type: String, enum: ["borrow", "return"]},
     status: {type: String, enum: ["active", "closed"], default: "active"},
 });
 
