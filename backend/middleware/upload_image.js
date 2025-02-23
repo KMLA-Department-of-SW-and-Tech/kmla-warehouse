@@ -48,7 +48,8 @@ const handleImageUpload = (req, res, next) => {
 
         // Check if file is uploaded
         if (!req.file) {
-            return res.status(400).json({ error: 'No file uploaded.' });
+            // return res.status(400).json({ error: 'No file uploaded.' });
+            return next();
         }
 
         // File uploaded successfully
@@ -58,7 +59,7 @@ const handleImageUpload = (req, res, next) => {
             imageUrl: req.file.location,
             imageKey: req.file.key,
         });
-        next();
+        return next();
     });
 };
 

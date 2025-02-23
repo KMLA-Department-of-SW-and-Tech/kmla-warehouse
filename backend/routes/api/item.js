@@ -11,15 +11,12 @@ router.get("/list", itemController.list);
 
 router.post("/", upload, itemController.create);
 
-router.post("/test", upload, printReq);
-
 router.route("/:id")
     .get(itemController.detail)
-//     .put(upload, itemController.item_update_put, deleteImage)
-//     .patch(verifyJWT, itemController.item_update_patch)
+    .patch(upload, itemController.edit)
 //     .delete(deleteItem, itemController.item_update_put);
 
-// router.route("/:id/borrow")
+router.patch("/:id/borrow", upload, itemController.borrow);
 
 //     .post(verifyJWT, itemController.item_borrow);
 module.exports = router;

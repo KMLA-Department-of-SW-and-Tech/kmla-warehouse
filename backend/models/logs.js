@@ -3,15 +3,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const logSchema = new Schema({
-    user: {type: Schema.Types.ObjectId, ref: "Team", required: true},
+    user: {type: String, required: true},
     item: {type: Schema.Types.ObjectId, ref: "Item", required: true},
     quantity: {type: Number, required: true},
     timestamp: {type: Schema.Types.Date, required: true, default: Date.now()},
     type: {type: String, enum: ["borrow", "return", "delete"]},
     reference: {type: Schema.Types.ObjectId},
-    status: {type: String, enum: ["valid", "deleted"], default: "valid"}
-    // borrowDate: {type: Date, required: true},
-    // returnDate: {type: Date/* , required: true */},
+    status: {type: String, enum: ["valid", "deleted"], default: "valid"},
 });
 
 module.exports = mongoose.model("Logs", logSchema);

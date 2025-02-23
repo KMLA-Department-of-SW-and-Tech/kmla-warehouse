@@ -26,7 +26,7 @@ exports.getOne = async (id) => {
     }
 }
 
-exports.createOne = async (body) => {
+exports.createOne = async (body, session=null) => {
     const args = Object.assign(body, {
         timestamp: Date.now(),
         status: "valid",
@@ -34,7 +34,7 @@ exports.createOne = async (body) => {
     const entry = new Log(args);
 
     try {
-        return await entry.save();
+        return await entry.save().session(session);
     } catch (e) {
         switch(e.message) {
             default:

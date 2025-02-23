@@ -4,7 +4,7 @@
 전체 리스트 | /api/logs/list
 로그 정보 | /api/logs/:id
 #### POST
-로그 생성 | /api/logs/ | user(ObjectId), item(String), quantity(Number), type(String), reference(ObjectId)
+로그 생성 | /api/logs/ | user(String), item(String), quantity(Number), type(String)
 물품 반납 | /api/logs/:id/return ??? 필요한지 잘 모르겠..
 
 #### DELETE
@@ -16,9 +16,9 @@
 물품 정보 | /api/item/:id
 #### POST
 물품 생성 | /api/item/ | body: name(String), description(String), quantity(Number), location(String), image(Image file) [request format: form]
-물품 대여 | /api/item/:id/borrow | body: quantity(Number)
-#### PUT 
-물품 업데이트 | /api/item/:id | body: name(String), description(String), quantity(Number), location(String), image(Image file) [request format: form]
+#### PATCH 
+물품 업데이트 | /api/item/:id | body: name(String), description(String), quantity(Number), location(String), image(Image file) [request format: form] *optional
+물품 대여 | /api/item/:id/borrow | body: quantity(Number), user(String)
 #### DELETE 
 물품 삭제 | /api/item/:id
 
