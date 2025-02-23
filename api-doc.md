@@ -5,7 +5,6 @@
 로그 정보 | /api/logs/:id
 #### POST
 로그 생성 | /api/logs/ | user(String), item(String), quantity(Number), type(String)
-물품 반납 | /api/logs/:id/return ??? 필요한지 잘 모르겠..
 
 #### DELETE
 로그 삭제 | /api/logs/:id
@@ -21,18 +20,6 @@
 물품 대여 | /api/item/:id/borrow | body: quantity(Number), user(String)
 #### DELETE 
 물품 삭제 | /api/item/:id
-
-## Team
-#### GET
-전체 리스트 | /api/team/list
-팀 정보 | /api/team/:id
-대여물품 리스트 | /api/team/:id/borrow-list
-#### POST
-팀 생성 | /api/team/ | body: username(String), password(String), name(String)
-#### PUT
-팀 업데이트 | /api/team/:id
-#### DELETE
-팀 삭제 | /api/team/:id
 
 ## Auth
 #### GET 
