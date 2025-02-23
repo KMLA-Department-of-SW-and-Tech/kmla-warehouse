@@ -6,6 +6,7 @@ import React from "react";
 import './login.css';
 import { useAuth } from "../../../contexts/authContext";
 import { changeUserPwd, signUserIn, signUserInWithGoogle } from "../../../../js/firebase/auth";
+import { getAdditionalUserInfo } from "firebase/auth";
 
 const LoginPage = () => {
   const { userLoggedIn } = useAuth();
@@ -13,49 +14,52 @@ const LoginPage = () => {
   const [userEmail, setUserEmail] = useState(""); 
   const [password, setPassword] = useState(""); 
   const [error, setError] = useState(""); 
-  const [isSigningIn, setIsSigningIn] = useState(false);
   const navigate = useNavigate(); 
 
   const handleGoogleLogin = async (e: React.MouseEvent<HTMLElement>) => {
-    if(isSigningIn) return;
-    setIsSigningIn(true);
-    const res = await signUserInWithGoogle();
-    console.log(res);
-    setIsSigningIn(false);
+    try {
+      const res = await signUserInWithGoogle();
+      const isNewUser = getAdditionalUserInfo(res)?.isNewUser;
+      console.log(isNewUser);
+
+    } catch (err) {
+      setError("로그인에 실패했습니다.");
+    }
   }
  
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); 
-    if(isSigningIn) return;
-    setIsSigningIn(true);
-    try {
-      const email = e.target[0].value;
-      const pwd = e.target[1].value;
-      const res = await signUserIn(email, pwd);
-      console.log(res);
-    } catch (err) {
+  // const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault(); 
+  //   if(isSigningIn) return;
+  //   setIsSigningIn(true);
+  //   try {
+  //     const email = e.target[0].value;
+  //     const pwd = e.target[1].value;
+  //     const res = await signUserIn(email, pwd);
+  //     console.log(res);
+  //   } catch (err) {
 
-       // firebases authentication error 목록을 살펴보면서 고쳐야 함
+  //      // firebases authentication error 목록을 살펴보면서 고쳐야 함
 
 
-      // previous code
-      let errorMessage = "로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.";
-      // if (err.response && err.response.data) {
-      //   // 서버로부터 전달받은 에러 메시지를 분석하여 사용자에게 적합한 메시지 표시
-      //   const serverMessage = err.response.data || "";
-      //   if (serverMessage.includes("password")) {
-      //     errorMessage = "비밀번호가 일치하지 않습니다.";
-      //   } else if (serverMessage.includes("userEmail")) {
-      //     errorMessage = "아이디가 일치하지 않습니다.";
-      //   }
-      // }
-      setError(errorMessage); // 에러 메시지 상태 업데이트
-    } finally {
-      setIsSigningIn(false);
-    }
-  };
+  //     // previous code
+  //     let errorMessage = "로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.";
+  //     // if (err.response && err.response.data) {
+  //     //   // 서버로부터 전달받은 에러 메시지를 분석하여 사용자에게 적합한 메시지 표시
+  //     //   const serverMessage = err.response.data || "";
+  //     //   if (serverMessage.includes("password")) {
+  //     //     errorMessage = "비밀번호가 일치하지 않습니다.";
+  //     //   } else if (serverMessage.includes("userEmail")) {
+  //     //     errorMessage = "아이디가 일치하지 않습니다.";
+  //     //   }
+  //     // }
+  //     setError(errorMessage); // 에러 메시지 상태 업데이트
+  //   } finally {
+  //     setIsSigningIn(false);
+  //   }
+  // };
 
   // 회원가입 페이지로 이동하는 함수
+  
   const handleSignUp = () => {
     navigate("/signup");
   };
@@ -68,7 +72,7 @@ const LoginPage = () => {
           <div className="login-box">
             <h2 className="login-title">로그인</h2>
 
-            <form onSubmit={onSubmit}>
+            {/* <form onSubmit={onSubmit}>
               <div className="form-group">
                 <label htmlFor="user-email" className="form-label">이메일</label>
                 <input
@@ -94,9 +98,7 @@ const LoginPage = () => {
               <button type="submit" className="submit-button" disabled={isSigningIn}>
               {isSigningIn ? '로그인하는 중...' : '로그인'}
               </button>
-              {error && <div className="error-message">{error}</div>}
-            </form>
-
+            </form> */}
             {/* <div className="signup-redirect">
               <p>
                 계정이 없으신가요?{" "}
@@ -105,13 +107,18 @@ const LoginPage = () => {
                 </a>
               </p>
             </div> */}
+            
 
 
             {/* faulty css from here */}
-            <div style={{width: "100%", textAlign: "center"}}> {/* ------------OR------------ 느낌이면 좋을 듯 */}
+            {/* ------------OR------------ 느낌이면 좋을 듯 */}
+            {/* <div style={{width: "100%", textAlign: "center"}}> 
               OR
-            </div>
-            <button disabled={isSigningIn} onClick={handleGoogleLogin} style={{backgroundColor: "white", border: "1px solid black", width: "100%",height: "40px", padding: "5px", display: "flex", flexDirection: "row", alignContent: "center", gap: "10px", justifyContent: "center"}} >
+            </div> */}
+            <p>
+              Signing in enables features such as booking equipment (highly recommended). If this is your first time signing in, you will have to edit your user profile to request an access grant from the admin.
+            </p>
+            <button onClick={handleGoogleLogin} style={{backgroundColor: "white", border: "1px solid black", width: "100%",height: "40px", padding: "5px", display: "flex", flexDirection: "row", alignContent: "center", gap: "10px", justifyContent: "center"}} >
               <svg style={{height: "30px"}} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clipPath="url(#clip0_17_40)">
                       <path d="M47.532 24.5528C47.532 22.9214 47.3997 21.2811 47.1175 19.6761H24.48V28.9181H37.4434C36.9055 31.8988 35.177 34.5356 32.6461 36.2111V42.2078H40.3801C44.9217 38.0278 47.532 31.8547 47.532 24.5528Z" fill="#4285F4" />
@@ -125,8 +132,10 @@ const LoginPage = () => {
                       </clipPath>
                   </defs>
               </svg>
-              <div>{isSigningIn ? '로그인하는 중' : '구글로 계속하기'}</div>
+              <div>구글로 계속하기'</div>
             </button>
+            
+            {error && <div className="error-message">{error}</div>}
           </div>
         </div>
 
