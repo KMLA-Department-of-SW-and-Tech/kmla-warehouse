@@ -132,7 +132,7 @@ const LoginPage = () => {
                       </clipPath>
                   </defs>
               </svg>
-              <div>구글로 계속하기'</div>
+              <div>구글로 계속하기</div>
             </button>
             
             {error && <div className="error-message">{error}</div>}

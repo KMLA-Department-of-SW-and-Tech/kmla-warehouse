@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, MenuProps, Badge, Modal } from 'antd';
+import { Menu, MenuProps, Badge } from 'antd';
 import { AppstoreOutlined, HistoryOutlined, UserOutlined } from '@ant-design/icons';
 //import authService from '../../api/authService';
 import './user-sidebar.css'; // CSS 파일을 가져옵니다.
