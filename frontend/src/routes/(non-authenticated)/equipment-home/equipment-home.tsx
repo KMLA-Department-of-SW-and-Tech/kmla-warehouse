@@ -1,21 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Card, Row, Col, Spin, Layout, Input, Modal } from 'antd';
-import { CalendarOutlined, UnorderedListOutlined } from '@ant-design/icons'; 
+import { /*CalendarOutlined,*/ UnorderedListOutlined } from '@ant-design/icons'; 
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../../components/user/user-sidebar';
 import { itemService } from '../../../api/itemService'; 
 import Headbar from '../../../components/user/header';
+import Item from '../../../types/Item';
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
 const { Search } = Input;
-
-interface Item {
-  _id: string;
-  name: string;
-  location: string;
-  imageUrl?: string;
-}
 
 export default function EquipmentListPage() {
   const [loading, setLoading] = useState(true);
