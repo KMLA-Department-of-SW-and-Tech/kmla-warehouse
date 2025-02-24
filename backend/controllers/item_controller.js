@@ -36,3 +36,48 @@ exports.create = async (req, res, next) => {
         }
     }
 };
+
+exports.edit = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+
+        return res.status(200).send(await itemService.editOne(id, req.body));
+    } catch (e) {   
+        switch(e.message) {
+            case "Item not found":
+                return res.status(404).send(e);
+            default:
+                return res.send(e);
+        }
+    }
+};
+
+exports.delete = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+
+        return res.status(200).send(await itemService.deleteOne(id));
+    } catch (e) {   
+        switch(e.message) {
+            case "Item not found":
+                return res.status(404).send(e);
+            default:
+                return res.send(e);
+        }
+    }
+};
+
+exports.borrow = async (req, res, next) => {
+    try {
+        return res.status(201).send(await itemService.borrow(req.params.id, req.body));
+    } catch (e) {   
+        switch(e.message) {
+            case "Item not found":
+                return res.status(404).send(e);
+            case "Invalid quantity":
+                return res.status(401).send(e);
+            default:
+                return res.send(e);
+        }
+    }
+};

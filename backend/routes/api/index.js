@@ -21,7 +21,7 @@ router.use("/team", teamRouter);
  *//* router.use("/category", categoryRouter); */
 router.use("/logs", logRouter);
 /* router.use("/adminRouter", adminRouter); */
-router.use("/auth", authRouter);
-router.use("/refresh", refreshRouter);
+// router.use("/auth", authRouter);
+// router.use("/refresh", refreshRouter);
 
 module.exports = router;
