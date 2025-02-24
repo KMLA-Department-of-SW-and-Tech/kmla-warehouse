@@ -36,6 +36,7 @@ const AdminHistoryPage: React.FC = () => {
     } catch (error) {
       message.error("Failed to fetch items");
       console.error(error);
+      throw(error);
     } finally {
       setLoading(false);
     }
@@ -61,6 +62,7 @@ const AdminHistoryPage: React.FC = () => {
     } catch (error) {
       message.error("Failed to update borrow history");
       console.error(error);
+      throw(error);
     }
   };
 

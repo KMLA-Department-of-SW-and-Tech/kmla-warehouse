@@ -27,6 +27,7 @@ const AdminTeamPage: React.FC = () => {
     } catch (error) {
       message.error('Failed to fetch items');
       console.error(error);
+      throw(error);
     } finally {
       setLoading(false);
     }
@@ -45,6 +46,7 @@ const AdminTeamPage: React.FC = () => {
     } catch (error) {
       message.error('Failed to add team');
       console.error(error);
+      throw(error);
     }
   };
 
@@ -59,6 +61,7 @@ const AdminTeamPage: React.FC = () => {
     } catch (error) {
       message.error('Failed to update team');
       console.error(error);
+      throw(error);
     }
   };
 
@@ -81,6 +84,7 @@ const AdminTeamPage: React.FC = () => {
     } catch (error) {
       message.error('Failed to delete team');
       console.error(error);
+      throw(error);
     }
   };
 

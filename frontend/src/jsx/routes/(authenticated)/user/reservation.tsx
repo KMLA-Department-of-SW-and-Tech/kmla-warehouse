@@ -15,6 +15,7 @@ const { Title } = Typography;
 export default function ReservationStatus() {
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState("");
+  
   const [reservationList, setReservationList] = useState<Reservation[]>([]);
 
 
@@ -27,6 +28,7 @@ export default function ReservationStatus() {
         setReservationList(reservations);
       } catch (error) {
         console.error("Failed to fetch:", error);
+        throw(error);
       } finally {
         setLoading(false);
       }
@@ -36,7 +38,6 @@ export default function ReservationStatus() {
   }, []);
 
   const handleReturn = async (reservationId: string) => {
-    if (!reservationId) return;
     try {
       await itemService.returnItem(reservationId);
       message.success('반납 요청이 성공적으로 처리되었습니다.');
@@ -59,6 +60,8 @@ export default function ReservationStatus() {
       } else {
         message.error('반납 요청에 실패했습니다. 다시 시도해 주세요.');
       }
+
+      throw(error);
     }
   };
 

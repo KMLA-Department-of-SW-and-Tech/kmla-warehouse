@@ -25,6 +25,7 @@ const AdminSettingPage = () => {
       const responseMessage = error.response?.data || 'Failed to change password. Please try again.';
       setErrorMessage(responseMessage); // Set error message for display in the form
       message.error('Failed to change password.'); // Display error notification
+      throw(error);
     } finally {
       setLoading(false);
     }
@@ -39,6 +40,7 @@ const AdminSettingPage = () => {
       navigate("/home");
     } catch (error) {
       message.error('Failed to log out. Please try again.');
+      throw(error);
     } finally {
       setLoading(false);
     }

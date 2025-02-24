@@ -35,6 +35,7 @@ const AdminEquipmentPage: React.FC = () => {
     } catch (error) {
       message.error('Failed to fetch items');
       console.error(error);
+      throw(error);
     } finally {
       setLoading(false);
     }
@@ -66,6 +67,7 @@ const AdminEquipmentPage: React.FC = () => {
     } catch (error) {
       message.error('Failed to add item');
       console.error(error);
+      throw(error);
     }
   };
 
@@ -88,6 +90,7 @@ const AdminEquipmentPage: React.FC = () => {
     } catch (error) {
       message.error('Failed to update item');
       console.error(error);
+      throw(error);
     }
   };
 
@@ -99,6 +102,7 @@ const AdminEquipmentPage: React.FC = () => {
     } catch (error) {
       message.error('Failed to delete item');
       console.error(error);
+      throw(error);
     }
   };
 
