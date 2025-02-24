@@ -6,24 +6,11 @@ import Sidebar from '../../../components/user/user-sidebar.tsx';
 import Headbar from "../../../components/user/header.tsx";
 import { UnorderedListOutlined } from '@ant-design/icons';
 
+import Reservation from "../../../../types/Reservation.ts";
+
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
-
-interface Item {
-  _id: string;
-  name: string;
-  location: string;
-  imageUrl?: string;
-}
-
-interface Reservation {
-  _id: string;
-  item: Item;
-  quantity: number;
-  user: object;
-  timestamp: Date;
-}
 
 export default function ReservationStatus() {
   const [loading, setLoading] = useState(true);
