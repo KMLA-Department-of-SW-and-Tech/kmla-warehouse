@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 // import { itemService } from '../../../api/itemService';
 import Sidebar from '../../../components/user/user-sidebar';
 import Headbar from '../../../components/user/header';
-
+import Item from '../../../types/Item';
 const { Sider, Content } = Layout;
 const { Title, Text } = Typography;
 
@@ -97,7 +97,7 @@ export default function EquipmentDetails() {
                 </div>
                 <div className="text-content">
                   <Title level={1}>{item.name}</Title> {/* Item name */}
-                  <Text>남은 수량 {item.availableQuantity} 개</Text> {/* Available quantity */}
+                  <Text>남은 수량 {item.quantity} 개</Text> {/* Available quantity */}
                   <div style={{ marginTop: '10px' }}>
                     <Text>위치 {item.location}</Text> {/* Item location */}
                     <Title level={5}>물품 설명</Title>
@@ -109,7 +109,7 @@ export default function EquipmentDetails() {
                       {/* Input for borrowing quantity */}
                       <InputNumber
                         min={1}
-                        max={item.availableQuantity}
+                        max={item.quantity}
                         value={borrowQuantity}
                         onChange={(value) => setBorrowQuantity(value || 1)}
                         style={{ width: '100%' }}

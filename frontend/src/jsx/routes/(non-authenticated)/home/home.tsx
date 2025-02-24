@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Card, Row, Col, Spin, Layout, Input, Modal } from 'antd';
-import { CalendarOutlined, UnorderedListOutlined } from '@ant-design/icons'; 
+import { /*CalendarOutlined,*/ UnorderedListOutlined } from '@ant-design/icons'; 
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../../components/user/user-sidebar';
 // import { itemService } from '../../../api/itemService'; 
 import Headbar from '../../../components/user/header';
 import LoginModal from '../../../components/login-modal';
+import Item from '../../../types/Item';
 
 //import "./home.css"
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
 const { Search } = Input;
-
-interface Item {
-  _id: string;
-  name: string;
-  location: string;
-  imageUrl?: string;
-}
 
 export default function Home() {
   const [loading, setLoading] = useState(true);

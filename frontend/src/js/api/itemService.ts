@@ -1,22 +1,5 @@
 import axiosPrivate from '../hooks/axiosPrivate';
-
-export interface Item {
-  _id: string; // Unique identifier for the item
-  name: string; // Name of the item
-  description: string; // Description of the item
-  quantity: number; // Available quantity of the item
-  location: string; // Location of the item
-  imageUrl?: string; // Optional image URL for the item
-  status?: "available" | "deleted"; // Availability status
-}
-
-export interface AddItem {
-  name: string;
-  description: string;
-  quantity: number;
-  location: string;
-  imageUrl?: string;
-}
+import Item from '../../types/Item';
 
 export const itemService = {
   // Fetch all items, returning only those with "available" status
