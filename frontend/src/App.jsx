@@ -26,11 +26,11 @@ const router = createBrowserRouter([
     path: "/admin",
     element: <Navigate to="/admin/equipment" replace />,
   },
-  // Login page
-  {
-    path: "/login",
-    element: <Login />,
-  },
+  // // Login page
+  // {
+  //   path: "/login",
+  //   element: <Login />,
+  // },
   // // Signup page
   // {
   //   path: "/signup",

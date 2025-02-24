@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../../components/user/user-sidebar';
 // import { itemService } from '../../../api/itemService'; 
 import Headbar from '../../../components/user/header';
+import LoginModal from '../../../components/login-modal';
 
 //import "./home.css"
 
@@ -103,7 +104,7 @@ export default function Home() {
           <Sidebar />
         </Sider>
       )}
-      
+      <LoginModal openModal={true} />
       <Layout style={{ marginLeft: windowWidth > 768 ? 250 : 0 }}>
         <Content style={{ padding: '40px', marginTop: '64px', width: windowWidth > 768 ? 'calc(98vw - 250px)' : '100%' }}>
           <Title level={2} style={{ display: 'flex', alignItems: 'center' }}>
