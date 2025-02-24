@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './equipment-details.css'; 
 import { Typography, Spin, Layout, Button, message, Form, InputNumber } from 'antd'; 
 import { useParams } from 'react-router-dom';
-// import { itemService } from '../../../api/itemService';
+import { itemService } from '../../../../js/api/itemService';
 import Sidebar from '../../../components/user/user-sidebar';
 import Headbar from '../../../components/user/header';
-import Item from '../../../types/Item';
+import Item from '../../../../js/types/Item';
 const { Sider, Content } = Layout;
 const { Title, Text } = Typography;
 

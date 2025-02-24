@@ -5,7 +5,7 @@ import React from "react";
 // import authService from "../../../api/authService"; 
 import './login.css';
 import { useAuth } from "../../../contexts/authContext";
-import { changeUserPwd, signUserIn, signUserInWithGoogle } from "../../../../js/firebase/auth";
+import { /*changeUserPwd, signUserIn,*/ signUserInWithGoogle } from "../../../../js/firebase/auth";
 import { getAdditionalUserInfo } from "firebase/auth";
 
 const LoginPage = () => {

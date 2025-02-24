@@ -1,5 +1,5 @@
 import axiosPrivate from '../hooks/axiosPrivate';
-import Item from '../../types/Item';
+import Item from '../types/Item';
 
 export const itemService = {
   // Fetch all items, returning only those with "available" status
