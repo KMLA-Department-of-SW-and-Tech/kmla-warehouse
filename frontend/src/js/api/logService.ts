@@ -16,16 +16,16 @@ export const logService = {
     }
   },
 
-  //GET 팀별 로그 정보
-  getLogInfo: async (teamName: string): Promise<GetLog> => {
-    try {
-      const response = await axios.get(`/api/logs/list/${teamName}`);
-      return response.data;
-    } catch (e) {
-      console.error(e.message);
-      throw e;
-    }
-  },
+  // //GET 팀별 로그 정보
+  // getLogInfo: async (teamName: string): Promise<GetLog> => {
+  //   try {
+  //     const response = await axios.get(`/api/logs/list/${teamName}`);
+  //     return response.data;
+  //   } catch (e) {
+  //     console.error(e.message);
+  //     throw e;
+  //   }
+  // },
 
   //POST 로그 업로드하기
   // create: async (borrowHistoryData: GetLog): Promise<Reservation> => {
