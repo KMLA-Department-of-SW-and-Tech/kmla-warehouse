@@ -4,6 +4,17 @@ const mongoose = require("mongoose");
 
 exports.getAll = async () => {
     try {
+        return await Item.find({ status: 'valid' });
+    } catch (e) {
+        switch(e.message) {
+            default:
+                throw e;
+        }
+    }
+}
+
+exports.getAll = async () => {
+    try {
         return await Item.find({});
     } catch (e) {
         switch(e.message) {

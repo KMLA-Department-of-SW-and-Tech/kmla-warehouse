@@ -4,7 +4,8 @@ import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from '../../../components/admin/admin-sidebar';
 import "./admin.css";
 import Headbar from "../../../components/admin/admin-header";
-// import { borrowHistoryService, BorrowHistory } from '../../../api/borrowHistoryService';
+import { borrowHistoryService } from '../../../../js/api/borrowHistoryService';
+import Reservation from '../../../../types/Reservation';
 import { DeleteOutlined } from '@ant-design/icons';
 
 const { Content, Sider } = Layout;
@@ -13,7 +14,7 @@ const { useBreakpoint } = Grid;
 
 const AdminHistoryPage: React.FC = () => {
   const screens = useBreakpoint();
-  const [borrowHistories, setBorrowHistories] = useState<BorrowHistory[]>([]);
+  const [borrowHistories, setBorrowHistories] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
 
@@ -53,7 +54,7 @@ const AdminHistoryPage: React.FC = () => {
     return `${year}-${month}-${day}-${hours}:${minutes}:${seconds}`;
   };
 
-  const handleUpdateBorrowHistory = async (id: string, updatedBorrowHistory: BorrowHistory) => {
+  const handleUpdateBorrowHistory = async (id: string, updatedBorrowHistory: Reservation) => {
     try {
       const updated = await borrowHistoryService.update(id, updatedBorrowHistory);
       setBorrowHistories(borrowHistories.map((bh) => (bh._id === id ? updated : bh)));
@@ -67,7 +68,7 @@ const AdminHistoryPage: React.FC = () => {
   };
 
 
-  const columns: ProColumns<BorrowHistory>[] = [
+  const columns: ProColumns<Reservation>[] = [
     { title: "팀명", dataIndex: "user", key: "user" },
     { title: "신청물품", dataIndex: "item", key: "item" },
     { title: "수량", dataIndex: "quantity", key: "quantity" },
@@ -91,7 +92,7 @@ const AdminHistoryPage: React.FC = () => {
             {loading ? (
               <Spin />
             ) : (
-              <EditableProTable<BorrowHistory>
+              <EditableProTable<Reservation>
                 rowKey="_id"
                 value={borrowHistories}
                 columns={columns}
@@ -99,7 +100,7 @@ const AdminHistoryPage: React.FC = () => {
                   type: "multiple",
                   editableKeys,
                   onSave: async (rowKey, data) => {
-                    await handleUpdateBorrowHistory(data._id, data as BorrowHistory);
+                    await handleUpdateBorrowHistory(data._id, data as Reservation);
                   },
                   onChange: setEditableRowKeys,
                 }}

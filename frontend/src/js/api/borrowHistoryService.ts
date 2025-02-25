@@ -1,21 +1,13 @@
-import axiosPrivate from '../hooks/axiosPrivate';
+import axios from 'axios';
 
-export interface BorrowHistory {
-  _id: string;
-  item: string;
-  quantity: number;
-  type: "borrow" | "return";
-  user: string;
-  timestamp: string;
-  status: string;
-}
+import Reservation from "../../types/Reservation";
 
 export const borrowHistoryService = {
 
   //GET 히스토리 리스트
-  getAll: async (): Promise<BorrowHistory[]> => {
+  getAll: async (): Promise<Reservation[]> => {
     try {
-      const response = await axiosPrivate.get(`/api/borrow-history/list`);
+      const response = await axios.get(`/api/borrow-history/list`);
       const responseData = response.data;
       console.log(responseData)
       const result = responseData.map(data => {
@@ -30,38 +22,38 @@ export const borrowHistoryService = {
     }
   },
   /*
-  search: async (query: string): Promise<BorrowHistory[]> => {
+  search: async (query: string): Promise<Reservation[]> => {
     const response = await axiosPrivate.get(`api/borrow-history/search`, { params: { query } });
     return response.data;
   },
   */
 
   //GET 팀별 히스토리 정보
-  getBorrowHistoryInfo: async (id: string): Promise<BorrowHistory> => {
-    const response = await axiosPrivate.get(`/api/borrow-history/${id}`);
+  getBorrowHistoryInfo: async (id: string): Promise<Reservation> => {
+    const response = await axios.get(`/api/borrow-history/${id}`);
     return response.data;
   },
 
   //POST 히스토리 업로드하기
-  create: async (borrowHistoryData: BorrowHistory): Promise<BorrowHistory> => {
-    const response = await axiosPrivate.post("/api/borrow-history/", borrowHistoryData);
+  create: async (borrowHistoryData: Reservation): Promise<Reservation> => {
+    const response = await axios.post("/api/logs/", borrowHistoryData);
     return response.data;
   },
 
-  //PUT 히스토리 업데이트하기
-  update: async (id: string, borrowHistoryData: Partial<BorrowHistory>): Promise<BorrowHistory> => {
-    const response = await axiosPrivate.put(`/api/borrow-history/${id}`, borrowHistoryData);
+  //PATCH 히스토리 업데이트하기
+  update: async (id: string, borrowHistoryData: Partial<Reservation>): Promise<Reservation> => {
+    const response = await axios.patch(`/api/logs/${id}`, borrowHistoryData);
     return response.data;
   },
 
   //DELETE 히스토리 삭제하기
   delete: async (id: string): Promise<void> => {
     try{
-      console.log(id)
-      const response = await axiosPrivate.delete(`/api/borrow-history/${id}`);
+      const response = await axios.delete(`/api/logs/${id}`);
       return response.data;
     }catch(e){
       console.error(e);
+      throw(e);
     }
     ;
     

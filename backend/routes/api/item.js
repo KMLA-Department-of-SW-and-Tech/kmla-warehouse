@@ -7,6 +7,8 @@ const itemController = require("../../controllers/item_controller");
 
 router.get("/list", itemController.list);
 
+router.get("/list-all", itemController.listAll);
+
 router.post("/", upload, itemController.create);
 
 router.route("/:id")

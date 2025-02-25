@@ -4,6 +4,8 @@ export default interface Reservation {
   _id: string;
   item: Item;
   quantity: number;
-  user: object;
-  timestamp: Date;
+  type: "borrow" | "return";
+  user: string;
+  timestamp: string;
+  status: string;
 }

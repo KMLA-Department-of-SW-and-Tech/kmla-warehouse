@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Card, Row, Col, Spin, Layout, message, Button } from 'antd';
 import Sidebar from '../../../components/user/user-sidebar.tsx';
-// import { teamService } from "../../../api/teamService.ts";
-// import { itemService } from "../../../api/itemService.ts";
+// import { teamService } from "../../../../js/api/borrowHistoryService.ts"
+import { itemService } from "../../../../js/api/itemService.ts";
 import Headbar from "../../../components/user/header.tsx";
 import { UnorderedListOutlined } from '@ant-design/icons';
 
 import Reservation from "../../../../types/Reservation.ts";
+import Item from "../../../../types/Item.ts";
 
 
 const { Sider, Content } = Layout;
@@ -17,15 +18,17 @@ export default function ReservationStatus() {
   const [currentUserId, setCurrentUserId] = useState("");
   
   const [reservationList, setReservationList] = useState<Reservation[]>([]);
+  const [reservationItemsList, setReservationItemsList] = useState<Item[]>([]);
 
 
   useEffect(() => {
     const fetchReservationAndEquipment = async () => {
       try {
-        const userInfo = await teamService.getUserInfo();
+        const userInfo = {_id: "userId"}; //Edit after implementing login
         setCurrentUserId(userInfo._id);
         const reservations = await itemService.getReservations(userInfo._id);
         setReservationList(reservations);
+
       } catch (error) {
         console.error("Failed to fetch:", error);
         throw(error);
@@ -92,7 +95,9 @@ export default function ReservationStatus() {
           ) : (
             <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
               {reservationList.length > 0 ? (
-                reservationList?.map((reservation) => (
+                reservationList?.map((reservation) => {
+
+                  return (
                   <Col xs={24} sm={12} md={8} lg={4} key={reservation._id}>
                     <Card
                       hoverable
@@ -151,7 +156,7 @@ export default function ReservationStatus() {
                       </Button>
                     </Card>
                   </Col>
-                ))
+                )})
               ) : (
                 <Typography.Text>데이터가 없습니다.</Typography.Text>
               )}

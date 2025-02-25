@@ -6,9 +6,9 @@ import { CloseOutlined, DeleteOutlined, EditOutlined, SaveOutlined, UploadOutlin
 import Sidebar from "../../../components/admin/admin-sidebar";
 import './admin.css';
 import Headbar from "../../../components/admin/admin-header";
-import { itemService } from "../../../api/itemService";
-import AddItem from '../../../types/AddItem';
-import Item from '../../../types/Item';
+import { itemService } from "../../../../js/api/itemService";
+import AddItem from '../../../../types/AddItem';
+import Item from '../../../../types/Item';
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;

@@ -2,6 +2,17 @@ const itemService = require("../services/item_service");
 
 exports.list = async (req, res, next) => {
     try {
+        return res.status(200).send(await itemService.getAvailiable());
+    } catch (e) {
+        switch(e.message) {
+            default:
+                return res.send(e);
+        }
+    }
+};
+
+exports.listAll = async (req, res, next) => {
+    try {
         return res.status(200).send(await itemService.getAll());
     } catch (e) {
         switch(e.message) {
