@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { itemService } from '../../../../js/api/itemService';
 import Sidebar from '../../../components/user/user-sidebar';
 import Headbar from '../../../components/user/header';
-import {GetItem, PostItem, PatchItem} from '../../../../types/Item';
+import {GetItem, PostItem, PatchItem} from '../../../../js/types/Item';
 const { Sider, Content } = Layout;
 const { Title, Text } = Typography;
 

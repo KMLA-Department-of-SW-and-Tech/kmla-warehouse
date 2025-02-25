@@ -5,7 +5,7 @@ import Sidebar from '../../../components/admin/admin-sidebar';
 import "./admin.css";
 import Headbar from "../../../components/admin/admin-header";
 import { logService } from "../../../../js/api/logService";
-import { GetLog, PatchLog } from "../../../../types/Log";
+import { GetLog, PatchLog } from "../../../../js/types/Log";
 import { DeleteOutlined } from '@ant-design/icons';
 
 const { Content, Sider } = Layout;

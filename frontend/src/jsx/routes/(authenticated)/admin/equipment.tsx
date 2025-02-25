@@ -7,7 +7,7 @@ import Sidebar from "../../../components/admin/admin-sidebar";
 import './admin.css';
 import Headbar from "../../../components/admin/admin-header";
 import { itemService } from "../../../../js/api/itemService";
-import {GetItem, PostItem, PatchItem} from '../../../../types/Item';
+import {GetItem, PostItem, PatchItem} from '../../../../js/types/Item';
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;

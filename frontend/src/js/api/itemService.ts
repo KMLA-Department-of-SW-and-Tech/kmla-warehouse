@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {GetItem, PostItem, PatchItem} from '../../types/Item';
+import {GetItem, PostItem, PatchItem} from '../types/Item';
 
 export const itemService = {
   // Fetch all items, returning only those with "available" status

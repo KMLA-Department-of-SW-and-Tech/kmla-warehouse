@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {GetLog, PatchLog} from "../../types/Log";
+import {GetLog, PatchLog} from "../types/Log";
 
 export const logService = {
 

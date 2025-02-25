@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 
 import { AuthProvider } from "./jsx/contexts/authContext/index.jsx";
 
-import Login from "./jsx/routes/(non-authenticated)/login/login.tsx"; 
+// import Login from "./jsx/routes/(non-authenticated)/login/login.tsx"; 
 // import Signup from "./jsx/routes/(non-authenticated)/signup/signup.tsx"; 
 import Home from "./jsx/routes/(non-authenticated)/home/home.tsx"; 
 import EquipmentDetails from "./jsx/routes/(non-authenticated)/equpment-details/equipment-details.tsx"; 

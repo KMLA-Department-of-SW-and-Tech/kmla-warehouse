@@ -6,7 +6,7 @@ import Sidebar from '../../../components/user/user-sidebar';
 import { itemService } from '../../../../js/api/itemService'; 
 import Headbar from '../../../components/user/header';
 import LoginModal from '../../../components/login-modal';
-import {GetItem, PostItem, PatchItem} from '../../../../types/Item';
+import {GetItem, PostItem, PatchItem} from '../../../../js/types/Item';
 
 //import "./home.css"
 

@@ -6,8 +6,8 @@ import { itemService } from "../../../../js/api/itemService.ts";
 import Headbar from "../../../components/user/header.tsx";
 import { UnorderedListOutlined } from '@ant-design/icons';
 
-import { GetLog } from "../../../../types/Log.ts";
-import {GetItem, PostItem, PatchItem} from "../../../../types/Item";
+import { GetLog } from "../../../../js/types/Log";
+import {GetItem, PostItem, PatchItem} from "../../../../js/types/Item";
 
 
 const { Sider, Content } = Layout;
