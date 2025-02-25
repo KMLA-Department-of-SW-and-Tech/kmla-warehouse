@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AuthProvider } from "./jsx/contexts/authContext/index.jsx";
 
 // import Login from "./jsx/routes/(non-authenticated)/login/login.tsx"; 
@@ -81,9 +81,12 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <AuthProvider>
+    <GoogleOAuthProvider clientId="651880013484-1a65k0p70lj44vdsehfpahqnm55pumg4.apps.googleusercontent.com">
+      <AuthProvider>
       <RouterProvider router={router} />
     </AuthProvider>
+    </GoogleOAuthProvider>
+    
   );
 };
 

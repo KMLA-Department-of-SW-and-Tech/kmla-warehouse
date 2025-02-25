@@ -1,5 +1,6 @@
 import { Modal } from "antd";
 import { useState } from "react";
+import { GoogleLogin } from "@react-oauth/google";
 import { signUserInWithGoogle } from "../../js/firebase/auth";
 import { getAdditionalUserInfo } from "firebase/auth";
 
@@ -7,37 +8,22 @@ import { getAdditionalUserInfo } from "firebase/auth";
 export default function LoginModal({ openModal }) {
     const [isModalOpen, setIsModalOpen] = useState(openModal);
 
-    const handleGoogleLogin = async (e) => {
-        e.preventDefault();
+    const handleGoogleLogin = async () => {
         const res = await signUserInWithGoogle();
         const isNewUser = getAdditionalUserInfo(res).isNewUser;
         console.log(isNewUser);
-    }
+    };
 
     const handleCancel = () => {
         setIsModalOpen(false);
-    }
+    };
+
     return (
-        <Modal title="Sign in" style={{titleFontSize: 30}} open={isModalOpen} footer={null} onCancel={handleCancel}>
-            <p>
-              Signing in enables features such as booking equipment (highly recommended). If this is your first time signing in, you will have to edit your user profile to request an access grant from the admin.
-            </p>
-            <button onClick={handleGoogleLogin} style={{backgroundColor: "white", border: "1px solid black", width: "100%",height: "40px", padding: "5px", display: "flex", flexDirection: "row", alignContent: "center", gap: "10px", justifyContent: "center"}} >
-              <svg style={{height: "30px"}} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clipPath="url(#clip0_17_40)">
-                      <path d="M47.532 24.5528C47.532 22.9214 47.3997 21.2811 47.1175 19.6761H24.48V28.9181H37.4434C36.9055 31.8988 35.177 34.5356 32.6461 36.2111V42.2078H40.3801C44.9217 38.0278 47.532 31.8547 47.532 24.5528Z" fill="#4285F4" />
-                      <path d="M24.48 48.0016C30.9529 48.0016 36.4116 45.8764 40.3888 42.2078L32.6549 36.2111C30.5031 37.675 27.7252 38.5039 24.4888 38.5039C18.2275 38.5039 12.9187 34.2798 11.0139 28.6006H3.03296V34.7825C7.10718 42.8868 15.4056 48.0016 24.48 48.0016Z" fill="#34A853" />
-                      <path d="M11.0051 28.6006C9.99973 25.6199 9.99973 22.3922 11.0051 19.4115V13.2296H3.03298C-0.371021 20.0112 -0.371021 28.0009 3.03298 34.7825L11.0051 28.6006Z" fill="#FBBC04" />
-                      <path d="M24.48 9.49932C27.9016 9.44641 31.2086 10.7339 33.6866 13.0973L40.5387 6.24523C36.2 2.17101 30.4414 -0.068932 24.48 0.00161733C15.4055 0.00161733 7.10718 5.11644 3.03296 13.2296L11.005 19.4115C12.901 13.7235 18.2187 9.49932 24.48 9.49932Z" fill="#EA4335" />
-                  </g>
-                  <defs>
-                      <clipPath id="clip0_17_40">
-                          <rect width="48" height="48" fill="white" />
-                      </clipPath>
-                  </defs>
-              </svg>
-              <div>구글로 계속하기</div>
-            </button>
+        <Modal title="KMLA WAREHOUSE LOGIN" open={isModalOpen} footer={null} onCancel={handleCancel}>
+            <div className="modal-container">
+                <p>큼라창고에 존재하는 물품을 대여하거나 반납하기 위해서는 로그인이 되어 있어야 합니다. 아래 버튼을 통해 구글 계정으로 로그인을 진행한 후 사용해 주세요!</p>
+                <GoogleLogin onClick={handleGoogleLogin} className="google-login-btn" />
+            </div>
         </Modal>
     );
 }
