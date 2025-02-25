@@ -67,11 +67,11 @@ const router = createBrowserRouter([
     path: "/admin/reservation",
     element: <AdminHistoryPage />,
   },
-  // Admin: mange team page
-  {
-    path: "/admin/team",
-    element: <AdminTeamPage />,
-  },
+  // // Admin: mange team page
+  // {
+  //   path: "/admin/team",
+  //   element: <AdminTeamPage />,
+  // },
   // Admin: account setting page
   {
     path: "/admin/account-settings",
