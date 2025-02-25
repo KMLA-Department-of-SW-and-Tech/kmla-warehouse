@@ -7,7 +7,7 @@ import Headbar from "../../../components/user/header.tsx";
 import { UnorderedListOutlined } from '@ant-design/icons';
 
 import { GetLog } from "../../../../types/Log.ts";
-import {GetItem, PostItem, PatchItem} from "../../../../types/Item.ts";
+import {GetItem, PostItem, PatchItem} from "../../../../types/Item";
 
 
 const { Sider, Content } = Layout;
