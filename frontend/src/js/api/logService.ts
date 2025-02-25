@@ -4,7 +4,8 @@ import {GetLog, PatchLog} from "../types/Log";
 
 export const logService = {
 
-  //GET 로그 리스트
+  // NEEDS ADMIN AUTH
+  // GET 로그 리스트
   getAll: async (): Promise<GetLog[]> => {
     try {
       const response = await axios.get(`/api/logs/list`);
@@ -32,6 +33,7 @@ export const logService = {
   //   return response.data;
   // },
 
+  // NEEDS ADMIN AUTH
   //PATCH 로그 업데이트하기
   update: async (id: string, update: PatchLog): Promise<GetLog> => {
     const response = await axios.patch(`/api/logs/${id}`, update);

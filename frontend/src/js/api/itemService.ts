@@ -24,6 +24,7 @@ export const itemService = {
     }
   },
 
+  // AUTH RELATED + NEEDS USER AUTH
   // Request to borrow an item by ID and quantity
   borrowRequest: async (id: string, quantity: number, user: string): Promise<GetItem> => {
     try {
@@ -42,6 +43,7 @@ export const itemService = {
     }
   },
 
+  // NEEDS ADMIN AUTH
   // Create a new item with form data (including optional image upload)
   create: async (item: FormData): Promise<GetItem> => {
     try {
@@ -56,6 +58,7 @@ export const itemService = {
     }
   },
 
+  // NEEDS ADMIN AUTH
   // Update an existing item by ID
   update: async (id: string, item: FormData): Promise<GetItem> => {
     try{
@@ -69,7 +72,7 @@ export const itemService = {
   },
 
  
-
+  // NEEDS ADMIN AUTH
   // Delete an item
   delete: async (id: string): Promise<void> => {
     try {
@@ -81,6 +84,7 @@ export const itemService = {
     }
   },
 
+  // AUTH RELATED + NEEDS USER AUTH
   // Fetch reservation list for a user
   getReservations: async (teamName: string) => {
     try {
@@ -92,6 +96,7 @@ export const itemService = {
     }
   },
 
+  // AUTH RELATED + NEEDS USER AUTH
   // Return an item for a user
   returnItem: async (id) => {
     try {
