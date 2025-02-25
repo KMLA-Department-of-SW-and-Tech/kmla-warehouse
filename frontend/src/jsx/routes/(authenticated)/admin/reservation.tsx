@@ -4,8 +4,8 @@ import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from '../../../components/admin/admin-sidebar';
 import "./admin.css";
 import Headbar from "../../../components/admin/admin-header";
-import { borrowHistoryService } from '../../../../js/api/borrowHistoryService';
-import Reservation from '../../../../types/Reservation';
+import { logService } from "../../../../js/api/logService";
+import { GetLog, PatchLog } from "../../../../types/Log";
 import { DeleteOutlined } from '@ant-design/icons';
 
 const { Content, Sider } = Layout;
@@ -14,26 +14,26 @@ const { useBreakpoint } = Grid;
 
 const AdminHistoryPage: React.FC = () => {
   const screens = useBreakpoint();
-  const [borrowHistories, setBorrowHistories] = useState<Reservation[]>([]);
+  const [logs, setLogs] = useState<GetLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
 
   useEffect(() => {
-    fetchBorrowHistories();
+    fetchLogs();
   }, []);
 
 
-  const fetchBorrowHistories = async () => {
+  const fetchLogs = async () => {
     setLoading(true);
     try {
-      const response = await borrowHistoryService.getAll();
-      const filteredBorrowHistories = response
-      .filter((borrowHistory) => borrowHistory.status !== "deleted")
-      .map((borrowHistory) => ({
-        ...borrowHistory,
-        timestamp: formatTimestamp(borrowHistory.timestamp), // 시간 형식 변환
+      const response = await logService.getAll();
+      const filteredLogs = response
+      .filter((log) => log.status !== "deleted")
+      .map((log) => ({
+        ...log,
+        timestamp: formatTimestamp(log.timestamp), // 시간 형식 변환
       }));
-      setBorrowHistories(filteredBorrowHistories);
+      setLogs(filteredLogs);
     } catch (error) {
       message.error("Failed to fetch items");
       console.error(error);
@@ -54,21 +54,21 @@ const AdminHistoryPage: React.FC = () => {
     return `${year}-${month}-${day}-${hours}:${minutes}:${seconds}`;
   };
 
-  const handleUpdateBorrowHistory = async (id: string, updatedBorrowHistory: Reservation) => {
+  const handleUpdateLog = async (id: string, update: PatchLog) => {
     try {
-      const updated = await borrowHistoryService.update(id, updatedBorrowHistory);
-      setBorrowHistories(borrowHistories.map((bh) => (bh._id === id ? updated : bh)));
-      message.success("Borrow history updated successfully");
-      fetchBorrowHistories(); // 데이터 갱신
+      const updated = await logService.update(id, update);
+      setLogs(logs.map((bh) => (bh._id === id ? updated : bh)));
+      message.success("Log updated successfully");
+      fetchLogs(); // 데이터 갱신
     } catch (error) {
-      message.error("Failed to update borrow history");
+      message.error("Failed to update log");
       console.error(error);
       throw(error);
     }
   };
 
 
-  const columns: ProColumns<Reservation>[] = [
+  const columns: ProColumns<GetLog>[] = [
     { title: "팀명", dataIndex: "user", key: "user" },
     { title: "신청물품", dataIndex: "item", key: "item" },
     { title: "수량", dataIndex: "quantity", key: "quantity" },
@@ -92,15 +92,15 @@ const AdminHistoryPage: React.FC = () => {
             {loading ? (
               <Spin />
             ) : (
-              <EditableProTable<Reservation>
+              <EditableProTable<GetLog>
                 rowKey="_id"
-                value={borrowHistories}
+                value={logs}
                 columns={columns}
                 editable={{
                   type: "multiple",
                   editableKeys,
                   onSave: async (rowKey, data) => {
-                    await handleUpdateBorrowHistory(data._id, data as Reservation);
+                    await handleUpdateLog(data._id, data as PatchLog);
                   },
                   onChange: setEditableRowKeys,
                 }}

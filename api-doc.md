@@ -14,6 +14,9 @@
 #### GET
 전체 리스트 (status == valid인 것들만) | /api/item/list
 전체 리스트 (status 상관없이 전부) | /api/item/list-all
+팀별 대여 리스트 (status == valid인 것들만) | /api/item/list/:teamName
+팀별 대여 리스트 (status 상관없이 전부) | /api/item/list-all/:teamName
+
 물품 정보 | /api/item/:id
 #### POST
 물품 생성 | /api/item/ | body: name(String), description(String), quantity(Number), location(String), image(Image file) [request format: form]

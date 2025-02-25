@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react';
 import './equipment-details.css'; 
 import { Typography, Spin, Layout, Button, message, Form, InputNumber } from 'antd'; 
 import { useParams } from 'react-router-dom';
-// import { itemService } from '../../../api/itemService';
+import { itemService } from '../../../../js/api/itemService';
 import Sidebar from '../../../components/user/user-sidebar';
 import Headbar from '../../../components/user/header';
-import Item from '../../../types/Item';
+import {GetItem, PostItem, PatchItem} from '../../../../types/Item';
 const { Sider, Content } = Layout;
 const { Title, Text } = Typography;
 
 export default function EquipmentDetails() {
   // State to manage loading status, item details, and borrowing quantity
   const [loading, setLoading] = useState(true);
-  const [item, setItem] = useState<Item | null>(null);
+  const [item, setItem] = useState<GetItem | null>(null);
   const [borrowQuantity, setBorrowQuantity] = useState<number>(1);
 
   // Retrieve the item ID from route parameters
@@ -27,6 +27,7 @@ export default function EquipmentDetails() {
     } catch (error) {
       console.error('Failed to fetch item details:', error);
       setItem(null);
+      throw(error);
     } finally {
       setLoading(false);
     }
@@ -45,7 +46,7 @@ export default function EquipmentDetails() {
       return;
     }
     try {
-      await itemService.borrowRequest(id, borrowQuantity); // Send borrow request
+      await itemService.borrowRequest(id, borrowQuantity, "user"); // Send borrow request
       message.success('대여 요청이 성공적으로 처리되었습니다.'); // Success message
       window.location.reload(); // Reload page to reflect updated status
     } catch (error) {

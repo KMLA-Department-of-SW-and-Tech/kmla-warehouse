@@ -6,8 +6,10 @@ const printReq = require("../../middleware/print_req.js");
 const itemController = require("../../controllers/item_controller"); 
 
 router.get("/list", itemController.list);
+router.get("/list/:teamName", itemController.listForTeam);
 
 router.get("/list-all", itemController.listAll);
+router.get("/list-all/:teamName", itemController.listAllForTeam);
 
 router.post("/", upload, itemController.create);
 

@@ -6,8 +6,8 @@ import { itemService } from "../../../../js/api/itemService.ts";
 import Headbar from "../../../components/user/header.tsx";
 import { UnorderedListOutlined } from '@ant-design/icons';
 
-import Reservation from "../../../../types/Reservation.ts";
-import Item from "../../../../types/Item.ts";
+import { GetLog } from "../../../../types/Log.ts";
+import {GetItem, PostItem, PatchItem} from "../../../../types/Item.ts";
 
 
 const { Sider, Content } = Layout;
@@ -17,16 +17,16 @@ export default function ReservationStatus() {
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState("");
   
-  const [reservationList, setReservationList] = useState<Reservation[]>([]);
-  const [reservationItemsList, setReservationItemsList] = useState<Item[]>([]);
+  const [reservationList, setReservationList] = useState<GetLog[]>([]);
+  const [reservationItemsList, setReservationItemsList] = useState<GetItem[]>([]);
 
 
   useEffect(() => {
     const fetchReservationAndEquipment = async () => {
       try {
-        const userInfo = {_id: "userId"}; //Edit after implementing login
-        setCurrentUserId(userInfo._id);
-        const reservations = await itemService.getReservations(userInfo._id);
+        const username = "username"; //Edit after implementing login
+        setCurrentUserId(username);
+        const reservations = await itemService.getReservations(username);
         setReservationList(reservations);
 
       } catch (error) {

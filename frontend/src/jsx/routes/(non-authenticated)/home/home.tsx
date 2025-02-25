@@ -3,10 +3,10 @@ import { Typography, Card, Row, Col, Spin, Layout, Input, Modal } from 'antd';
 import { /*CalendarOutlined,*/ UnorderedListOutlined } from '@ant-design/icons'; 
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../../components/user/user-sidebar';
-// import { itemService } from '../../../api/itemService'; 
+import { itemService } from '../../../../js/api/itemService'; 
 import Headbar from '../../../components/user/header';
 import LoginModal from '../../../components/login-modal';
-import Item from '../../../types/Item';
+import {GetItem, PostItem, PatchItem} from '../../../../types/Item';
 
 //import "./home.css"
 
@@ -16,8 +16,8 @@ const { Search } = Input;
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
-  const [equipmentList, setEquipmentList] = useState<Item[]>([]);
-  const [filteredEquipmentList, setFilteredEquipmentList] = useState<Item[]>([]);
+  const [equipmentList, setEquipmentList] = useState<GetItem[]>([]);
+  const [filteredEquipmentList, setFilteredEquipmentList] = useState<GetItem[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [windowWidth, setWindowWidth] = useState(window.innerWidth); 
   const [isModalVisible, setIsModalVisible] = useState(false);  // State for Modal visibility

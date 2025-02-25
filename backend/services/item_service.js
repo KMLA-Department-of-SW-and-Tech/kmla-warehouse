@@ -2,14 +2,11 @@ const Item = require("../models/item");
 const logService = require("./log_service");
 const mongoose = require("mongoose");
 
-exports.getAll = async () => {
+exports.getAvailable = async () => {
     try {
         return await Item.find({ status: 'valid' });
     } catch (e) {
-        switch(e.message) {
-            default:
-                throw e;
-        }
+        throw(e);
     }
 }
 
@@ -17,10 +14,25 @@ exports.getAll = async () => {
     try {
         return await Item.find({});
     } catch (e) {
-        switch(e.message) {
-            default:
-                throw e;
-        }
+        throw(e);
+    }
+}
+
+exports.getAvailableForTeam = async (teamName) => {
+    try {
+        const teamLogs = (await logService.getAllForTeam(teamName)).filter(log => log.item.status === "valid");
+        return teamLogs.map(log => log.item);
+    } catch (e) {
+        throw(e);
+    }
+}
+
+exports.getAllForTeam = async (teamName) => {
+    try {
+        const teamLogs = logService.getAllForTeam(teamName);
+        return teamLogs.map(log => log.item);
+    } catch (e) {
+        throw(e);
     }
 }
 
@@ -32,10 +44,7 @@ exports.getOne = async (id, session=null) => {
         } 
         return log;
     } catch (e) {
-        switch(e.message) {
-            default:
-                throw e;
-        }
+        throw(e);
     }
 }
 
@@ -47,12 +56,15 @@ exports.createOne = async (body) => {
     const entry = new Item(args);
 
     try {
-        return await entry.save();
-    } catch (e) {
-        switch(e.message) {
-            default:
-                throw e;
+        const newItem = await entry.save();
+        
+        if(!newItem) {
+            throw new Error("Item not created");
         }
+
+        return newItem;s
+    } catch (e) {
+        throw(e);
     }
 }
 
@@ -64,29 +76,23 @@ exports.editOne = async (id, updates, session=null) => {
             throw new Error("Item not found");
         }
 
-        return;
+        return updatedItem;
     } catch (e) {
-        switch(e.message) {
-            default:
-                throw e;
-        }
+        throw(e);
     }
 }
 
 exports.deleteOne = async (id) => {
     try {
-        const updatedItem = await Item.findByIdAndUpdate(id, {status: "deleted"});
+        const deletedItem = await Item.findByIdAndUpdate(id, {status: "deleted"});
 
-        if (!updatedItem) {
+        if (!deletedItem) {
             throw new Error("Item not found");
         }
 
-        return;
+        return deletedItem;
     } catch (e) {
-        switch(e.message) {
-            default:
-                throw e;
-        }
+        throw e;
     }
 }
 
@@ -109,7 +115,7 @@ exports.borrow = async (id, body) => {
             throw new Error("Invalid quantity");
         }
 
-        await exports.editOne(id, {quantity: prevItemState.quantity - quantity});
+        const updatedItem = await exports.editOne(id, {quantity: prevItemState.quantity - quantity});
 
         await logService.createOne({
             user,
@@ -121,7 +127,7 @@ exports.borrow = async (id, body) => {
         // await session.commitTransaction();
         // session.endSession();
 
-        return;
+        return updatedItem;
     } catch (e) {
         // await session.abortTransaction();
         // session.endSession();

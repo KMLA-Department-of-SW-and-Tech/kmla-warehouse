@@ -11,6 +11,17 @@ exports.list = async (req, res, next) => {
     }
 };
 
+exports.listForTeam = async (req, res, next) => {
+    try {
+        return res.status(200).send(await logService.getAllForTeam(req.params.teamName));
+    } catch (e) {
+        switch(e.message) {
+            default:
+                return res.status(500).send(e);
+        }
+    }
+};
+
 exports.detail = async (req, res, next) => {
     try {
         const id = req.params.id;

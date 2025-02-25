@@ -7,15 +7,14 @@ import Sidebar from "../../../components/admin/admin-sidebar";
 import './admin.css';
 import Headbar from "../../../components/admin/admin-header";
 import { itemService } from "../../../../js/api/itemService";
-import AddItem from '../../../../types/AddItem';
-import Item from '../../../../types/Item';
+import {GetItem, PostItem, PatchItem} from '../../../../types/Item';
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
 
 
 const AdminEquipmentPage: React.FC = () => {
-  const [items, setItems] = useState<Item[]>([]);
+  const [items, setItems] = useState<GetItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [form] = Form.useForm();
@@ -30,8 +29,7 @@ const AdminEquipmentPage: React.FC = () => {
     setLoading(true);
     try {
       const response = await itemService.getAll(); 
-      const filteredItems = response.filter((item: Item) => item.status !== "deleted");
-      setItems(filteredItems);
+      setItems(response);
     } catch (error) {
       message.error('Failed to fetch items');
       console.error(error);
@@ -48,7 +46,7 @@ const AdminEquipmentPage: React.FC = () => {
   };
 
   
-  const handleAddItem = async (newItem: AddItem) => {    
+  const handleAddItem = async (newItem: PostItem) => {    
     const formData = new FormData();
     formData.append("name", newItem.name);
     formData.append("description", newItem.description);
@@ -71,12 +69,14 @@ const AdminEquipmentPage: React.FC = () => {
     }
   };
 
-  const handleUpdateItem = async (id: string, updatedItem: Item) => {
+  const handleUpdateItem = async (id: string, updatedItem: PatchItem) => {
     const formData = new FormData();
-    formData.append('name', updatedItem.name);
-    formData.append('description', updatedItem.description);
-    formData.append('quantity', updatedItem.quantity.toString());
-    formData.append('location', updatedItem.location);
+    
+    Object.entries(updatedItem).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        formData.append(key, value.toString()); // Convert to string if needed
+      }
+    })
 
     if (imageFile) {
       formData.append('image', imageFile);
@@ -107,7 +107,7 @@ const AdminEquipmentPage: React.FC = () => {
   };
 
 
-  const columns: ProColumns<Item>[] = [
+  const columns: ProColumns<GetItem>[] = [
     {
       title: '사진',
       dataIndex: 'imageUrl',
@@ -230,7 +230,7 @@ const AdminEquipmentPage: React.FC = () => {
                 <Spin />
               ) : (
                 // properties in editable state on each row cell
-                <EditableProTable<Item>
+                <EditableProTable<GetItem>
                   rowKey="_id"
                   value={items}
                   columns={columns}
@@ -238,7 +238,7 @@ const AdminEquipmentPage: React.FC = () => {
                     type: 'multiple',
                     editableKeys,
                     onSave: async (rowKey, data) => {
-                      await handleUpdateItem(data._id, data as Item);
+                      await handleUpdateItem(data._id, data as PatchItem);
                       setEditableRowKeys((prevKeys) => prevKeys.filter((key) => key !== rowKey));
                     },
                     onChange: setEditableRowKeys,

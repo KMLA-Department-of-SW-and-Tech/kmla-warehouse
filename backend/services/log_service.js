@@ -3,7 +3,18 @@ const itemService = require("./item_service");
 
 exports.getAll = async () => {
     try {
-        return await Log.find({});
+        return await Log.find({}).populate("item");
+    } catch (e) {
+        switch(e.message) {
+            default:
+                throw e;
+        }
+    }
+}
+
+exports.getAllForTeam = async (teamName) => {
+    try {
+        return await Log.find({user: teamName}).populate("item");
     } catch (e) {
         switch(e.message) {
             default:
@@ -14,7 +25,7 @@ exports.getAll = async () => {
 
 exports.getOne = async (id) => {
     try {
-        const log = await Log.findById(id);
+        const log = await Log.findById(id).populate("item");
         if(!log) {
             throw new Error("Log not found");
         } 
@@ -32,7 +43,7 @@ exports.createOne = async (body, status=null, session=null) => {
     const entry = new Log(args);
 
     try {
-        return await entry.save({session});
+        return (await entry.save({session})).populate("item");
     } catch (e) {
         switch(e.message) {
             default:
@@ -43,7 +54,7 @@ exports.createOne = async (body, status=null, session=null) => {
 
 exports.deleteOne = async (id) => {
     try {
-        const log = await Log.findByIdAndDelete(id);
+        const log = await Log.findByIdAndDelete(id).populate("item");
         if(!log) {
             throw new Error("Log not found");
         }
@@ -59,7 +70,7 @@ exports.deleteOne = async (id) => {
 
 exports.editOne = async (id, updates, session=null) => {
     try {
-        const updatedLog = await Log.findByIdAndUpdate(id, updates).session(session);
+        const updatedLog = await Log.findByIdAndUpdate(id, updates).populate("item").session(session);
 
         if (!updatedLog) {
             throw new Error("Log not found");
@@ -84,7 +95,7 @@ exports.return = async (id) => {
         }
         
         
-        await exports.editOne(id, {status: "closed"});
+        const updatedItem = await exports.editOne(id, {status: "closed"});
         
         console.log("yeets");
         
@@ -96,21 +107,9 @@ exports.return = async (id) => {
             quantity: log.quantity,
             type: "return",
         }, "closed");
-            
-        console.log("hey oh");
 
-        return;
+        return updatedItem;
     } catch (e) {
         throw e;
     }
 }
-
-
-// try {
-
-// } catch (e) {
-//     switch(e.message) {
-//         default:
-//             throw e;
-//     }
-// }

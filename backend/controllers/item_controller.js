@@ -22,6 +22,28 @@ exports.listAll = async (req, res, next) => {
     }
 };
 
+exports.listForTeam = async (req, res, next) => {
+    try {
+        return res.status(200).send(await itemService.getAvailiableForTeam(req.params.teamName));
+    } catch (e) {
+        switch(e.message) {
+            default:
+                return res.send(e);
+        }
+    }
+};
+
+exports.listAllForTeam = async (req, res, next) => {
+    try {
+        return res.status(200).send(await itemService.getAllForTeam(req.params.teamName));
+    } catch (e) {
+        switch(e.message) {
+            default:
+                return res.send(e);
+        }
+    }
+};
+
 exports.detail = async (req, res, next) => {
     try {
         const id = req.params.id;
