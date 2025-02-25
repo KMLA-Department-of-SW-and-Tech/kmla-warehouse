@@ -13,7 +13,7 @@ import AccountSettings from "./jsx/routes/(authenticated)/user/account-settings.
  
 import AdminEquipmentPage from "./jsx/routes/(authenticated)/admin/equipment.tsx"; 
 import AdminHistoryPage from "./jsx/routes/(authenticated)/admin/reservation.tsx";  
-import AdminTeamPage from "./jsx/routes/(authenticated)/admin/manage-team.tsx";
+// import AdminTeamPage from "./jsx/routes/(authenticated)/admin/manage-team.tsx";
 import AdminSettingPage from "./jsx/routes/(authenticated)/admin/account-settings.tsx";
 // import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./jsx/components/protected-routes.jsx";
 
