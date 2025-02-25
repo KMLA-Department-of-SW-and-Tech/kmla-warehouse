@@ -6,7 +6,7 @@ import Sidebar from '../../../components/user/user-sidebar.tsx';
 import Headbar from "../../../components/user/header.tsx";
 import { UnorderedListOutlined } from '@ant-design/icons';
 
-import Reservation from "../../../../types/Reservation.ts";
+// import Reservation from "../../../../types/Reservation.ts";
 
 
 const { Sider, Content } = Layout;
