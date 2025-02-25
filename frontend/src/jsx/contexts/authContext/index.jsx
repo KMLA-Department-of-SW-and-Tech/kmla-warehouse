@@ -13,9 +13,9 @@ export function AuthProvider({ children }) {
     const [userLoggedIn, setUserLoggedIn] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    async function initializeUser(user) {
-        if(user) {
-            setCurrentUser({ ...user });
+    async function initializeUser(userCred) {
+        if(userCred) {
+            setCurrentUser({ ...userCred });
             setUserLoggedIn(true);
         } else {
             setCurrentUser(null);
