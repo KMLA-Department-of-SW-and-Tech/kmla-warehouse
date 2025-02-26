@@ -12,6 +12,9 @@ import { auth } from "./firebase"
 
 export const signUserInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({
+        prompt: 'select_account', // This forces the account selection account every time
+    });
     const result = await signInWithPopup(auth, provider);
     //result.user
     return result;
