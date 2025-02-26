@@ -81,12 +81,9 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <GoogleOAuthProvider clientId="651880013484-1a65k0p70lj44vdsehfpahqnm55pumg4.apps.googleusercontent.com">
-      <AuthProvider>
+    <AuthProvider>
       <RouterProvider router={router} />
     </AuthProvider>
-    </GoogleOAuthProvider>
-    
   );
 };
 
