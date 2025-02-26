@@ -11,10 +11,12 @@ export function useAuth() {
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null);
     const [userLoggedIn, setUserLoggedIn] = useState(false);
+    const [accessToken, setAccessToken] = useState("");
     const [loading, setLoading] = useState(true);
 
     async function initializeUser(userCred) {
         if(userCred) {
+            setAccessToken(userCred.accessToken); // accesstoken for jwt
             setCurrentUser({ ...userCred });
             setUserLoggedIn(true);
         } else {
@@ -33,7 +35,7 @@ export function AuthProvider({ children }) {
     const value = {
         currentUser,
         userLoggedIn,
-        loading,
+        accessToken,
     };
 
     return (
