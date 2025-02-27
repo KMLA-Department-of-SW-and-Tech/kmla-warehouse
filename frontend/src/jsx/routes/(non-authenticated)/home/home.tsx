@@ -6,9 +6,7 @@ import Sidebar from '../../../components/user/user-sidebar';
 import { itemService } from '../../../../js/api/itemService'; 
 import Headbar from '../../../components/user/header';
 import {GetItem, PostItem, PatchItem} from '../../../../js/types/Item';
-import LoginModal from "../../../components/login-modal";
-import { useAuth } from '../../../contexts/authContext'; // needs removal
-import axiosPrivate from '../../../../js/hooks/axiosPrivate'; // needs removal
+
 
 //import "./home.css"
 
@@ -26,18 +24,13 @@ export default function Home() {
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null); // Selected item ID
   const navigate = useNavigate();
 
-  const contextValue = useAuth();
   
 
   useEffect(() => {
     const fetchEquipmentList = async () => {
       try {
-        console.log(contextValue.accessToken);
-        const res = await axiosPrivate.get("/api/user/test", contextValue.accessToken);
-        console.log(res);
-
-
         const items = await itemService.getAll();
+        console.log(items);
         setEquipmentList(items);
       } catch (error) {
         console.error('Failed to fetch equipment list:', error);
@@ -108,7 +101,6 @@ export default function Home() {
           <Sidebar />
         </Sider>
       )}
-      <LoginModal openModal={true} />
       <Layout style={{ marginLeft: windowWidth > 768 ? 250 : 0 }}>
         <Content style={{ padding: '40px', marginTop: '64px', width: windowWidth > 768 ? 'calc(98vw - 250px)' : '100%' }}>
           <Title level={2} style={{ display: 'flex', alignItems: 'center' }}>

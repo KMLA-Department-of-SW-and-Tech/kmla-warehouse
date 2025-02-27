@@ -1,7 +1,7 @@
 const Log = require("../models/logs");
 const itemService = require("./item_service");
 
-exports.getAll = async () => {
+module.exports.getAll = async () => {
     try {
         return await Log.find({}).populate("item");
     } catch (e) {
@@ -12,7 +12,7 @@ exports.getAll = async () => {
     }
 }
 
-exports.getAllForTeam = async (teamName) => {
+module.exports.getAllForTeam = async (teamName) => {
     try {
         return await Log.find({user: teamName}).populate("item");
     } catch (e) {
@@ -23,7 +23,7 @@ exports.getAllForTeam = async (teamName) => {
     }
 }
 
-exports.getOne = async (id) => {
+module.exports.getOne = async (id) => {
     try {
         const log = await Log.findById(id).populate("item");
         if(!log) {
@@ -38,7 +38,7 @@ exports.getOne = async (id) => {
     }
 }
 
-exports.createOne = async (body, status=null, session=null) => {
+module.exports.createOne = async (body, status=null, session=null) => {
     const args = { ...body, timestamp: Date.now(), status: status ? status : "active" };
     const entry = new Log(args);
 
@@ -52,7 +52,7 @@ exports.createOne = async (body, status=null, session=null) => {
     }
 }
 
-exports.deleteOne = async (id) => {
+module.exports.deleteOne = async (id) => {
     try {
         const log = await Log.findByIdAndDelete(id).populate("item");
         if(!log) {
@@ -68,7 +68,7 @@ exports.deleteOne = async (id) => {
     }
 }
 
-exports.editOne = async (id, updates, session=null) => {
+module.exports.editOne = async (id, updates, session=null) => {
     try {
         const updatedLog = await Log.findByIdAndUpdate(id, updates).populate("item").session(session);
 
@@ -82,9 +82,9 @@ exports.editOne = async (id, updates, session=null) => {
     }
 }
 
-exports.return = async (id) => {
+module.exports.return = async (id) => {
     try {
-        const log = await exports.getOne(id);
+        const log = await module.exports.getOne(id);
         if(!log) {
             throw new Error("Log not found");
         }
@@ -95,13 +95,13 @@ exports.return = async (id) => {
         }
         
         
-        const updatedItem = await exports.editOne(id, {status: "closed"});
+        const updatedItem = await module.exports.editOne(id, {status: "closed"});
         
         console.log("yeets");
         
         await itemService.editOne(log.item, {quantity: item.quantity + log.quantity});
         
-        await exports.createOne({
+        await module.exports.createOne({
             user: log.user,
             item: log.item,
             quantity: log.quantity,

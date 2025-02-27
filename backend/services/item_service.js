@@ -1,8 +1,8 @@
 const Item = require("../models/item");
 const logService = require("./log_service");
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 
-exports.getAvailable = async () => {
+module.exports.getAvailable = async () => {
     try {
         return await Item.find({ status: 'valid' });
     } catch (e) {
@@ -10,7 +10,7 @@ exports.getAvailable = async () => {
     }
 }
 
-exports.getAll = async () => {
+module.exports.getAll = async () => {
     try {
         return await Item.find({});
     } catch (e) {
@@ -18,7 +18,7 @@ exports.getAll = async () => {
     }
 }
 
-exports.getAvailableForTeam = async (teamName) => {
+module.exports.getAvailableForTeam = async (teamName) => {
     try {
         const teamLogs = (await logService.getAllForTeam(teamName)).filter(log => log.item.status === "valid");
         return teamLogs.map(log => log.item);
@@ -27,7 +27,7 @@ exports.getAvailableForTeam = async (teamName) => {
     }
 }
 
-exports.getAllForTeam = async (teamName) => {
+module.exports.getAllForTeam = async (teamName) => {
     try {
         const teamLogs = logService.getAllForTeam(teamName);
         return teamLogs.map(log => log.item);
@@ -36,7 +36,7 @@ exports.getAllForTeam = async (teamName) => {
     }
 }
 
-exports.getOne = async (id, session=null) => {
+module.exports.getOne = async (id, session=null) => {
     try {
         const log = await Item.findById(id).session(session);
         if(!log) {
@@ -48,7 +48,7 @@ exports.getOne = async (id, session=null) => {
     }
 }
 
-exports.createOne = async (body) => {
+module.exports.createOne = async (body) => {
     const args = Object.assign(body, {
         totalQuantity: body.quantity,
         status: "valid",
@@ -68,7 +68,7 @@ exports.createOne = async (body) => {
     }
 }
 
-exports.editOne = async (id, updates, session=null) => {
+module.exports.editOne = async (id, updates, session=null) => {
     try {
         const updatedItem = await Item.findByIdAndUpdate(id, updates).session(session);
 
@@ -82,7 +82,7 @@ exports.editOne = async (id, updates, session=null) => {
     }
 }
 
-exports.deleteOne = async (id) => {
+module.exports.deleteOne = async (id) => {
     try {
         const deletedItem = await Item.findByIdAndUpdate(id, {status: "deleted"});
 
@@ -96,7 +96,7 @@ exports.deleteOne = async (id) => {
     }
 }
 
-exports.borrow = async (id, body) => {
+module.exports.borrow = async (id, body) => {
     // const session = await mongoose.startSession();
     // session.startTransaction();
 
@@ -105,7 +105,7 @@ exports.borrow = async (id, body) => {
 
         console.log(quantity, user);
 
-        const prevItemState = await exports.getOne(id);
+        const prevItemState = await module.exports.getOne(id);
 
         if(!prevItemState) {
             throw new Error("Item not found");
@@ -115,7 +115,7 @@ exports.borrow = async (id, body) => {
             throw new Error("Invalid quantity");
         }
 
-        const updatedItem = await exports.editOne(id, {quantity: prevItemState.quantity - quantity});
+        const updatedItem = await module.exports.editOne(id, {quantity: prevItemState.quantity - quantity});
 
         await logService.createOne({
             user,
