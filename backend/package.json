@@ -10,8 +10,6 @@
   "dependencies": {
     "@netlify/functions": "^2.8.2",
     "aws-sdk": "^2.1692.0",
-    "bcrypt": "^5.1.1",
-    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "debug": "^4.3.5",
     "dotenv": "^16.4.5",
@@ -19,7 +17,6 @@
     "express-validator": "^7.2.0",
     "firebase-admin": "^13.1.0",
     "http-errors": "~2.0.0",
-    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.10.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",

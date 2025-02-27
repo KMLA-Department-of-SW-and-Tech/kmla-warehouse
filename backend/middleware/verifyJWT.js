@@ -1,8 +1,5 @@
 const admin = require("../config/firebase-config");
 
-// const jwt = require("jsonwebtoken");
-// require("dotenv").config();
-
 const verifyJWT = async (req, res, next) => {
     const authHeader = req.headers.authorization || req.headers.Authorization;
     if(!authHeader?.startsWith('Bearer')) return res.status(401).send("Invalid header request regarding authorization");
@@ -17,4 +14,4 @@ const verifyJWT = async (req, res, next) => {
     }
 };
 
-// module.exports = verifyJWT;
+module.exports = verifyJWT;
