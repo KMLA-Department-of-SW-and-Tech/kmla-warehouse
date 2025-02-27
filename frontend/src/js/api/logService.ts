@@ -1,14 +1,15 @@
 import axios from 'axios';
 
 import {GetLog, PatchLog} from "../types/Log";
+import axiosPrivate from '../hooks/axiosPrivate';
 
 export const logService = {
 
   // NEEDS ADMIN AUTH
   // GET 로그 리스트
-  getAll: async (): Promise<GetLog[]> => {
+  getAll: async (accessToken: string): Promise<GetLog[]> => {
     try {
-      const response = await axios.get(`/api/logs/list`);
+      const response = await axiosPrivate.get(`/api/logs/list`);
       return response.data;
     } catch (e) {
       console.error(e.message);
@@ -35,8 +36,8 @@ export const logService = {
 
   // NEEDS ADMIN AUTH
   //PATCH 로그 업데이트하기
-  update: async (id: string, update: PatchLog): Promise<GetLog> => {
-    const response = await axios.patch(`/api/logs/${id}`, update);
+  update: async (id: string, update: PatchLog, accessToken: string): Promise<GetLog> => {
+    const response = await axiosPrivate.patch(`/api/logs/${id}`, update);
     return response.data;
   },
 

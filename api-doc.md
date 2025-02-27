@@ -3,6 +3,7 @@
 #### GET
 전체 리스트 | /api/logs/list
 로그 정보 | /api/logs/:id
+팀별 로그 정보 | /list/:teamName
 #### POST
 로그 생성 | /api/logs/ | user(String), item(String), quantity(Number), type(String)
 물품 반납 | /api/logs/:id/return

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import axiosPrivate from '../hooks/axiosPrivate';
 import {GetItem, PostItem, PatchItem} from '../types/Item';
 
 export const itemService = {
@@ -26,9 +27,9 @@ export const itemService = {
 
   // AUTH RELATED + NEEDS USER AUTH // verifyRoles req.roles === null res next()
   // Request to borrow an item by ID and quantity
-  borrowRequest: async (id: string, quantity: number, user: string): Promise<GetItem> => {
+  borrowRequest: async (id: string, quantity: number, user: string, accessToken: string): Promise<GetItem> => {
     try {
-      const response = await axios.post(`/api/item/${id}/borrow`, { quantity, user });
+      const response = await axiosPrivate.post(`/api/item/${id}/borrow`, { quantity, user });
       if (!response.data) {
         throw new Error('Failed to borrow item: Invalid response from server');
       }
@@ -45,9 +46,9 @@ export const itemService = {
 
   // NEEDS ADMIN AUTH
   // Create a new item with form data (including optional image upload)
-  create: async (item: FormData): Promise<GetItem> => {
+  create: async (item: FormData, accessToken: string): Promise<GetItem> => {
     try {
-      const response = await axios.post("/api/item", item, {
+      const response = await axiosPrivate.post("/api/item", item, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -60,9 +61,9 @@ export const itemService = {
 
   // NEEDS ADMIN AUTH
   // Update an existing item by ID
-  update: async (id: string, item: FormData): Promise<GetItem> => {
+  update: async (id: string, item: FormData, accessToken: string): Promise<GetItem> => {
     try{
-      const response = await axios.patch(`/api/item/${id}`, item, {
+      const response = await axiosPrivate.patch(`/api/item/${id}`, item, {
         headers: {'Content-Type': 'multipart/form-data'},
       });
       return response.data;
@@ -74,9 +75,9 @@ export const itemService = {
  
   // NEEDS ADMIN AUTH
   // Delete an item
-  delete: async (id: string): Promise<void> => {
+  delete: async (id: string, accessToken: string): Promise<void> => {
     try {
-      const response = await axios.delete(`/api/item/${id}`); 
+      const response = await axiosPrivate.delete(`/api/item/${id}`); 
       return response.data;
     } catch (e) {
       console.error(e.message);
@@ -86,9 +87,9 @@ export const itemService = {
 
   // AUTH RELATED + NEEDS USER AUTH
   // Fetch reservation list for a user
-  getReservations: async (teamName: string) => {
+  getReservations: async (teamName: string, accessToken: string) => {
     try {
-      const response = await axios.get(`/api/item/list/${teamName}`);
+      const response = await axiosPrivate.get(`/api/item/list/${teamName}`);
       return response.data;
     } catch (error) {
       console.error('Error fetching reservations:', error.message);
@@ -98,9 +99,9 @@ export const itemService = {
 
   // AUTH RELATED + NEEDS USER AUTH
   // Return an item for a user
-  returnItem: async (id) => {
+  returnItem: async (id, accessToken: string) => {
     try {
-      const data = await axios.post(`/api/logs/${id}/return`);
+      const data = await axiosPrivate.post(`/api/logs/${id}/return`);
       return data.data;
     } catch (error) {
       console.error('Error posting item return:', error.message);
