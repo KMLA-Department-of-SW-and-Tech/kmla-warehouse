@@ -3,11 +3,11 @@ import axios from 'axios';
 // use try catch
 
 const axiosPrivate: {
-    get: (apiUrl: string, accessToken: string, axiosConfig?: object) => Promise<any>,
-    post: (apiUrl: string, requestData: any, accessToken: string, axiosConfig?: object) => Promise<any>,
-    put: (apiUrl: string, requestData: any, accessToken: string, axiosConfig?: object) => Promise<any>,
-    patch: (apiUrl: string, requestData: any, accessToken: string, axiosConfig?: object) => Promise<any>,
-    delete: (apiUrl: string, accessToken: string, axiosConfig?: object) => Promise<any>
+    get: (apiUrl: string, accessToken: string, axiosConfig?: { headers?: object }) => Promise<any>,
+    post: (apiUrl: string, requestData: any, accessToken: string, axiosConfig?: { headers?: object }) => Promise<any>,
+    put: (apiUrl: string, requestData: any, accessToken: string, axiosConfig?: { headers?: object }) => Promise<any>,
+    patch: (apiUrl: string, requestData: any, accessToken: string, axiosConfig?: { headers?: object }) => Promise<any>,
+    delete: (apiUrl: string, accessToken: string, axiosConfig?: { headers?: object }) => Promise<any>
 } = {
     get: async (apiUrl, accessToken, axiosConfig) => {
         try {
@@ -15,7 +15,8 @@ const axiosPrivate: {
                 ...axiosConfig,
                 withCredentials: true,
                 headers: {
-                    Authorization: `Bearer ${accessToken}`
+                    Authorization: `Bearer ${accessToken}`,
+                    ...axiosConfig?.headers
                 }
             });
             return response;
@@ -30,7 +31,8 @@ const axiosPrivate: {
                 ...axiosConfig,
                 withCredentials: true,
                 headers: {
-                    Authorization: `Bearer ${accessToken}`
+                    Authorization: `Bearer ${accessToken}`,
+                    ...axiosConfig?.headers
                 }
             });
             return response;
@@ -45,7 +47,8 @@ const axiosPrivate: {
                 ...axiosConfig,
                 withCredentials: true,
                 headers: {
-                    Authorization: `Bearer ${accessToken}`
+                    Authorization: `Bearer ${accessToken}`,
+                    ...axiosConfig?.headers
                 }
             });
             return response;
@@ -60,7 +63,8 @@ const axiosPrivate: {
                 ...axiosConfig,
                 withCredentials: true,
                 headers: {
-                    Authorization: `Bearer ${accessToken}`
+                    Authorization: `Bearer ${accessToken}`,
+                    ...axiosConfig?.headers
                 }
             });
             return response;
@@ -75,7 +79,8 @@ const axiosPrivate: {
                 ...axiosConfig,
                 withCredentials: true,
                 headers: {
-                    Authorization: `Bearer ${accessToken}`
+                    Authorization: `Bearer ${accessToken}`,
+                    ...axiosConfig?.headers
                 }
             });
             return response;
