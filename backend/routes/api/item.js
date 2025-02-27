@@ -19,7 +19,7 @@ router.route("/:id")
     .patch(verifyJWT, verifyRoles(["Admin"]), upload, itemController.edit)
     .delete(verifyJWT, verifyRoles(["Admin"]), itemController.delete);
 
-router.patch(verifyJWT, verifyRoles, "/:id/borrow", upload, itemController.borrow);
+router.patch(verifyJWT, verifyRoles(["User", "Admin"]), "/:id/borrow", upload, itemController.borrow);
 
 module.exports = router;
   
