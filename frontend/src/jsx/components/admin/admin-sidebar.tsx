@@ -7,6 +7,8 @@ import {
   TeamOutlined,
   UserOutlined
 } from '@ant-design/icons';
+import './admin-sidebar.css';
+
 
 
 const Sidebar: React.FC = () => {
@@ -23,11 +25,6 @@ const items1: MenuProps['items'] = [
         key: '/admin/equipment',
         icon: <ProductOutlined />,
         label: '물품관리',
-      },
-      {
-        key: '/admin/team',
-        icon: <TeamOutlined />,
-        label: '팀관리',
       },
       {
         key: '/admin/reservation',
@@ -61,16 +58,9 @@ const handleMenuClick = (e: {key: string}) => {
       defaultSelectedKeys={['home']}
       onClick={handleMenuClick}
       items={items1}
-      style={{
-        height: '100vh',
-        paddingTop: '10px',
-        position: 'fixed', // 사이드바 고정
-        top: 60,
-        left: 0,
-        width: '200px', // 너비를 설정하여 고정
-        boxShadow: '2px 0 5px rgba(0, 0, 0, 0.1)', // 그림자 추가
-      }}
+      className="sidebar"
     />
+    
   );
 };
 

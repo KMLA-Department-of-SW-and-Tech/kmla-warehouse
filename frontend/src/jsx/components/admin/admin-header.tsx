@@ -3,11 +3,10 @@ import { useNavigate } from 'react-router-dom'; // 페이지 이동을 위한 �
 import './admin-header.css';
 // import authService from '../../api/authService';
 
-// Header 컴포넌트 정의
 const Headbar: React.FC = () => {
   const [loading, setLoading] = useState<Boolean>(true);
   const [currentUserName, setCurrentUserName] = useState<string | null>(null);
-  const navigate = useNavigate(); // 페이지 이동을 위한 navigate 함수 생성
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -15,7 +14,6 @@ const Headbar: React.FC = () => {
         const data = await authService.currentUser();
         setCurrentUserName(data);
       } catch (error) {
-        //console.error('Error fetching user info:', error);
         setCurrentUserName(null); // 에러 발생 시 로그인 상태를 비로그인으로 처리
       } finally {
         setLoading(false);
