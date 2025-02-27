@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
 });
 
 const itemRouter = require("./item");
-const teamRouter = require("./team");
+const userRouter = require("./user");
 /* const tagRouter = require("./tag");*/
 /* const categoryRouter = require("./category");*/
 const logRouter = require("./log");
@@ -16,7 +16,7 @@ const authRouter = require("./auth")
 const refreshRouter = require("./refresh")
 
 router.use("/item", itemRouter);
-router.use("/team", teamRouter);
+router.use("/user", userRouter);
 /* router.use("/tag", tagRouter);
  *//* router.use("/category", categoryRouter); */
 router.use("/logs", logRouter);

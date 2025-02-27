@@ -6,6 +6,8 @@ import Sidebar from '../../../components/user/user-sidebar';
 import { itemService } from '../../../../js/api/itemService'; 
 import Headbar from '../../../components/user/header';
 import {GetItem, PostItem, PatchItem} from '../../../../js/types/Item';
+import axios from 'axios'; // needs removal
+import LoginModal from "../../../components/login-modal";
 
 //import "./home.css"
 
@@ -26,6 +28,10 @@ export default function Home() {
   useEffect(() => {
     const fetchEquipmentList = async () => {
       try {
+        const res = await axios.get("/api/user/test");
+        console.log(res);
+
+
         const items = await itemService.getAll();
         setEquipmentList(items);
       } catch (error) {
@@ -97,6 +103,7 @@ export default function Home() {
           <Sidebar />
         </Sider>
       )}
+      <LoginModal openModal={true} />
       <Layout style={{ marginLeft: windowWidth > 768 ? 250 : 0 }}>
         <Content style={{ padding: '40px', marginTop: '64px', width: windowWidth > 768 ? 'calc(98vw - 250px)' : '100%' }}>
           <Title level={2} style={{ display: 'flex', alignItems: 'center' }}>

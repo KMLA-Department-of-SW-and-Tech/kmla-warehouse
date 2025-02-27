@@ -24,7 +24,7 @@ export const itemService = {
     }
   },
 
-  // AUTH RELATED + NEEDS USER AUTH
+  // AUTH RELATED + NEEDS USER AUTH // verifyRoles req.roles === null res next()
   // Request to borrow an item by ID and quantity
   borrowRequest: async (id: string, quantity: number, user: string): Promise<GetItem> => {
     try {

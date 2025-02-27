@@ -1,7 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const querystring = require('querystring');
@@ -55,7 +55,7 @@ app.use((req, res, next) => {
 });
 
 app.use(logger(env === 'development'? 'dev' : 'combined'));
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 

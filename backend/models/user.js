@@ -11,9 +11,8 @@ const userSchema = new Schema({
     // type: {type: String, enum: ["borrow", "return"]},
     // status: {type: String, enum: ["active", "closed"], default: "active"},
     firebaseUid: { type: String, required: true },
-    userType: { type: String, required: true, enum: ["User", "Admin"] },
+    userType: { type: String, enum: ["User", "Admin"] },
     teamName: { type: String, enum: teamNameList },
-
 });
 
 module.exports = mongoose.model("User", userSchema);
