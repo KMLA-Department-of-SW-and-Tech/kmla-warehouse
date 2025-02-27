@@ -14,4 +14,4 @@ module.exports = {
     client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40dswt-sharable-auth.iam.gserviceaccount.com",
     universe_domain: "googleapis.com"
   }
-} // needs check of how much to migrate
+}
