@@ -7,6 +7,7 @@ import Headbar from "../../../components/admin/admin-header";
 import { logService } from "../../../../js/api/logService";
 import { GetLog, PatchLog } from "../../../../js/types/Log";
 import { DeleteOutlined } from '@ant-design/icons';
+import { useAuth } from '../../../contexts/authContext';
 
 const { Content, Sider } = Layout;
 const { Title } = Typography;
@@ -17,6 +18,7 @@ const AdminHistoryPage: React.FC = () => {
   const [logs, setLogs] = useState<GetLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
+  const authValue = useAuth();
 
   useEffect(() => {
     fetchLogs();
@@ -26,7 +28,7 @@ const AdminHistoryPage: React.FC = () => {
   const fetchLogs = async () => {
     setLoading(true);
     try {
-      const response = await logService.getAll();
+      const response = await logService.getAll(authValue.accessToken);
       const filteredLogs = response
       .filter((log) => log.status !== "deleted")
       .map((log) => ({
@@ -56,7 +58,7 @@ const AdminHistoryPage: React.FC = () => {
 
   const handleUpdateLog = async (id: string, update: PatchLog) => {
     try {
-      const updated = await logService.update(id, update);
+      const updated = await logService.update(id, update, authValue.accessToken);
       setLogs(logs.map((bh) => (bh._id === id ? updated : bh)));
       message.success("Log updated successfully");
       fetchLogs(); // 데이터 갱신
