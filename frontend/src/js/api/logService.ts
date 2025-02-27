@@ -9,7 +9,7 @@ export const logService = {
   // GET 로그 리스트
   getAll: async (accessToken: string): Promise<GetLog[]> => {
     try {
-      const response = await axiosPrivate.get(`/api/logs/list`);
+      const response = await axiosPrivate.get(`/api/logs/list`, accessToken);
       return response.data;
     } catch (e) {
       console.error(e.message);
@@ -37,7 +37,7 @@ export const logService = {
   // NEEDS ADMIN AUTH
   //PATCH 로그 업데이트하기
   update: async (id: string, update: PatchLog, accessToken: string): Promise<GetLog> => {
-    const response = await axiosPrivate.patch(`/api/logs/${id}`, update);
+    const response = await axiosPrivate.patch(`/api/logs/${id}`, update, accessToken);
     return response.data;
   },
 

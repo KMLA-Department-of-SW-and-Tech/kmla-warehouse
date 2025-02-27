@@ -29,7 +29,7 @@ export const itemService = {
   // Request to borrow an item by ID and quantity
   borrowRequest: async (id: string, quantity: number, user: string, accessToken: string): Promise<GetItem> => {
     try {
-      const response = await axiosPrivate.post(`/api/item/${id}/borrow`, { quantity, user });
+      const response = await axiosPrivate.post(`/api/item/${id}/borrow`, { quantity, user }, accessToken);
       if (!response.data) {
         throw new Error('Failed to borrow item: Invalid response from server');
       }
@@ -48,7 +48,7 @@ export const itemService = {
   // Create a new item with form data (including optional image upload)
   create: async (item: FormData, accessToken: string): Promise<GetItem> => {
     try {
-      const response = await axiosPrivate.post("/api/item", item, {
+      const response = await axiosPrivate.post("/api/item", item, accessToken, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -63,8 +63,10 @@ export const itemService = {
   // Update an existing item by ID
   update: async (id: string, item: FormData, accessToken: string): Promise<GetItem> => {
     try{
-      const response = await axiosPrivate.patch(`/api/item/${id}`, item, {
-        headers: {'Content-Type': 'multipart/form-data'},
+      const response = await axiosPrivate.patch(`/api/item/${id}`, item, accessToken, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
       });
       return response.data;
     } catch (error){
@@ -77,7 +79,7 @@ export const itemService = {
   // Delete an item
   delete: async (id: string, accessToken: string): Promise<void> => {
     try {
-      const response = await axiosPrivate.delete(`/api/item/${id}`); 
+      const response = await axiosPrivate.delete(`/api/item/${id}`, accessToken); 
       return response.data;
     } catch (e) {
       console.error(e.message);
@@ -89,7 +91,7 @@ export const itemService = {
   // Fetch reservation list for a user
   getReservations: async (teamName: string, accessToken: string) => {
     try {
-      const response = await axiosPrivate.get(`/api/item/list/${teamName}`);
+      const response = await axiosPrivate.get(`/api/item/list/${teamName}`, accessToken);
       return response.data;
     } catch (error) {
       console.error('Error fetching reservations:', error.message);
@@ -101,7 +103,7 @@ export const itemService = {
   // Return an item for a user
   returnItem: async (id, accessToken: string) => {
     try {
-      const data = await axiosPrivate.post(`/api/logs/${id}/return`);
+      const data = await axiosPrivate.post(`/api/logs/${id}/return`, accessToken);
       return data.data;
     } catch (error) {
       console.error('Error posting item return:', error.message);
