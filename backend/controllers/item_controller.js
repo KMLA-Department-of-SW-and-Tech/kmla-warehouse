@@ -2,7 +2,7 @@ const itemService = require("../services/item_service");
 
 exports.list = async (req, res, next) => {
     try {
-        return res.status(200).send(await itemService.getAvailiable());
+        return res.status(200).send(await itemService.getAvailable());
     } catch (e) {
         switch(e.message) {
             default:
@@ -24,7 +24,7 @@ exports.listAll = async (req, res, next) => {
 
 exports.listForTeam = async (req, res, next) => {
     try {
-        return res.status(200).send(await itemService.getAvailiableForTeam(req.params.teamName));
+        return res.status(200).send(await itemService.getAvailableForTeam(req.params.teamName));
     } catch (e) {
         switch(e.message) {
             default:
