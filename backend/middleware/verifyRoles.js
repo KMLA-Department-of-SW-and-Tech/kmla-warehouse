@@ -1,5 +1,6 @@
 
-const verifyAdminRoles = (...allowedRoles) => { // will be needed in future applications
+
+const verifyRoles = (...allowedRoles) => { // will be needed in future applications
     return async(req, res, next) => {
         // if(!req.roles) return res.sendStatus(401);
         // const rolesArray = [...allowedRoles];
@@ -11,4 +12,4 @@ const verifyAdminRoles = (...allowedRoles) => { // will be needed in future appl
     };
 }
 
-module.exports = verifyAdminRoles;
+module.exports = verifyRoles;

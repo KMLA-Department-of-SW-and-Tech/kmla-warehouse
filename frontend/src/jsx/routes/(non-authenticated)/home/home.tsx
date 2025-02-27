@@ -6,8 +6,9 @@ import Sidebar from '../../../components/user/user-sidebar';
 import { itemService } from '../../../../js/api/itemService'; 
 import Headbar from '../../../components/user/header';
 import {GetItem, PostItem, PatchItem} from '../../../../js/types/Item';
-import axios from 'axios'; // needs removal
 import LoginModal from "../../../components/login-modal";
+import { useAuth } from '../../../contexts/authContext'; // needs removal
+import axiosPrivate from '../../../../js/hooks/axiosPrivate'; // needs removal
 
 //import "./home.css"
 
@@ -25,11 +26,15 @@ export default function Home() {
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null); // Selected item ID
   const navigate = useNavigate();
 
+  const contextValue = useAuth();
+  
+
   useEffect(() => {
     const fetchEquipmentList = async () => {
       try {
-        const res = await axios.get("/api/user/test");
-        console.log(res);
+        // console.log(contextValue.accessToken);
+        // const res = await axiosPrivate.get("/api/user/test", contextValue.accessToken);
+        // console.log(res);
 
 
         const items = await itemService.getAll();
