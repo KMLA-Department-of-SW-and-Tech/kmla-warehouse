@@ -12,7 +12,7 @@ const userRouter = require("./user");
 /* const categoryRouter = require("./category");*/
 const logRouter = require("./log");
 /* const adminRouter = require("./admin"); */
-const authRouter = require("./auth")
+// const authRouter = require("./auth")
 const refreshRouter = require("./refresh")
 
 router.use("/item", itemRouter);
