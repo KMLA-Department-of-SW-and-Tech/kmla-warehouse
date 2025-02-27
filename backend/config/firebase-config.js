@@ -5,3 +5,5 @@ const serviceAccount = require("./serviceAccount").serviceAccount;
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
+
+module.exports = admin;

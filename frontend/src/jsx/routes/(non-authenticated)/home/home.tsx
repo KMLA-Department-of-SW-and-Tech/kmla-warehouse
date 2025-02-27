@@ -32,9 +32,9 @@ export default function Home() {
   useEffect(() => {
     const fetchEquipmentList = async () => {
       try {
-        // console.log(contextValue.accessToken);
-        // const res = await axiosPrivate.get("/api/user/test", contextValue.accessToken);
-        // console.log(res);
+        console.log(contextValue.accessToken);
+        const res = await axiosPrivate.get("/api/user/test", contextValue.accessToken);
+        console.log(res);
 
 
         const items = await itemService.getAll();
