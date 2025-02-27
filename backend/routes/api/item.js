@@ -10,14 +10,14 @@ router.get("/list", itemController.list);
 router.get(verifyJWT, verifyRoles(["User", "Admin"]), "/list/:teamName", itemController.listForTeam);
 
 router.get("/list-all", itemController.listAll);
-router.get(verifyJWT, verifyRoles, "/list-all/:teamName", itemController.listAllForTeam);
+router.get(verifyJWT, verifyRoles(["User", "Admin"]), "/list-all/:teamName", itemController.listAllForTeam);
 
-router.post(verifyJWT, verifyAdminRoles, "/", upload, itemController.create);
+router.post(verifyJWT, verifyRoles(["Admin"]), "/", upload, itemController.create);
 
 router.route("/:id")
     .get(itemController.detail)
-    .patch(verifyJWT, verifyAdminRoles, upload, itemController.edit)
-    .delete(verifyJWT, verifyAdminRoles, itemController.delete);
+    .patch(verifyJWT, verifyRoles(["Admin"]), upload, itemController.edit)
+    .delete(verifyJWT, verifyRoles(["Admin"]), itemController.delete);
 
 router.patch(verifyJWT, verifyRoles, "/:id/borrow", upload, itemController.borrow);
 

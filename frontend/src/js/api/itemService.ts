@@ -103,7 +103,7 @@ export const itemService = {
   // Return an item for a user
   returnItem: async (id, accessToken: string) => {
     try {
-      const data = await axiosPrivate.post(`/api/logs/${id}/return`, accessToken);
+      const data = await axiosPrivate.post(`/api/logs/${id}/return`, {}, accessToken);
       return data.data;
     } catch (error) {
       console.error('Error posting item return:', error.message);
