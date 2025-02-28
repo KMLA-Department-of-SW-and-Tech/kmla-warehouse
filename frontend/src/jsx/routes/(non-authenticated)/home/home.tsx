@@ -5,8 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../../components/user/user-sidebar';
 import { itemService } from '../../../../js/api/itemService'; 
 import Headbar from '../../../components/user/header';
-import { GetItem } from '../../../../js/types/Item';
-import './home.css';
+import {GetItem, PostItem, PatchItem} from '../../../../js/types/Item';
+
+// needs deletion
+import LoginModal from "../../../components/login-modal";
+
+
+//import "./home.css"
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -85,58 +90,73 @@ export default function Home() {
           <Sidebar />
         </Sider>
       )}
-      <Layout className="equipment-content-layout" style={{ marginLeft: windowWidth > 768 ? 250 : 0 }}>
-      <Content className="equipment-content">
-  <div className="equipment-card-container">
-    <Title level={2} className="equipment-title">
-      <UnorderedListOutlined className="equipment-icon" />
-      물품목록 전체보기
-    </Title>
-
-    <Search
-      placeholder="이름 또는 위치로 검색"
-      onChange={(e) => setSearchQuery(e.target.value)}
-      className="equipment-search"
-      allowClear
-    />
-
-    {loading ? (
-      <Spin size="large" />
-    ) : (
-      <Row gutter={[16, 16]} className="equipment-row">
-        {filteredEquipmentList.length > 0 ? (
-          filteredEquipmentList.map((equipment) => (
-            <Col xs={24} sm={12} md={8} lg={4} key={equipment._id}>
-              <Card
-                hoverable
-                onClick={() => handleViewDetails(equipment._id)}
-                cover={
-                  <div className="equipment-image-container">
-                    {equipment.imageUrl ? (
-                      <img src={equipment.imageUrl} alt={equipment.name} className="equipment-image" />
-                    ) : (
-                      <Typography.Text>이미지 없음</Typography.Text>
-                    )}
-                  </div>
-                }
-                className="equipment-card"
-              >
-                <Card.Meta
-                  title={equipment.name}
-                  description={equipment.location}
-                  className="equipment-meta"
-                />
-              </Card>
-            </Col>
-          ))
-        ) : (
-          <Typography.Text>데이터가 없습니다.</Typography.Text>
-        )}
-      </Row>
-    )}
-  </div>
-</Content>
-
+      <LoginModal openModal={true} />
+      <Layout style={{ marginLeft: windowWidth > 768 ? 250 : 0 }}>
+        <Content style={{ padding: '40px', marginTop: '64px', width: windowWidth > 768 ? 'calc(98vw - 250px)' : '100%' }}>
+          <Title level={2} style={{ display: 'flex', alignItems: 'center' }}>
+            <UnorderedListOutlined style={{ marginRight: '10px' }} />
+            물품목록 전체보기
+          </Title>
+          
+          <Search
+            placeholder="이름 또는 위치로 검색"
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{ marginBottom: '20px', maxWidth: '400px' }}
+            allowClear
+          />
+          
+          {loading ? (
+            <Spin size="large" />
+          ) : (
+            <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
+              {filteredEquipmentList.length > 0 ? (
+                filteredEquipmentList.map((equipment, index) => (
+                  <Col xs={24} sm={12} md={8} lg={4} key={equipment._id}>
+                    <Card
+                      hoverable
+                      onClick={() => handleViewDetails(equipment._id)}
+                      cover={
+                        <div
+                          style={{
+                            width: '100%',
+                            height: '150px',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: '#f0f0f0',
+                          }}
+                        >
+                          {equipment.imageUrl ? (
+                            <img
+                              src={equipment.imageUrl}
+                              alt={equipment.name}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                          ) : (
+                            <Typography.Text>이미지 없음</Typography.Text>
+                          )}
+                        </div>
+                      }
+                      style={{ maxWidth: '220px', height: '260px' }}
+                    >
+                      <Card.Meta
+                        title={equipment.name}
+                        description={equipment.location}
+                        style={{
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                        }}
+                      />
+                    </Card>
+                  </Col>
+                ))
+              ) : (
+                <Typography.Text>데이터가 없습니다.</Typography.Text>
+              )}
+            </Row>
+          )}
+        </Content>
       </Layout>
 
       <Modal

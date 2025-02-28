@@ -6,6 +6,7 @@ import { itemService } from '../../../../js/api/itemService';
 import Sidebar from '../../../components/user/user-sidebar';
 import Headbar from '../../../components/user/header';
 import {GetItem, PostItem, PatchItem} from '../../../../js/types/Item';
+import { useAuth } from '../../../contexts/authContext';
 const { Sider, Content } = Layout;
 const { Title, Text } = Typography;
 
@@ -14,6 +15,7 @@ export default function EquipmentDetails() {
   const [loading, setLoading] = useState(true);
   const [item, setItem] = useState<GetItem | null>(null);
   const [borrowQuantity, setBorrowQuantity] = useState<number>(1);
+  const authValue = useAuth();
 
   // Retrieve the item ID from route parameters
   const { id } = useParams<{ id: string }>();
@@ -46,7 +48,7 @@ export default function EquipmentDetails() {
       return;
     }
     try {
-      await itemService.borrowRequest(id, borrowQuantity, "user",); // Send borrow request
+      await itemService.borrowRequest(id, borrowQuantity, "user", authValue.accessToken); // Send borrow request
       message.success('대여 요청이 성공적으로 처리되었습니다.'); // Success message
       window.location.reload(); // Reload page to reflect updated status
     } catch (error) {

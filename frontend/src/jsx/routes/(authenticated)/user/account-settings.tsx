@@ -12,23 +12,25 @@ const AccountSettings = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+  
+  // const handlePasswordChange = async (values) => {
+  //   setLoading(true);
+  //   setErrorMessage(""); 
+  //   try {
+  //     // await authService.changePassword(values.currentPassword, values.newPassword);
+  //     message.success('비밀번호가 성공적으로 변경되었습니다');
+  //   } catch (error) {
+  //     console.log(error);
+      
+  //     const responseMessage = error.response?.data || '비밀번호를 변경하는데 실패하였습니다. 다시 시도해 주세요.';
+  //     setErrorMessage(responseMessage);
+  //     message.error('비밀번호를 변경하는데 실패하였습니다.'); 
 
-  const handlePasswordChange = async (values) => {
-    setLoading(true);
-    setErrorMessage("");
-    try {
-      await authService.changePassword(values.currentPassword, values.newPassword);
-      message.success('비밀번호가 성공적으로 변경되었습니다');
-    } catch (error) {
-      console.log(error);
-      const responseMessage = error.response?.data || '비밀번호를 변경하는데 실패하였습니다. 다시 시도해 주세요.';
-      setErrorMessage(responseMessage);
-      message.error('비밀번호를 변경하는데 실패하였습니다.');
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     throw(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleLogout = async () => {
     setLoading(true);
@@ -50,18 +52,19 @@ const AccountSettings = () => {
       <Sider className={styles.sidebar}>
         <Sidebar />
       </Sider>
-      <Layout style={{ marginLeft: 250 }}>
-        <Content className={styles.content}>
-          <div className={styles.container}>
-            <h2>계정 설정</h2>
-            <Form layout="vertical" onFinish={handlePasswordChange}>
-              <Form.Item
-                label="현재 비밀번호"
-                name="currentPassword"
-                rules={[{ required: true, message: '현재 비밀번호를 입력해주세요' }]}
-              >
-                <Input.Password />
-              </Form.Item>
+        <Layout style={{ marginLeft: 250 }}>
+          <Content style={{ padding: '40px', marginTop: '64px', width: 'calc(100vw - 250px)' }}>
+            <div style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>
+              <h2>계정 설정</h2>
+
+              <Form layout="vertical" onFinish={/* handlePasswordChange */() => {}}>
+                <Form.Item
+                  label="현재 비밀번호"
+                  name="currentPassword"
+                  rules={[{ required: true, message: '현재 비밀번호를 입력해주세요' }]}
+                >
+                  <Input.Password />
+                </Form.Item>
 
               <Form.Item
                 label="새 비밀번호"

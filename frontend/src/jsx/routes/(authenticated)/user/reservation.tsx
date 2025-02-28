@@ -8,8 +8,7 @@ import { UnorderedListOutlined } from '@ant-design/icons';
 
 import { GetLog } from "../../../../js/types/Log";
 import {GetItem, PostItem, PatchItem} from "../../../../js/types/Item";
-import styles from './reservation.module.css';
-
+import { useAuth } from "../../../contexts/authContext/index.jsx";
 
 
 const { Sider, Content } = Layout;
@@ -22,13 +21,15 @@ export default function ReservationStatus() {
   const [reservationList, setReservationList] = useState<GetLog[]>([]);
   const [reservationItemsList, setReservationItemsList] = useState<GetItem[]>([]);
 
+  const authValue = useAuth();
+
 
   useEffect(() => {
     const fetchReservationAndEquipment = async () => {
       try {
         const username = "username"; //Edit after implementing login
         setCurrentUserId(username);
-        const reservations = await itemService.getReservations(username);
+        const reservations = await itemService.getReservations(username, authValue.accessToken);
         setReservationList(reservations);
 
       } catch (error) {
@@ -44,7 +45,7 @@ export default function ReservationStatus() {
 
   const handleReturn = async (reservationId: string) => {
     try {
-      await itemService.returnItem(reservationId);
+      await itemService.returnItem(reservationId, authValue.accessToken);
       message.success('반납 요청이 성공적으로 처리되었습니다.');
       setReservationList(prevList => prevList.filter(r => r._id !== reservationId));
     } catch (error) {
