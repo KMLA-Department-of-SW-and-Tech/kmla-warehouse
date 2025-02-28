@@ -10,13 +10,19 @@ import { auth } from "./firebase"
 //     return signInWithEmailAndPassword(auth, email, pwd);
 // }
 
+const createNewUser = async (credential) => {
+    
+}
+
+
 export const signUserInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({
         prompt: 'select_account', // This forces the account selection account every time
     });
     const result = await signInWithPopup(auth, provider);
-    //result.user
+    // check whether user exists and create account if ...
+    if(result) await createNewUser(result);
     return result;
 }
 

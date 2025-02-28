@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { signUserOut } from '../../../../js/firebase/auth';
 import Sidebar from '../../../components/user/user-sidebar';
 import Headbar from '../../../components/user/header';
-import styles from './account-settings.module.css';
+import './account-settings.css';
 
 const { Sider, Content } = Layout;
 
@@ -12,8 +12,21 @@ const AccountSettings = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-  
-  // const handlePasswordChange = async (values) => {
+
+  const handleLogout = async () => {
+    setLoading(true);
+    try {
+      await signUserOut();
+      message.success('로그아웃이 성공적으로 완료되었습니다.');
+      navigate("/home");
+    } catch (error) {
+      message.error('로그아웃하는데 실패하였습니다. 다시 시도해주세요.');
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+    // const handlePasswordChange = async (values) => {
   //   setLoading(true);
   //   setErrorMessage(""); 
   //   try {
@@ -32,39 +45,25 @@ const AccountSettings = () => {
   //   }
   // };
 
-  const handleLogout = async () => {
-    setLoading(true);
-    try {
-      await signUserOut();
-      message.success('로그아웃이 성공적으로 완료되었습니다.');
-      navigate("/home");
-    } catch (error) {
-      message.error('로그아웃하는데 실패하였습니다. 다시 시도해주세요.');
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <Layout className={styles.layout}>
+    <Layout className="layout">
       <Headbar />
-      <Sider className={styles.sidebar}>
+      <Sider className="sidebar">
         <Sidebar />
       </Sider>
-        <Layout style={{ marginLeft: 250 }}>
-          <Content style={{ padding: '40px', marginTop: '64px', width: 'calc(100vw - 250px)' }}>
-            <div style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>
-              <h2>계정 설정</h2>
+      <Layout className="content-layout">
+        <Content className="content">
+          <div className="form-container">
+            <h2>계정 설정</h2>
 
-              <Form layout="vertical" onFinish={/* handlePasswordChange */() => {}}>
-                <Form.Item
-                  label="현재 비밀번호"
-                  name="currentPassword"
-                  rules={[{ required: true, message: '현재 비밀번호를 입력해주세요' }]}
-                >
-                  <Input.Password />
-                </Form.Item>
+            <Form layout="vertical" onFinish={() => {}}>
+              <Form.Item
+                label="현재 비밀번호"
+                name="currentPassword"
+                rules={[{ required: true, message: '현재 비밀번호를 입력해주세요' }]}
+              >
+                <Input.Password />
+              </Form.Item>
 
               <Form.Item
                 label="새 비밀번호"
@@ -92,11 +91,7 @@ const AccountSettings = () => {
                 <Input.Password />
               </Form.Item>
 
-              {errorMessage && (
-                <div className={styles.errorMessage}>
-                  {errorMessage}
-                </div>
-              )}
+              {errorMessage && <div className="error-message">{errorMessage}</div>}
 
               <Form.Item>
                 <Button type="primary" htmlType="submit" loading={loading}>
@@ -116,3 +111,4 @@ const AccountSettings = () => {
 };
 
 export default AccountSettings;
+
