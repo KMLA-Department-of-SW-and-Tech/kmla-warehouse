@@ -11,7 +11,7 @@ module.exports.findUserByFirebaseUid = async (firebaseUid) => {
     }
 }
 
-
+// module.exports.createUser
 
 // exports.getAll = async () => {
 //     try {
