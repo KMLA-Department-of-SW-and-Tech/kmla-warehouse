@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Button, message, Layout, Spin, Modal } from 'antd';
-// import authService from '../../../api/authService';
-import Sidebar from '../../../components/user/user-sidebar';
-import Headbar from '../../../components/user/header'; 
+import { Form, Input, Button, message, Layout } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { signUserOut } from '../../../../js/firebase/auth';
+import Sidebar from '../../../components/user/user-sidebar';
+import Headbar from '../../../components/user/header';
+import styles from './account-settings.module.css';
 
 const { Sider, Content } = Layout;
 
 const AccountSettings = () => {
-  const [loading, setLoading] = useState(false); // minor elements loading
-  const [errorMessage, setErrorMessage] = useState(''); 
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
   
   // const handlePasswordChange = async (values) => {
@@ -40,26 +40,17 @@ const AccountSettings = () => {
       navigate("/home");
     } catch (error) {
       message.error('로그아웃하는데 실패하였습니다. 다시 시도해주세요.');
-      throw(error);
+      throw error;
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout className={styles.layout}>
       <Headbar />
-      <Sider
-        width={250}
-        style={{
-          background: '#fff',
-          position: 'fixed',
-          height: '100vh',
-          left: 0,
-          top: 64,
-        }}
-      >
-      <Sidebar /> 
+      <Sider className={styles.sidebar}>
+        <Sidebar />
       </Sider>
         <Layout style={{ marginLeft: 250 }}>
           <Content style={{ padding: '40px', marginTop: '64px', width: 'calc(100vw - 250px)' }}>
@@ -75,52 +66,51 @@ const AccountSettings = () => {
                   <Input.Password />
                 </Form.Item>
 
-                <Form.Item
-                  label="새 비밀번호"
-                  name="newPassword"
-                  rules={[{ required: true, message: '새 비밀번호를 입력해주세요' }]}
-                >
-                  <Input.Password />
-                </Form.Item>
+              <Form.Item
+                label="새 비밀번호"
+                name="newPassword"
+                rules={[{ required: true, message: '새 비밀번호를 입력해주세요' }]}
+              >
+                <Input.Password />
+              </Form.Item>
 
-                <Form.Item
-                  label="새 비밀번호 확인"
-                  name="confirmNewPassword"
-                  rules={[
-                    { required: true, message: '새 비밀번호를 다시 한 번 입력해주세요' },
-                    ({ getFieldValue }) => ({
-                      validator(_, value) {
-                        if (!value || getFieldValue('newPassword') === value) {
-                          return Promise.resolve();
-                        }
-                        return Promise.reject(new Error('새 비밀번호 두 개가 일치하지 않습니다.'));
-                      },
-                    }),
-                  ]}
-                >
-                  <Input.Password />
-                </Form.Item>
+              <Form.Item
+                label="새 비밀번호 확인"
+                name="confirmNewPassword"
+                rules={[
+                  { required: true, message: '새 비밀번호를 다시 한 번 입력해주세요' },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue('newPassword') === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(new Error('새 비밀번호 두 개가 일치하지 않습니다.'));
+                    },
+                  }),
+                ]}
+              >
+                <Input.Password />
+              </Form.Item>
 
-                {errorMessage && (
-                  <div style={{ color: 'red', marginBottom: '16px' }}>
-                    {errorMessage}
-                  </div>
-                )}
+              {errorMessage && (
+                <div className={styles.errorMessage}>
+                  {errorMessage}
+                </div>
+              )}
 
-                <Form.Item>
-                  <Button type="primary" htmlType="submit" loading={loading}>
-                    비밀번호 변경
-                  </Button>
-                </Form.Item>
-              </Form>
+              <Form.Item>
+                <Button type="primary" htmlType="submit" loading={loading}>
+                  비밀번호 변경
+                </Button>
+              </Form.Item>
+            </Form>
 
-
-              <Button onClick={handleLogout} loading={loading}>
-                로그아웃
-              </Button>
-            </div>
-          </Content>
-        </Layout>
+            <Button onClick={handleLogout} loading={loading}>
+              로그아웃
+            </Button>
+          </div>
+        </Content>
+      </Layout>
     </Layout>
   );
 };

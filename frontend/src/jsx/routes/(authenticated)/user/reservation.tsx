@@ -74,99 +74,69 @@ export default function ReservationStatus() {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Headbar />
-      <Sider
-        width={250}
-        style={{
-          background: '#fff',
-          position: 'fixed',
-          height: '100vh',
-          left: 0,
-          top: 64,
-        }}
-      >
-      <Sidebar />
-      </Sider>
-      <Layout style={{ marginLeft: 250 }}>
-        <Content style={{ padding: '40px', marginTop: '64px', width: 'calc(98vw - 250px)' }}>
-          <Title level={2} style={{ display: 'flex', alignItems: 'center' }}>
-            <UnorderedListOutlined style={{ marginRight: '10px' }} />
-            예약현황 보기
-          </Title>
+      <Sider className={styles.sidebar}>
+  <Sidebar />
+</Sider>
 
-          {loading ? (
-            <Spin size="large" />
-          ) : (
-            <Row gutter={[16, 16]} style={{ marginTop: '20px' }}>
-              {reservationList.length > 0 ? (
-                reservationList?.map((reservation) => {
+<Layout className={styles.layout}>
+  <Content className={styles.content}>
+    <Title level={2} className={styles.title}>
+      <UnorderedListOutlined style={{ marginRight: '10px' }} />
+      예약현황 보기
+    </Title>
 
-                  return (
-                  <Col xs={24} sm={12} md={8} lg={4} key={reservation._id}>
-                    <Card
-                      hoverable
-                      cover={
-                        <div
-                          style={{
-                            width: '100%',
-                            height: '150px',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            backgroundColor: '#f0f0f0',
-                          }}
-                        >
-                          {reservation.item.imageUrl ? (
-                            <img
-                              src={reservation.item.imageUrl}
-                              alt={reservation.item.name}
-                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                            />
-                          ) : (
-                            <Typography.Text>이미지 없음</Typography.Text>
-                          )}
-                        </div>
-                      }
-                      style={{ maxWidth: '220px', height: '300px' }}
-                    >
-                      <Card.Meta
-                        title={reservation.item.name}
-                        description={
-                          <>
-                            <span> {reservation.quantity}</span>
-                            <span> / {reservation.item.location} / {new Date(reservation.timestamp).toLocaleDateString()}`</span>
-                          </>
-                          
-                        }
-                        style={{
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                        }}
+    {loading ? (
+      <Spin size="large" />
+    ) : (
+      <Row gutter={[16, 16]} className={styles.cardContainer}>
+        {reservationList.length > 0 ? (
+          reservationList?.map((reservation) => (
+            <Col xs={24} sm={12} md={8} lg={4} key={reservation._id}>
+              <Card
+                hoverable
+                cover={
+                  <div className={styles.imageContainer}>
+                    {reservation.item.imageUrl ? (
+                      <img
+                        src={reservation.item.imageUrl}
+                        alt={reservation.item.name}
+                        className={styles.image}
                       />
-                      
-                      <Button
-                        type="primary"
-                        onClick={() => handleReturn(reservation._id)}
-                        style={{
-                          marginTop: '10px',
-                          width: '100%',
-                          display: 'flex',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        
-                        반납하기
-                      </Button>
-                    </Card>
-                  </Col>
-                )})
-              ) : (
-                <Typography.Text>데이터가 없습니다.</Typography.Text>
-              )}
-            </Row>
-          )}
-        </Content>
-      </Layout>
+                    ) : (
+                      <Typography.Text className={styles.noImageText}>이미지 없음</Typography.Text>
+                    )}
+                  </div>
+                }
+                className={styles.card}
+              >
+                <Card.Meta
+                  title={reservation.item.name}
+                  description={
+                    <>
+                      <span> {reservation.quantity}</span>
+                      <span> / {reservation.item.location} / {new Date(reservation.timestamp).toLocaleDateString()}</span>
+                    </>
+                  }
+                  className={styles.cardMeta}
+                />
+
+                <Button
+                  type="primary"
+                  onClick={() => handleReturn(reservation._id)}
+                  className={styles.returnButton}
+                >
+                  반납하기
+                </Button>
+              </Card>
+            </Col>
+          ))
+        ) : (
+          <Typography.Text>데이터가 없습니다.</Typography.Text>
+        )}
+      </Row>
+    )}
+  </Content>
+</Layout>
     </Layout>
   );
 }

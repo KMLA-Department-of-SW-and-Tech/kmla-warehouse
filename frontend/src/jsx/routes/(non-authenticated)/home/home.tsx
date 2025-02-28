@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Card, Row, Col, Spin, Layout, Input, Modal } from 'antd';
-import { /*CalendarOutlined,*/ UnorderedListOutlined } from '@ant-design/icons'; 
+import { UnorderedListOutlined } from '@ant-design/icons'; 
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../../components/user/user-sidebar';
 import { itemService } from '../../../../js/api/itemService'; 
@@ -23,17 +23,14 @@ export default function Home() {
   const [filteredEquipmentList, setFilteredEquipmentList] = useState<GetItem[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [windowWidth, setWindowWidth] = useState(window.innerWidth); 
-  const [isModalVisible, setIsModalVisible] = useState(false);  // State for Modal visibility
-  const [selectedItemId, setSelectedItemId] = useState<string | null>(null); // Selected item ID
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
   const navigate = useNavigate();
-
-  
 
   useEffect(() => {
     const fetchEquipmentList = async () => {
       try {
         const items = await itemService.getAll();
-        console.log(items);
         setEquipmentList(items);
       } catch (error) {
         console.error('Failed to fetch equipment list:', error);
@@ -45,7 +42,6 @@ export default function Home() {
 
     fetchEquipmentList();
 
-    // Listen for window resize
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
 
@@ -54,11 +50,12 @@ export default function Home() {
 
   useEffect(() => {
     if (searchQuery) {
-      const filteredItems = equipmentList.filter(item =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.location.toLowerCase().includes(searchQuery.toLowerCase())
+      setFilteredEquipmentList(
+        equipmentList.filter(item =>
+          item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.location.toLowerCase().includes(searchQuery.toLowerCase())
+        )
       );
-      setFilteredEquipmentList(filteredItems);
     } else {
       setFilteredEquipmentList(equipmentList);
     }
@@ -66,11 +63,9 @@ export default function Home() {
 
   const handleViewDetails = (equipmentId: string) => {
     if (windowWidth <= 768) {
-      // Show a modal on mobile screens instead of an alert
       setSelectedItemId(equipmentId);
       setIsModalVisible(true);
     } else {
-      // Navigate to the details page on larger screens
       navigate(`/item/${equipmentId}`);
     }
   };
@@ -87,20 +82,11 @@ export default function Home() {
   };
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout className="equipment-layout">
       <Headbar />
       
       {windowWidth > 768 && (
-        <Sider
-          width={250}
-          style={{
-            background: '#fff',
-            position: 'fixed',
-            height: '100vh',
-            left: 0,
-            top: 64,
-          }}
-        >
+        <Sider className="equipment-sider">
           <Sidebar />
         </Sider>
       )}
@@ -173,17 +159,15 @@ export default function Home() {
         </Content>
       </Layout>
 
-      {/* Modal for mobile screens */}
       <Modal
-      title="아이템 상세 보기"
-      visible={isModalVisible}
-      onCancel={handleCancel}
-      onOk={handleOk}
-      cancelText="취소"
-    >
-      <Typography.Text>이 페이지는 모바일 화면에서 열 수 없습니다. 더 큰 화면에서 확인해주세요.</Typography.Text>
-    </Modal>
-
+        title="아이템 상세 보기"
+        visible={isModalVisible}
+        onCancel={handleCancel}
+        onOk={handleOk}
+        cancelText="취소"
+      >
+        <Typography.Text>이 페이지는 모바일 화면에서 열 수 없습니다. 더 큰 화면에서 확인해주세요.</Typography.Text>
+      </Modal>
     </Layout>
   );
 }
