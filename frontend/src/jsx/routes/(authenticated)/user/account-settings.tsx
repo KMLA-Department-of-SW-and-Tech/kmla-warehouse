@@ -66,7 +66,7 @@ const AccountSettings = () => {
             <div style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>
               <h2>계정 설정</h2>
 
-              <Form layout="vertical" onFinish={handlePasswordChange}>
+              <Form layout="vertical" onFinish={/* handlePasswordChange */() => {}}>
                 <Form.Item
                   label="현재 비밀번호"
                   name="currentPassword"
