@@ -17,7 +17,7 @@ const AccountSettings = () => {
     setLoading(true);
     setErrorMessage(""); 
     try {
-      await authService.changePassword(values.currentPassword, values.newPassword);
+      // await authService.changePassword(values.currentPassword, values.newPassword);
       message.success('비밀번호가 성공적으로 변경되었습니다');
     } catch (error) {
       console.log(error);

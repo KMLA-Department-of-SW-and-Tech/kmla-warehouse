@@ -8,6 +8,7 @@ import './admin.css';
 import Headbar from "../../../components/admin/admin-header";
 import { itemService } from "../../../../js/api/itemService";
 import {GetItem, PostItem, PatchItem} from '../../../../js/types/Item';
+import { useAuth } from "../../../contexts/authContext";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -19,6 +20,7 @@ const AdminEquipmentPage: React.FC = () => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [form] = Form.useForm();
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const authValue = useAuth();
 
   useEffect(() => {
     fetchItem();
@@ -58,7 +60,7 @@ const AdminEquipmentPage: React.FC = () => {
     }
 
     try {
-      const addedItem = await itemService.create(formData); 
+      const addedItem = await itemService.create(formData, authValue.accessToken); 
       setItems(prevItems => [addedItem, ...prevItems]); 
       message.success('Item added successfully');
       form.resetFields();
@@ -83,7 +85,7 @@ const AdminEquipmentPage: React.FC = () => {
     }
 
     try {
-      const updated = await itemService.update(id, formData); 
+      const updated = await itemService.update(id, formData, authValue.accessToken); 
       setItems(items.map(item => (item._id === id ? updated : item))); 
       message.success('Item updated successfully');
       fetchItem();
@@ -96,7 +98,7 @@ const AdminEquipmentPage: React.FC = () => {
 
   const handleDeleteItem = async (id: string) => {
     try {
-      await itemService.delete(id); 
+      await itemService.delete(id, authValue.accessToken); 
       setItems(items.filter(item => item._id !== id)); 
       message.success('Item deleted successfully');
     } catch (error) {

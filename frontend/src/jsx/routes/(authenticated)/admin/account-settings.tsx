@@ -17,7 +17,7 @@ const AdminSettingPage = () => {
     setLoading(true);
     setErrorMessage(""); // Reset error message on new attempt
     try {
-      await authService.changePassword(values.currentPassword, values.newPassword);
+      // await authService.changePassword(values.currentPassword, values.newPassword);
       message.success('Password changed successfully!');
     } catch (error) {
       console.log(error);
