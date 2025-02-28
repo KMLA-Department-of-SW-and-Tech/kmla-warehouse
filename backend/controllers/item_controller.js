@@ -1,6 +1,6 @@
 const itemService = require("../services/item_service");
 
-exports.list = async (req, res, next) => {
+module.exports.list = async (req, res, next) => {
     try {
         return res.status(200).send(await itemService.getAvailable());
     } catch (e) {
@@ -11,7 +11,7 @@ exports.list = async (req, res, next) => {
     }
 };
 
-exports.listAll = async (req, res, next) => {
+module.exports.listAll = async (req, res, next) => {
     try {
         return res.status(200).send(await itemService.getAll());
     } catch (e) {
@@ -22,7 +22,7 @@ exports.listAll = async (req, res, next) => {
     }
 };
 
-exports.listForTeam = async (req, res, next) => {
+module.exports.listForTeam = async (req, res, next) => {
     try {
         return res.status(200).send(await itemService.getAvailableForTeam(req.params.teamName));
     } catch (e) {
@@ -33,7 +33,7 @@ exports.listForTeam = async (req, res, next) => {
     }
 };
 
-exports.listAllForTeam = async (req, res, next) => {
+module.exports.listAllForTeam = async (req, res, next) => {
     try {
         return res.status(200).send(await itemService.getAllForTeam(req.params.teamName));
     } catch (e) {
@@ -44,7 +44,7 @@ exports.listAllForTeam = async (req, res, next) => {
     }
 };
 
-exports.detail = async (req, res, next) => {
+module.exports.detail = async (req, res, next) => {
     try {
         const id = req.params.id;
 
@@ -59,7 +59,7 @@ exports.detail = async (req, res, next) => {
     }
 };
 
-exports.create = async (req, res, next) => {
+module.exports.create = async (req, res, next) => {
     try {
         return res.status(201).send(await itemService.createOne(req.body));
     } catch (e) {   
@@ -70,7 +70,7 @@ exports.create = async (req, res, next) => {
     }
 };
 
-exports.edit = async (req, res, next) => {
+module.exports.edit = async (req, res, next) => {
     try {
         const id = req.params.id;
 
@@ -85,7 +85,7 @@ exports.edit = async (req, res, next) => {
     }
 };
 
-exports.delete = async (req, res, next) => {
+module.exports.delete = async (req, res, next) => {
     try {
         const id = req.params.id;
 
@@ -100,7 +100,7 @@ exports.delete = async (req, res, next) => {
     }
 };
 
-exports.borrow = async (req, res, next) => {
+module.exports.borrow = async (req, res, next) => {
     try {
         return res.status(201).send(await itemService.borrow(req.params.id, req.body));
     } catch (e) {   

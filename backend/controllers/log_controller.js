@@ -1,6 +1,6 @@
 const logService = require("../services/log_service");
 
-exports.list = async (req, res, next) => {
+module.exports.list = async (req, res, next) => {
     try {
         return res.status(200).send(await logService.getAll());
     } catch (e) {
@@ -11,7 +11,7 @@ exports.list = async (req, res, next) => {
     }
 };
 
-exports.listForTeam = async (req, res, next) => {
+module.exports.listForTeam = async (req, res, next) => {
     try {
         return res.status(200).send(await logService.getAllForTeam(req.params.teamName));
     } catch (e) {
@@ -22,7 +22,7 @@ exports.listForTeam = async (req, res, next) => {
     }
 };
 
-exports.detail = async (req, res, next) => {
+module.exports.detail = async (req, res, next) => {
     try {
         const id = req.params.id;
 
@@ -37,7 +37,7 @@ exports.detail = async (req, res, next) => {
     }
 };
 
-exports.create = async (req, res, next) => {
+module.exports.create = async (req, res, next) => {
     try {
         return res.status(201).send(await logService.createOne(req.body));
     } catch (e) {
@@ -48,7 +48,7 @@ exports.create = async (req, res, next) => {
     }
 };
 
-exports.delete = async (req, res, next) => {
+module.exports.delete = async (req, res, next) => {
     try {
         const id = req.params.id;
 
@@ -63,7 +63,7 @@ exports.delete = async (req, res, next) => {
     }
 };
 
-exports.item_return = async (req, res, next) => {
+module.exports.item_return = async (req, res, next) => {
     try {
         const id = req.params.id;
 
