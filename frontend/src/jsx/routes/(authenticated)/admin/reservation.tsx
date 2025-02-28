@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Typography, Spin, message, Grid, Modal } from 'antd';
+import { Layout, Typography, Spin, message, Grid, Modal, ConfigProvider } from 'antd';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from '../../../components/admin/admin-sidebar';
 import "./admin.css";
@@ -7,6 +7,7 @@ import Headbar from "../../../components/admin/admin-header";
 import { logService } from "../../../../js/api/logService";
 import { GetLog, PatchLog } from "../../../../js/types/Log";
 import { DeleteOutlined } from '@ant-design/icons';
+import enUS from 'antd/lib/locale/en_US';
 import { useAuth } from '../../../contexts/authContext';
 
 const { Content, Sider } = Layout;
@@ -79,40 +80,43 @@ const AdminHistoryPage: React.FC = () => {
   ];
 
   return (
-    <Layout className="layout">
-      <Headbar />
-      <Layout>
-        {!screens.xs  && (
-          <Sider>
-            <Sidebar />
-          </Sider>
-        )}
-        
+    <ConfigProvider locale={enUS}>
+      <Layout className="layout">
+        <Headbar />
         <Layout>
-          <Content className="content">
-            <Title level={3}>예약현황</Title>
-            {loading ? (
-              <Spin />
-            ) : (
-              <EditableProTable<GetLog>
-                rowKey="_id"
-                value={logs}
-                columns={columns}
-                editable={{
-                  type: "multiple",
-                  editableKeys,
-                  onSave: async (rowKey, data) => {
-                    await handleUpdateLog(data._id, data as PatchLog);
-                  },
-                  onChange: setEditableRowKeys,
-                }}
-                recordCreatorProps={false}
-              />
-            )}
-          </Content>
+          {!screens.xs  && (
+            <Sider>
+              <Sidebar />
+            </Sider>
+          )}
+          
+          <Layout>
+            <Content className="content">
+              <Title level={3}>신청관리</Title>
+              {loading ? (
+                <Spin />
+              ) : (
+                <EditableProTable<GetLog>
+                  rowKey="_id"
+                  value={logs}
+                  columns={columns}
+                  editable={{
+                    type: "multiple",
+                    editableKeys,
+                    onSave: async (rowKey, data) => {
+                      await handleUpdateLog(data._id, data as PatchLog);
+                    },
+                    onChange: setEditableRowKeys,
+                  }}
+                  recordCreatorProps={false}
+                />
+              )}
+            </Content>
+          </Layout>
         </Layout>
       </Layout>
-    </Layout>
+    </ConfigProvider>
+    
   );
 };
 
