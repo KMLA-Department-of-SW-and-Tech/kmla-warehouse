@@ -13,24 +13,24 @@ const AccountSettings = () => {
   const [errorMessage, setErrorMessage] = useState(''); 
   const navigate = useNavigate();
   
-  const handlePasswordChange = async (values) => {
-    setLoading(true);
-    setErrorMessage(""); 
-    try {
-      // await authService.changePassword(values.currentPassword, values.newPassword);
-      message.success('비밀번호가 성공적으로 변경되었습니다');
-    } catch (error) {
-      console.log(error);
+  // const handlePasswordChange = async (values) => {
+  //   setLoading(true);
+  //   setErrorMessage(""); 
+  //   try {
+  //     // await authService.changePassword(values.currentPassword, values.newPassword);
+  //     message.success('비밀번호가 성공적으로 변경되었습니다');
+  //   } catch (error) {
+  //     console.log(error);
       
-      const responseMessage = error.response?.data || '비밀번호를 변경하는데 실패하였습니다. 다시 시도해 주세요.';
-      setErrorMessage(responseMessage);
-      message.error('비밀번호를 변경하는데 실패하였습니다.'); 
+  //     const responseMessage = error.response?.data || '비밀번호를 변경하는데 실패하였습니다. 다시 시도해 주세요.';
+  //     setErrorMessage(responseMessage);
+  //     message.error('비밀번호를 변경하는데 실패하였습니다.'); 
 
-      throw(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     throw(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleLogout = async () => {
     setLoading(true);
