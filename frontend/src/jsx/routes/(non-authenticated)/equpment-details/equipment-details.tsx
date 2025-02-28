@@ -10,6 +10,7 @@ import { useAuth } from '../../../contexts/authContext';
 const { Sider, Content } = Layout;
 const { Title, Text } = Typography;
 
+
 export default function EquipmentDetails() {
   // State to manage loading status, item details, and borrowing quantity
   const [loading, setLoading] = useState(true);
