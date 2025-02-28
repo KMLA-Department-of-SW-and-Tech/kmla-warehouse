@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, message, Layout } from 'antd';
+import { Form, Input, Button, message, Layout, Typography } from 'antd';
 import Sidebar from '../../../components/admin/admin-sidebar';
 import Headbar from '../../../components/admin/admin-header'; // Assuming you have a header component like in the EquipmentListPage
 import { useNavigate } from 'react-router-dom';
 // import authService from '../../../../api/authService';
 
 const { Sider, Content } = Layout;
+const { Title } = Typography;
 
 const AdminSettingPage = () => {
   const [loading, setLoading] = useState(false);
@@ -48,80 +49,23 @@ const AdminSettingPage = () => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Headbar /> {/* Header component */}
-      <Sider
-        width={250}
-        style={{
-          background: '#fff',
-          position: 'fixed',
-          height: '100vh',
-          left: 0,
-          top: 64, // If you have a fixed header
-        }}
-      >
-        <Sidebar /> {/* Sidebar component */}
-      </Sider>
-      
-      <Layout style={{ marginLeft: 250 }}>
-        <Content style={{ padding: '40px', marginTop: '64px', width: 'calc(100vw - 250px)' }}>
-          <div style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>
-            <h2>Account Settings</h2>
-
-            <Form layout="vertical" onFinish={handlePasswordChange}>
-              <Form.Item
-                label="Current Password"
-                name="currentPassword"
-                rules={[{ required: true, message: 'Please enter your current password!' }]}
-              >
-                <Input.Password />
-              </Form.Item>
-
-              <Form.Item
-                label="New Password"
-                name="newPassword"
-                rules={[{ required: true, message: 'Please enter your new password!' }]}
-              >
-                <Input.Password />
-              </Form.Item>
-
-              <Form.Item
-                label="Confirm New Password"
-                name="confirmNewPassword"
-                rules={[
-                  { required: true, message: 'Please confirm your new password!' },
-                  ({ getFieldValue }) => ({
-                    validator(_, value) {
-                      if (!value || getFieldValue('newPassword') === value) {
-                        return Promise.resolve();
-                      }
-                      return Promise.reject(new Error('The two passwords do not match!'));
-                    },
-                  }),
-                ]}
-              >
-                <Input.Password />
-              </Form.Item>
-
-              {/* Display error message */}
-              {errorMessage && (
-                <div style={{ color: 'red', marginBottom: '16px' }}>
-                  {errorMessage}
-                </div>
-              )}
-
-              <Form.Item>
-                <Button type="primary" htmlType="submit" loading={loading}>
-                  Change Password
-                </Button>
-              </Form.Item>
-            </Form>
-
+      <Headbar />
+      <Layout>
+        <Sider>
+          <Sidebar />
+        </Sider>
+        <Layout>
+          <Content className='content'>
+            <Title level={3}>마이페이지</Title>
             <Button onClick={handleLogout} loading={loading}>
               Logout
             </Button>
-          </div>
-        </Content>
+          </Content>
+        </Layout>
       </Layout>
+      
+      
+      
     </Layout>
   );
 };
