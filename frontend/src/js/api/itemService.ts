@@ -16,9 +16,11 @@ export const itemService = {
 
   // Fetch item details by ID
   getById: async (id: string): Promise<GetItem> => {
+    console.log(id);
     try {
       const response = await axios.get(`/api/item/${id}`);
-      return response.data.item;
+      console.log(response);
+      return response.data;
     } catch (e) {
       console.error(e.message);
       throw e;
