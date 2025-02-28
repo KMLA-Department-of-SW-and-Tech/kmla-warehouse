@@ -46,7 +46,7 @@ export default function EquipmentDetails() {
       return;
     }
     try {
-      await itemService.borrowRequest(id, borrowQuantity, "user"); // Send borrow request
+      await itemService.borrowRequest(id, borrowQuantity, "user",); // Send borrow request
       message.success('대여 요청이 성공적으로 처리되었습니다.'); // Success message
       window.location.reload(); // Reload page to reflect updated status
     } catch (error) {

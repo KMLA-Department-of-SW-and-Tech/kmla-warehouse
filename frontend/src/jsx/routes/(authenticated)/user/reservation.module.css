@@ -1,0 +1,67 @@
+/* ReservationStatus.module.css */
+
+.layout {
+    min-height: 100vh;
+  }
+  
+  .sidebar {
+    background: #fff;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 64px;
+    width: 250px;
+  }
+  
+  .content {
+    padding: 40px;
+    margin-top: 64px;
+    width: calc(98vw - 250px);
+  }
+  
+  .title {
+    display: flex;
+    align-items: center;
+  }
+  
+  .cardContainer {
+    margin-top: 20px;
+  }
+  
+  .card {
+    max-width: 220px;
+    height: 300px;
+  }
+  
+  .imageContainer {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+  }
+  
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .noImageText {
+    color: gray;
+  }
+  
+  .cardMeta {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .returnButton {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
