@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Layout, Typography, Spin, message, ConfigProvider, Upload, Button, Form, Input, InputNumber } from 'antd';
 import enUS from 'antd/lib/locale/en_US';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
-import { CloseOutlined, DeleteOutlined, EditOutlined, SaveOutlined, UploadOutlined } from "@ant-design/icons";
+import { CloseOutlined, DeleteOutlined, EditOutlined, SaveOutlined, UploadOutlined, PlusOutlined } from "@ant-design/icons";
 import Sidebar from "../../../components/admin/admin-sidebar";
 import './admin.css';
 import Headbar from "../../../components/admin/admin-header";
@@ -20,6 +20,7 @@ const AdminEquipmentPage: React.FC = () => {
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const [form] = Form.useForm();
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const authValue = useAuth();
 
   useEffect(() => {
@@ -44,10 +45,13 @@ const AdminEquipmentPage: React.FC = () => {
   
   const handleImageUpload = (file: File) => {
     setImageFile(file);
+    const imageUrl = URL.createObjectURL(file);
+    setPreviewImage(imageUrl);
     return false;
   };
 
   
+  // create new item to table
   const handleAddItem = async (newItem: PostItem) => {    
     const formData = new FormData();
     formData.append("name", newItem.name);
@@ -69,14 +73,17 @@ const AdminEquipmentPage: React.FC = () => {
       console.error(error);
       throw(error);
     }
+    fetchItem();
   };
 
+
+
+  // modify existing item in table
   const handleUpdateItem = async (id: string, updatedItem: PatchItem) => {
     const formData = new FormData();
-    
     Object.entries(updatedItem).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
-        formData.append(key, value.toString()); // Convert to string if needed
+        formData.append(key, value.toString());
       }
     })
 
@@ -88,14 +95,16 @@ const AdminEquipmentPage: React.FC = () => {
       const updated = await itemService.update(id, formData, authValue.accessToken); 
       setItems(items.map(item => (item._id === id ? updated : item))); 
       message.success('Item updated successfully');
+      setPreviewImage(null);
+      setImageFile(null);
       fetchItem();
     } catch (error) {
       message.error('Failed to update item');
       console.error(error);
-      throw(error);
     }
   };
 
+  // delete existing item in table
   const handleDeleteItem = async (id: string) => {
     try {
       await itemService.delete(id, authValue.accessToken); 
@@ -129,11 +138,7 @@ const AdminEquipmentPage: React.FC = () => {
             name="image"
             listType="picture-card"
             showUploadList={false}
-            beforeUpload={(file) => {
-              const formData = new FormData();
-              formData.append("image", file);
-              return false; 
-            }}
+            beforeUpload={handleImageUpload}
           >
             <Button icon={<UploadOutlined />}>이미지 업로드</Button>
           </Upload>
@@ -151,9 +156,7 @@ const AdminEquipmentPage: React.FC = () => {
         <Button
           key="editable"
           icon={<EditOutlined />}
-          onClick={() => {
-            action?.startEditable?.(record._id);
-          }}
+          onClick={() => action?.startEditable?.(record._id)}
           type="link"
         >
         </Button>,

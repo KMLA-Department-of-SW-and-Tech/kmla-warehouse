@@ -51,28 +51,25 @@ const router = createBrowserRouter([
     path: "/account-settings",
     element: <AccountSettings />,
   },
-
   //Reservation Status page
   {
     path: "/reservation",
     element: <ReservationStatus />,
   },
-  // Admin: add equipment page
+
+
+  
+  // ADMIN: add equipment page
   {
     path: "/admin/equipment",
     element: <AdminEquipmentPage />,
   },
-  // Admin: reservation page
+  // ADMIN: reservation page
   {
     path: "/admin/reservation",
     element: <AdminHistoryPage />,
   },
-  // // Admin: mange team page
-  // {
-  //   path: "/admin/team",
-  //   element: <AdminTeamPage />,
-  // },
-  // Admin: account setting page
+  // ADMIN: account setting page
   {
     path: "/admin/account-settings",
     element: <AdminSettingPage />,
