@@ -4,14 +4,20 @@ const mongoose = require("mongoose");
 
 module.exports.findUserByFirebaseUid = async (firebaseUid) => {
     try {
-        return await User.find({ firebaseUid: firebaseUid });
+        return await User.findOne({ firebaseUid: firebaseUid });
     } catch (e) {
         console.log("user service error: ", e);
         throw e;
     }
 }
 
-// module.exports.createUser
+module.exports.createUserByFirebaseUid = async (firebaseUid) => {
+    const newUser = await User.create({
+        firebaseUid: firebaseUid,
+        userType: "Unauthorized",
+    })
+    return newUser;
+}
 
 // exports.getAll = async () => {
 //     try {

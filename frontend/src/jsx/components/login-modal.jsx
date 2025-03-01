@@ -1,8 +1,9 @@
 import { Modal } from "antd";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 // import { GoogleLogin } from "@react-oauth/google";
 import { signUserInWithGoogle } from "../../js/firebase/auth";
-import { getAdditionalUserInfo } from "firebase/auth";
+// import { getAdditionalUserInfo } from "firebase/auth";
 import { FcGoogle } from "react-icons/fc";
 
 import "./login-modal.css"
@@ -10,12 +11,14 @@ import { useAuth } from "../contexts/authContext";
 
 export default function LoginModal({ openModal }) {
     const [isModalOpen, setIsModalOpen] = useState(openModal);
+    const navigate = useNavigate();
     const authValue = useAuth();
 
     const handleGoogleLogin = async () => {
         const res = await signUserInWithGoogle();
-        const isNewUser = getAdditionalUserInfo(res).isNewUser;
-        console.log(isNewUser);
+        if(res.isAdmin) navigate("/admin/equipment");
+        // const isNewUser = getAdditionalUserInfo(res).isNewUser;
+        // console.log(isNewUser);
     };
 
     const handleCancel = () => {

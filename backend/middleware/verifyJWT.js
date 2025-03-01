@@ -6,11 +6,10 @@ const verifyJWT = async (req, res, next) => {
     const token = authHeader.split(' ')[1];
     try {
         const decodedValue = await admin.auth().verifyIdToken(token);
-        console.log(decodedValue);
-        // decodedValue checking
+        req.firebaseUid = decodedValue.user_id;
         return next();
     } catch(e) {
-        console.log(e);
+        console.log("JWT validation error: ", e.errorInfo.message);
         return res.status(500).send("Internal error");
     }
 };
