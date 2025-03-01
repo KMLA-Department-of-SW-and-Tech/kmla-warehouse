@@ -17,6 +17,7 @@ const syncFirebaseWithMongoose = async (credential) => {
 }
 
 
+
 export const signUserInWithGoogle = async () => {
     try {
         const provider = new GoogleAuthProvider();
@@ -25,11 +26,14 @@ export const signUserInWithGoogle = async () => {
         });
         const result = await signInWithPopup(auth, provider);
         console.log(result.user);
-        // check whether user exists and create account if ...
+        // check whether user exists and create account if not
         if(result) await syncFirebaseWithMongoose(result);
         // check admin
-        
-        return result;
+        const userInfo = await axiosPrivate.get("/api/user", result.user.accessToken);
+        return {
+            firebaseResult: result,
+            isAdmin: userInfo.data.userType === "Admin",
+        };
     } catch(err) {
         console.log(err);
         throw err;

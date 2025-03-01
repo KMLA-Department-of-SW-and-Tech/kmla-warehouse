@@ -13,7 +13,12 @@ module.exports.syncFirebaseAndMongooseUserDB = async (req, res, next) => {
 }
 
 module.exports.getUserInfo = async (req, res, next) => {
-    const foundUser = await userService.findUserByFirebaseUid(req.firebaseUid);
+    try {
+        const foundUser = await userService.findUserByFirebaseUid(req.firebaseUid);
+        return res.status(200).send(foundUser);
+    } catch(e) {
+        return res.status(500).send("Internal server error");
+    }
 }
 
 module.exports.updateUserInfo = async (req, res, next) => {
