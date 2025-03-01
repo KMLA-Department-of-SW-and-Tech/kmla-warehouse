@@ -3,12 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Menu, MenuProps, Badge } from 'antd';
 import { 
   HistoryOutlined, 
-  ProductOutlined, 
-  TeamOutlined,
+  ProductOutlined,
   UserOutlined
 } from '@ant-design/icons';
 import './admin-sidebar.css';
-
 
 
 const Sidebar: React.FC = () => {
@@ -54,7 +52,6 @@ const handleMenuClick = (e: {key: string}) => {
 };
   return (
     <Menu
-      mode="inline"
       defaultSelectedKeys={['home']}
       onClick={handleMenuClick}
       items={items1}

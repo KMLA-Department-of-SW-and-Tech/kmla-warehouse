@@ -1,10 +1,8 @@
 
 
 .layout {
- 
   background-color: #d7d7d4;
-  display: flex;
-  
+  display: flex; 
 }
 
 
@@ -16,6 +14,7 @@
   width: calc(100vw - 250px);
 }
 
+/* If this css is commented out, admin settings account page becomes normal */
 .content {
   padding: 40px;
   margin-top: 64px;
@@ -23,7 +22,6 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  
   
 }
 

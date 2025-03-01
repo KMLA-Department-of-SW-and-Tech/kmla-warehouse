@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, message, Layout, Typography } from 'antd';
+import { Button, message, Layout, Typography } from 'antd';
+import { signUserOut } from '../../../../js/firebase/auth';
 import Sidebar from '../../../components/admin/admin-sidebar';
 import Headbar from '../../../components/admin/admin-header'; // Assuming you have a header component like in the EquipmentListPage
 import { useNavigate } from 'react-router-dom';
+import './admin.css';
 // import authService from '../../../../api/authService';
 
 const { Sider, Content } = Layout;
@@ -16,7 +18,7 @@ const AdminSettingPage = () => {
   const handleLogout = async () => {
     setLoading(true);
     try {
-      await authService.logout();
+      await signUserOut();
       message.success('Logged out successfully!');
       navigate("/home");
     } catch (error) {
@@ -28,14 +30,14 @@ const AdminSettingPage = () => {
   };
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout className='layout'>
       <Headbar />
       <Layout>
         <Sider>
           <Sidebar />
         </Sider>
         <Layout>
-          <Content className='content'>
+          <Content>
             <Title level={3}>마이페이지</Title>
             <Button onClick={handleLogout} loading={loading}>
               Logout

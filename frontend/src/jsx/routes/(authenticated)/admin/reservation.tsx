@@ -6,7 +6,6 @@ import "./admin.css";
 import Headbar from "../../../components/admin/admin-header";
 import { logService } from "../../../../js/api/logService";
 import { GetLog, PatchLog } from "../../../../js/types/Log";
-import { DeleteOutlined } from '@ant-design/icons';
 import enUS from 'antd/lib/locale/en_US';
 import { useAuth } from '../../../contexts/authContext';
 

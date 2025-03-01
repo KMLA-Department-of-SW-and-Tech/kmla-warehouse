@@ -1,9 +1,9 @@
 .sidebar {
-    height: 100vh;
-    padding-top: 70px;
+    padding-top: 10px;
     position: 'fixed'; 
     top: 60;
     left: 0;
     width: 200px; 
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); 
+    background-color: white;
 }
