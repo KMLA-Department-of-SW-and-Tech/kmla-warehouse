@@ -6,7 +6,7 @@ import {
   ProductOutlined,
   UserOutlined
 } from '@ant-design/icons';
-import './admin-sidebar.css';
+import './sidebar.css';
 
 
 const Sidebar: React.FC = () => {
@@ -20,7 +20,7 @@ const items1: MenuProps['items'] = [
     type: 'group',
     children: [
       {
-        key: '/admin/equipment',
+        key: '/admin/item',
         icon: <ProductOutlined />,
         label: '물품관리',
       },

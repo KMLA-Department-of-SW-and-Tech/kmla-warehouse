@@ -3,9 +3,9 @@ import { Layout, Typography, Spin, message, ConfigProvider, Upload, Button, Form
 import enUS from 'antd/lib/locale/en_US';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import { CloseOutlined, DeleteOutlined, EditOutlined, SaveOutlined, UploadOutlined, PlusOutlined } from "@ant-design/icons";
-import Sidebar from "../../../components/admin/admin-sidebar";
+import Sidebar from "../../../components/sidebar/admin-sidebar";
 import './admin.css';
-import Headbar from "../../../components/admin/admin-header";
+import Headbar from "../../../components/header/header";
 import { itemService } from "../../../../js/api/itemService";
 import {GetItem, PostItem, PatchItem} from '../../../../js/types/Item';
 import { useAuth } from "../../../contexts/authContext";
@@ -174,21 +174,17 @@ const AdminEquipmentPage: React.FC = () => {
 
   return (
     <ConfigProvider locale={enUS}>
-      <Layout className="layout">
+      <Layout> 
         <Headbar />
-        <Layout>
-          <Sider>
+        <Layout className="admin-layout">
+          <Sider className="sidebar">
             <Sidebar />
           </Sider>
-          <Layout>
-            <Content className="content">
+          <Content className="admin-content">
               <Title level={3}>물품관리</Title>
-
               <Form
                 form={form}
-                layout="inline"
                 onFinish={handleAddItem}
-                style={{ marginBottom: '16px' }}
               >
                 <Form.Item
                   name="name"
@@ -257,8 +253,7 @@ const AdminEquipmentPage: React.FC = () => {
                   recordCreatorProps={false}
                 />
               )}
-            </Content>
-          </Layout>
+          </Content>
         </Layout>
       </Layout>
     </ConfigProvider>

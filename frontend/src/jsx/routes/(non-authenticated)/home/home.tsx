@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Card, Row, Col, Spin, Layout, Input, Modal } from 'antd';
 import { UnorderedListOutlined } from '@ant-design/icons'; 
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../../../components/user/user-sidebar';
+import Sidebar from '../../../components/sidebar/user-sidebar';
 import { itemService } from '../../../../js/api/itemService'; 
-import Headbar from '../../../components/user/header';
+import Headbar from '../../../components/header/header';
 import {GetItem, PostItem, PatchItem} from '../../../../js/types/Item';
 
 // needs deletion
-import LoginModal from "../../../components/login-modal";
+import LoginModal from "../../../components/login-modal/login-modal";
 
 
 import "./home.css"
@@ -86,7 +86,7 @@ export default function Home() {
       <Headbar />
       
       {windowWidth > 768 && (
-        <Sider className="equipment-sider">
+        <Sider className='sidebar'>
           <Sidebar />
         </Sider>
       )}

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Card, Row, Col, Spin, Layout, message, Button } from 'antd';
-import Sidebar from '../../../components/user/user-sidebar.tsx';
+import Sidebar from '../../../components/sidebar/user-sidebar.tsx';
 import { itemService } from "../../../../js/api/itemService.ts";
-import Headbar from "../../../components/user/header.tsx";
+import Headbar from "../../../components/header/header.tsx";
 import { UnorderedListOutlined } from '@ant-design/icons';
 
-import { GetLog } from "../../../../js/types/Log";
-import { GetItem } from "../../../../js/types/Item";
+import { GetLog } from "../../../../js/types/Log.ts";
+import { GetItem } from "../../../../js/types/Item.ts";
 import { useAuth } from "../../../contexts/authContext/index.jsx";
 import './reservation.css';
 
@@ -53,16 +53,16 @@ export default function ReservationStatus() {
   };
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout>
       <Headbar />
-      <Sider className="sidebar">
+      <Sider>
         <Sidebar />
       </Sider>
 
       <Layout className="layout">
         <Content className="content">
           <Title level={2} className="title">
-            <UnorderedListOutlined style={{ marginRight: '10px' }} />
+            <UnorderedListOutlined />
             예약현황 보기
           </Title>
 

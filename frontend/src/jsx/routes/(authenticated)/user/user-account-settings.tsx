@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, message, Layout } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { signUserOut } from '../../../../js/firebase/auth';
-import Sidebar from '../../../components/user/user-sidebar';
-import Headbar from '../../../components/user/header';
-import './account-settings.css';
+import Sidebar from '../../../components/sidebar/user-sidebar';
+import Headbar from '../../../components/header/header';
+import './user-account-settings.css';
 
 const { Sider, Content } = Layout;
 

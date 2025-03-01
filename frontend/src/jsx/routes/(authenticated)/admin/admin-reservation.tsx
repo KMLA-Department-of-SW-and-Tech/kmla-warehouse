@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Typography, Spin, message, Grid, Modal, ConfigProvider } from 'antd';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
-import Sidebar from '../../../components/admin/admin-sidebar';
+import Sidebar from '../../../components/sidebar/admin-sidebar';
 import "./admin.css";
-import Headbar from "../../../components/admin/admin-header";
+import Headbar from "../../../components/header/header";
 import { logService } from "../../../../js/api/logService";
 import { GetLog, PatchLog } from "../../../../js/types/Log";
 import enUS from 'antd/lib/locale/en_US';
@@ -80,17 +80,14 @@ const AdminHistoryPage: React.FC = () => {
 
   return (
     <ConfigProvider locale={enUS}>
-      <Layout className="layout">
+      <Layout>
         <Headbar />
-        <Layout>
-          {!screens.xs  && (
-            <Sider>
+        <Layout>          
+          <Layout className="admin-layout">
+            <Sider className='sidebar'>
               <Sidebar />
             </Sider>
-          )}
-          
-          <Layout>
-            <Content className="content">
+            <Content className="admin-content">
               <Title level={3}>신청관리</Title>
               {loading ? (
                 <Spin />

@@ -3,7 +3,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, MenuProps, Badge } from 'antd';
 import { AppstoreOutlined, HistoryOutlined, UserOutlined } from '@ant-design/icons';
 //import authService from '../../api/authService';
-import './user-sidebar.css'; // CSS 파일을 가져옵니다.
+import './sidebar.css'; // CSS 파일을 가져옵니다.
 
 const MenuBar: React.FC = () => {
   const navigate = useNavigate();
@@ -50,11 +50,10 @@ const MenuBar: React.FC = () => {
 
   return (
     <Menu
-      mode="inline"
       defaultSelectedKeys={['home']}
       onClick={handleMenuClick}
       items={items1}
-      className="menu-bar" // CSS 클래스 추가
+      className="sidebar"
     />
   );
 };
