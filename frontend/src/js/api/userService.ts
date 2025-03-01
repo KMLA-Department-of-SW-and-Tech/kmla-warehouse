@@ -1,52 +1,60 @@
+import axios from 'axios';
 import axiosPrivate from '../hooks/axiosPrivate';
+import { GetUser, PatchUser } from '../types/User';
 
-// export const teamService = {
-
-//   //GET 팀리스트
-//   getAll: async (): Promise<Team[]> => {
-//     try {
-//       const response = await axiosPrivate.get(`/api/team/list`);
-//       console.log(response);
-//       return response.data;
-//     } catch (e) {
-//       console.error(e.message);
-//       return [];
-//     }
-//   },
-//   /*
-//   search: async (query: string): Promise<Team[]> => {
-//     const response = await axiosPrivate.get(`${API_URL}/search`, { params: { query } });
-//     return response.data;
-//   },
-//   */
-
-//   //GET 아이디별 팀정보
-//   getTeamInfo: async (id: string): Promise<Team> => {
-//     const response = await axiosPrivate.get(`/api/team/${id}`);
-//     console.log(response.data.newTeam)
-//     return response.data.newTeam;
-//   },
-
-//   //POST 팀정보 업로드하기
-//   create: async (teamData: AddTeam): Promise<AddTeam> => {
-//     const response = await axiosPrivate.post("/api/team/", teamData);
-//     return response.data.newTeam;
-//   },
-
-//   //PUT 팀정보 업데이트하기
-//   update: async (id: string, teamData: Partial<Team>): Promise<Team> => {
-//     const response = await axiosPrivate.put(`/api/team/${id}`, teamData);
-//     return response.data;
-//   },
-
-//   //DELETE 팀 삭제하기
-//   delete: async (id: string): Promise<void> => {
-//     await axiosPrivate.delete(`/api/team/${id}`);
-//   },
-
-//   //유저 정보 가져오기
-//   getUserInfo : async () => {
-//     const response = await axiosPrivate.get(`/api/auth`);
-//     return response.data;
-//   },
-// };
+export const userService = {
+    getUserInfo: async (accessToken: string): Promise<GetUser> => {
+        try {
+            const response = await axiosPrivate.get("/api/user", accessToken);
+            return response.data;
+        } catch (e) {
+            console.error("Get user info error: ", e);
+            throw e;
+        }
+    },
+    updateCurrentUserInfo: async (accessToken: string): Promise<void> => {
+        try {
+            const response = await axiosPrivate.patch("/api/user", {}, accessToken);
+            console.log(response);
+        } catch (e) {
+            console.log("Update current user info error: ", e);
+            throw e;
+        }
+    },
+    getUnauthorizedUsers: async (accessToken: string): Promise<GetUser[]> => {
+        try {
+            const response = await axiosPrivate.get("/api/user/unauth-list", accessToken);
+            return response.data;
+        } catch (e) {
+            console.log("Get unauthorized users error: ", e);
+            throw e;
+        }
+    },
+    authorizeUserById: async (id: string, accessToken: string): Promise<void> => {
+        try {
+            const response = await axiosPrivate.patch(`/api/user/authorize/${id}`, {}, accessToken);
+            console.log(response);
+        } catch (e) {
+            console.log("Authorize user by id error: ", e);
+            throw e;
+        }
+    },
+    getAuthorizedUsers: async (accessToken: string): Promise<GetUser[]> => {
+        try {
+            const response = await axiosPrivate.get("/api/user/auth-list", accessToken);
+            return response.data;
+        } catch (e) {
+            console.log("Get unauthorized users error: ", e);
+            throw e;
+        }
+    },
+    getTeamNameList: async (): Promise<string[]> => {
+        try {
+            const response = await axios.get("/api/users/team-name-list");
+            return response.data;
+        } catch (e) {
+            console.log("Get team name list error: ", e);
+            throw e;
+        }
+    },
+}
