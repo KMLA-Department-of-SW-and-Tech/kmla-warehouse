@@ -20,6 +20,8 @@ router.route("/authorize/:id")
 router.route("/auth-list")
     .get(verifyJWT, verifyRoles(["Admin"]), userController.getAuthorizedUserList);
 
+router.route("/team-name-list")
+    .get(userController.getTeamNameList);
 module.exports = router;
 
 
