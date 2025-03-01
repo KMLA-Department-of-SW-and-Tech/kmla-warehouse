@@ -1,7 +1,10 @@
+const userService = require("../services/user_service");
 
-
-const verifyRoles = (...allowedRoles) => { // will be needed in future applications
+const verifyRoles = (...allowedRoles) => { // will be needed in future applications // should not be empty
     return async(req, res, next) => {
+        const user = await userService.findUserByFirebaseUid(req.firebaseUid);
+        if(!user) return res.status(500).send("No matching firebase user in mongoose, inspection needed");
+        
         // if(!req.roles) return res.sendStatus(401);
         // const rolesArray = [...allowedRoles];
         // console.log(rolesArray);

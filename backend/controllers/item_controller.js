@@ -62,7 +62,7 @@ module.exports.detail = async (req, res, next) => {
 module.exports.create = async (req, res, next) => {
     try {
         return res.status(201).send(await itemService.createOne(req.body));
-    } catch (e) {   
+    } catch (e) {
         switch(e.message) {
             default:
                 return res.send(e);
