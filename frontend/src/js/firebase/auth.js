@@ -27,6 +27,8 @@ export const signUserInWithGoogle = async () => {
         console.log(result.user);
         // check whether user exists and create account if ...
         if(result) await syncFirebaseWithMongoose(result);
+        // check admin
+        
         return result;
     } catch(err) {
         console.log(err);
