@@ -13,7 +13,7 @@ module.exports.syncFirebaseAndMongooseUserDB = async (req, res, next) => {
 }
 
 module.exports.getUserInfo = async (req, res, next) => {
-    return res.status(200).send("not implemented");
+    const foundUser = await userService.findUserByFirebaseUid(req.firebaseUid);
 }
 
 module.exports.updateUserInfo = async (req, res, next) => {
