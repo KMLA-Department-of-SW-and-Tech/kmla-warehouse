@@ -12,9 +12,9 @@ router.route("/")
     .patch(verifyJWT, userController.updateUserInfo);
 
 router.route("/unauth-list")
-    .get(verifyJWT, verifyRoles(["Admin"]), userController.getUnauthorizedUserList)
+    .get(verifyJWT, verifyRoles(["Admin"]), userController.getUnauthorizedUserList);
 
-    router.route("/unauth-list/:id")
+router.route("/authorize/:id")
     .patch(verifyJWT, verifyRoles(["Admin"]), userController.authorizeUser);
 
 router.route("/auth-list")
