@@ -22,6 +22,7 @@ router.route("/auth-list")
 
 router.route("/team-name-list")
     .get(userController.getTeamNameList);
+
 module.exports = router;
 
 
@@ -29,5 +30,7 @@ module.exports = router;
 // 새로운 유저 정보를 가지고 기존 유저 정보를 업데이트 할 수 있는 API --> PATCH | /api/user/:id | verifyJWT
 
 // Unauthorized user list를 불러오는 API --> GET | /api/user/unauth-list | verifyJWT, verifyRoles(["Admin"])
-// Unauthorized user를 승인할 수 있는 API --> PATCH | /api/user/unauth-list | verifyJWT, verifyRoles(["Admin"])
+// Unauthorized user를 승인할 수 있는 API --> PATCH | /api/user/authorize/:id | verifyJWT, verifyRoles(["Admin"])
 // Authorized user를 불러오는 API --> GET | /api/user/auth-list | verifyJWT, verifyRoles(["Admin"])
+
+// team name list 불러오기 --> GET | /api/user/team-name-list
