@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // 페이지 이동을 위한 훅
 import './admin-header.css';
-import { useAuth } from '../../contexts/authContext';
+// import { useAuth } from '../../contexts/authContext';
 // import authService from '../../api/authService';
 
 const Headbar: React.FC = () => {
-  // const [loading, setLoading] = useState<Boolean>(true);
-  // const [currentUserName, setCurrentUserName] = useState<string | null>(null);
+  const [loading, setLoading] = useState<Boolean>(true);
+  const [currentUserName, setCurrentUserName] = useState<string | null>(null);
   const navigate = useNavigate(); 
-  const authValue = useAuth();
+  // const authValue = useAuth();
 
-  // useEffect(() => {
-  //   const fetchCurrentUser = async () => {
-  //     try {
-  //       const data = await authService.currentUser();
-  //       setCurrentUserName(data);
-  //     } catch (error) {
-  //       setCurrentUserName(null); // 에러 발생 시 로그인 상태를 비로그인으로 처리
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchCurrentUser();
-  // }, []);
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const data = await ;
+        setCurrentUserName(data);
+      } catch (error) {
+        setCurrentUserName(null); // 에러 발생 시 로그인 상태를 비로그인으로 처리
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCurrentUser();
+  }, []);
 
   const handleLogoClick = () => {
     navigate('/admin/equipment'); // admin main page

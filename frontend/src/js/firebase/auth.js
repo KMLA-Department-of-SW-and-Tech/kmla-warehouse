@@ -16,8 +16,6 @@ const syncFirebaseWithMongoose = async (credential) => {
     return result;
 }
 
-
-
 export const signUserInWithGoogle = async () => {
     try {
         const provider = new GoogleAuthProvider();

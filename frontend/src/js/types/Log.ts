@@ -1,4 +1,4 @@
-import {GetItem} from "./Item";
+import { GetItem } from "./Item";
 
 export type GetLog = {
   _id: string;
@@ -8,6 +8,6 @@ export type GetLog = {
   timestamp: string;
   type: "borrow" | "return";
   status: string;
-}
+};
 
-export type PatchLog = Partial<GetLog>
+export type PatchLog = Partial<GetLog>;

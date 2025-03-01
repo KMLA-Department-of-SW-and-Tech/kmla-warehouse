@@ -1,16 +1,4 @@
-// import axiosPrivate from '../hooks/axiosPrivate';
-
-// export interface Team {
-//   _id: string;
-//   name: string;
-//   status: string;
-// }
-
-// export interface AddTeam{
-//   username: string;
-//   password: string;
-//   name: string;
-// }
+import axiosPrivate from '../hooks/axiosPrivate';
 
 // export const teamService = {
 
