@@ -4,7 +4,7 @@ import Sidebar from '../../../components/sidebar/admin-sidebar';
 import Headbar from '../../../components/header/admin-header';
 import { useAuth } from "../../../contexts/authContext";
 import { CheckOutlined } from "@ant-design/icons";
-import { userService } from "../../../../js/api/userService";
+import userService from "../../../../js/api/userService";
 import { GetUser } from "../../../../js/types/User";
 
 
