@@ -19,13 +19,17 @@ export function AuthProvider({ children }) {
     async function initializeUser(userCred) {
         if(userCred) {
             setAccessToken(userCred.accessToken); // accesstoken for jwt
-            const userInfo = await userService.getUserInfo();
-            setUserType(userInfo.userType);
             setCurrentUser({ ...userCred });
             setUserLoggedIn(true);
         } else {
             setCurrentUser(null);
             setUserLoggedIn(false);
+        }
+        try {
+            setUserType(userInfo.userType);
+            const userInfo = await userService.getUserInfo(userCred.accessToken);
+        } catch (err) {
+            console.log(err);
         }
         setLoading(false);
     }
