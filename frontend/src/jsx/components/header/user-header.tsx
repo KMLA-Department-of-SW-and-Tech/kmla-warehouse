@@ -18,9 +18,9 @@ const Headbar: React.FC = () => {
         setLoading(true);
         const userInfo = await userService.getUserInfo(authValue.accessToken);
         console.log(userInfo);
-        setCurrentUserName(userInfo.userName == undefined ? "Guest" : userInfo.userName);
+        setCurrentUserName(userInfo.userName == undefined ? "(승인되지 않음)" : userInfo.userName);
       } catch (error) {
-        setCurrentUserName("Guest");
+        setCurrentUserName("(승인되지 않음))");
       } finally {
         setLoading(false);
       }
@@ -39,7 +39,7 @@ const Headbar: React.FC = () => {
   return (
     <header className="head">
       <div className="head-container">
-        <div className="logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
+        <div className="main-logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
           KMLA Warehouse
         </div>
         <div className="user-info" onClick={handleHelloClick} style={{cursor: 'pointer'}}>

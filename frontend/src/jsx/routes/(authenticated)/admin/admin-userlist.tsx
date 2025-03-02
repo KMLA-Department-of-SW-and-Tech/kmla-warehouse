@@ -13,7 +13,7 @@ const { Title } = Typography;
 const { Search } = Input;
   
 
-const AdminUserPage = () => {
+const AdminUserListPage = () => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState<GetUser[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<GetUser[]>([]);
@@ -61,6 +61,11 @@ const AdminUserPage = () => {
         dataIndex: "userName", 
         key: "userName" 
     },
+    { 
+      title: "학번", 
+      dataIndex: "userStudentNumber", 
+      key: "userStudentNumber" 
+  },
   ];
 
 
@@ -74,21 +79,16 @@ const AdminUserPage = () => {
             <Sidebar />
           </Sider>
           <Content className='admin-content'>
-            <Title level={3}>가입승인</Title>
-            <Space style={{ marginBottom: 16 }}>
-              <Search
-                placeholder="팀명 또는 사용자명 검색"
-                onSearch={handleSearch}
-                onChange={(e) => handleSearch(e.target.value)}
-                value={searchText}
-                allowClear
-                style={{ width: 300 }}
-              />
-            </Space>
+            <Title level={3}>사용자 목록</Title>
             {loading ? (
             <Spin />
             ) : (
-                <Table columns={columns} dataSource={users} rowKey="_id" />
+                <Table 
+                  columns={columns} 
+                  dataSource={users} 
+                  rowKey="_id" 
+                  className='admin-table'
+                />
             )}
 
           </Content>
@@ -101,4 +101,4 @@ const AdminUserPage = () => {
   );
 };
 
-export default AdminUserPage;
+export default AdminUserListPage;

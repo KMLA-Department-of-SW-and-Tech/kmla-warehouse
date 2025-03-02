@@ -26,12 +26,12 @@
 
 .admin-item-add-form {
     display: flex;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 .admin-item-add-form .ant-input,
 .admin-item-add-form .ant-input-number {
-    width: 200px;
+    width: 150px;
     margin-right: 10px;
 
 }
@@ -42,6 +42,10 @@
 }
 
 .admin-reservation-table {
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
+
+.admin-table {
+    margin-top: 20px;
+}

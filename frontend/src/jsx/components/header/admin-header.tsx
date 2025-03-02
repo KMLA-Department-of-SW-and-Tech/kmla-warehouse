@@ -37,12 +37,12 @@ const Headbar: React.FC = () => {
   return (
     <header className="head">
       <div className="head-container">
-        <div className="logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
+        <div className="main-logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
           KMLA Warehouse
         </div>
         <div className="user-info" onClick={handleHelloClick} style={{cursor: 'pointer'}}>
           {loading ? <span></span> : authValue.userLoggedIn ? (
-            <span>{currentUserName}님, KMLA WAREHOUSE에 오신 것을 환영합니다</span>
+            <span>관리자 계정입니다</span>
           ) : (
             <span>로그인을 하신 후 다른 기능을 사용하실 수 있습니다</span>
           )}
