@@ -37,7 +37,7 @@ const upload = multer({
 */
 
 
-module.exports.deleteImage = async (fileKey) => {
+const deleteImage = async (fileKey) => {
     if (!fileKey) {
         console.warn("No imageKey provided for deletion.");
         return { success: false, message: "No image found to delete." };
