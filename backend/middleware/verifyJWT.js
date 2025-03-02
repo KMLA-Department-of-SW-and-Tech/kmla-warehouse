@@ -10,7 +10,7 @@ const verifyJWT = async (req, res, next) => {
         return next();
     } catch(e) {
         console.log("JWT validation error: ", e.errorInfo.message);
-        return res.status(500).send("Internal error");
+        return res.status(401).send("Invalid token use regarding authentication");
     }
 };
 
