@@ -13,7 +13,7 @@ const { Content, Sider } = Layout;
 const { Title } = Typography;
 const { useBreakpoint } = Grid;
 
-const AdminHistoryPage: React.FC = () => {
+const AdminReservationPage: React.FC = () => {
   const screens = useBreakpoint();
   const [logs, setLogs] = useState<GetLog[]>([]);
   const [loading, setLoading] = useState(true);
@@ -116,4 +116,4 @@ const AdminHistoryPage: React.FC = () => {
   );
 };
 
-export default AdminHistoryPage;
+export default AdminReservationPage;

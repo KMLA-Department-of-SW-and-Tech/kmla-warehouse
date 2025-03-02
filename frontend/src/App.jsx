@@ -10,9 +10,10 @@ import ReservationStatus from "./jsx/routes/(authenticated)/user/user-reservatio
 import AccountSettings from "./jsx/routes/(authenticated)/user/user-account-settings.tsx";
  
 import AdminEquipmentPage from "./jsx/routes/(authenticated)/admin/admin-item.tsx"; 
-import AdminHistoryPage from "./jsx/routes/(authenticated)/admin/admin-reservation.tsx";  
+import AdminReservationPage from "./jsx/routes/(authenticated)/admin/admin-reservation.tsx";  
 // import AdminTeamPage from "./jsx/routes/(authenticated)/admin/manage-team.tsx";
 import AdminSettingPage from "./jsx/routes/(authenticated)/admin/admin-account-settings.tsx";
+import AdminPermissionPage from "./jsx/routes/(authenticated)/admin/admin-permission.tsx";
 // import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./jsx/components/protected-routes.jsx";
 
 const router = createBrowserRouter([
@@ -65,7 +66,12 @@ const router = createBrowserRouter([
   // ADMIN: reservation page
   {
     path: "/admin/reservation",
-    element: <AdminHistoryPage />,
+    element: <AdminReservationPage />,
+  },
+  // ADMIN: user permission page
+  {
+    path: "/admin/permission",
+    element: <AdminPermissionPage />,
   },
   // ADMIN: account setting page
   {

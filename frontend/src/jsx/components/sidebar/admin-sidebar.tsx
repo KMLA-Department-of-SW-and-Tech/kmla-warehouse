@@ -2,8 +2,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Menu, MenuProps, Badge } from 'antd';
 import { 
-  HistoryOutlined, 
-  ProductOutlined,
+  AccountBookOutlined, 
+  AppstoreAddOutlined,
+  UsergroupAddOutlined, 
   UserOutlined
 } from '@ant-design/icons';
 import './sidebar.css';
@@ -21,13 +22,18 @@ const items1: MenuProps['items'] = [
     children: [
       {
         key: '/admin/item',
-        icon: <ProductOutlined />,
+        icon: <AppstoreAddOutlined />,
         label: '물품관리',
       },
       {
         key: '/admin/reservation',
-        icon: <Badge size='small'><HistoryOutlined /></Badge>,
+        icon: <AccountBookOutlined />,
         label: '신청관리',
+      },
+      {
+        key: '/admin/permission',
+        icon: <UsergroupAddOutlined />,
+        label: '가입승인',
       },
     ],
   },
