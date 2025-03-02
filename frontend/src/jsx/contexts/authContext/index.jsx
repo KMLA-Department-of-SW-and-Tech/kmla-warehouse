@@ -32,14 +32,14 @@ export function AuthProvider({ children }) {
         return unsubscribe;
     }, []);
 
-    const value = {
+    const authValue =  {
         currentUser,
         userLoggedIn,
         accessToken,
     };
 
     return (
-        <AuthContext.Provider value={value}>
+        <AuthContext.Provider value={authValue}>
             {!loading && children}
         </AuthContext.Provider>
     );
