@@ -31,6 +31,11 @@ const items1: MenuProps['items'] = [
         label: '신청관리',
       },
       {
+        key: '/admin/userlist',
+        icon: <UsergroupAddOutlined />,
+        label: '가입승인',
+      },
+      {
         key: '/admin/permission',
         icon: <UsergroupAddOutlined />,
         label: '가입승인',
