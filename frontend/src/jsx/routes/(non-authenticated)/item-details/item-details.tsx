@@ -7,6 +7,7 @@ import Sidebar from '../../../components/sidebar/user-sidebar';
 import Headbar from '../../../components/header/user-header.tsx';
 import { GetItem, PostItem, PatchItem } from '../../../../js/types/Item';
 import { useAuth } from '../../../contexts/authContext';
+import LoginModal from '../../../components/login-modal/login-modal.jsx';
 const { Sider, Content } = Layout;
 const { Title, Text } = Typography;
 
@@ -42,6 +43,12 @@ export default function EquipmentDetails() {
       return;
     }
     try {
+      if(!authValue.userLoggedIn) {
+        <LoginModal openModal={true} redirectToHomeOnCancel={false} />
+      }
+      if(authValue.userType != "User") {
+        
+      }
       await itemService.borrowRequest(id, borrowQuantity, authValue.accessToken);
       message.success('대여 요청이 성공적으로 처리되었습니다.');
       window.location.reload();

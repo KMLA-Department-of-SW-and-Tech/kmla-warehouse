@@ -9,7 +9,7 @@ import { FcGoogle } from "react-icons/fc";
 import "./login-modal.css"
 import { useAuth } from "../../contexts/authContext";
 
-export default function LoginModal({ openModal }) {
+export default function LoginModal({ openModal, redirectToHomeOnCancel }) {
     const [isModalOpen, setIsModalOpen] = useState(openModal);
     const navigate = useNavigate();
     const authValue = useAuth();
@@ -23,7 +23,7 @@ export default function LoginModal({ openModal }) {
 
     const handleCancel = () => {
         setIsModalOpen(false);
-        navigate("/home");
+        redirectToHomeOnCancel ? navigate("/home") : null;
     };
 
     return (
