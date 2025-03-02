@@ -147,7 +147,7 @@ export default function Home() {
 
       <Modal
         title="아이템 상세 보기"
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={handleCancel}
         onOk={handleOk}
         cancelText="취소"

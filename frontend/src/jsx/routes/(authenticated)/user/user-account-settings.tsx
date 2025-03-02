@@ -1,3 +1,6 @@
+
+
+
 import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, message, Layout } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -26,7 +29,7 @@ const AccountSettings = () => {
       setLoading(false);
     }
   };
-    // const handlePasswordChange = async (values) => {
+  // const handlePasswordChange = async (values) => {
   //   setLoading(true);
   //   setErrorMessage(""); 
   //   try {
@@ -73,7 +76,7 @@ const AccountSettings = () => {
                 <Input.Password />
               </Form.Item>
 
-              <Form.Item
+                <Form.Item
                 label="새 비밀번호 확인"
                 name="confirmNewPassword"
                 rules={[
@@ -90,6 +93,7 @@ const AccountSettings = () => {
               >
                 <Input.Password />
               </Form.Item>
+
 
               {errorMessage && <div className="error-message">{errorMessage}</div>}
 
@@ -111,4 +115,3 @@ const AccountSettings = () => {
 };
 
 export default AccountSettings;
-
