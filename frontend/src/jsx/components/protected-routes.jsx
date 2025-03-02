@@ -1,10 +1,9 @@
-/* eslint-disable */
-import { Navigate, useNavigate } from "react-router-dom";
-//import axiosPrivate from "../hooks/axiosPrivate";
+import { useNavigate } from "react-router-dom";
 import { cloneElement, useEffect, useRef, useState } from "react";
 
-export const ProtectedRoute = ({ children, accessToken, roles }) => {
+export const ProtectedRoute = ({ children }) => {
     const navigate = useNavigate();
+    const authValue = useAuth();
     return (
         accessToken === ""
         ? <Modal

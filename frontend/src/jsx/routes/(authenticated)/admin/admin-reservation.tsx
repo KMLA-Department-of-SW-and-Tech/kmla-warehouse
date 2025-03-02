@@ -4,7 +4,7 @@ import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from '../../../components/sidebar/admin-sidebar';
 import "./admin.css";
 import Headbar from "../../../components/header/admin-header.tsx";
-import { logService } from "../../../../js/api/logService";
+import logService from "../../../../js/api/logService";
 import { GetLog, PatchLog } from "../../../../js/types/Log";
 import enUS from 'antd/lib/locale/en_US';
 import { useAuth } from '../../../contexts/authContext';
