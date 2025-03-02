@@ -12,9 +12,9 @@ export const userService = {
             throw e;
         }
     },
-    updateCurrentUserInfo: async (accessToken: string): Promise<void> => {
+    updateCurrentUserInfo: async (update: PatchUser, accessToken: string): Promise<void> => {
         try {
-            const response = await axiosPrivate.patch("/api/user", {}, accessToken);
+            const response = await axiosPrivate.patch("/api/user", update, accessToken);
             console.log(response);
         } catch (e) {
             console.log("Update current user info error: ", e);

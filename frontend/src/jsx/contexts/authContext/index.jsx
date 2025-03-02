@@ -1,6 +1,7 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../../../js/firebase/firebase";
+import { userService } from "../../../js/api/userService";
 
 const AuthContext = createContext();
 
@@ -17,6 +18,7 @@ export function AuthProvider({ children }) {
     async function initializeUser(userCred) {
         if(userCred) {
             setAccessToken(userCred.accessToken); // accesstoken for jwt
+            await userService.getUserInfo()
             setCurrentUser({ ...userCred });
             setUserLoggedIn(true);
         } else {

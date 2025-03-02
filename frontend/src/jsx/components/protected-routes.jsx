@@ -2,10 +2,8 @@
 import { Navigate, useNavigate } from "react-router-dom";
 //import axiosPrivate from "../hooks/axiosPrivate";
 import { cloneElement, useEffect, useRef, useState } from "react";
-import { Modal } from "antd";
 
 export const ProtectedRoute = ({ children, accessToken, roles }) => {
-    // wait for refresh request on page refresh necessarily first
     const navigate = useNavigate();
     return (
         accessToken === ""
