@@ -14,11 +14,13 @@ export function AuthProvider({ children }) {
     const [userLoggedIn, setUserLoggedIn] = useState(false);
     const [accessToken, setAccessToken] = useState("");
     const [loading, setLoading] = useState(true);
+    const [userType, setUserType] = useState("Unauthorized");
 
     async function initializeUser(userCred) {
         if(userCred) {
             setAccessToken(userCred.accessToken); // accesstoken for jwt
-            await userService.getUserInfo()
+            const userInfo = await userService.getUserInfo();
+            setUserType(userInfo.userType);
             setCurrentUser({ ...userCred });
             setUserLoggedIn(true);
         } else {
@@ -38,6 +40,7 @@ export function AuthProvider({ children }) {
         currentUser,
         userLoggedIn,
         accessToken,
+        userType
     };
 
     return (
