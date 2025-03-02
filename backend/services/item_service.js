@@ -102,14 +102,15 @@ module.exports.deleteOne = async (id) => {
 module.exports.borrow = async (id, body) => {
     // const session = await mongoose.startSession();
     // session.startTransaction();
-
     try {
+        console.log(body);
         const { quantity } = body;
         const user = await userService.findUserByFirebaseUid(req.firebaseUid);
         const teamName = user.teamName;
-        console.log(quantity, teamName);
+        console.log("hi", quantity, teamName);
 
         const prevItemState = await module.exports.getOne(id);
+        console.log(prevItemState);
 
         if(!prevItemState) {
             throw new Error("Item not found");

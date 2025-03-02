@@ -102,7 +102,8 @@ module.exports.delete = async (req, res, next) => {
 
 module.exports.borrow = async (req, res, next) => {
     try {
-        return res.status(201).send(await itemService.borrow(req.params.id, req.body));
+        console.log("hi")
+        return res.status(200).send(await itemService.borrow(req.params.id, req.body));
     } catch (e) {   
         switch(e.message) {
             case "Item not found":
@@ -110,7 +111,7 @@ module.exports.borrow = async (req, res, next) => {
             case "Invalid quantity":
                 return res.status(401).send(e);
             default:
-                return res.send(e);
+                return res.status(500).send(e);
         }
     }
 };

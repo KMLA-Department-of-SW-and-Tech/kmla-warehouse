@@ -54,6 +54,7 @@ export default function EquipmentDetails() {
         setShowNotAuthModal(true);
         return;
       }
+      console.log(id, borrowQuantity, authValue.accessToken)
       await itemService.borrowRequest(id, borrowQuantity, authValue.accessToken);
       message.success('대여 요청이 성공적으로 처리되었습니다.');
       window.location.reload();
