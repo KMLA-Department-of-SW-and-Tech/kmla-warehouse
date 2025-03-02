@@ -13,9 +13,9 @@ const { Option } = Select;
 
 const AccountSettings = () => {
   const [userName, setUserName] = useState<string>('Guest');
-  const [userGrade, setUserGrade] = useState<number | null>(null);
-  const [userClassNumber, setUserClassNumber] = useState<number | null>(null);
-  const [userStudentNumber, setUserStudentNumber] = useState<number | null>(null);
+  const [userGrade, setUserGrade] = useState<number | undefined>(undefined);
+  const [userClassNumber, setUserClassNumber] = useState<number | undefined>(undefined);
+  const [userStudentNumber, setUserStudentNumber] = useState<number | undefined>(undefined);
   const [teamNames, setTeamNames] = useState<string[]>([]);
   const [selectedTeam, setSelectedTeam] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(true);
@@ -31,9 +31,9 @@ const AccountSettings = () => {
         const teams = await userService.getTeamNameList();
 
         setUserName(userInfo.userName || 'Guest');
-        setUserGrade(userInfo.userGrade ? Number(userInfo.userGrade) : null);
-        setUserClassNumber(userInfo.userClassNumber ? Number(userInfo.userClassNumber) : null);
-        setUserStudentNumber(userInfo.userStudentNumber ? Number(userInfo.userStudentNumber) : null);
+        setUserGrade(userInfo.userGrade ? Number(userInfo.userGrade) : undefined);
+        setUserClassNumber(userInfo.userClassNumber ? Number(userInfo.userClassNumber) : undefined);
+        setUserStudentNumber(userInfo.userStudentNumber ? Number(userInfo.userStudentNumber) : undefined);
         setTeamNames(teams);
         setSelectedTeam(userInfo.teamName || teams[0]);
       } catch (error) {
@@ -60,13 +60,13 @@ const AccountSettings = () => {
   const handleSave = async () => {
     setSaving(true);
     try {
-      await userService.updateCurrentUserInfo(authValue.accessToken, {
+      await userService.updateCurrentUserInfo({
         userName,
         userGrade,
         userClassNumber,
         userStudentNumber,
         teamName: selectedTeam,
-      });
+      }, authValue.accessToken);
       message.success('정보가 성공적으로 저장되었습니다.');
     } catch (error) {
       message.error('정보 저장에 실패했습니다.');
