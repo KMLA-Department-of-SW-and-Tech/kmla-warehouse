@@ -6,7 +6,7 @@ import { Form, Input, Button, message, Layout } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { signUserOut } from '../../../../js/firebase/auth';
 import Sidebar from '../../../components/sidebar/user-sidebar';
-import Headbar from '../../../components/header/header';
+import Headbar from '../../../components/header/user-header.tsx';
 import './user-account-settings.css';
 
 const { Sider, Content } = Layout;

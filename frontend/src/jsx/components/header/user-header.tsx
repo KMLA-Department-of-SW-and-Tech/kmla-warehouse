@@ -25,7 +25,7 @@ const Headbar: React.FC = () => {
   // }, []);
 
   const handleLogoClick = () => {
-    navigate('/equipment'); // admin main page
+    navigate('/home'); // user main page
   };
 
   const handleHelloClick = () => {
