@@ -14,9 +14,9 @@
 ## Item
 #### GET
 전체 리스트 (status == valid인 것들만) | /api/item/list
-전체 리스트 (status 상관없이 전부) | /api/item/list-all
-팀별 대여 리스트 (status == valid인 것들만) | /api/item/list/:teamName
-팀별 대여 리스트 (status 상관없이 전부) | /api/item/list-all/:teamName
+<!-- 전체 리스트 (status 상관없이 전부) | /api/item/list-all -->
+팀별 대여 리스트 (status == valid인 것들만) | /api/item/team-list/ | body: firebaseUid(String)
+<!-- 팀별 대여 리스트 (status 상관없이 전부) | /api/item/list-all/:teamName -->
 
 물품 정보 | /api/item/:id
 #### POST

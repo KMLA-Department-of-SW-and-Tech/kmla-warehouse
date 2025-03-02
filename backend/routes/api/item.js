@@ -7,7 +7,7 @@ const itemController = require("../../controllers/item_controller");
 const verifyRoles = require("../../middleware/verifyRoles.js");
 
 router.get("/list", itemController.list);
-router.get("/team-list", verifyJWT, verifyRoles(["User"]), itemController.listForTeam);
+router.get("/team-list/", verifyJWT, verifyRoles(["User"]), itemController.listForTeam);
 
 // router.get("/list-all", itemController.listAll);
 // router.get("/list-all/:teamName", verifyJWT, verifyRoles(["User", "Admin"]), itemController.listAllForTeam);

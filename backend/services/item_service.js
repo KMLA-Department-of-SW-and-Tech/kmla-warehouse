@@ -19,9 +19,9 @@ module.exports.getAll = async () => {
     }
 }
 
-module.exports.getAvailableForTeam = async () => {
+module.exports.getAvailableForTeam = async (firebaseUid) => {
     try {
-        const user = userService.findUserByFirebaseUid(req.firebaseUid);
+        const user = userService.findUserByFirebaseUid(firebaseUid);
         const teamName = user.teamName;
         const teamLogs = (await logService.getAllForTeam(teamName)).filter(log => log.item.status === "valid");
         return teamLogs.map(log => log.item);

@@ -24,7 +24,10 @@ module.exports.listAll = async (req, res, next) => {
 
 module.exports.listForTeam = async (req, res, next) => {
     try {
-        return res.status(200).send(await itemService.getAvailableForTeam());
+        console.log(req);
+        return res.status(200);
+        // console.log(req.params.id, req.firebaseUid);
+        return res.status(200).send(await itemService.getAvailableForTeam(req.params.id, req.firebaseUid));
     } catch (e) {
         switch(e.message) {
             default:
