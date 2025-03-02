@@ -6,7 +6,7 @@ import Headbar from '../../../components/header/admin-header';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../../contexts/authContext";
 import { CheckOutlined } from "@ant-design/icons";
-import { userService } from "../../../../js/api/userService";
+import userService from "../../../../js/api/userService";
 
 
 const { Sider, Content } = Layout;

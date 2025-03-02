@@ -2,7 +2,7 @@ import axios from 'axios';
 import axiosPrivate from '../hooks/axiosPrivate';
 import { GetUser, PatchUser } from '../types/User';
 
-export const userService = {
+const userService = {
     getUserInfo: async (accessToken: string): Promise<GetUser> => {
         try {
             const response = await axiosPrivate.get("/api/user", accessToken);
@@ -58,3 +58,5 @@ export const userService = {
         }
     },
 }
+
+export default userService;

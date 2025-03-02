@@ -2,7 +2,7 @@ import axios from 'axios';
 import axiosPrivate from '../hooks/axiosPrivate';
 import {GetItem, PostItem, PatchItem} from '../types/Item';
 
-export const itemService = {
+const itemService = {
   // Fetch all items, returning only those with "available" status
   getAll: async (): Promise<GetItem[]> => {
     try {
@@ -113,3 +113,5 @@ export const itemService = {
     }
   },
 };
+
+export default itemService;

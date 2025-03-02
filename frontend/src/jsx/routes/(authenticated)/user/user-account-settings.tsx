@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { signUserOut } from '../../../../js/firebase/auth';
 import Sidebar from '../../../components/sidebar/user-sidebar';
 import Headbar from '../../../components/header/user-header.tsx';
-import { userService } from '../../../../js/api/userService';
+import userService from '../../../../js/api/userService';
 import { useAuth } from '../../../contexts/authContext';
 import './user-account-settings.css';
 
