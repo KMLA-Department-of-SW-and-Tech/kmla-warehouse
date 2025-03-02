@@ -186,6 +186,7 @@ const AdminEquipmentPage: React.FC = () => {
                 <Form
                   form={form}
                   onFinish={handleAddItem}
+                  className="admin-item-add-form"
                 >
                   <Form.Item
                     name="name"

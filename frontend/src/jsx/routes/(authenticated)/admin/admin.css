@@ -20,6 +20,28 @@
 }
 
 .admin-logout-btn {
-    margin-top: 50px;
     display: flex;
+    margin-top: 50px;
 }
+
+.admin-item-add-form {
+    display: flex;
+    margin-top: 50px;
+}
+
+.admin-item-add-form .ant-input,
+.admin-item-add-form .ant-input-number {
+    width: 200px;
+    margin-right: 10px;
+
+}
+
+.admin-item-add-form .ant-upload,
+.admin-item-add-form button {
+    margin-right: 20px;
+}
+
+.admin-reservation-table {
+    margin-top: 50px;
+}
+

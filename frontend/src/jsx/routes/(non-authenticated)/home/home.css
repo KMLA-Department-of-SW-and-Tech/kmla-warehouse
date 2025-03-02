@@ -84,7 +84,7 @@
 
 .equipment-card-container {
   background: rgb(255, 255, 255); /* 카드 부분만 흰색 */
-  padding: 10px;
+  padding: 50px;
   border-radius: 12px; /* 모서리 둥글게 */
   max-width: 1200px; /* 카드 부분의 최대 너비 설정 */
   width: 100%;

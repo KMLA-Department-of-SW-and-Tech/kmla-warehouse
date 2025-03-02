@@ -1,29 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Button, message, Layout, Typography, Table, Spin } from 'antd';
-import { signUserOut } from '../../../../js/firebase/auth';
+import { Button, message, Layout, Typography, Table, Spin, Input, Space } from 'antd';
 import Sidebar from '../../../components/sidebar/admin-sidebar';
 import Headbar from '../../../components/header/admin-header';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../../contexts/authContext";
 import { CheckOutlined } from "@ant-design/icons";
 import { userService } from "../../../../js/api/userService";
+import { GetUser } from "../../../../js/types/User";
 
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
-
-interface UnauthorizedUser {
-    _id: string;
-    username: string;
-    name: string;
-  }
+const { Search } = Input;
   
 
 const AdminPermissionPage = () => {
   const [loading, setLoading] = useState(false);
-  const [users, setUsers] = useState<UnauthorizedUser[]>([]);
+  const [users, setUsers] = useState<GetUser[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<GetUser[]>([]);
+  const [searchText, setSearchText] = useState("");
   const authValue = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchUnauthorizedUsers();
@@ -33,8 +28,10 @@ const AdminPermissionPage = () => {
   const fetchUnauthorizedUsers = async () => {
     setLoading(true);
     try {
-      const response = await userService.getUnauthorizedUsers(authValue.accessToken);
-      setUsers(response.data);
+      const unauthorizedUsers = await userService.getUnauthorizedUsers(authValue.accessToken);
+      const filteredUsers = unauthorizedUsers.filter(user => user.teamName);
+
+      setUsers(filteredUsers);
     } catch (error) {
       message.error("Failed to fetch unauthorized users.");
       console.error(error);
@@ -43,28 +40,43 @@ const AdminPermissionPage = () => {
     }
   };
 
-  // permite an unauthorized user
+  // permit an unauthorized user
   const handleAuthorizeUser = async (id: string) => {
     try {
-      await userService.authorizeUserById(
-        `/api/user/unauth-list/${id}`,
-        { headers: { Authorization: `Bearer ${authValue.accessToken}` } }
-      );
+      await userService.authorizeUserById(id, authValue.accessToken);
       message.success("User authorized successfully.");
-      setUsers(users.filter(user => user._id !== id)); // 승인된 사용자 제거
+      setUsers(users.filter(user => user._id !== id)); // delete after authorization
     } catch (error) {
       message.error("Failed to authorize user.");
       console.error(error);
     }
   };
 
+  // search
+  const handleSearch = (value: string) => {
+    setSearchText(value);
+    const filtered = users.filter(user =>
+        (user.userName && user.userName.toLowerCase().includes(value.toLowerCase())) ||
+        (user.teamName && user.teamName.toLowerCase().includes(value.toLowerCase()))
+    );
+    setFilteredUsers(filtered);
+  };
+
   const columns = [
-    { title: "사용자명", dataIndex: "username", key: "username" },
-    { title: "이름", dataIndex: "name", key: "name" },
+    { 
+        title: "팀명",
+        dataIndex: "teamName", 
+        key: "teamName" 
+    },
+    { 
+        title: "사용자명", 
+        dataIndex: "userName", 
+        key: "userName" 
+    },
     {
       title: "승인",
       key: "authorize",
-      render: (_, record: UnauthorizedUser) => (
+      render: (_, record: GetUser) => (
         <Button
           type="primary"
           icon={<CheckOutlined />}
@@ -88,6 +100,16 @@ const AdminPermissionPage = () => {
           </Sider>
           <Content className='admin-content'>
             <Title level={3}>가입승인</Title>
+            <Space style={{ marginBottom: 16 }}>
+              <Search
+                placeholder="팀명 또는 사용자명 검색"
+                onSearch={handleSearch}
+                onChange={(e) => handleSearch(e.target.value)}
+                value={searchText}
+                allowClear
+                style={{ width: 300 }}
+              />
+            </Space>
             {loading ? (
             <Spin />
             ) : (
