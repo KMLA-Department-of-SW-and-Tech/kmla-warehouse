@@ -1,75 +1,74 @@
+
 .layout {
-    min-height: 100vh;
-    width: 100vw;
-  }
-  
-  .sider {
-    background: #fff;
-    position: fixed;
-    height: 100vh;
-    left: 0;
-    top: 64px;
-    width: 250px;
-  }
-  
-  .content {
-    margin-top: 64px;
-    width: calc(100vw - 250px);
-    position: relative;
-  }
-  
-  .content-wrapper {
-    max-width: 900px;
-    margin: 0 auto;
-    display: flex;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .layout {
     flex-direction: row;
-     
   }
-  
+}
+
+.sider {
+  background: #fff;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 64px;
+  width: 250px;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .sider {
+    display: block;
+  }
+}
+
+.content-layout {
+  margin-left: 0;
+  width: 100%;
+  padding: 20px;
+}
+
+@media (min-width: 768px) {
+  .content-layout {
+    margin-left: 250px;
+    width: calc(100vw - 250px);
+  }
+}
+
+.content-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .content-wrapper {
+    flex-direction: row;
+  }
+}
+
+.image-container {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
   .image-container {
     width: 70vw;
-    position: relative;
   }
-  
+}
 
-  
-  .image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .image-placeholder {
-    width: 100%;
-    height: 0;
-    padding-top: 100%;
-    background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
-  
-  .no-image-text {
-    position: absolute;
-    text-align: center;
-    color: #888;
-    font-size: 16px;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 50%;
-    margin: 0; 
-  }
-  
-  .text-content {
-    width: 100%;
-    padding-left: 50px;
-  }
-  
-  .borrow-form {
-    margin-top: 20px;
-  }
-  
+.text-content {
+  width: 100%;
+  padding: 20px;
+}
+
+.borrow-form {
+  margin-top: 20px;
+}
