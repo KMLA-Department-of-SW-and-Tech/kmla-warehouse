@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // 페이지 이동을 위한 훅
 import { userService } from "../../../js/api/userService";
-import './admin-header.css';
+import './header.css';
 import { useAuth } from '../../contexts/authContext';
 
 const Headbar: React.FC = () => {
