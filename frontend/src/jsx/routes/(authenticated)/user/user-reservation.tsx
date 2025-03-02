@@ -59,9 +59,9 @@ export default function ReservationStatus() {
         <Sidebar />
       </Sider>
 
-      <Layout className="layout">
-        <Content className="content">
-          <Title level={2} className="title">
+      <Layout className="equipment-layout">
+        <Content className="equipment-content">
+          <Title level={2} className="equipment-title">
             <UnorderedListOutlined />
             예약현황 보기
           </Title>
@@ -69,26 +69,26 @@ export default function ReservationStatus() {
           {loading ? (
             <Spin size="large" />
           ) : (
-            <Row gutter={[16, 16]} className="cardContainer">
+            <Row gutter={[16, 16]} className="equipment-row">
               {reservationList.length > 0 ? (
                 reservationList.map((reservation) => (
                   <Col xs={24} sm={12} md={8} lg={4} key={reservation._id || Math.random()}>
                     <Card
                       hoverable
                       cover={
-                        <div className="imageContainer">
+                        <div className="equipment-image-container">
                           {reservation.item?.imageUrl ? (
                             <img
                               src={reservation.item.imageUrl}
                               alt={reservation.item.name}
-                              className="image"
+                              className="equipment-image"
                             />
                           ) : (
                             <Typography.Text className="noImageText">이미지 없음</Typography.Text>
                           )}
                         </div>
                       }
-                      className="card"
+                      className="equipment-card"
                     >
                       <Card.Meta
                         title={reservation.item?.name || "이름 없음"}
@@ -98,7 +98,7 @@ export default function ReservationStatus() {
                             <span> / {reservation.item?.location || "위치 정보 없음"} / {reservation.timestamp ? new Date(reservation.timestamp).toLocaleDateString() : "날짜 없음"}</span>
                           </>
                         }
-                        className="cardMeta"
+                        className="equipment-meta"
                       />
 
                       <Button
