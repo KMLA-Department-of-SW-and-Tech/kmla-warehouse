@@ -9,7 +9,7 @@ import { FcGoogle } from "react-icons/fc";
 import "./login-modal.css"
 import { useAuth } from "../../contexts/authContext";
 
-export default function LoginModal({ openModal, redirectToHomeOnCancel }) {
+export default function LoginModal({ openModal, redirectToHomeOnCancel, callBack }) {
     const [isModalOpen, setIsModalOpen] = useState(openModal);
     const navigate = useNavigate();
     const authValue = useAuth();
@@ -19,11 +19,13 @@ export default function LoginModal({ openModal, redirectToHomeOnCancel }) {
         if(res.isAdmin) navigate("/admin/equipment");
         // const isNewUser = getAdditionalUserInfo(res).isNewUser;
         // console.log(isNewUser);
+        if(!!callBack) callBack();
     };
 
     const handleCancel = () => {
         setIsModalOpen(false);
         redirectToHomeOnCancel ? navigate("/home") : null;
+        if(!!callBack) callBack();
     };
 
     return (
