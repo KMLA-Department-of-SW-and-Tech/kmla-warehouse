@@ -23,6 +23,7 @@ export default function LoginModal({ openModal }) {
 
     const handleCancel = () => {
         setIsModalOpen(false);
+        navigate("/home");
     };
 
     return (

@@ -1,6 +1,7 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../../../js/firebase/firebase";
+import userService from "../../../js/api/userService";
 
 const AuthContext = createContext();
 
@@ -13,10 +14,13 @@ export function AuthProvider({ children }) {
     const [userLoggedIn, setUserLoggedIn] = useState(false);
     const [accessToken, setAccessToken] = useState("");
     const [loading, setLoading] = useState(true);
+    const [userType, setUserType] = useState("Unauthorized");
 
     async function initializeUser(userCred) {
         if(userCred) {
             setAccessToken(userCred.accessToken); // accesstoken for jwt
+            const userInfo = await userService.getUserInfo();
+            setUserType(userInfo.userType);
             setCurrentUser({ ...userCred });
             setUserLoggedIn(true);
         } else {
@@ -32,14 +36,15 @@ export function AuthProvider({ children }) {
         return unsubscribe;
     }, []);
 
-    const value = {
+    const authValue =  {
         currentUser,
         userLoggedIn,
         accessToken,
+        userType
     };
 
     return (
-        <AuthContext.Provider value={value}>
+        <AuthContext.Provider value={authValue}>
             {!loading && children}
         </AuthContext.Provider>
     );

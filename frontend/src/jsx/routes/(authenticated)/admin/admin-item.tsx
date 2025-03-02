@@ -6,8 +6,8 @@ import { CloseOutlined, DeleteOutlined, EditOutlined, SaveOutlined, UploadOutlin
 import Sidebar from "../../../components/sidebar/admin-sidebar";
 import './admin.css';
 import Headbar from "../../../components/header/admin-header";
-import { itemService } from "../../../../js/api/itemService";
-import {GetItem, PostItem, PatchItem} from '../../../../js/types/Item';
+import itemService from "../../../../js/api/itemService";
+import { GetItem, PostItem, PatchItem } from '../../../../js/types/Item';
 import { useAuth } from "../../../contexts/authContext";
 
 const { Sider, Content } = Layout;

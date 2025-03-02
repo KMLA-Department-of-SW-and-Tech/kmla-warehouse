@@ -23,7 +23,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <Navigate to="/admin/items" replace />,
+    element: <Navigate to="/admin/item" replace />,
   },
   // // Login page
   // {

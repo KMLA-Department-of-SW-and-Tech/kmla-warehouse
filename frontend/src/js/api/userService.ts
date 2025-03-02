@@ -2,7 +2,7 @@ import axios from 'axios';
 import axiosPrivate from '../hooks/axiosPrivate';
 import { GetUser, PatchUser } from '../types/User';
 
-export const userService = {
+const userService = {
     getUserInfo: async (accessToken: string): Promise<GetUser> => {
         try {
             const response = await axiosPrivate.get("/api/user", accessToken);
@@ -12,9 +12,9 @@ export const userService = {
             throw e;
         }
     },
-    updateCurrentUserInfo: async (accessToken: string): Promise<void> => {
+    updateCurrentUserInfo: async (update: PatchUser, accessToken: string): Promise<void> => {
         try {
-            const response = await axiosPrivate.patch("/api/user", {}, accessToken);
+            const response = await axiosPrivate.patch("/api/user", update, accessToken);
             console.log(response);
         } catch (e) {
             console.log("Update current user info error: ", e);
@@ -50,7 +50,7 @@ export const userService = {
     },
     getTeamNameList: async (): Promise<string[]> => {
         try {
-            const response = await axios.get("/api/users/team-name-list");
+            const response = await axios.get("/api/user/team-name-list");
             return response.data;
         } catch (e) {
             console.log("Get team name list error: ", e);
@@ -58,3 +58,5 @@ export const userService = {
         }
     },
 }
+
+export default userService;

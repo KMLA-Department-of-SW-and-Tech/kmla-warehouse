@@ -1,12 +1,9 @@
-/* eslint-disable */
-import { Navigate, useNavigate } from "react-router-dom";
-//import axiosPrivate from "../hooks/axiosPrivate";
+import { useNavigate } from "react-router-dom";
 import { cloneElement, useEffect, useRef, useState } from "react";
-import { Modal } from "antd";
 
-export const ProtectedRoute = ({ children, accessToken, roles }) => {
-    // wait for refresh request on page refresh necessarily first
+export const ProtectedRoute = ({ children }) => {
     const navigate = useNavigate();
+    const authValue = useAuth();
     return (
         accessToken === ""
         ? <Modal

@@ -1,7 +1,7 @@
 import { GetLog, PatchLog } from "../types/Log";
 import axiosPrivate from '../hooks/axiosPrivate';
 
-export const logService = {
+const logService = {
 
   // NEEDS ADMIN AUTH
   // GET 로그 리스트
@@ -53,3 +53,5 @@ export const logService = {
   // },
 
 };
+
+export default logService;

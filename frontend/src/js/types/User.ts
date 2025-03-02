@@ -3,9 +3,9 @@ export type GetUser = {
     firebaseUid: string;
     userType: "Unauthorized" | "User" | "Admin";
     userName?: string;
-    userGrade?: string;
-    userClassNumber?: string;
-    userStudentNumber?: string;
+    userGrade?: number;
+    userClassNumber?: number;
+    userStudentNumber?: number;
     teamName?: string;
 };
   
