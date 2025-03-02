@@ -1,4 +1,3 @@
-
 .layout {
   min-height: 100vh;
   width: 100vw;
@@ -46,27 +45,46 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  align-items: center; /* 중앙 정렬 */
+  gap: 20px; /* 요소 사이 여백 추가 */
 }
 
 @media (min-width: 768px) {
   .content-wrapper {
     flex-direction: row;
+    align-items: flex-start;
+    gap: 40px; /* 큰 화면에서 이미지와 글 사이의 거리 증가 */
   }
 }
 
 .image-container {
   width: 100%;
+  max-width: 400px; /* 최대 크기 제한 */
+  flex-basis: 50%; /* 가로 공간 비율 설정 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .image-container {
-    width: 70vw;
+    margin-top: 3vw;
+    max-width: 800px; /* 큰 화면에서 이미지 크기 증가 */
   }
+}
+
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px; /* 모서리 둥글게 */
 }
 
 .text-content {
   width: 100%;
   padding: 20px;
+  flex-basis: 50%; /* 텍스트 영역도 50%로 설정 */
 }
 
 .borrow-form {
