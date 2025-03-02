@@ -13,8 +13,15 @@ const logService = {
       console.error(e.message);
       throw e;
     }
+  },  
+  // NEEDS ADMIN AUTH
+  //PATCH 로그 업데이트하기
+  update: async (id: string, update: PatchLog, accessToken: string): Promise<GetLog> => {
+    const response = await axiosPrivate.patch(`/api/logs/${id}`, update, accessToken);
+    return response.data;
   },
 
+  
   // //GET 팀별 로그 정보
   // getLogInfo: async (teamName: string): Promise<GetLog> => {
   //   try {
@@ -32,17 +39,10 @@ const logService = {
   //   return response.data;
   // },
 
-  // NEEDS ADMIN AUTH
-  //PATCH 로그 업데이트하기
-  update: async (id: string, update: PatchLog, accessToken: string): Promise<GetLog> => {
-    const response = await axiosPrivate.patch(`/api/logs/${id}`, update, accessToken);
-    return response.data;
-  },
-
   //DELETE 로그 삭제하기
   // delete: async (id: string): Promise<void> => {
   //   try{
-  //     const response = await axios.delete(`/api/logs/${id}`);
+    //     const response = await axios.delete(`/api/logs/${id}`);
   //     return response.data;
   //   }catch(e){
   //     console.error(e);

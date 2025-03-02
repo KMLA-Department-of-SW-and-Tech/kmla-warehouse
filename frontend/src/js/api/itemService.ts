@@ -1,6 +1,6 @@
 import axios from 'axios';
 import axiosPrivate from '../hooks/axiosPrivate';
-import {GetItem, PostItem, PatchItem} from '../types/Item';
+import { GetItem, PostItem, PatchItem } from '../types/Item';
 
 const itemService = {
   // Fetch all items, returning only those with "available" status
@@ -27,11 +27,11 @@ const itemService = {
     }
   },
 
-  // AUTH RELATED + NEEDS USER AUTH // verifyRoles req.roles === null res next()
+  // AUTH RELATED + NEEDS USER AUTH // changed
   // Request to borrow an item by ID and quantity
-  borrowRequest: async (id: string, quantity: number, user: string, accessToken: string): Promise<GetItem> => {
+  borrowRequest: async (id: string, quantity: number, accessToken: string): Promise<GetItem> => {
     try {
-      const response = await axiosPrivate.post(`/api/item/${id}/borrow`, { quantity, user }, accessToken);
+      const response = await axiosPrivate.post(`/api/item/${id}/borrow`, { quantity }, accessToken);
       if (!response.data) {
         throw new Error('Failed to borrow item: Invalid response from server');
       }
@@ -89,11 +89,11 @@ const itemService = {
     }
   },
 
-  // AUTH RELATED + NEEDS USER AUTH
+  // AUTH RELATED + NEEDS USER AUTH // changed
   // Fetch reservation list for a user
-  getReservations: async (teamName: string, accessToken: string) => {
+  getReservations: async (accessToken: string) => {
     try {
-      const response = await axiosPrivate.get(`/api/item/list/${teamName}`, accessToken);
+      const response = await axiosPrivate.get(`/api/item/team-list`, accessToken);
       return response.data;
     } catch (error) {
       console.error('Error fetching reservations:', error.message);
@@ -103,7 +103,7 @@ const itemService = {
 
   // AUTH RELATED + NEEDS USER AUTH
   // Return an item for a user
-  returnItem: async (id, accessToken: string) => {
+  returnItem: async (id: string, accessToken: string) => {
     try {
       const data = await axiosPrivate.post(`/api/logs/${id}/return`, {}, accessToken);
       return data.data;

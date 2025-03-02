@@ -2,7 +2,7 @@ import { GetItem } from "./Item";
 
 export type GetLog = {
   _id: string;
-  user: string;
+  teamName: string;
   item: GetItem;
   quantity: number;
   timestamp: string;

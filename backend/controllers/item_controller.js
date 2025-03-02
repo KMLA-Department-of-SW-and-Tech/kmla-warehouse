@@ -24,7 +24,7 @@ module.exports.listAll = async (req, res, next) => {
 
 module.exports.listForTeam = async (req, res, next) => {
     try {
-        return res.status(200).send(await itemService.getAvailableForTeam(req.params.teamName));
+        return res.status(200).send(await itemService.getAvailableForTeam());
     } catch (e) {
         switch(e.message) {
             default:

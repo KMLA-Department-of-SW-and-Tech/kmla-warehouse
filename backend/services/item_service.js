@@ -1,5 +1,6 @@
 const Item = require("../models/item");
 const logService = require("./log_service");
+const userService = require("./user_service");
 // const mongoose = require("mongoose");
 
 module.exports.getAvailable = async () => {
@@ -18,8 +19,10 @@ module.exports.getAll = async () => {
     }
 }
 
-module.exports.getAvailableForTeam = async (teamName) => {
+module.exports.getAvailableForTeam = async () => {
     try {
+        const user = userService.findUserByFirebaseUid(req.firebaseUid);
+        const teamName = user.teamName;
         const teamLogs = (await logService.getAllForTeam(teamName)).filter(log => log.item.status === "valid");
         return teamLogs.map(log => log.item);
     } catch (e) {
@@ -101,8 +104,9 @@ module.exports.borrow = async (id, body) => {
     // session.startTransaction();
 
     try {
-        const { quantity, teamName } = body;
-
+        const { quantity } = body;
+        const user = await userService.findUserByFirebaseUid(req.firebaseUid);
+        const teamName = user.teamName;
         console.log(quantity, teamName);
 
         const prevItemState = await module.exports.getOne(id);
