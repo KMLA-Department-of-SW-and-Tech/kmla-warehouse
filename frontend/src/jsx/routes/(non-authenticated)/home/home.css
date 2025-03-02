@@ -31,7 +31,7 @@
 .equipment-icon {
   margin-right: 10px;
   font-size: 1.5rem;
-  color: #1890ff;
+  color: #090a0a;
 }
 
 .equipment-search .ant-input {
@@ -81,14 +81,12 @@
 }
 
 .equipment-card-container {
-  background: white; /* 카드 부분만 흰색 */
-  padding: 20px;
+  background: rgb(230, 227, 227); /* 카드 부분만 흰색 */
+  padding: 10px;
   border-radius: 12px; /* 모서리 둥글게 */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* 가벼운 그림자 효과 */
   max-width: 1200px; /* 카드 부분의 최대 너비 설정 */
   width: 100%;
 }
-
 
 .equipment-image {
   width: 100%;

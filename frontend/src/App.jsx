@@ -8,7 +8,7 @@ import { AuthProvider } from "./jsx/contexts/authContext/index.jsx";
 import Home from "./jsx/routes/(non-authenticated)/home/home.tsx"; 
 import EquipmentDetails from "./jsx/routes/(non-authenticated)/item-details/item-details.tsx"; 
 
-import ReservationStatus from "./jsx/routes/(authenticated)/user/user-account-settings.tsx";
+import ReservationStatus from "./jsx/routes/(authenticated)/user/user-reservation.tsx";
 import AccountSettings from "./jsx/routes/(authenticated)/user/user-account-settings.tsx";
  
 import AdminEquipmentPage from "./jsx/routes/(authenticated)/admin/admin-item.tsx"; 

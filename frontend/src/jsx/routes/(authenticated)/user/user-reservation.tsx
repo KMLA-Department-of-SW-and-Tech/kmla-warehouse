@@ -8,7 +8,7 @@ import { UnorderedListOutlined } from '@ant-design/icons';
 import { GetLog } from "../../../../js/types/Log.ts";
 import { GetItem } from "../../../../js/types/Item.ts";
 import { useAuth } from "../../../contexts/authContext/index.jsx";
-import './reservation.css';
+import './user-reservation.css';
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
