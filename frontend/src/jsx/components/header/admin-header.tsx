@@ -42,7 +42,7 @@ const Headbar: React.FC = () => {
         </div>
         <div className="user-info" onClick={handleHelloClick} style={{cursor: 'pointer'}}>
           {loading ? <span></span> : authValue.userLoggedIn ? (
-            <span>관리자 님</span>
+            <span>관리자 계정입니다</span>
           ) : (
             <span>로그인을 하신 후 다른 기능을 사용하실 수 있습니다</span>
           )}
