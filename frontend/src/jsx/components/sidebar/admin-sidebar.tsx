@@ -4,8 +4,9 @@ import { Menu, MenuProps, Badge } from 'antd';
 import { 
   AccountBookOutlined, 
   AppstoreAddOutlined,
-  UsergroupAddOutlined, 
-  UserOutlined
+  UserAddOutlined, 
+  LogoutOutlined,
+  TeamOutlined
 } from '@ant-design/icons';
 import './sidebar.css';
 
@@ -32,12 +33,12 @@ const items1: MenuProps['items'] = [
       },
       {
         key: '/admin/userlist',
-        icon: <UsergroupAddOutlined />,
-        label: '가입승인',
+        icon: <TeamOutlined />,
+        label: '사용자 목록',
       },
       {
         key: '/admin/permission',
-        icon: <UsergroupAddOutlined />,
+        icon: <UserAddOutlined />,
         label: '가입승인',
       },
     ],
@@ -49,7 +50,7 @@ const items1: MenuProps['items'] = [
     children: [
       {
         key: '/admin/account-settings',
-        icon: <UserOutlined />,
+        icon: <LogoutOutlined />,
         label: '로그아웃',
       },
     ],

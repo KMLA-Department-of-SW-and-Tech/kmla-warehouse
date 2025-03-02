@@ -14,6 +14,7 @@ import AdminReservationPage from "./jsx/routes/(authenticated)/admin/admin-reser
 // import AdminTeamPage from "./jsx/routes/(authenticated)/admin/manage-team.tsx";
 import AdminSettingPage from "./jsx/routes/(authenticated)/admin/admin-account-settings.tsx";
 import AdminPermissionPage from "./jsx/routes/(authenticated)/admin/admin-permission.tsx";
+import AdminUserListPage from "./jsx/routes/(authenticated)/admin/admin-userlist.tsx";
 import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./jsx/components/protected-routes.jsx";
 // import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./jsx/components/protected-routes.jsx";
 
@@ -81,6 +82,17 @@ const router = createBrowserRouter([
       <ProtectedRoute>
         <ProtectedAdmin>
           <AdminReservationPage />
+        </ProtectedAdmin>
+      </ProtectedRoute>
+    ),
+  },
+  // ADMIN: userlist page
+  {
+    path: "/admin/userlist",
+    element: (
+      <ProtectedRoute>
+        <ProtectedAdmin>
+          <AdminUserListPage />
         </ProtectedAdmin>
       </ProtectedRoute>
     ),

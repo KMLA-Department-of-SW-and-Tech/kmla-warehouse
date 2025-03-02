@@ -39,7 +39,7 @@ const Headbar: React.FC = () => {
   return (
     <header className="head">
       <div className="head-container">
-        <div className="logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
+        <div className="main-logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
           KMLA Warehouse
         </div>
         <div className="user-info" onClick={handleHelloClick} style={{cursor: 'pointer'}}>

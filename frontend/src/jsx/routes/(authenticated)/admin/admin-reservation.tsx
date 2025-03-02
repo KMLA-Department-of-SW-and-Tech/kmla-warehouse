@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Typography, Spin, message, Grid, Modal, ConfigProvider } from 'antd';
+import { Layout, Typography, Spin, message, Grid, ConfigProvider, Select, Button } from 'antd';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from '../../../components/sidebar/admin-sidebar';
 import "./admin.css";
@@ -12,17 +12,26 @@ import { useAuth } from '../../../contexts/authContext';
 const { Content, Sider } = Layout;
 const { Title } = Typography;
 const { useBreakpoint } = Grid;
+const { Option } = Select;
+
+
 
 const AdminReservationPage: React.FC = () => {
   const screens = useBreakpoint();
   const [logs, setLogs] = useState<GetLog[]>([]);
+  const [filteredLogs, setFilteredLogs] = useState<GetLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   const authValue = useAuth();
+  const [selectedFilter, setSelectedFilter] = useState<string>("all");
 
   useEffect(() => {
     fetchLogs();
   }, []);
+
+  useEffect(() => {
+    applyFilter();
+  }, [selectedFilter, logs]);
 
 
   const fetchLogs = async () => {
@@ -42,6 +51,14 @@ const AdminReservationPage: React.FC = () => {
       throw(error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const applyFilter = () => {
+    if (selectedFilter === "all") {
+      setFilteredLogs(logs);
+    } else {
+      setFilteredLogs(logs.filter((log) => log.type === selectedFilter));
     }
   };
 
@@ -76,12 +93,32 @@ const AdminReservationPage: React.FC = () => {
             </Sider>
             <Content className="admin-content">
               <Title level={3}>신청관리</Title>
+              <Button.Group className='admin-table'>
+                <Button 
+                  type={selectedFilter === "all"  ? "primary" : "default"} 
+                  onClick={() => setSelectedFilter("all")}
+                >
+                  전체
+                </Button>
+                <Button 
+                  type={selectedFilter === "borrow" ? "primary" : "default"} 
+                  onClick={() => setSelectedFilter("borrow")}
+                >
+                  대여 중
+                </Button>
+                <Button 
+                  type={selectedFilter === "return" ? "primary" : "default"} 
+                  onClick={() => setSelectedFilter("return")}
+                >
+                  반납됨
+                </Button>
+              </Button.Group>
               {loading ? (
                 <Spin />
               ) : (
                 <EditableProTable<GetLog>
                   rowKey="_id"
-                  value={logs}
+                  value={filteredLogs}
                   columns={columns}
                   editable={{
                     type: "multiple",
