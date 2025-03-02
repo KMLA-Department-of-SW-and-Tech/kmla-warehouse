@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, message, Layout, Typography } from 'antd';
 import { signUserOut } from '../../../../js/firebase/auth';
 import Sidebar from '../../../components/sidebar/admin-sidebar';
-import Headbar from '../../../components/header/header'; // Assuming you have a header component like in the EquipmentListPage
+import Headbar from '../../../components/header/admin-header'; // Assuming you have a header component like in the EquipmentListPage
 import { useNavigate } from 'react-router-dom';
 
 

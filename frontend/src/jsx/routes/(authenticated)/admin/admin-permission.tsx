@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, message, Layout, Typography, Table, Spin } from 'antd';
 import { signUserOut } from '../../../../js/firebase/auth';
 import Sidebar from '../../../components/sidebar/admin-sidebar';
-import Headbar from '../../../components/header/header';
+import Headbar from '../../../components/header/admin-header';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../../contexts/authContext";
 import { CheckOutlined } from "@ant-design/icons";
