@@ -99,13 +99,13 @@ module.exports.deleteOne = async (id) => {
     }
 }
 
-module.exports.borrow = async (id, body) => {
+module.exports.borrow = async (id, body, firebaseUid) => {
     // const session = await mongoose.startSession();
     // session.startTransaction();
     try {
         console.log(body);
         const { quantity } = body;
-        const user = await userService.findUserByFirebaseUid(req.firebaseUid);
+        const user = await userService.findUserByFirebaseUid(firebaseUid);
         const teamName = user.teamName;
         console.log("hi", quantity, teamName);
 

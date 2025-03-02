@@ -1,6 +1,7 @@
 import axios from 'axios';
 import axiosPrivate from '../hooks/axiosPrivate';
 import { GetItem, PostItem, PatchItem } from '../types/Item';
+import { access } from 'fs';
 
 const itemService = {
   // Fetch all items, returning only those with "available" status
@@ -31,7 +32,8 @@ const itemService = {
   // Request to borrow an item by ID and quantity
   borrowRequest: async (id: string, quantity: number, accessToken: string): Promise<GetItem> => {
     try {
-      const response = await axiosPrivate.post(`/api/item/${id}/borrow`, { quantity }, accessToken);
+      console.log(id, quantity, accessToken);
+      const response = await axiosPrivate.patch(`/api/item/${id}/borrow`, { quantity }, accessToken);
       if (!response.data) {
         throw new Error('Failed to borrow item: Invalid response from server');
       }

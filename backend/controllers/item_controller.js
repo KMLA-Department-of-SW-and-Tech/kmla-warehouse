@@ -105,8 +105,7 @@ module.exports.delete = async (req, res, next) => {
 
 module.exports.borrow = async (req, res, next) => {
     try {
-        console.log("hi")
-        return res.status(200).send(await itemService.borrow(req.params.id, req.body));
+        return res.status(200).send(await itemService.borrow(req.params.id, req.body, req.firebaseUid));
     } catch (e) {   
         switch(e.message) {
             case "Item not found":
