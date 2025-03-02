@@ -53,7 +53,7 @@ module.exports.getAuthorizedUsers = async () => {
 
 module.exports.authorizedUserById = async (id) => {
     try {
-        return await User.updateOne({ id: id, userType: "Unauthorized" }, { $set: { userType: "User" } });
+        return await User.findByIdAndUpdate(id, { userType: "User" });
     } catch (e) {
         console.log("Cannot authorize user", e);
         throw e;
