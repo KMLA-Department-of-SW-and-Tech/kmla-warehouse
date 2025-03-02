@@ -56,19 +56,6 @@ const AdminReservationPage: React.FC = () => {
     return `${year}-${month}-${day}-${hours}:${minutes}:${seconds}`;
   };
 
-  const handleUpdateLog = async (id: string, update: PatchLog) => {
-    try {
-      const updated = await logService.update(id, update, authValue.accessToken);
-      setLogs(logs.map((bh) => (bh._id === id ? updated : bh)));
-      message.success("Log updated successfully");
-      fetchLogs(); // 데이터 갱신
-    } catch (error) {
-      message.error("Failed to update log");
-      console.error(error);
-      throw(error);
-    }
-  };
-
 
   const columns: ProColumns<GetLog>[] = [
     { title: "팀명", dataIndex: "user", key: "user" },
@@ -99,12 +86,10 @@ const AdminReservationPage: React.FC = () => {
                   editable={{
                     type: "multiple",
                     editableKeys,
-                    onSave: async (rowKey, data) => {
-                      await handleUpdateLog(data._id, data as PatchLog);
-                    },
                     onChange: setEditableRowKeys,
                   }}
                   recordCreatorProps={false}
+                  className='admin-reservation-table'
                 />
               )}
             </Content>
