@@ -39,7 +39,7 @@ const items1: MenuProps['items'] = [
       {
         key: '/admin/account-settings',
         icon: <UserOutlined />,
-        label: '계정설정',
+        label: '로그아웃',
       },
     ],
   },

@@ -37,8 +37,11 @@ const AdminSettingPage = () => {
             <Sidebar />
           </Sider>
           <Content className='admin-content'>
-            <Title level={3}>마이페이지</Title>
-            <Button onClick={handleLogout} loading={loading}>
+            <Title level={3}>로그아웃</Title>
+            <Button 
+              onClick={handleLogout} 
+              loading={loading}
+              className='admin-logout-btn'>
               Logout
             </Button>
           </Content>

@@ -3,14 +3,23 @@
     background-color: white;
     display: flex;
     justify-content: center;
+    flex-grow: 1;
     margin-left: 250px;
-    margin-top: 60px;
+    margin-top: 40px;
     min-height: 100vh;
-    width: 100vw;
+    width: 80vw;
+    overflow-x: auto;
+    position: relative;
 }
 
 .admin-content {
     background-color: white;
-    padding: 24px;
-    position: relative;
+    padding: 60px;
+    flex-grow: 1;
+    overflow-x: auto;
+}
+
+.admin-logout-btn {
+    margin-top: 50px;
+    display: flex;
 }

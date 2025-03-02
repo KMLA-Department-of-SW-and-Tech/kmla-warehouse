@@ -3,14 +3,14 @@
     width: 100vw;
   }
   
-  .sider {
+/*   .sider {
     background: #fff;
     position: fixed;
     height: 100vh;
     left: 0;
     top: 64px;
     width: 250px;
-  }
+  } */
   
   .content {
     margin-top: 64px;
