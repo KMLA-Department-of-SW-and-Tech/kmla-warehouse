@@ -50,7 +50,7 @@ export const userService = {
     },
     getTeamNameList: async (): Promise<string[]> => {
         try {
-            const response = await axios.get("/api/users/team-name-list");
+            const response = await axios.get("/api/user/team-name-list");
             return response.data;
         } catch (e) {
             console.log("Get team name list error: ", e);
