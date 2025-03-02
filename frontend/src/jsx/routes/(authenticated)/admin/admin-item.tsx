@@ -3,9 +3,9 @@ import { Layout, Typography, Spin, message, ConfigProvider, Upload, Button, Form
 import enUS from 'antd/lib/locale/en_US';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import { CloseOutlined, DeleteOutlined, EditOutlined, SaveOutlined, UploadOutlined, PlusOutlined } from "@ant-design/icons";
-import Sidebar from "../../../components/admin/admin-sidebar";
+import Sidebar from "../../../components/sidebar/admin-sidebar";
 import './admin.css';
-import Headbar from "../../../components/admin/admin-header";
+import Headbar from "../../../components/header/admin-header";
 import { itemService } from "../../../../js/api/itemService";
 import {GetItem, PostItem, PatchItem} from '../../../../js/types/Item';
 import { useAuth } from "../../../contexts/authContext";
@@ -174,91 +174,89 @@ const AdminEquipmentPage: React.FC = () => {
 
   return (
     <ConfigProvider locale={enUS}>
-      <Layout className="layout">
+      <Layout> 
         <Headbar />
-        <Layout>
-          <Sider>
+        <Layout className="admin-layout">
+          <Sider className="sidebar">
             <Sidebar />
           </Sider>
           <Layout>
-            <Content className="content">
-              <Title level={3}>물품관리</Title>
-
-              <Form
-                form={form}
-                layout="inline"
-                onFinish={handleAddItem}
-                style={{ marginBottom: '16px' }}
-              >
-                <Form.Item
-                  name="name"
-                  rules={[{ required: true, message: 'Please input the item name!' }]}
+            <Content className="admin-content">
+                <Title level={3}>물품관리</Title>
+                <Form
+                  form={form}
+                  onFinish={handleAddItem}
                 >
-                  <Input placeholder="Item Name" />
-                </Form.Item>
-                <Form.Item
-                  name="description"
-                  rules={[{ required: true, message: 'Please input the description!' }]}
-                >
-                  <Input placeholder="Description" />
-                </Form.Item>
-                <Form.Item
-                  name="quantity"
-                  rules={[{ required: true, message: 'Please input the quantity!' }]}
-                >
-                  <InputNumber min={1} placeholder="Quantity" />
-                </Form.Item>
-                <Form.Item
-                  name="location"
-                  rules={[{ required: true, message: 'Please input the location!' }]}
-                >
-                  <Input placeholder="Location" />
-                </Form.Item>
-                <Form.Item name="imageUrl">
-                  <Upload
-                    name="image"
-                    listType="picture"
-                    showUploadList={true}
-                    beforeUpload={handleImageUpload}
+                  <Form.Item
+                    name="name"
+                    rules={[{ required: true, message: 'Please input the item name!' }]}
                   >
-                    <Button icon={<UploadOutlined />}>이미지 업로드</Button>
-                  </Upload>
-                </Form.Item>
-                <Form.Item>
-                  <Button type="primary" htmlType="submit">
-                    Add Item
-                  </Button>
-                </Form.Item>
-              </Form>
+                    <Input placeholder="물품명" />
+                  </Form.Item>
+                  <Form.Item
+                    name="description"
+                    rules={[{ required: true, message: 'Please input the description!' }]}
+                  >
+                    <Input placeholder="설명" />
+                  </Form.Item>
+                  <Form.Item
+                    name="quantity"
+                    rules={[{ required: true, message: 'Please input the quantity!' }]}
+                  >
+                    <InputNumber min={1} placeholder="수량" />
+                  </Form.Item>
+                  <Form.Item
+                    name="location"
+                    rules={[{ required: true, message: 'Please input the location!' }]}
+                  >
+                    <Input placeholder="위치" />
+                  </Form.Item>
+                  <Form.Item name="imageUrl">
+                    <Upload
+                      name="image"
+                      listType="picture"
+                      showUploadList={true}
+                      beforeUpload={handleImageUpload}
+                    >
+                      <Button icon={<UploadOutlined />}>img</Button>
+                    </Upload>
+                  </Form.Item>
+                  <Form.Item>
+                    <Button type="primary" htmlType="submit">
+                      물품 추가
+                    </Button>
+                  </Form.Item>
+                </Form>
 
-              {loading ? (
-                <Spin />
-              ) : (
-                // properties in editable state on each row cell
-                <EditableProTable<GetItem>
-                  rowKey="_id"
-                  value={items}
-                  columns={columns}
-                  editable={{
-                    type: 'multiple',
-                    editableKeys,
-                    onSave: async (rowKey, data) => {
-                      await handleUpdateItem(data._id, data as PatchItem);
-                      setEditableRowKeys((prevKeys) => prevKeys.filter((key) => key !== rowKey));
-                    },
-                    onChange: setEditableRowKeys,
-                    saveText: <Button icon={<SaveOutlined/>}></Button>,
-                    cancelText: <Button icon={<CloseOutlined/>}></Button>,
-                    actionRender: (row, config, defaultDom) => {
-                      const { save, cancel } = defaultDom; 
-                      return [save, cancel];
-                    },
-                  }}
-                  recordCreatorProps={false}
-                />
-              )}
+                {loading ? (
+                  <Spin />
+                ) : (
+                  // properties in editable state on each row cell
+                  <EditableProTable<GetItem>
+                    rowKey="_id"
+                    value={items}
+                    columns={columns}
+                    editable={{
+                      type: 'multiple',
+                      editableKeys,
+                      onSave: async (rowKey, data) => {
+                        await handleUpdateItem(data._id, data as PatchItem);
+                        setEditableRowKeys((prevKeys) => prevKeys.filter((key) => key !== rowKey));
+                      },
+                      onChange: setEditableRowKeys,
+                      saveText: <Button icon={<SaveOutlined/>}></Button>,
+                      cancelText: <Button icon={<CloseOutlined/>}></Button>,
+                      actionRender: (row, config, defaultDom) => {
+                        const { save, cancel } = defaultDom; 
+                        return [save, cancel];
+                      },
+                    }}
+                    recordCreatorProps={false}
+                  />
+                )}
             </Content>
           </Layout>
+          
         </Layout>
       </Layout>
     </ConfigProvider>

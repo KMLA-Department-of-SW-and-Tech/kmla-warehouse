@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Typography, Spin, message, Grid, Modal, ConfigProvider } from 'antd';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
-import Sidebar from '../../../components/admin/admin-sidebar';
+import Sidebar from '../../../components/sidebar/admin-sidebar';
 import "./admin.css";
-import Headbar from "../../../components/admin/admin-header";
+import Headbar from "../../../components/header/admin-header.tsx";
 import { logService } from "../../../../js/api/logService";
 import { GetLog, PatchLog } from "../../../../js/types/Log";
 import enUS from 'antd/lib/locale/en_US';
@@ -13,7 +13,7 @@ const { Content, Sider } = Layout;
 const { Title } = Typography;
 const { useBreakpoint } = Grid;
 
-const AdminHistoryPage: React.FC = () => {
+const AdminReservationPage: React.FC = () => {
   const screens = useBreakpoint();
   const [logs, setLogs] = useState<GetLog[]>([]);
   const [loading, setLoading] = useState(true);
@@ -80,17 +80,14 @@ const AdminHistoryPage: React.FC = () => {
 
   return (
     <ConfigProvider locale={enUS}>
-      <Layout className="layout">
+      <Layout>
         <Headbar />
-        <Layout>
-          {!screens.xs  && (
-            <Sider>
+        <Layout>          
+          <Layout className="admin-layout">
+            <Sider className='sidebar'>
               <Sidebar />
             </Sider>
-          )}
-          
-          <Layout>
-            <Content className="content">
+            <Content className="admin-content">
               <Title level={3}>신청관리</Title>
               {loading ? (
                 <Spin />
@@ -119,4 +116,4 @@ const AdminHistoryPage: React.FC = () => {
   );
 };
 
-export default AdminHistoryPage;
+export default AdminReservationPage;

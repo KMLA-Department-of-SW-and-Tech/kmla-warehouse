@@ -1,27 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import './equipment-details.css'; 
+import './item-details.css'; 
 import { Typography, Spin, Layout, Button, message, Form, InputNumber } from 'antd'; 
 import { useParams } from 'react-router-dom';
 import { itemService } from '../../../../js/api/itemService';
-import Sidebar from '../../../components/user/user-sidebar';
-import Headbar from '../../../components/user/header';
+import Sidebar from '../../../components/sidebar/user-sidebar';
+import Headbar from '../../../components/header/user-header.tsx';
 import {GetItem, PostItem, PatchItem} from '../../../../js/types/Item';
 import { useAuth } from '../../../contexts/authContext';
 const { Sider, Content } = Layout;
 const { Title, Text } = Typography;
 
-
 export default function EquipmentDetails() {
-  // State to manage loading status, item details, and borrowing quantity
   const [loading, setLoading] = useState(true);
   const [item, setItem] = useState<GetItem | null>(null);
   const [borrowQuantity, setBorrowQuantity] = useState<number>(1);
   const authValue = useAuth();
-
-  // Retrieve the item ID from route parameters
   const { id } = useParams<{ id: string }>();
 
-  // Fetch item details by ID
   const fetchItemDetails = async () => {
     if (!id) return;
     try {
@@ -30,35 +25,31 @@ export default function EquipmentDetails() {
     } catch (error) {
       console.error('Failed to fetch item details:', error);
       setItem(null);
-      throw(error);
+      throw error;
     } finally {
       setLoading(false);
     }
   };
 
-  // Load item details when component mounts or ID changes
   useEffect(() => {
     fetchItemDetails();
   }, [id]);
 
-  // Handle the borrow request
   const handleBorrow = async () => {
     if (!id) return;
     if (borrowQuantity < 1) {
-      message.error('유효한 수량을 입력하세요.'); // Error message for invalid quantity
+      message.error('유효한 수량을 입력하세요.');
       return;
     }
     try {
-      await itemService.borrowRequest(id, borrowQuantity, "user", authValue.accessToken); // Send borrow request
-      message.success('대여 요청이 성공적으로 처리되었습니다.'); // Success message
-      window.location.reload(); // Reload page to reflect updated status
+      await itemService.borrowRequest(id, borrowQuantity, "user", authValue.accessToken);
+      message.success('대여 요청이 성공적으로 처리되었습니다.');
+      window.location.reload();
     } catch (error) {
       console.error('Failed to borrow item:', error);
       if (error.response) {
-        const status = error.response.status; // HTTP status code
-        const messageText = error.response.data.message || error.message; // Error message from server
-
-        // Display error messages based on HTTP status codes
+        const status = error.response.status;
+        const messageText = error.response.data.message || error.message;
         if (status === 404) {
           message.error(messageText || '아이템을 찾을 수 없습니다.');
         } else if (status === 400) {
@@ -79,19 +70,16 @@ export default function EquipmentDetails() {
       <Headbar /> 
       <Layout className="layout">
         <Sider className="sider">
-          <Sidebar /> {/* Sidebar for navigation */}
+          <Sidebar />
         </Sider>
-        <Layout style={{ marginLeft: 250 }}>
+        <Layout className="content-layout">
           <Content className="content">
-            {/* Show spinner while loading */}
             {loading ? (
               <Spin size="large" />
             ) : item ? (
-              // Display item details if fetched successfully
               <div className="content-wrapper">
                 <div className="image-container">
                   <div className="image-placeholder">
-                    {/* Display item image if available */}
                     {item.imageUrl ? (
                       <img src={item.imageUrl} alt={item.name} className="image" />
                     ) : (
@@ -100,17 +88,15 @@ export default function EquipmentDetails() {
                   </div>
                 </div>
                 <div className="text-content">
-                  <Title level={1}>{item.name}</Title> {/* Item name */}
-                  <Text>남은 수량 {item.quantity} 개</Text> {/* Available quantity */}
+                  <Title level={1}>{item.name}</Title>
+                  <Text>남은 수량 {item.quantity} 개</Text>
                   <div style={{ marginTop: '10px' }}>
-                    <Text>위치 {item.location}</Text> {/* Item location */}
+                    <Text>위치 {item.location}</Text>
                     <Title level={5}>물품 설명</Title>
-                    <Text>{item.description}</Text> {/* Item description */}
+                    <Text>{item.description}</Text>
                   </div>
-                  {/* Borrow form */}
                   <Form layout="vertical" className="borrow-form">
                     <Form.Item label="대여할 수량을 선택하세요">
-                      {/* Input for borrowing quantity */}
                       <InputNumber
                         min={1}
                         max={item.quantity}
@@ -124,7 +110,6 @@ export default function EquipmentDetails() {
                 </div>
               </div>
             ) : (
-              // Fallback message if item details couldn't be loaded
               <Typography.Text>아이템 정보를 불러오지 못했습니다. 과학기술부에 문의하세요.</Typography.Text>
             )}
           </Content>

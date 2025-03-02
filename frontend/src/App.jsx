@@ -1,20 +1,19 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AuthProvider } from "./jsx/contexts/authContext/index.jsx";
-
 // import Login from "./jsx/routes/(non-authenticated)/login/login.tsx"; 
 // import Signup from "./jsx/routes/(non-authenticated)/signup/signup.tsx"; 
 import Home from "./jsx/routes/(non-authenticated)/home/home.tsx"; 
-import EquipmentDetails from "./jsx/routes/(non-authenticated)/equpment-details/equipment-details.tsx"; 
+import EquipmentDetails from "./jsx/routes/(non-authenticated)/item-details/item-details.tsx"; 
 
-import ReservationStatus from "./jsx/routes/(authenticated)/user/reservation.tsx";
-import AccountSettings from "./jsx/routes/(authenticated)/user/account-settings.tsx";
+import ReservationStatus from "./jsx/routes/(authenticated)/user/user-reservation.tsx";
+import AccountSettings from "./jsx/routes/(authenticated)/user/user-account-settings.tsx";
  
-import AdminEquipmentPage from "./jsx/routes/(authenticated)/admin/equipment.tsx"; 
-import AdminHistoryPage from "./jsx/routes/(authenticated)/admin/reservation.tsx";  
+import AdminEquipmentPage from "./jsx/routes/(authenticated)/admin/admin-item.tsx"; 
+import AdminReservationPage from "./jsx/routes/(authenticated)/admin/admin-reservation.tsx";  
 // import AdminTeamPage from "./jsx/routes/(authenticated)/admin/manage-team.tsx";
-import AdminSettingPage from "./jsx/routes/(authenticated)/admin/account-settings.tsx";
+import AdminSettingPage from "./jsx/routes/(authenticated)/admin/admin-account-settings.tsx";
+import AdminPermissionPage from "./jsx/routes/(authenticated)/admin/admin-permission.tsx";
 // import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./jsx/components/protected-routes.jsx";
 
 const router = createBrowserRouter([
@@ -24,7 +23,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <Navigate to="/admin/equipment" replace />,
+    element: <Navigate to="/admin/items" replace />,
   },
   // // Login page
   // {
@@ -61,13 +60,18 @@ const router = createBrowserRouter([
   
   // ADMIN: add equipment page
   {
-    path: "/admin/equipment",
+    path: "/admin/item",
     element: <AdminEquipmentPage />,
   },
   // ADMIN: reservation page
   {
     path: "/admin/reservation",
-    element: <AdminHistoryPage />,
+    element: <AdminReservationPage />,
+  },
+  // ADMIN: user permission page
+  {
+    path: "/admin/permission",
+    element: <AdminPermissionPage />,
   },
   // ADMIN: account setting page
   {
