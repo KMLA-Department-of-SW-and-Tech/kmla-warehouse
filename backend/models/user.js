@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const teamNameList = require("../config/team-config").teamNameList;
+const { teamNameList } = require("../config/team-config");
 
 const Schema = mongoose.Schema;
 

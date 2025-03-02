@@ -10,7 +10,7 @@ const verifyRoles = (allowedRoles) => { // will be needed in future applications
         console.log(allowedRoles);
         const validated = allowedRoles.includes(userRole);
         console.log(validated);
-        //if(!validated) return res.sendStatus(401).send("Unauthorized api access");
+        if(!validated) return res.sendStatus(401).send("Unauthorized api access");
         return next();
     };
 }

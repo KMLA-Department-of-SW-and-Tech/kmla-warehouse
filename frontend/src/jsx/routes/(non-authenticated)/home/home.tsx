@@ -7,9 +7,6 @@ import itemService from '../../../../js/api/itemService';
 import Headbar from '../../../components/header/user-header.tsx';
 import { GetItem } from '../../../../js/types/Item';
 
-// needs deletion
-import LoginModal from "../../../components/login-modal/login-modal";
-
 import "./home.css";
 
 const { Sider, Content } = Layout;
@@ -70,10 +67,7 @@ export default function Home() {
         <Sider className='sidebar'>
           <Sidebar />
         </Sider>
-      )}
-      
-      <LoginModal openModal={true} />
-      
+      )}      
       <Layout style={{ marginLeft: windowWidth > 768 ? 250 : 0 }}>
         <Content className="equipment-content">
           <div className="equipment-card-container">

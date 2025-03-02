@@ -14,9 +14,11 @@ import AdminReservationPage from "./jsx/routes/(authenticated)/admin/admin-reser
 // import AdminTeamPage from "./jsx/routes/(authenticated)/admin/manage-team.tsx";
 import AdminSettingPage from "./jsx/routes/(authenticated)/admin/admin-account-settings.tsx";
 import AdminPermissionPage from "./jsx/routes/(authenticated)/admin/admin-permission.tsx";
+import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./jsx/components/protected-routes.jsx";
 // import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./jsx/components/protected-routes.jsx";
 
 const router = createBrowserRouter([
+  // Replacements
   {
     path: "/",
     element: <Navigate to="/home" replace />,
@@ -25,16 +27,9 @@ const router = createBrowserRouter([
     path: "/admin",
     element: <Navigate to="/admin/item" replace />,
   },
-  // // Login page
-  // {
-  //   path: "/login",
-  //   element: <Login />,
-  // },
-  // // Signup page
-  // {
-  //   path: "/signup",
-  //   element: <Signup />,
-  // },
+
+  
+
   // Home page
   {
     path: "/home",
@@ -48,12 +43,22 @@ const router = createBrowserRouter([
   // under here needs authorization
   {
     path: "/account-settings",
-    element: <AccountSettings />,
+    element: (
+      <ProtectedRoute>
+        <AccountSettings />
+      </ProtectedRoute>
+    ),
   },
   //Reservation Status page
   {
     path: "/reservation",
-    element: <ReservationStatus />,
+    element: (
+      <ProtectedRoute>
+        <ProtectedUser>
+          <ReservationStatus />
+        </ProtectedUser>
+      </ProtectedRoute>
+    ),
   },
 
 
@@ -61,22 +66,46 @@ const router = createBrowserRouter([
   // ADMIN: add equipment page
   {
     path: "/admin/item",
-    element: <AdminEquipmentPage />,
+    element: (
+      <ProtectedRoute>
+        <ProtectedAdmin>
+          <AdminEquipmentPage />
+        </ProtectedAdmin>
+      </ProtectedRoute>
+    ),
   },
   // ADMIN: reservation page
   {
     path: "/admin/reservation",
-    element: <AdminReservationPage />,
+    element: (
+      <ProtectedRoute>
+        <ProtectedAdmin>
+          <AdminReservationPage />
+        </ProtectedAdmin>
+      </ProtectedRoute>
+    ),
   },
   // ADMIN: user permission page
   {
     path: "/admin/permission",
-    element: <AdminPermissionPage />,
+    element: (
+      <ProtectedRoute>
+        <ProtectedAdmin>
+          <AdminPermissionPage />
+        </ProtectedAdmin>
+      </ProtectedRoute>
+    ),
   },
   // ADMIN: account setting page
   {
     path: "/admin/account-settings",
-    element: <AdminSettingPage />,
+    element: (
+      <ProtectedRoute>
+        <ProtectedAdmin>
+          <AdminSettingPage />
+        </ProtectedAdmin>
+      </ProtectedRoute>
+    ),
   },  
 ]);
 

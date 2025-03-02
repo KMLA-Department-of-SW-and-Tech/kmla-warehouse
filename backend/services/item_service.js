@@ -84,7 +84,7 @@ module.exports.editOne = async (id, updates, session=null) => {
 
 module.exports.deleteOne = async (id) => {
     try {
-        const deletedItem = await Item.findByIdAndUpdate(id, {status: "deleted"});
+        const deletedItem = await Item.findByIdAndUpdate(id, { status: "deleted" });
 
         if (!deletedItem) {
             throw new Error("Item not found");
@@ -101,9 +101,9 @@ module.exports.borrow = async (id, body) => {
     // session.startTransaction();
 
     try {
-        const {quantity, user} = body;
+        const { quantity, teamName } = body;
 
-        console.log(quantity, user);
+        console.log(quantity, teamName);
 
         const prevItemState = await module.exports.getOne(id);
 
@@ -115,10 +115,10 @@ module.exports.borrow = async (id, body) => {
             throw new Error("Invalid quantity");
         }
 
-        const updatedItem = await module.exports.editOne(id, {quantity: prevItemState.quantity - quantity});
+        const updatedItem = await module.exports.editOne(id, { quantity: prevItemState.quantity - quantity });
 
         await logService.createOne({
-            user,
+            teamName,
             item: id,
             quantity,
             type: "borrow",

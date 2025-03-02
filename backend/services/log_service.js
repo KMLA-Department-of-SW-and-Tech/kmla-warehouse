@@ -14,7 +14,7 @@ module.exports.getAll = async () => {
 
 module.exports.getAllForTeam = async (teamName) => {
     try {
-        return await Log.find({user: teamName}).populate("item");
+        return await Log.find({ teamName: teamName }).populate("item");
     } catch (e) {
         switch(e.message) {
             default:
@@ -43,7 +43,7 @@ module.exports.createOne = async (body, status=null, session=null) => {
     const entry = new Log(args);
 
     try {
-        return (await entry.save({session})).populate("item");
+        return (await entry.save({ session })).populate("item");
     } catch (e) {
         switch(e.message) {
             default:
@@ -95,14 +95,14 @@ module.exports.return = async (id) => {
         }
         
         
-        const updatedItem = await module.exports.editOne(id, {status: "closed"});
+        const updatedItem = await module.exports.editOne(id, { status: "closed" });
         
         console.log("yeets");
         
-        await itemService.editOne(log.item, {quantity: item.quantity + log.quantity});
+        await itemService.editOne(log.item, { quantity: item.quantity + log.quantity });
         
         await module.exports.createOne({
-            user: log.user,
+            teamName: log.teamName,
             item: log.item,
             quantity: log.quantity,
             type: "return",
