@@ -16,7 +16,7 @@ export default function LoginModal({ openModal, redirectToHomeOnCancel, callBack
 
     const handleGoogleLogin = async () => {
         const res = await signUserInWithGoogle();
-        if(res.isAdmin) navigate("/admin/equipment");
+        if(res.isAdmin) navigate("/admin/item");
         // const isNewUser = getAdditionalUserInfo(res).isNewUser;
         // console.log(isNewUser);
         if(!!callBack) callBack();
