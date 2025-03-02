@@ -4,7 +4,7 @@ import { UnorderedListOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../../components/sidebar/user-sidebar';
 import { itemService } from '../../../../js/api/itemService'; 
-import Headbar from '../../../components/header/header';
+import Headbar from '../../../components/header/user-header.tsx';
 import { GetItem } from '../../../../js/types/Item';
 import { GetLog } from '../../../../js/types/Log';
 import { useAuth } from "../../../contexts/authContext/index.jsx";
