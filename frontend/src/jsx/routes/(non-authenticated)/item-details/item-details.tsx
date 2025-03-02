@@ -8,6 +8,7 @@ import Headbar from '../../../components/header/user-header.tsx';
 import { GetItem, PostItem, PatchItem } from '../../../../js/types/Item';
 import { useAuth } from '../../../contexts/authContext';
 import LoginModal from '../../../components/login-modal/login-modal.jsx';
+import NotAuthorizedModal from "../../../components/not-authorized-modal/not-authorized-modal.jsx";
 const { Sider, Content } = Layout;
 const { Title, Text } = Typography;
 
@@ -15,6 +16,8 @@ export default function EquipmentDetails() {
   const [loading, setLoading] = useState(true);
   const [item, setItem] = useState<GetItem | null>(null);
   const [borrowQuantity, setBorrowQuantity] = useState<number>(1);
+  const [showLoginModal, setShowLoginModal] = useState<Boolean>(false);
+  const [showNotAuthModal, setShowNotAuthModal] = useState<Boolean>(false);
   const authValue = useAuth();
   const { id } = useParams<{ id: string }>();
 
@@ -44,11 +47,14 @@ export default function EquipmentDetails() {
     }
     try {
       if(!authValue.userLoggedIn) {
-        <LoginModal openModal={true} redirectToHomeOnCancel={false} />
+        setShowLoginModal(true);
+        return;
       }
-      if(authValue.userType != "User") {
-        
+      if(authValue.userType !== "User") {
+        setShowNotAuthModal(true);
+        return;
       }
+      console.log(id, borrowQuantity, authValue.accessToken)
       await itemService.borrowRequest(id, borrowQuantity, authValue.accessToken);
       message.success('대여 요청이 성공적으로 처리되었습니다.');
       window.location.reload();
@@ -73,6 +79,8 @@ export default function EquipmentDetails() {
   };
 
   return (
+    showLoginModal ? <LoginModal openModal={showLoginModal} redirectToHomeOnCancel={false} callBack={() => setShowLoginModal(false)} /> :
+    showNotAuthModal ? <NotAuthorizedModal openModal={showNotAuthModal} redirectToHomeOnCancel={false} callBack={() => setShowNotAuthModal(false)} /> : 
     <Layout>
       <Headbar /> 
       <Layout className="layout">

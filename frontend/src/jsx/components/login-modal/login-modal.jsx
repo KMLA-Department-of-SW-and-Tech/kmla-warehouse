@@ -9,21 +9,23 @@ import { FcGoogle } from "react-icons/fc";
 import "./login-modal.css"
 import { useAuth } from "../../contexts/authContext";
 
-export default function LoginModal({ openModal, redirectToHomeOnCancel }) {
+export default function LoginModal({ openModal, redirectToHomeOnCancel, callBack }) {
     const [isModalOpen, setIsModalOpen] = useState(openModal);
     const navigate = useNavigate();
     const authValue = useAuth();
 
     const handleGoogleLogin = async () => {
         const res = await signUserInWithGoogle();
-        if(res.isAdmin) navigate("/admin/equipment");
+        if(res.isAdmin) navigate("/admin/item");
         // const isNewUser = getAdditionalUserInfo(res).isNewUser;
         // console.log(isNewUser);
+        if(!!callBack) callBack();
     };
 
     const handleCancel = () => {
         setIsModalOpen(false);
         redirectToHomeOnCancel ? navigate("/home") : null;
+        if(!!callBack) callBack();
     };
 
     return (
