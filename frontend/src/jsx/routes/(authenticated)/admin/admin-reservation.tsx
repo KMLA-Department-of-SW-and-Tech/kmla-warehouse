@@ -1,13 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { Layout, Typography, message, Grid, ConfigProvider, Button } from 'antd';
-import { EditableProTable, ProColumns } from '@ant-design/pro-components';
-import enUS from 'antd/lib/locale/en_US';
+import {
+  Layout,
+  Typography,
+  message,
+  Grid,
+  ConfigProvider,
+  Button,
+} from "antd";
+import { EditableProTable, ProColumns } from "@ant-design/pro-components";
+import enUS from "antd/lib/locale/en_US";
 import AdminHeader from "../../../components/header/admin-header.tsx";
-import AdminSidebar from '../../../components/sidebar/admin-sidebar';
-import Loading from '../../../components/loading/loading.jsx';
+import AdminSidebar from "../../../components/sidebar/admin-sidebar";
+import Loading from "../../../components/loading/loading.jsx";
 
-import { useAuth } from '../../../contexts/authContext';
+import { useAuth } from "../../../contexts/authContext";
 import logService from "../../../../js/api/logService";
 import { GetLog } from "../../../../js/types/Log";
 
@@ -32,17 +39,16 @@ const AdminReservation: React.FC = () => {
     applyFilter();
   }, [selectedFilter, logs]);
 
-
   const fetchLogs = async () => {
     setLoading(true);
     try {
       const response = await logService.getAll(authValue.accessToken);
       const filteredLogs = response
-      .filter((log) => log.status !== "deleted")
-      .map((log) => ({
-        ...log,
-        timestamp: formatTimestamp(log.timestamp), // change time format
-      }));
+        .filter((log) => log.status !== "deleted")
+        .map((log) => ({
+          ...log,
+          timestamp: formatTimestamp(log.timestamp), // change time format
+        }));
       setLogs(filteredLogs);
     } catch (error) {
       message.error("물품을 불러오는 데 실패했습니다.");
@@ -71,7 +77,6 @@ const AdminReservation: React.FC = () => {
     return `${year}-${month}-${day}-${hours}:${minutes}:${seconds}`;
   };
 
-
   const columns: ProColumns<GetLog>[] = [
     { title: "팀명", dataIndex: "teamName", key: "teamName" },
     { title: "신청물품", dataIndex: "item", key: "item" },
@@ -84,28 +89,28 @@ const AdminReservation: React.FC = () => {
     <ConfigProvider locale={enUS}>
       <Layout>
         <AdminHeader />
-        <Layout>          
+        <Layout>
           <Layout className="admin-layout">
-            <Sider className='sidebar'>
+            <Sider className="sidebar">
               <AdminSidebar />
             </Sider>
             <Content className="admin-content">
               <Title level={3}>신청관리</Title>
-              <Button.Group className='admin-table'>
-                <Button 
-                  type={selectedFilter === "all"  ? "primary" : "default"} 
+              <Button.Group className="admin-table">
+                <Button
+                  type={selectedFilter === "all" ? "primary" : "default"}
                   onClick={() => setSelectedFilter("all")}
                 >
                   전체
                 </Button>
-                <Button 
-                  type={selectedFilter === "borrow" ? "primary" : "default"} 
+                <Button
+                  type={selectedFilter === "borrow" ? "primary" : "default"}
                   onClick={() => setSelectedFilter("borrow")}
                 >
                   대여 중
                 </Button>
-                <Button 
-                  type={selectedFilter === "return" ? "primary" : "default"} 
+                <Button
+                  type={selectedFilter === "return" ? "primary" : "default"}
                   onClick={() => setSelectedFilter("return")}
                 >
                   반납됨
@@ -124,7 +129,7 @@ const AdminReservation: React.FC = () => {
                     onChange: setEditableRowKeys,
                   }}
                   recordCreatorProps={false}
-                  className='admin-reservation-table'
+                  className="admin-reservation-table"
                 />
               )}
             </Content>

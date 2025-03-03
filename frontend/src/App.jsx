@@ -2,18 +2,22 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { AuthProvider } from "./jsx/contexts/authContext/index.jsx";
 
-import Home from "./jsx/routes/(non-authenticated)/home/home.tsx"; 
-import ItemDetails from "./jsx/routes/(non-authenticated)/item-details/item-details.tsx"; 
+import Home from "./jsx/routes/(non-authenticated)/home/home.tsx";
+import ItemDetails from "./jsx/routes/(non-authenticated)/item-details/item-details.tsx";
 
 import UserReservation from "./jsx/routes/(authenticated)/user/user-reservation.tsx";
 import UserAccountSettings from "./jsx/routes/(authenticated)/user/user-account-settings.tsx";
- 
-import AdminItem from "./jsx/routes/(authenticated)/admin/admin-item.tsx"; 
-import AdminReservation from "./jsx/routes/(authenticated)/admin/admin-reservation.tsx";  
+
+import AdminItem from "./jsx/routes/(authenticated)/admin/admin-item.tsx";
+import AdminReservation from "./jsx/routes/(authenticated)/admin/admin-reservation.tsx";
 import AdminAccountSettings from "./jsx/routes/(authenticated)/admin/admin-account-settings.tsx";
 import AdminPermission from "./jsx/routes/(authenticated)/admin/admin-permission.tsx";
 import AdminUserList from "./jsx/routes/(authenticated)/admin/admin-userlist.tsx";
-import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./jsx/components/protected-routes/protected-routes.jsx";
+import {
+  ProtectedAdmin,
+  ProtectedRoute,
+  ProtectedUser,
+} from "./jsx/components/protected-routes/protected-routes.jsx";
 
 const router = createBrowserRouter([
   // Replacements
@@ -25,8 +29,6 @@ const router = createBrowserRouter([
     path: "/admin",
     element: <Navigate to="/admin/item" replace />,
   },
-
-  
 
   // Home page
   {
@@ -59,8 +61,6 @@ const router = createBrowserRouter([
     ),
   },
 
-
-  
   // ADMIN: add equipment page
   {
     path: "/admin/item",
@@ -115,7 +115,7 @@ const router = createBrowserRouter([
         </ProtectedAdmin>
       </ProtectedRoute>
     ),
-  },  
+  },
 ]);
 
 const App = () => {
@@ -127,7 +127,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-

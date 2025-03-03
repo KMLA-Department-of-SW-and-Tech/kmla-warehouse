@@ -15,7 +15,7 @@ const firebaseConfig = {
   storageBucket: "dswt-sharable-auth.firebasestorage.app",
   messagingSenderId: "651880013484",
   appId: "1:651880013484:web:f3cec3505494a824074909",
-  measurementId: "G-742SQKRGWL"
+  measurementId: "G-742SQKRGWL",
 };
 
 // Initialize Firebase

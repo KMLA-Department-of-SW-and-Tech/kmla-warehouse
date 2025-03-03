@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { Button, message, Layout, Typography, Table, Input } from 'antd';
+import { Button, message, Layout, Typography, Table, Input } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
-import AdminHeader from '../../../components/header/admin-header';
-import AdminSidebar from '../../../components/sidebar/admin-sidebar';
-import Loading from '../../../components/loading/loading';
+import AdminHeader from "../../../components/header/admin-header";
+import AdminSidebar from "../../../components/sidebar/admin-sidebar";
+import Loading from "../../../components/loading/loading";
 
 import { useAuth } from "../../../contexts/authContext";
 import userService from "../../../../js/api/userService";
@@ -26,12 +26,17 @@ const AdminPermission = () => {
   const fetchUnauthorizedUsers = async () => {
     setLoading(true);
     try {
-      const unauthorizedUsers = await userService.getUnauthorizedUsers(authValue.accessToken);
-      const filteredUsers = unauthorizedUsers.filter(user => user.teamName);
+      const unauthorizedUsers = await userService.getUnauthorizedUsers(
+        authValue.accessToken,
+      );
+      const filteredUsers = unauthorizedUsers.filter((user) => user.teamName);
       setUsers(filteredUsers);
     } catch (error) {
       message.error("비승인 유저를 불러오는 데 실패했습니다.");
-      console.error("Failed to fetch unauthorized users in admin permission: ", error);
+      console.error(
+        "Failed to fetch unauthorized users in admin permission: ",
+        error,
+      );
     } finally {
       setLoading(false);
     }
@@ -42,7 +47,7 @@ const AdminPermission = () => {
     try {
       await userService.authorizeUserById(id, authValue.accessToken);
       message.success("성공적으로 유저를 승인했습니다.");
-      setUsers(users.filter(user => user._id !== id)); // delete after authorization
+      setUsers(users.filter((user) => user._id !== id)); // delete after authorization
     } catch (error) {
       message.error("유저를 승인하는 데 실패했습니다.");
       console.error(error);
@@ -50,15 +55,15 @@ const AdminPermission = () => {
   };
 
   const columns = [
-    { 
-        title: "팀명",
-        dataIndex: "teamName", 
-        key: "teamName" 
+    {
+      title: "팀명",
+      dataIndex: "teamName",
+      key: "teamName",
     },
-    { 
-        title: "사용자명", 
-        dataIndex: "userName", 
-        key: "userName" 
+    {
+      title: "사용자명",
+      dataIndex: "userName",
+      key: "userName",
     },
     {
       title: "승인",
@@ -75,27 +80,25 @@ const AdminPermission = () => {
     },
   ];
 
-
-
   return (
     <Layout>
       <AdminHeader />
       <Layout>
-        <Layout className='admin-layout'>
-          <Sider className='sidebar'>
+        <Layout className="admin-layout">
+          <Sider className="sidebar">
             <AdminSidebar />
           </Sider>
-          <Content className='admin-content'>
+          <Content className="admin-content">
             <Title level={3}>가입승인</Title>
             {loading ? (
-            <Loading />
+              <Loading />
             ) : (
-                <Table 
-                  columns={columns} 
-                  dataSource={users} 
-                  rowKey="_id" 
-                  className='admin-table'
-                />
+              <Table
+                columns={columns}
+                dataSource={users}
+                rowKey="_id"
+                className="admin-table"
+              />
             )}
           </Content>
         </Layout>

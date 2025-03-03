@@ -1,5 +1,5 @@
-require('dotenv').config(); // Load environment variables from .env
-const { S3Client } = require('@aws-sdk/client-s3');
+require("dotenv").config(); // Load environment variables from .env
+const { S3Client } = require("@aws-sdk/client-s3");
 
 // Configure the S3 client with environment variables
 const s3 = new S3Client({

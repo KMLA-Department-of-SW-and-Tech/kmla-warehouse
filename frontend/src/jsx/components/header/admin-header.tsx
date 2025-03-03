@@ -1,29 +1,37 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-import { useAuth } from '../../contexts/authContext';
+import { useAuth } from "../../contexts/authContext";
 
-import './header.css';
+import "./header.css";
 
 const AdminHeader: React.FC = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const authValue = useAuth();
 
   const handleLogoClick = () => {
-    navigate('/admin/item'); // admin main page
+    navigate("/admin/item"); // admin main page
   };
 
   const handleHelloClick = () => {
-    navigate('/admin/account-settings');
-  }
+    navigate("/admin/account-settings");
+  };
 
   return (
     <header className="head">
       <div className="head-container">
-        <div className="main-logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
+        <div
+          className="main-logo"
+          onClick={handleLogoClick}
+          style={{ cursor: "pointer" }}
+        >
           KMLA Warehouse
         </div>
-        <div className="user-info" onClick={handleHelloClick} style={{cursor: 'pointer'}}>
+        <div
+          className="user-info"
+          onClick={handleHelloClick}
+          style={{ cursor: "pointer" }}
+        >
           {authValue.userLoggedIn ? (
             <span>관리자 계정입니다</span>
           ) : (
