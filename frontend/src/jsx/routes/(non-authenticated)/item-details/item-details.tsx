@@ -67,11 +67,11 @@ export default function ItemDetails() {
                 authValue.accessToken
             );
             message.success("대여 요청이 성공적으로 처리되었습니다.");
-            setItem(it => {
+            setItem((it) => {
                 const newItem = JSON.parse(JSON.stringify(it));
                 newItem.quantity -= borrowQuantity;
                 return newItem;
-            })
+            });
         } catch (error) {
             console.error("Failed to borrow item in item details:", error);
             if (error.response) {
