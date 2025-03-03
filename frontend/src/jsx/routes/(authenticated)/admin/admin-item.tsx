@@ -107,12 +107,19 @@ const AdminItem: React.FC = () => {
 
         if (imageFile) {
             formData.append("image", imageFile);
-        }  else {
-            formData.append("imageUrl", items.find((item) => item._id === id)?.imageUrl || "");
+        } else {
+            formData.append(
+                "imageUrl",
+                items.find((item) => item._id === id)?.imageUrl || ""
+            );
         }
 
         try {
-            const updated = await itemService.update(id, formData, authValue.accessToken);
+            const updated = await itemService.update(
+                id,
+                formData,
+                authValue.accessToken
+            );
             setItems(items.map((item) => (item._id === id ? updated : item)));
             message.success("성공적으로 물품을 수정했습니다.");
             setPreviewImage(null);
@@ -169,14 +176,14 @@ const AdminItem: React.FC = () => {
                         beforeUpload={(file) => handleImageUpload(file)}
                     >
                         {previewImage ? (
-                        <img
-                            src={previewImage}
-                            alt="Preview"
-                            style={{ width: "100%" }}
-                        />
-                    ) : (
-                        <Button icon={<UploadOutlined />}></Button>
-                    )}
+                            <img
+                                src={previewImage}
+                                alt="Preview"
+                                style={{ width: "100%" }}
+                            />
+                        ) : (
+                            <Button icon={<UploadOutlined />}></Button>
+                        )}
                     </Upload>
                 );
             },

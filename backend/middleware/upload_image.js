@@ -82,11 +82,11 @@ const handleImageUpload = async (req, res, next) => {
             }
         }
 
-        const uploadSingle = upload.single('image');
-        uploadSingle(req, res, async (e) => { 
+        const uploadSingle = upload.single("image");
+        uploadSingle(req, res, async (e) => {
             if (e instanceof multer.MulterError) {
                 // A Multer error occurred when uploading
-                console.error('Multer Error:', e.message);
+                console.error("Multer Error:", e.message);
                 return res.status(400).json({ error: e.message });
             } else if (e) {
                 // An unknown error occurred when uploading

@@ -75,7 +75,6 @@ export default function UserReservation() {
         }
     }, [searchQuery, reservationList]);
 
- 
     const handleReturn = async (reservationId: string) => {
         try {
             await itemService.returnItem(reservationId, authValue.accessToken);
@@ -157,7 +156,6 @@ export default function UserReservation() {
                                                         </div>
                                                     }
                                                     className="reservation-card"
-                                                   
                                                 >
                                                     <Card.Meta
                                                         title={
@@ -167,10 +165,23 @@ export default function UserReservation() {
                                                         }
                                                         description={
                                                             <>
-                                                                <span>{reservation.quantity}</span>
                                                                 <span>
-                                                                    {" "}/{" "}{reservation.item?.location ||"위치 정보 없음"}{" "}/{" "}
-                                                                    {reservation.timestamp? new Date(reservation.timestamp).toLocaleDateString()
+                                                                    {
+                                                                        reservation.quantity
+                                                                    }
+                                                                </span>
+                                                                <span>
+                                                                    {" "}
+                                                                    /{" "}
+                                                                    {reservation
+                                                                        .item
+                                                                        ?.location ||
+                                                                        "위치 정보 없음"}{" "}
+                                                                    /{" "}
+                                                                    {reservation.timestamp
+                                                                        ? new Date(
+                                                                              reservation.timestamp
+                                                                          ).toLocaleDateString()
                                                                         : "날짜 없음"}
                                                                 </span>
                                                             </>
@@ -178,19 +189,24 @@ export default function UserReservation() {
                                                         className="reservation-meta"
                                                     />
 
-                                                    <Button 
+                                                    <Button
                                                         onClick={() =>
-                                                            handleReturn(reservation._id)
+                                                            handleReturn(
+                                                                reservation._id
+                                                            )
                                                         }
                                                         className="reservation-button"
                                                     >
-                                                        반납하기</Button>
+                                                        반납하기
+                                                    </Button>
                                                 </Card>
                                             </Col>
                                         )
                                     )
                                 ) : (
-                                    <Typography.Text>데이터가 없습니다.</Typography.Text>
+                                    <Typography.Text>
+                                        데이터가 없습니다.
+                                    </Typography.Text>
                                 )}
                             </Row>
                         )}
