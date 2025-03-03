@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Button, message, Layout, Typography, Table, Spin, Input, Space } from 'antd';
+import { Button, message, Layout, Typography, Table, Input, Space } from 'antd';
 import Sidebar from '../../../components/sidebar/admin-sidebar';
 import Headbar from '../../../components/header/admin-header';
 import { useAuth } from "../../../contexts/authContext";
 import { CheckOutlined } from "@ant-design/icons";
 import userService from "../../../../js/api/userService";
 import { GetUser } from "../../../../js/types/User";
+import Loading from '../../../components/loading/loading';
 
 
 const { Sider, Content } = Layout;
@@ -13,7 +14,7 @@ const { Title } = Typography;
 const { Search } = Input;
   
 
-const AdminUserListPage = () => {
+const AdminUserList = () => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState<GetUser[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<GetUser[]>([]);
@@ -81,7 +82,7 @@ const AdminUserListPage = () => {
           <Content className='admin-content'>
             <Title level={3}>사용자 목록</Title>
             {loading ? (
-            <Spin />
+            <Loading />
             ) : (
                 <Table 
                   columns={columns} 
@@ -101,4 +102,4 @@ const AdminUserListPage = () => {
   );
 };
 
-export default AdminUserListPage;
+export default AdminUserList;

@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const { Sider, Content } = Layout;
 const { Title } = Typography;
 
-const AdminSettingPage = () => {
+const AdminAccountSettings = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -54,4 +54,4 @@ const AdminSettingPage = () => {
   );
 };
 
-export default AdminSettingPage;
+export default AdminAccountSettings;

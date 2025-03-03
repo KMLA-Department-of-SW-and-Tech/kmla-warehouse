@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Typography, Spin, message, ConfigProvider, Upload, Button, Form, Input, InputNumber } from 'antd';
+import { Layout, Typography, message, ConfigProvider, Upload, Button, Form, Input, InputNumber } from 'antd';
 import enUS from 'antd/lib/locale/en_US';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import { CloseOutlined, DeleteOutlined, EditOutlined, SaveOutlined, UploadOutlined, PlusOutlined } from "@ant-design/icons";
@@ -9,12 +9,13 @@ import Headbar from "../../../components/header/admin-header";
 import itemService from "../../../../js/api/itemService";
 import { GetItem, PostItem, PatchItem } from '../../../../js/types/Item';
 import { useAuth } from "../../../contexts/authContext";
+import Loading from "../../../components/loading/loading";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
 
 
-const AdminEquipmentPage: React.FC = () => {
+const AdminItem: React.FC = () => {
   const [items, setItems] = useState<GetItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
@@ -230,7 +231,7 @@ const AdminEquipmentPage: React.FC = () => {
                 </Form>
 
                 {loading ? (
-                  <Spin />
+                  <Loading />
                 ) : (
                   // properties in editable state on each row cell
                   <EditableProTable<GetItem>
@@ -264,4 +265,4 @@ const AdminEquipmentPage: React.FC = () => {
   );
 };
 
-export default AdminEquipmentPage;
+export default AdminItem;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './item-details.css'; 
-import { Typography, Spin, Layout, Button, message, Form, InputNumber } from 'antd'; 
+import { Typography, Layout, Button, message, Form, InputNumber } from 'antd'; 
 import { useParams } from 'react-router-dom';
 import itemService from '../../../../js/api/itemService';
 import Sidebar from '../../../components/sidebar/user-sidebar';
@@ -9,10 +9,11 @@ import { GetItem, PostItem, PatchItem } from '../../../../js/types/Item';
 import { useAuth } from '../../../contexts/authContext';
 import LoginModal from '../../../components/login-modal/login-modal.jsx';
 import NotAuthorizedModal from "../../../components/not-authorized-modal/not-authorized-modal.jsx";
+import Loading from '../../../components/loading/loading.jsx';
 const { Sider, Content } = Layout;
 const { Title, Text } = Typography;
 
-export default function EquipmentDetails() {
+export default function ItemDetails() {
   const [loading, setLoading] = useState(true);
   const [item, setItem] = useState<GetItem | null>(null);
   const [borrowQuantity, setBorrowQuantity] = useState<number>(1);
@@ -90,7 +91,7 @@ export default function EquipmentDetails() {
         <Layout className="content-layout">
           <Content className="content">
             {loading ? (
-              <Spin size="large" />
+              <Loading />
             ) : item ? (
               <div className="content-wrapper">
                 <div className="image-container">

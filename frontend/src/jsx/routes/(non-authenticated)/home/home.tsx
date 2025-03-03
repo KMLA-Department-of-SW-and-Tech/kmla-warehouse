@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Card, Row, Col, Spin, Layout, Input } from 'antd';
+import { Typography, Card, Row, Col, Layout, Input } from 'antd';
 import { UnorderedListOutlined } from '@ant-design/icons'; 
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../../components/sidebar/user-sidebar';
@@ -8,6 +8,7 @@ import Headbar from '../../../components/header/user-header.tsx';
 import { GetItem } from '../../../../js/types/Item';
 
 import "./home.css";
+import Loading from '../../../components/loading/loading.jsx';
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -93,7 +94,7 @@ export default function Home() {
             />
 
             {loading ? (
-              <Spin size="large" />
+              <Loading />
             ) : (
               <Row gutter={[16, 16]} className="equipment-row">
                 {filteredEquipmentList.length > 0 ? (
