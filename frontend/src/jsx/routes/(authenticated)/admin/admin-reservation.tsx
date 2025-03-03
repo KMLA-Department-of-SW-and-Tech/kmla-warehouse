@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Typography, message, Grid, ConfigProvider, Select, Button } from 'antd';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
-import Sidebar from '../../../components/sidebar/admin-sidebar';
-import "./admin.css";
-import Headbar from "../../../components/header/admin-header.tsx";
+import AdminSidebar from '../../../components/sidebar/admin-sidebar';
+import AdminHeader from "../../../components/header/admin-header.tsx";
 import logService from "../../../../js/api/logService";
 import { GetLog, PatchLog } from "../../../../js/types/Log";
 import enUS from 'antd/lib/locale/en_US';
 import { useAuth } from '../../../contexts/authContext';
 import Loading from '../../../components/loading/loading.jsx';
+
+import "./admin.css";
 
 const { Content, Sider } = Layout;
 const { Title } = Typography;
@@ -86,11 +87,11 @@ const AdminReservation: React.FC = () => {
   return (
     <ConfigProvider locale={enUS}>
       <Layout>
-        <Headbar />
+        <AdminHeader />
         <Layout>          
           <Layout className="admin-layout">
             <Sider className='sidebar'>
-              <Sidebar />
+              <AdminSidebar />
             </Sider>
             <Content className="admin-content">
               <Title level={3}>신청관리</Title>

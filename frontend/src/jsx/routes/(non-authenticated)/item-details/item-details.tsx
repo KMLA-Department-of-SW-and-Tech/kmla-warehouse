@@ -3,8 +3,8 @@ import './item-details.css';
 import { Typography, Layout, Button, message, Form, InputNumber } from 'antd'; 
 import { useParams } from 'react-router-dom';
 import itemService from '../../../../js/api/itemService';
-import Sidebar from '../../../components/sidebar/user-sidebar';
-import Headbar from '../../../components/header/user-header.tsx';
+import UserSidebar from '../../../components/sidebar/user-sidebar';
+import UserHeader from '../../../components/header/user-header.tsx';
 import { GetItem, PostItem, PatchItem } from '../../../../js/types/Item';
 import { useAuth } from '../../../contexts/authContext';
 import LoginModal from '../../../components/login-modal/login-modal.jsx';
@@ -83,10 +83,10 @@ export default function ItemDetails() {
     showLoginModal ? <LoginModal openModal={showLoginModal} redirectToHomeOnCancel={false} callBack={() => setShowLoginModal(false)} /> :
     showNotAuthModal ? <NotAuthorizedModal openModal={showNotAuthModal} redirectToHomeOnCancel={false} callBack={() => setShowNotAuthModal(false)} /> : 
     <Layout>
-      <Headbar /> 
+      <UserHeader /> 
       <Layout className="layout">
         <Sider className="sider">
-          <Sidebar />
+          <UserSidebar />
         </Sider>
         <Layout className="content-layout">
           <Content className="content">

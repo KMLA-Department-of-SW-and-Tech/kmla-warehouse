@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button, message, Layout, Typography } from 'antd';
 import { signUserOut } from '../../../../js/firebase/auth';
-import Sidebar from '../../../components/sidebar/admin-sidebar';
-import Headbar from '../../../components/header/admin-header'; // Assuming you have a header component like in the EquipmentListPage
+import AdminSidebar from '../../../components/sidebar/admin-sidebar';
+import AdminHeader from '../../../components/header/admin-header'; // Assuming you have a header component like in the EquipmentListPage
 import { useNavigate } from 'react-router-dom';
 
 
@@ -30,11 +30,11 @@ const AdminAccountSettings = () => {
 
   return (
     <Layout>
-      <Headbar />
+      <AdminHeader />
       <Layout>
         <Layout className='admin-layout'>
           <Sider className='sidebar'>
-            <Sidebar />
+            <AdminSidebar />
           </Sider>
           <Content className='admin-content'>
             <Title level={3}>로그아웃</Title>

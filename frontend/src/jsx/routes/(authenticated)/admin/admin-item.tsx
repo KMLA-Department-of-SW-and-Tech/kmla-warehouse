@@ -3,13 +3,14 @@ import { Layout, Typography, message, ConfigProvider, Upload, Button, Form, Inpu
 import enUS from 'antd/lib/locale/en_US';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import { CloseOutlined, DeleteOutlined, EditOutlined, SaveOutlined, UploadOutlined, PlusOutlined } from "@ant-design/icons";
-import Sidebar from "../../../components/sidebar/admin-sidebar";
-import './admin.css';
-import Headbar from "../../../components/header/admin-header";
+import AdminSidebar from "../../../components/sidebar/admin-sidebar";
+import AdminHeader from "../../../components/header/admin-header";
 import itemService from "../../../../js/api/itemService";
 import { GetItem, PostItem, PatchItem } from '../../../../js/types/Item';
 import { useAuth } from "../../../contexts/authContext";
 import Loading from "../../../components/loading/loading";
+
+import './admin.css';
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
@@ -176,10 +177,10 @@ const AdminItem: React.FC = () => {
   return (
     <ConfigProvider locale={enUS}>
       <Layout> 
-        <Headbar />
+        <AdminHeader />
         <Layout className="admin-layout">
           <Sider className="sidebar">
-            <Sidebar />
+            <AdminSidebar />
           </Sider>
           <Layout>
             <Content className="admin-content">

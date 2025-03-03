@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, MenuProps, Badge } from 'antd';
 import { AppstoreOutlined, HistoryOutlined, UserOutlined } from '@ant-design/icons';
-//import authService from '../../api/authService';
 import './sidebar.css'; // CSS 파일을 가져옵니다.
 
-const MenuBar: React.FC = () => {
+const UserSidebar: React.FC = () => {
   const navigate = useNavigate();
   const items1: MenuProps['items'] = [
     {
@@ -58,4 +57,4 @@ const MenuBar: React.FC = () => {
   );
 };
 
-export default MenuBar;
+export default UserSidebar;
