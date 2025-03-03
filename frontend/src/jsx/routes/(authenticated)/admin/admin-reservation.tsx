@@ -58,7 +58,7 @@ const AdminReservation: React.FC = () => {
 
   const applyFilter = () => {
     if (selectedFilter === "all") {
-      setFilteredLogs(logs);
+      setFilteredLogs(logs.reverse());
     } else {
       setFilteredLogs(logs.filter((log) => log.type === selectedFilter));
     }
@@ -77,7 +77,7 @@ const AdminReservation: React.FC = () => {
 
 
   const columns: ProColumns<GetLog>[] = [
-    { title: "팀명", dataIndex: "user", key: "user" },
+    { title: "팀명", dataIndex: "teamName", key: "teamName" },
     { title: "신청물품", dataIndex: "item", key: "item" },
     { title: "수량", dataIndex: "quantity", key: "quantity" },
     { title: "상태", dataIndex: "type", key: "type" },
