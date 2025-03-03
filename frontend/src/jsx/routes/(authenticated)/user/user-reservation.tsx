@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Card, Row, Col, Spin, Layout, Input } from 'antd';
+import { Typography, Card, Row, Col, Layout, Input } from 'antd';
 import { UnorderedListOutlined } from '@ant-design/icons'; 
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../../components/sidebar/user-sidebar';
@@ -9,12 +9,13 @@ import { GetItem } from '../../../../js/types/Item';
 import { GetLog } from '../../../../js/types/Log';
 import { useAuth } from "../../../contexts/authContext/index.jsx";
 import "./user-reservation.css";
+import Loading from '../../../components/loading/loading.jsx';
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
 const { Search } = Input;
 
-export default function ReservationStatus() {
+export default function UserReservation() {
   const [loading, setLoading] = useState(true);
   const [reservationList, setReservationList] = useState<(GetLog & { item?: GetItem })[]>([]);
   const [filteredReservationList, setFilteredReservationList] = useState<(GetLog & { item?: GetItem })[]>([]);
@@ -100,7 +101,7 @@ export default function ReservationStatus() {
             </Title>
 
             {loading ? (
-              <Spin size="large" />
+              <Loading />
             ) : (
               <Row gutter={[16, 16]} className="reservation-row">
                 {filteredReservationList.length > 0 ? (

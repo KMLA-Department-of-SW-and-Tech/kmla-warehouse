@@ -4,19 +4,17 @@ import { AuthProvider } from "./jsx/contexts/authContext/index.jsx";
 // import Login from "./jsx/routes/(non-authenticated)/login/login.tsx"; 
 // import Signup from "./jsx/routes/(non-authenticated)/signup/signup.tsx"; 
 import Home from "./jsx/routes/(non-authenticated)/home/home.tsx"; 
-import EquipmentDetails from "./jsx/routes/(non-authenticated)/item-details/item-details.tsx"; 
+import ItemDetails from "./jsx/routes/(non-authenticated)/item-details/item-details.tsx"; 
 
-import ReservationStatus from "./jsx/routes/(authenticated)/user/user-reservation.tsx";
-import AccountSettings from "./jsx/routes/(authenticated)/user/user-account-settings.tsx";
+import UserReservation from "./jsx/routes/(authenticated)/user/user-reservation.tsx";
+import UserAccountSettings from "./jsx/routes/(authenticated)/user/user-account-settings.tsx";
  
-import AdminEquipmentPage from "./jsx/routes/(authenticated)/admin/admin-item.tsx"; 
-import AdminReservationPage from "./jsx/routes/(authenticated)/admin/admin-reservation.tsx";  
-// import AdminTeamPage from "./jsx/routes/(authenticated)/admin/manage-team.tsx";
-import AdminSettingPage from "./jsx/routes/(authenticated)/admin/admin-account-settings.tsx";
-import AdminPermissionPage from "./jsx/routes/(authenticated)/admin/admin-permission.tsx";
-import AdminUserListPage from "./jsx/routes/(authenticated)/admin/admin-userlist.tsx";
+import AdminItem from "./jsx/routes/(authenticated)/admin/admin-item.tsx"; 
+import AdminReservation from "./jsx/routes/(authenticated)/admin/admin-reservation.tsx";  
+import AdminAccountSettings from "./jsx/routes/(authenticated)/admin/admin-account-settings.tsx";
+import AdminPermission from "./jsx/routes/(authenticated)/admin/admin-permission.tsx";
+import AdminUserList from "./jsx/routes/(authenticated)/admin/admin-userlist.tsx";
 import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./jsx/components/protected-routes.jsx";
-// import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./jsx/components/protected-routes.jsx";
 
 const router = createBrowserRouter([
   // Replacements
@@ -39,14 +37,14 @@ const router = createBrowserRouter([
   // Equipment details page
   {
     path: "/item/:id",
-    element: <EquipmentDetails />,
+    element: <ItemDetails />,
   },
   // under here needs authorization
   {
     path: "/account-settings",
     element: (
       <ProtectedRoute>
-        <AccountSettings />
+        <UserAccountSettings />
       </ProtectedRoute>
     ),
   },
@@ -56,7 +54,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <ProtectedUser>
-          <ReservationStatus />
+          <UserReservation />
         </ProtectedUser>
       </ProtectedRoute>
     ),
@@ -70,7 +68,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <ProtectedAdmin>
-          <AdminEquipmentPage />
+          <AdminItem />
         </ProtectedAdmin>
       </ProtectedRoute>
     ),
@@ -81,7 +79,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <ProtectedAdmin>
-          <AdminReservationPage />
+          <AdminReservation />
         </ProtectedAdmin>
       </ProtectedRoute>
     ),
@@ -92,7 +90,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <ProtectedAdmin>
-          <AdminUserListPage />
+          <AdminUserList />
         </ProtectedAdmin>
       </ProtectedRoute>
     ),
@@ -103,7 +101,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <ProtectedAdmin>
-          <AdminPermissionPage />
+          <AdminPermission />
         </ProtectedAdmin>
       </ProtectedRoute>
     ),
@@ -114,7 +112,7 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <ProtectedAdmin>
-          <AdminSettingPage />
+          <AdminAccountSettings />
         </ProtectedAdmin>
       </ProtectedRoute>
     ),

@@ -11,7 +11,7 @@ import './user-account-settings.css';
 const { Sider, Content } = Layout;
 const { Option } = Select;
 
-const AccountSettings = () => {
+const UserAccountSettings = () => {
   const [userName, setUserName] = useState<string>('Guest');
   const [userGrade, setUserGrade] = useState<number | undefined>(undefined);
   const [userClassNumber, setUserClassNumber] = useState<number | undefined>(undefined);
@@ -74,15 +74,6 @@ const AccountSettings = () => {
       setSaving(false);
     }
   };
-
-  if (loading) {
-    return (
-      <Layout className="layout">
-        <Spin size="large" className="loading-spinner" />
-      </Layout>
-    );
-  }
-
   return (
     <Layout className="layout">
       <Headbar />
@@ -129,4 +120,4 @@ const AccountSettings = () => {
   );
 };
 
-export default AccountSettings;
+export default UserAccountSettings;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Typography, Spin, message, Grid, ConfigProvider, Select, Button } from 'antd';
+import { Layout, Typography, message, Grid, ConfigProvider, Select, Button } from 'antd';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import Sidebar from '../../../components/sidebar/admin-sidebar';
 import "./admin.css";
@@ -8,6 +8,7 @@ import logService from "../../../../js/api/logService";
 import { GetLog, PatchLog } from "../../../../js/types/Log";
 import enUS from 'antd/lib/locale/en_US';
 import { useAuth } from '../../../contexts/authContext';
+import Loading from '../../../components/loading/loading.jsx';
 
 const { Content, Sider } = Layout;
 const { Title } = Typography;
@@ -16,7 +17,7 @@ const { Option } = Select;
 
 
 
-const AdminReservationPage: React.FC = () => {
+const AdminReservation: React.FC = () => {
   const screens = useBreakpoint();
   const [logs, setLogs] = useState<GetLog[]>([]);
   const [filteredLogs, setFilteredLogs] = useState<GetLog[]>([]);
@@ -114,7 +115,7 @@ const AdminReservationPage: React.FC = () => {
                 </Button>
               </Button.Group>
               {loading ? (
-                <Spin />
+                <Loading />
               ) : (
                 <EditableProTable<GetLog>
                   rowKey="_id"
@@ -138,4 +139,4 @@ const AdminReservationPage: React.FC = () => {
   );
 };
 
-export default AdminReservationPage;
+export default AdminReservation;
