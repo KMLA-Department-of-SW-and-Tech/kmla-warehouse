@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
+
 import { Button, message, Layout, Typography, Table, Input, Space } from 'antd';
-import AdminSidebar from '../../../components/sidebar/admin-sidebar';
 import AdminHeader from '../../../components/header/admin-header';
-import { useAuth } from "../../../contexts/authContext";
-import { CheckOutlined } from "@ant-design/icons";
-import userService from "../../../../js/api/userService";
-import { GetUser } from "../../../../js/types/User";
+import AdminSidebar from '../../../components/sidebar/admin-sidebar';
 import Loading from '../../../components/loading/loading';
 
+import { useAuth } from "../../../contexts/authContext";
+import userService from "../../../../js/api/userService";
+import { GetUser } from "../../../../js/types/User";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;

@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import './item-details.css'; 
-import { Typography, Layout, Button, message, Form, InputNumber } from 'antd'; 
 import { useParams } from 'react-router-dom';
-import itemService from '../../../../js/api/itemService';
-import UserSidebar from '../../../components/sidebar/user-sidebar';
+
+import { Typography, Layout, Button, message, Form, InputNumber } from 'antd'; 
 import UserHeader from '../../../components/header/user-header.tsx';
-import { GetItem, PostItem, PatchItem } from '../../../../js/types/Item';
-import { useAuth } from '../../../contexts/authContext';
+import UserSidebar from '../../../components/sidebar/user-sidebar';
 import LoginModal from '../../../components/login-modal/login-modal.jsx';
 import NotAuthorizedModal from "../../../components/not-authorized-modal/not-authorized-modal.jsx";
 import Loading from '../../../components/loading/loading.jsx';
-const { Sider, Content } = Layout;
+
+import { useAuth } from '../../../contexts/authContext';
+import itemService from '../../../../js/api/itemService';
+import { GetItem, PostItem, PatchItem } from '../../../../js/types/Item';
+
+import './item-details.css'; 
+
 const { Title, Text } = Typography;
+const { Sider, Content } = Layout;
 
 export default function ItemDetails() {
   const [loading, setLoading] = useState(true);
