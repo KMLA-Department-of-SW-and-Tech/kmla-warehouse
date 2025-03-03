@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 
 const logSchema = new Schema({
     teamName: { type: String, enum: teamNameList, required: true },
+    userFirebaseUid: { type: String, required: true },
     item: { type: Schema.Types.ObjectId, ref: "Item", required: true },
     quantity: { type: Number, required: true },
     timestamp: { type: Schema.Types.Date, required: true, default: Date.now() },

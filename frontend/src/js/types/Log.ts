@@ -3,6 +3,7 @@ import { GetItem } from "./Item";
 export type GetLog = {
     _id: string;
     teamName: string;
+    userFirebaseUid: string;
     item: GetItem;
     quantity: number;
     timestamp: string;

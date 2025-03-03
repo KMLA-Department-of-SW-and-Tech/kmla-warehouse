@@ -115,6 +115,7 @@ module.exports.return = async (id) => {
         await module.exports.createOne(
             {
                 teamName: log.teamName,
+                userFirebaseUid: log.userFirebaseUid,
                 item: log.item,
                 quantity: log.quantity,
                 type: "return",

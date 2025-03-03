@@ -111,10 +111,10 @@ module.exports.deleteOne = async (id) => {
     }
 };
 
-module.exports.borrow = async (id, body, firebaseUid) => {
+module.exports.borrow = async (id, body, userFirebaseUid) => {
     try {
         const { quantity } = body;
-        const user = await userService.findUserByFirebaseUid(firebaseUid);
+        const user = await userService.findUserByFirebaseUid(userFirebaseUid);
         const teamName = user.teamName;
 
         const prevItemState = await module.exports.getOne(id);
@@ -133,6 +133,7 @@ module.exports.borrow = async (id, body, firebaseUid) => {
 
         await logService.createOne({
             teamName,
+            userFirebaseUid,
             item: id,
             quantity,
             type: "borrow",
