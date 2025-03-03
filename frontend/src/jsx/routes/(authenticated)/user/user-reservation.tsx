@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Typography, Card, Row, Col, Layout, Button } from "antd";
+import { Typography, Card, Row, Col, Layout, Button, message } from "antd";
 import { UnorderedListOutlined } from "@ant-design/icons";
 import UserHeader from "../../../components/header/user-header.tsx";
 import UserSidebar from "../../../components/sidebar/user-sidebar";
@@ -28,7 +28,6 @@ export default function UserReservation() {
     >([]);
     const [searchQuery, setSearchQuery] = useState(""); // not implemented
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const navigate = useNavigate();
     const authValue = useAuth();
 
     useEffect(() => {
@@ -44,6 +43,7 @@ export default function UserReservation() {
                     "Failed to fetch reservations in user reservation:",
                     error
                 );
+                message.error("물품 정보를 불러오는 데 실패했습니다.");
             } finally {
                 setLoading(false);
             }
@@ -81,8 +81,10 @@ export default function UserReservation() {
             setReservationList((prevList) =>
                 prevList.filter((r) => r._id !== reservationId)
             );
+            message.success("성공적으로 물품을 반납했습니다.");
         } catch (error) {
             console.error("Failed to return item in user reservation:", error);
+            message.error("물품 반납에 실패했습니다.");
         }
     };
 

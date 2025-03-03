@@ -69,7 +69,7 @@ const UserAccountSettings = () => {
         setSaving(true);
         try {
             await signUserOut();
-            message.success("로그아웃이 성공적으로 완료되었습니다.");
+            message.success("성공적으로 로그아웃하였습니다.");
             navigate("/home");
         } catch (error) {
             message.error("로그아웃하는데 실패하였습니다. 다시 시도해주세요.");

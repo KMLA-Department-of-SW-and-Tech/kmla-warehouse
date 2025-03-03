@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Typography, Card, Row, Col, Layout, Input } from "antd";
+import { Typography, Card, Row, Col, Layout, Input, message } from "antd";
 import { UnorderedListOutlined } from "@ant-design/icons";
 import UserHeader from "../../../components/header/user-header.tsx";
 import UserSidebar from "../../../components/sidebar/user-sidebar";
@@ -34,6 +34,7 @@ export default function Home() {
             } catch (error) {
                 console.error("Failed to fetch equipment list in home:", error);
                 setEquipmentList([]);
+                message.error("물품을 불러오는 데 실패했습니다.");
             } finally {
                 setLoading(false);
             }

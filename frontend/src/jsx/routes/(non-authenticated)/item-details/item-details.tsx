@@ -37,6 +37,7 @@ export default function ItemDetails() {
                 error
             );
             setItem(null);
+            message.error("물품을 불러오는 데 실패했습니다.");
         } finally {
             setLoading(false);
         }
