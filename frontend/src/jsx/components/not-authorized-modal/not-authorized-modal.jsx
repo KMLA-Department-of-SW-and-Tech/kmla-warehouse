@@ -1,6 +1,7 @@
-import { Modal } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { Modal } from "antd";
 
 
 export default function NotAuthorizedModal({ openModal, redirectToHomeOnCancel, callBack }) {
