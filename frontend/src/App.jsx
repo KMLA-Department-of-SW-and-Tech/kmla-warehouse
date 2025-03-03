@@ -14,7 +14,7 @@ import AdminReservation from "./jsx/routes/(authenticated)/admin/admin-reservati
 import AdminAccountSettings from "./jsx/routes/(authenticated)/admin/admin-account-settings.tsx";
 import AdminPermission from "./jsx/routes/(authenticated)/admin/admin-permission.tsx";
 import AdminUserList from "./jsx/routes/(authenticated)/admin/admin-userlist.tsx";
-import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./jsx/components/protected-routes.jsx";
+import { ProtectedAdmin, ProtectedRoute, ProtectedUser } from "./jsx/components/protected-routes/protected-routes.jsx";
 
 const router = createBrowserRouter([
   // Replacements
