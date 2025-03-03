@@ -1,7 +1,6 @@
 import axios from 'axios';
 import axiosPrivate from '../hooks/axiosPrivate';
-import { GetItem, PostItem, PatchItem } from '../types/Item';
-import { access } from 'fs';
+import { GetItem } from '../types/Item';
 
 const itemService = {
   // Fetch all items, returning only those with "available" status

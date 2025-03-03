@@ -1,6 +1,6 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "./firebase";
 import axiosPrivate from "../hooks/axiosPrivate";
+import { auth } from "./firebase";
 
 // export const createUserAccount = async (email, pwd) => {
 //     return createUserWithEmailAndPassword(auth, email, pwd);
