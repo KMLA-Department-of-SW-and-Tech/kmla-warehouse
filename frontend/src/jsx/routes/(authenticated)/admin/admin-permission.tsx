@@ -30,7 +30,7 @@ const AdminPermission = () => {
       const filteredUsers = unauthorizedUsers.filter(user => user.teamName);
       setUsers(filteredUsers);
     } catch (error) {
-      message.error("Failed to fetch unauthorized users.");
+      message.error("비승인 유저를 불러오는 데 실패했습니다.");
       console.error("Failed to fetch unauthorized users in admin permission: ", error);
     } finally {
       setLoading(false);
@@ -41,10 +41,10 @@ const AdminPermission = () => {
   const handleAuthorizeUser = async (id: string) => {
     try {
       await userService.authorizeUserById(id, authValue.accessToken);
-      message.success("User authorized successfully.");
+      message.success("성공적으로 유저를 승인했습니다.");
       setUsers(users.filter(user => user._id !== id)); // delete after authorization
     } catch (error) {
-      message.error("Failed to authorize user.");
+      message.error("유저를 승인하는 데 실패했습니다.");
       console.error(error);
     }
   };

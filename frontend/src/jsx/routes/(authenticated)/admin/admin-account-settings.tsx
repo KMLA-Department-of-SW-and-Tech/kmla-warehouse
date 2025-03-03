@@ -19,10 +19,10 @@ const AdminAccountSettings = () => {
     setLoading(true);
     try {
       signUserOut();
-      message.success('Logged out successfully!');
+      message.success('성공적으로 로그아웃했습니다!');
       navigate("/home");
     } catch (error) {
-      message.error('Failed to log out. Please try again.');
+      message.error('로그아웃에 실패했습니다. 다시 시도해 주세요.');
       console.error("Failed to log out in admin account settings: ", error);
     } finally {
       setLoading(false);

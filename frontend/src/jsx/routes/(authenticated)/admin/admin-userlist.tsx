@@ -31,8 +31,8 @@ const AdminUserList = () => {
 
       setUsers(filteredUsers);
     } catch (error) {
-      message.error("Failed to fetch unauthorized users.");
-      console.error("Failed to fetch unauthorized users in admin userlist: ", error);
+      message.error("승인된 유저를 불러오는 데 실패했습니다.");
+      console.error("Failed to fetch authorized users in admin userlist: ", error);
     } finally {
       setLoading(false);
     }

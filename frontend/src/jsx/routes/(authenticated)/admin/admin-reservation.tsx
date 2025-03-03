@@ -45,7 +45,7 @@ const AdminReservation: React.FC = () => {
       }));
       setLogs(filteredLogs);
     } catch (error) {
-      message.error("Failed to fetch items");
+      message.error("물품을 불러오는 데 실패했습니다.");
       console.error("Failed to fetch all items in admin reservation: ", error);
     } finally {
       setLoading(false);

@@ -38,7 +38,7 @@ const AdminItem: React.FC = () => {
       const response = await itemService.getAll(); 
       setItems(response);
     } catch (error) {
-      message.error('Failed to fetch items');
+      message.error('물품을 불러오는 데 실패했습니다.');
       console.error("Failed to fetch all items in admin item: ", error);
     } finally {
       setLoading(false);
@@ -69,10 +69,10 @@ const AdminItem: React.FC = () => {
     try {
       const addedItem = await itemService.create(formData, authValue.accessToken); 
       setItems(prevItems => [addedItem, ...prevItems]); 
-      message.success('Item added successfully');
+      message.success('성공적으로 물품을 추가했습니다.');
       form.resetFields();
     } catch (error) {
-      message.error('Failed to add item');
+      message.error('물품을 추가하는 데 실패했습니다.');
       console.error(error);
       throw(error);
     }
@@ -97,12 +97,12 @@ const AdminItem: React.FC = () => {
     try {
       const updated = await itemService.update(id, formData, authValue.accessToken); 
       setItems(items.map(item => (item._id === id ? updated : item))); 
-      message.success('Item updated successfully');
+      message.success('성공적으로 물품을 수정했습니다.');
       setPreviewImage(null);
       setImageFile(null);
       fetchItem();
     } catch (error) {
-      message.error('Failed to update item');
+      message.error('물품을 수정하는 데 실패했습니다.');
       console.error(error);
     }
   };
@@ -112,9 +112,9 @@ const AdminItem: React.FC = () => {
     try {
       await itemService.delete(id, authValue.accessToken); 
       setItems(items.filter(item => item._id !== id)); 
-      message.success('Item deleted successfully');
+      message.success('성공적으로 물품을 제거했습니다.');
     } catch (error) {
-      message.error('Failed to delete item');
+      message.error('물품을 제거하는 데 실패했습니다.');
       console.error(error);
       throw(error);
     }
