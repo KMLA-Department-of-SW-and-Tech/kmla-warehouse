@@ -9,6 +9,7 @@ import './header.css';
 const UserHeader: React.FC = () => {
   const [loading, setLoading] = useState<Boolean>(true);
   const [currentUserName, setCurrentUserName] = useState<string | null>(null);
+  const [isVerified, setIsVerified] = useState<Boolean>(false);
   const navigate = useNavigate(); // 페이지 이동을 위한 navigate 함수 생성
 
   const authValue = useAuth();
@@ -20,6 +21,7 @@ const UserHeader: React.FC = () => {
         const userInfo = await userService.getUserInfo(authValue.accessToken);
         // console.log(userInfo);
         setCurrentUserName(userInfo.userName == undefined ? "(승인되지 않음)" : userInfo.userName);
+        setIsVerified(userInfo.userType != "Unauthorized");
       } catch (error) {
         setCurrentUserName("(승인되지 않음))");
       } finally {
@@ -45,7 +47,7 @@ const UserHeader: React.FC = () => {
         </div>
         <div className="user-info" onClick={handleHelloClick} style={{cursor: 'pointer'}}>
           {loading ? <span></span> : authValue.userLoggedIn ? (
-            <span>{currentUserName}님, KMLA WAREHOUSE에 오신 것을 환영합니다</span>
+            <span><div>{currentUserName}님, KMLA WAREHOUSE에 오신 것을 환영합니다</div><div className="unverifiedLabel">{isVerified ? "" : "관리자에게 계정을 인증받은 후 모든 기능을 사용할 수 있습니다."}</div></span>
           ) : (
             <span>로그인을 하신 후 다른 기능을 사용하실 수 있습니다</span>
           )}
