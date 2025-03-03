@@ -5,10 +5,8 @@ module.exports.getAll = async () => {
     try {
         return await Log.find({}).populate("item");
     } catch (e) {
-        switch(e.message) {
-            default:
-                throw e;
-        }
+        console.error("Logservice get all logs error" + e);
+        throw e;
     }
 }
 
@@ -16,10 +14,8 @@ module.exports.getAllForTeam = async (teamName) => {
     try {
         return await Log.find({ teamName: teamName }).populate("item");
     } catch (e) {
-        switch(e.message) {
-            default:
-                throw e;
-        }
+        console.error("Logservice get all logs for team error" + e);
+        throw e;
     }
 }
 
@@ -31,10 +27,8 @@ module.exports.getOne = async (id) => {
         } 
         return log;
     } catch (e) {
-        switch(e.message) {
-            default:
-                throw e;
-        }
+        console.error("Logservice get one log error" + e);
+        throw e;
     }
 }
 
@@ -45,10 +39,8 @@ module.exports.createOne = async (body, status=null, session=null) => {
     try {
         return (await entry.save({ session })).populate("item");
     } catch (e) {
-        switch(e.message) {
-            default:
-                throw e;
-        }
+        console.error("Logservice create log error" + e);
+        throw e;
     }
 }
 
@@ -61,10 +53,8 @@ module.exports.deleteOne = async (id) => {
 
         return;
     } catch (e) {
-        switch(e.message) {
-            default:
-                throw e;
-        }
+        console.error("Logservice delete log error" + e);
+        throw e;
     }
 }
 
@@ -78,6 +68,7 @@ module.exports.editOne = async (id, updates, session=null) => {
 
         return;
     } catch (e) {
+        console.error("Logservice edit log error" + e);
         throw e;
     }
 }
@@ -97,8 +88,6 @@ module.exports.return = async (id) => {
         
         const updatedItem = await module.exports.editOne(id, { status: "closed" });
         
-        console.log("yeets");
-        
         await itemService.editOne(log.item, { quantity: item.quantity + log.quantity });
         
         await module.exports.createOne({
@@ -110,6 +99,7 @@ module.exports.return = async (id) => {
 
         return updatedItem;
     } catch (e) {
+        console.error("Logservice return item error" + e);
         throw e;
     }
 }

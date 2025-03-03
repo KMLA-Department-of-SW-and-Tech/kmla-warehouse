@@ -69,18 +69,13 @@ const handleImageUpload = async (req, res, next) => {
                 throw new Error("Item not found");
             }
 
-            console.log("B");
-
-            // console.log(item);
-
             try {
                 await deleteImage(item.imageKey); 
             } catch(e) {
-                console.log("error!");
+                console.error("Failed to get Item in image upload stage." + e);
                 return res.status(500).send(e);
             }
 
-                
         }
 
         const uploadSingle = upload.single('image');
@@ -89,20 +84,18 @@ const handleImageUpload = async (req, res, next) => {
                 // A Multer error occurred when uploading
                 console.error('Multer Error:', err.message);
                 return res.status(400).json({ error: err.message });
-            } else if (err) {
+            } else if (e) {
                 // An unknown error occurred when uploading
-                console.error('Unknown Error:', err);
-                return res.status(500).json({ error: 'An error occurred while uploading the image.' });
+                console.error('Unknown error in multer when uploading image:' + e);
+                return res.status(500).send("Internal server error: " + e.message);
             }
 
             // Check if file is uploaded
             if (!req.file) {
-                // return res.status(400).json({ error: 'No file uploaded.' });
                 return next();
             }
 
             // File uploaded successfully
-            // console.log('Image uploaded to S3:', req.file);
 
             req.body = Object.assign(req.body, {
                 imageUrl: req.file.location,
@@ -111,8 +104,8 @@ const handleImageUpload = async (req, res, next) => {
             return next();
         });
     } catch (e) {
-        console.log(e);
-        res.status(500).send(e);
+        console.error("Error while uploading image" + e);
+        return res.status(500).send("Internal server error: " + e.message);
     }
 };
 
