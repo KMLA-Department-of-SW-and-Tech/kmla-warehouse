@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Card, Row, Col, Layout, Input } from 'antd';
 import { UnorderedListOutlined } from '@ant-design/icons'; 
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../../../components/sidebar/user-sidebar';
+import UserHeader from '../../../components/header/user-header.tsx';
+import UserSidebar from '../../../components/sidebar/user-sidebar';
 import itemService from '../../../../js/api/itemService'; 
-import Headbar from '../../../components/header/user-header.tsx';
 import { GetItem } from '../../../../js/types/Item';
 
 import "./home.css";
@@ -62,11 +62,11 @@ export default function Home() {
 
   return (
     <Layout className="equipment-layout">
-      <Headbar />
+      <UserHeader />
       
       {windowWidth > 768 && (
         <Sider className='sidebar'>
-          <Sidebar />
+          <UserSidebar />
         </Sider>
       )}      
       <Layout style={{ marginLeft: windowWidth > 768 ? 250 : 0 }}>

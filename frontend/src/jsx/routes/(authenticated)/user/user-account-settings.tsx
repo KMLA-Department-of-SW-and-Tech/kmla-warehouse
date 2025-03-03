@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, message, Layout, Select, Spin } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { signUserOut } from '../../../../js/firebase/auth';
-import Sidebar from '../../../components/sidebar/user-sidebar';
-import Headbar from '../../../components/header/user-header.tsx';
+import UserSidebar from '../../../components/sidebar/user-sidebar';
+import UserHeader from '../../../components/header/user-header.tsx';
 import userService from '../../../../js/api/userService';
 import { useAuth } from '../../../contexts/authContext';
 import './user-account-settings.css';
@@ -76,9 +76,9 @@ const UserAccountSettings = () => {
   };
   return (
     <Layout className="layout">
-      <Headbar />
+      <UserHeader />
       <Sider className="sidebar">
-        <Sidebar />
+        <UserSidebar />
       </Sider>
       <Layout className="content-layout">
         <Content className="content">
