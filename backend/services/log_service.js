@@ -19,6 +19,15 @@ module.exports.getAllForTeam = async (teamName) => {
     }
 };
 
+module.exports.getBorrowedForTeam = async (teamName) => {
+    try {
+        return await Log.find({ teamName: teamName, type: "borrow" }).populate("item");
+    } catch (e) {
+        console.error("Logservice get borrow logs for team error" + e);
+        throw e;
+    }
+};
+
 module.exports.getOne = async (id) => {
     try {
         const log = await Log.findById(id).populate("item");

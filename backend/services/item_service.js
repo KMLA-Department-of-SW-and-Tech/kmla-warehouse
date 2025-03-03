@@ -23,7 +23,7 @@ module.exports.getAvailableForTeam = async (firebaseUid) => {
     try {
         const userData = await userService.findUserByFirebaseUid(firebaseUid);
         const teamName = userData.teamName;
-        const teamLogs = (await logService.getAllForTeam(teamName)).filter(
+        const teamLogs = (await logService.getBorrowedForTeam(teamName)).filter(
             (log) => log.item.status === "valid"
         );
         return teamLogs;
