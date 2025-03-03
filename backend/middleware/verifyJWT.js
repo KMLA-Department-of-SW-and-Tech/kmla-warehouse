@@ -2,7 +2,7 @@ const admin = require("../config/firebase-config");
 
 const verifyJWT = async (req, res, next) => {
     const authHeader = req.headers.authorization || req.headers.Authorization;
-    console.log(authHeader.split());
+    // console.log(authHeader.split());
     if(!authHeader?.startsWith('Bearer') || authHeader.split(' ').length !== 2) return res.status(401).send("Invalid header request regarding authorization");
     const token = authHeader.split(' ')[1];
     try {

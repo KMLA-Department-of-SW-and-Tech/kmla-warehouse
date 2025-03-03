@@ -32,7 +32,7 @@ const itemService = {
   // Request to borrow an item by ID and quantity
   borrowRequest: async (id: string, quantity: number, accessToken: string): Promise<GetItem> => {
     try {
-      console.log(id, quantity, accessToken);
+      // console.log(id, quantity, accessToken);
       const response = await axiosPrivate.patch(`/api/item/${id}/borrow`, { quantity }, accessToken);
       if (!response.data) {
         throw new Error('Failed to borrow item: Invalid response from server');
@@ -95,6 +95,7 @@ const itemService = {
   // Fetch reservation list for a user
   getReservations: async (accessToken: string) => {
     try {
+      console.log("getReservation");
       const response = await axiosPrivate.get(`/api/item/team-list`, accessToken);
       return response.data;
     } catch (error) {
@@ -108,6 +109,7 @@ const itemService = {
   returnItem: async (id: string, accessToken: string) => {
     try {
       const data = await axiosPrivate.post(`/api/logs/${id}/return`, {}, accessToken);
+      // console.log(data);
       return data.data;
     } catch (error) {
       console.error('Error posting item return:', error.message);

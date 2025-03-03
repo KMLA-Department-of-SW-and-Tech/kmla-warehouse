@@ -21,8 +21,13 @@ module.exports.getAll = async () => {
 
 module.exports.getAvailableForTeam = async (firebaseUid) => {
     try {
-        const user = userService.findUserByFirebaseUid(firebaseUid);
-        const teamName = user.teamName;
+        console.log("Service");
+        const userData = await userService.findUserByFirebaseUid(firebaseUid);
+        console.log("Retrieved userData:", JSON.stringify(userData, null, 2));
+        console.log("test 1");
+        console.log("<" + userData + ">");
+        const teamName = userData.teamName;
+        console.log("test 2");
         const teamLogs = (await logService.getAllForTeam(teamName)).filter(log => log.item.status === "valid");
         return teamLogs.map(log => log.item);
     } catch (e) {

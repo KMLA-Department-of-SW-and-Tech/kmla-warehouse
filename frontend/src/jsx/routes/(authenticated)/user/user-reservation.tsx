@@ -26,6 +26,7 @@ export default function ReservationStatus() {
   useEffect(() => {
     const fetchReservationAndEquipment = async () => {
       try {
+        console.log("fetch");
         const reservations = await itemService.getReservations(authValue.accessToken);
         setReservationList(reservations);
       } catch (error) {
@@ -62,6 +63,7 @@ export default function ReservationStatus() {
 
   const handleReturn = async (reservationId: string) => {
     try {
+      console.log("HandleReturn");
       await itemService.returnItem(reservationId, authValue.accessToken);
       setReservationList(prevList => prevList.filter(r => r._id !== reservationId));
     } catch (error) {

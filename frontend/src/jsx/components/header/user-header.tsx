@@ -17,7 +17,7 @@ const Headbar: React.FC = () => {
       try {
         setLoading(true);
         const userInfo = await userService.getUserInfo(authValue.accessToken);
-        console.log(userInfo);
+        // console.log(userInfo);
         setCurrentUserName(userInfo.userName == undefined ? "(승인되지 않음)" : userInfo.userName);
       } catch (error) {
         setCurrentUserName("(승인되지 않음))");

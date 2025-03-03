@@ -60,52 +60,60 @@ const deleteImage = async (fileKey) => {
 };
 
 const handleImageUpload = async (req, res, next) => {
-    if(req.params.id) {
-        const id = req.params.id;
-        const item = await itemService.getOne(id);
-
-        if(!item) {
-            throw new Error("Item not found");
-        }
-
-        console.log(item);
-
         try {
-            await exports.deleteImage(item.imageKey); 
-        } catch(e) {
-            throw(e);
+        if(req.params.id) {
+            const id = req.params.id;
+            const item = await itemService.getOne(id);
+
+            if(!item) {
+                throw new Error("Item not found");
+            }
+
+            console.log("B");
+
+            // console.log(item);
+
+            try {
+                await deleteImage(item.imageKey); 
+            } catch(e) {
+                console.log("error!");
+                return res.status(500).send(e);
+            }
+
+                
         }
 
-            
-    }
+        const uploadSingle = upload.single('image');
+        uploadSingle(req, res, async (err) => { 
+            if (err instanceof multer.MulterError) {
+                // A Multer error occurred when uploading
+                console.error('Multer Error:', err.message);
+                return res.status(400).json({ error: err.message });
+            } else if (err) {
+                // An unknown error occurred when uploading
+                console.error('Unknown Error:', err);
+                return res.status(500).json({ error: 'An error occurred while uploading the image.' });
+            }
 
-    const uploadSingle = upload.single('image');
-    uploadSingle(req, res, async (err) => { 
-        if (err instanceof multer.MulterError) {
-            // A Multer error occurred when uploading
-            console.error('Multer Error:', err.message);
-            return res.status(400).json({ error: err.message });
-        } else if (err) {
-            // An unknown error occurred when uploading
-            console.error('Unknown Error:', err);
-            return res.status(500).json({ error: 'An error occurred while uploading the image.' });
-        }
+            // Check if file is uploaded
+            if (!req.file) {
+                // return res.status(400).json({ error: 'No file uploaded.' });
+                return next();
+            }
 
-        // Check if file is uploaded
-        if (!req.file) {
-            // return res.status(400).json({ error: 'No file uploaded.' });
+            // File uploaded successfully
+            // console.log('Image uploaded to S3:', req.file);
+
+            req.body = Object.assign(req.body, {
+                imageUrl: req.file.location,
+                imageKey: req.file.key,
+            });
             return next();
-        }
-
-        // File uploaded successfully
-        // console.log('Image uploaded to S3:', req.file);
-
-        req.body = Object.assign(req.body, {
-            imageUrl: req.file.location,
-            imageKey: req.file.key,
         });
-        return next();
-    });
+    } catch (e) {
+        console.log(e);
+        res.status(500).send(e);
+    }
 };
 
 module.exports = handleImageUpload;
