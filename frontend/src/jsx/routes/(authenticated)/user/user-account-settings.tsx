@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Button, message, Layout, Select, Spin } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { signUserOut } from '../../../../js/firebase/auth';
-import UserSidebar from '../../../components/sidebar/user-sidebar';
+
+import { Form, Input, Button, message, Layout, Select } from 'antd';
 import UserHeader from '../../../components/header/user-header.tsx';
-import userService from '../../../../js/api/userService';
+import UserSidebar from '../../../components/sidebar/user-sidebar';
+
 import { useAuth } from '../../../contexts/authContext';
+import { signUserOut } from '../../../../js/firebase/auth';
+import userService from '../../../../js/api/userService';
+
 import './user-account-settings.css';
 
 const { Sider, Content } = Layout;

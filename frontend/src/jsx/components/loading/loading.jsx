@@ -5,6 +5,6 @@ import { Spin } from "antd";
 export default function Loading() {
 
     return (
-        <Spin />
+        <div><Spin /></div>
     );
 }

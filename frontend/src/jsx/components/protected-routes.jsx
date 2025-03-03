@@ -1,6 +1,7 @@
-import { useAuth } from "../contexts/authContext";
 import LoginModal from "./login-modal/login-modal";
 import NotAuthorizedModal from "./not-authorized-modal/not-authorized-modal";
+
+import { useAuth } from "../contexts/authContext";
 
 export const ProtectedRoute = ({ children }) => {
     const authValue = useAuth();
