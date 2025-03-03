@@ -10,8 +10,6 @@ require('dotenv').config();
 
 const env = process.env.NODE_ENV || 'development';
 
-// const indexRouter = require('./routes/index');
-// const usersRouter = require('./routes/users');
 const apiRouter = require('./routes/api');
 
 const app = express();
@@ -55,20 +53,13 @@ app.use((req, res, next) => {
 });
 
 app.use(logger(env === 'development'? 'dev' : 'combined'));
-// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-/* app.use(credentials);
-app.use(cors(corsOptions)); */
 app.use(cors({
   origin: env === 'development'? 'http://localhost:5173' : 'https://kmla-warehouse.netlify.app',
   credentials: true,
   
 }))
-
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
 
 // API routes
 app.use('/api', apiRouter);
@@ -86,7 +77,6 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  // res.render('error');
   res.send(err);
 });
 
