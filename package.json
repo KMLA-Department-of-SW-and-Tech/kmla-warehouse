@@ -1,20 +1,20 @@
 {
-    "name": "kmla-warehouse",
-    "workspaces": [
-        "backend",
-        "frontend"
-    ],
-    "private": true,
-    "scripts": {
-        "start": "npm run start --workspace backend",
-        "dev:frontend": "npm run dev --workspace frontend",
-        "dev:backend": "npm run dev --workspace backend",
-        "dev": "concurrently -c cyan,yellow \"npm run dev:*\"",
-        "log": "git log --all --oneline --graph",
-        "prettier": "npx prettier . --write"
-    },
-    "devDependencies": {
-        "concurrently": "^9.0.0",
-        "prettier": "3.5.3"
-    }
+  "name": "kmla-warehouse",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "private": true,
+  "scripts": {
+    "start": "npm run start --workspace backend",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "dev:backend": "npm run dev --workspace backend",
+    "dev": "concurrently -c cyan,yellow \"npm run dev:*\"",
+    "log": "git log --all --oneline --graph",
+    "prettier": "npx prettier . --write"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0",
+    "prettier": "3.5.3"
+  }
 }
