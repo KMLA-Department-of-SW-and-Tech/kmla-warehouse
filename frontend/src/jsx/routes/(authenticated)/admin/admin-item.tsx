@@ -62,9 +62,9 @@ const AdminItem: React.FC = () => {
     };
 
     const handleImageUpload = (file: File) => {
-        setImageFile(file);
         const imageUrl = URL.createObjectURL(file);
         setPreviewImage(imageUrl);
+        setImageFile(file);
         return false;
     };
 
@@ -107,14 +107,12 @@ const AdminItem: React.FC = () => {
 
         if (imageFile) {
             formData.append("image", imageFile);
+        }  else {
+            formData.append("imageUrl", items.find((item) => item._id === id)?.imageUrl || "");
         }
 
         try {
-            const updated = await itemService.update(
-                id,
-                formData,
-                authValue.accessToken
-            );
+            const updated = await itemService.update(id, formData, authValue.accessToken);
             setItems(items.map((item) => (item._id === id ? updated : item)));
             message.success("성공적으로 물품을 수정했습니다.");
             setPreviewImage(null);
@@ -144,8 +142,14 @@ const AdminItem: React.FC = () => {
             title: "사진",
             dataIndex: "imageUrl",
             key: "imageUrl",
-            render: (text) =>
-                text ? (
+            render: (text, record) =>
+                previewImage && editableKeys.includes(record._id) ? (
+                    <img
+                        src={previewImage}
+                        alt="Preview"
+                        style={{ width: 50, height: 50, objectFit: "cover" }}
+                    />
+                ) : text ? (
                     <img
                         src={String(text)}
                         alt="img"
@@ -154,7 +158,7 @@ const AdminItem: React.FC = () => {
                 ) : (
                     <span>No image</span>
                 ),
-            renderFormItem: (_, { isEditable }) => {
+            renderFormItem: (_, { isEditable, record }) => {
                 if (!isEditable) return null;
 
                 return (
@@ -162,9 +166,17 @@ const AdminItem: React.FC = () => {
                         name="image"
                         listType="picture-card"
                         showUploadList={false}
-                        beforeUpload={handleImageUpload}
+                        beforeUpload={(file) => handleImageUpload(file)}
                     >
-                        <Button icon={<UploadOutlined />}>이미지 업로드</Button>
+                        {previewImage ? (
+                        <img
+                            src={previewImage}
+                            alt="Preview"
+                            style={{ width: "100%" }}
+                        />
+                    ) : (
+                        <Button icon={<UploadOutlined />}></Button>
+                    )}
                     </Upload>
                 );
             },
