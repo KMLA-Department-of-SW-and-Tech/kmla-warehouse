@@ -26,8 +26,8 @@ export default function ReservationStatus() {
   useEffect(() => {
     const fetchReservationAndEquipment = async () => {
       try {
-        console.log("fetch");
         const reservations = await itemService.getReservations(authValue.accessToken);
+        console.log(reservations);
         setReservationList(reservations);
       } catch (error) {
         console.error('Failed to fetch:', error);
