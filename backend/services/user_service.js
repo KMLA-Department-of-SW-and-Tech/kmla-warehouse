@@ -5,9 +5,7 @@ const mongoose = require("mongoose");
 module.exports.findUserByFirebaseUid = async (firebaseUid) => {
     try {
         const res = await User.findOne({ firebaseUid: firebaseUid });
-        const plainUser = res.toObject ? res.toObject() : res;
-        console.log("{|" + JSON.stringify(plainUser, null, 2) + "|}")
-        return plainUser;
+        return res;
     } catch (e) {
         console.log("Cannot find user by firebase id: ", e);
         throw e;

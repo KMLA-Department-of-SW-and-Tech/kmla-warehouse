@@ -27,7 +27,7 @@ export default function ReservationStatus() {
     const fetchReservationAndEquipment = async () => {
       try {
         const reservations = await itemService.getReservations(authValue.accessToken);
-        console.log(reservations);
+        // console.log(reservations);
         setReservationList(reservations);
       } catch (error) {
         console.error('Failed to fetch:', error);
@@ -55,6 +55,7 @@ export default function ReservationStatus() {
     } else {
       setFilteredReservationList(reservationList);
     }
+    console.log(filteredReservationList)
   }, [searchQuery, reservationList]);
 
   const handleViewDetails = (equipmentId: string) => {
