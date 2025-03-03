@@ -58,7 +58,7 @@ const AdminReservation: React.FC = () => {
 
   const applyFilter = () => {
     if (selectedFilter === "all") {
-      setFilteredLogs(logs);
+      setFilteredLogs(logs.reverse());
     } else {
       setFilteredLogs(logs.filter((log) => log.type === selectedFilter));
     }
