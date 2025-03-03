@@ -8,35 +8,35 @@ const verifyRoles = require("../../middleware/verifyRoles.js");
 
 router.get("/list", itemController.list);
 router.get(
-  "/team-list/",
-  verifyJWT,
-  verifyRoles(["User"]),
-  itemController.listForTeam
+    "/team-list/",
+    verifyJWT,
+    verifyRoles(["User"]),
+    itemController.listForTeam
 );
 
 // router.get("/list-all", itemController.listAll);
 // router.get("/list-all/:teamName", verifyJWT, verifyRoles(["User", "Admin"]), itemController.listAllForTeam);
 
 router.post(
-  "/",
-  verifyJWT,
-  verifyRoles(["Admin"]),
-  upload,
-  itemController.create
+    "/",
+    verifyJWT,
+    verifyRoles(["Admin"]),
+    upload,
+    itemController.create
 );
 
 router
-  .route("/:id")
-  .get(itemController.detail)
-  .patch(verifyJWT, verifyRoles(["Admin"]), upload, itemController.edit)
-  .delete(verifyJWT, verifyRoles(["Admin"]), itemController.delete);
+    .route("/:id")
+    .get(itemController.detail)
+    .patch(verifyJWT, verifyRoles(["Admin"]), upload, itemController.edit)
+    .delete(verifyJWT, verifyRoles(["Admin"]), itemController.delete);
 
 router.patch(
-  "/:id/borrow",
-  verifyJWT,
-  verifyRoles(["User"]),
-  upload,
-  itemController.borrow
+    "/:id/borrow",
+    verifyJWT,
+    verifyRoles(["User"]),
+    upload,
+    itemController.borrow
 );
 
 module.exports = router;
