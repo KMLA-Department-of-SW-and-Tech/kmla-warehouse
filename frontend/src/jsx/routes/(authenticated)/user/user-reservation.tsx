@@ -16,13 +16,12 @@ import "./user-reservation.css";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
-// const { Search } = Input;
 
-export default function UserReservation() {
+export default function UserReservation() { // something wrong
   const [loading, setLoading] = useState(true);
   const [reservationList, setReservationList] = useState<(GetLog & { item?: GetItem })[]>([]);
   const [filteredReservationList, setFilteredReservationList] = useState<(GetLog & { item?: GetItem })[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(''); // not implemented
   const [windowWidth, setWindowWidth] = useState(window.innerWidth); 
   const navigate = useNavigate();
   const authValue = useAuth();
@@ -30,11 +29,11 @@ export default function UserReservation() {
   useEffect(() => {
     const fetchReservationAndEquipment = async () => {
       try {
+        setLoading(true);
         const reservations = await itemService.getReservations(authValue.accessToken);
-        // console.log(reservations);
         setReservationList(reservations);
       } catch (error) {
-        console.error('Failed to fetch:', error);
+        console.error('Failed to fetch reservations in user reservation:', error);
       } finally {
         setLoading(false);
       }
@@ -59,7 +58,6 @@ export default function UserReservation() {
     } else {
       setFilteredReservationList(reservationList);
     }
-    console.log(filteredReservationList)
   }, [searchQuery, reservationList]);
 
   const handleViewDetails = (equipmentId: string) => {
@@ -68,11 +66,10 @@ export default function UserReservation() {
 
   const handleReturn = async (reservationId: string) => {
     try {
-      console.log("HandleReturn");
       await itemService.returnItem(reservationId, authValue.accessToken);
       setReservationList(prevList => prevList.filter(r => r._id !== reservationId));
     } catch (error) {
-      console.error('Failed to return item:', error);
+      console.error('Failed to return item in user reservation:', error);
     }
   };
 

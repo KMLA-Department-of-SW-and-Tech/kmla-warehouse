@@ -10,7 +10,7 @@ const UserHeader: React.FC = () => {
   const [loading, setLoading] = useState<Boolean>(true);
   const [currentUserName, setCurrentUserName] = useState<string | null>(null);
   const [isVerified, setIsVerified] = useState<Boolean>(false);
-  const navigate = useNavigate(); // 페이지 이동을 위한 navigate 함수 생성
+  const navigate = useNavigate();
 
   const authValue = useAuth();
 
@@ -19,11 +19,11 @@ const UserHeader: React.FC = () => {
       try {
         setLoading(true);
         const userInfo = await userService.getUserInfo(authValue.accessToken);
-        // console.log(userInfo);
-        setCurrentUserName(userInfo.userName == undefined ? "(승인되지 않음)" : userInfo.userName);
+        setCurrentUserName(userInfo.userName == undefined ? "(이름 없음)" : userInfo.userName);
         setIsVerified(userInfo.userType != "Unauthorized");
       } catch (error) {
-        setCurrentUserName("(승인되지 않음))");
+        console.error("Failed to load user info in user-header.tsx: ", error);
+        setCurrentUserName("(ERROR)");
       } finally {
         setLoading(false);
       }

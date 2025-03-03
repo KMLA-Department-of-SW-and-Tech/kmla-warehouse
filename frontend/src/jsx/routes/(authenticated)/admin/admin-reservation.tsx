@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Layout, Typography, message, Grid, ConfigProvider, Select, Button } from 'antd';
+import { Layout, Typography, message, Grid, ConfigProvider, Button } from 'antd';
 import { EditableProTable, ProColumns } from '@ant-design/pro-components';
 import enUS from 'antd/lib/locale/en_US';
 import AdminHeader from "../../../components/header/admin-header.tsx";
@@ -9,17 +9,14 @@ import Loading from '../../../components/loading/loading.jsx';
 
 import { useAuth } from '../../../contexts/authContext';
 import logService from "../../../../js/api/logService";
-import { GetLog, PatchLog } from "../../../../js/types/Log";
+import { GetLog } from "../../../../js/types/Log";
 
 import "./admin.css";
 
 const { Content, Sider } = Layout;
 const { Title } = Typography;
-const { useBreakpoint } = Grid;
-// const { Option } = Select;
 
 const AdminReservation: React.FC = () => {
-  const screens = useBreakpoint();
   const [logs, setLogs] = useState<GetLog[]>([]);
   const [filteredLogs, setFilteredLogs] = useState<GetLog[]>([]);
   const [loading, setLoading] = useState(true);
@@ -44,13 +41,12 @@ const AdminReservation: React.FC = () => {
       .filter((log) => log.status !== "deleted")
       .map((log) => ({
         ...log,
-        timestamp: formatTimestamp(log.timestamp), // 시간 형식 변환
+        timestamp: formatTimestamp(log.timestamp), // change time format
       }));
       setLogs(filteredLogs);
     } catch (error) {
       message.error("Failed to fetch items");
-      console.error(error);
-      throw(error);
+      console.error("Failed to fetch all items in admin reservation: ", error);
     } finally {
       setLoading(false);
     }
@@ -136,7 +132,6 @@ const AdminReservation: React.FC = () => {
         </Layout>
       </Layout>
     </ConfigProvider>
-    
   );
 };
 

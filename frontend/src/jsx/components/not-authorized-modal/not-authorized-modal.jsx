@@ -15,7 +15,7 @@ export default function NotAuthorizedModal({ openModal, redirectToHomeOnCancel, 
             onCancel={() => {
                 setIsModalOpen(false);
                 redirectToHomeOnCancel ? navigate('/home') : null
-                if(!!callBack) callBack();
+                if(callBack) callBack();
             }}
         >
         <p>해당 기능에 대한 권한이 없습니다.</p>

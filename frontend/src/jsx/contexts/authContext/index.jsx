@@ -47,7 +47,7 @@ export function AuthProvider({ children }) {
         userType
     };
 
-    return (
+    return ( // can add some loading features in the future
         <AuthContext.Provider value={authValue}>
             {!loading && children}
         </AuthContext.Provider>

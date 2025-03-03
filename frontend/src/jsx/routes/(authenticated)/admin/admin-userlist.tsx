@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Button, message, Layout, Typography, Table, Input, Space } from 'antd';
+import { message, Layout, Typography, Table, Input } from 'antd';
 import AdminHeader from '../../../components/header/admin-header';
 import AdminSidebar from '../../../components/sidebar/admin-sidebar';
 import Loading from '../../../components/loading/loading';
@@ -11,14 +11,11 @@ import { GetUser } from "../../../../js/types/User";
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
-const { Search } = Input;
   
 
 const AdminUserList = () => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState<GetUser[]>([]);
-  const [filteredUsers, setFilteredUsers] = useState<GetUser[]>([]);
-  const [searchText, setSearchText] = useState("");
   const authValue = useAuth();
 
   useEffect(() => {
@@ -35,21 +32,11 @@ const AdminUserList = () => {
       setUsers(filteredUsers);
     } catch (error) {
       message.error("Failed to fetch unauthorized users.");
-      console.error(error);
+      console.error("Failed to fetch unauthorized users in admin userlist: ", error);
     } finally {
       setLoading(false);
     }
-  };
-
-  // search
-  const handleSearch = (value: string) => {
-    setSearchText(value);
-    const filtered = users.filter(user =>
-        (user.userName && user.userName.toLowerCase().includes(value.toLowerCase())) ||
-        (user.teamName && user.teamName.toLowerCase().includes(value.toLowerCase()))
-    );
-    setFilteredUsers(filtered);
-  };
+  }
 
   const columns = [
     { 
@@ -66,7 +53,7 @@ const AdminUserList = () => {
       title: "학번", 
       dataIndex: "userStudentNumber", 
       key: "userStudentNumber" 
-  },
+    },
   ];
 
 
@@ -95,9 +82,6 @@ const AdminUserList = () => {
           </Content>
         </Layout>
       </Layout>
-      
-      
-      
     </Layout>
   );
 };

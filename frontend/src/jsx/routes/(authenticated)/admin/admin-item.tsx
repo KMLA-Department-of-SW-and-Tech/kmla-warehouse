@@ -39,8 +39,7 @@ const AdminItem: React.FC = () => {
       setItems(response);
     } catch (error) {
       message.error('Failed to fetch items');
-      console.error(error);
-      throw(error);
+      console.error("Failed to fetch all items in admin item: ", error);
     } finally {
       setLoading(false);
     }

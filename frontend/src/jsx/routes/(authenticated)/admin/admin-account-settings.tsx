@@ -23,7 +23,7 @@ const AdminAccountSettings = () => {
       navigate("/home");
     } catch (error) {
       message.error('Failed to log out. Please try again.');
-      throw(error);
+      console.error("Failed to log out in admin account settings: ", error);
     } finally {
       setLoading(false);
     }
@@ -48,9 +48,6 @@ const AdminAccountSettings = () => {
           </Content>
         </Layout>
       </Layout>
-      
-      
-      
     </Layout>
   );
 };

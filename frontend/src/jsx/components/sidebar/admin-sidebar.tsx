@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'
 ;
-import { Menu, MenuProps, Badge } from 'antd';
+import { Menu, MenuProps } from 'antd';
 import { AccountBookOutlined, AppstoreAddOutlined, UserAddOutlined, LogoutOutlined, TeamOutlined } from '@ant-design/icons';
 
 import './sidebar.css';

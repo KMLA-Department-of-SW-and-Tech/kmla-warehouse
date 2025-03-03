@@ -30,7 +30,7 @@ export default function Home() {
         const items = await itemService.getAll();
         setEquipmentList(items);
       } catch (error) {
-        console.error('Failed to fetch equipment list:', error);
+        console.error('Failed to fetch equipment list in home:', error);
         setEquipmentList([]);
       } finally {
         setLoading(false);

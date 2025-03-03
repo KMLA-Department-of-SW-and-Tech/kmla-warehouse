@@ -1,8 +1,6 @@
 import axios from 'axios';
 
-// use try catch
-
-const axiosPrivate: {
+const axiosPrivate: { // allows authorized api access
     get: (apiUrl: string, accessToken: string, axiosConfig?: { headers?: object }) => Promise<any>,
     post: (apiUrl: string, requestData: any, accessToken: string, axiosConfig?: { headers?: object }) => Promise<any>,
     put: (apiUrl: string, requestData: any, accessToken: string, axiosConfig?: { headers?: object }) => Promise<any>,
@@ -21,7 +19,7 @@ const axiosPrivate: {
             });
             return response;
         } catch (err) {
-            console.error(err);
+            console.error("Axiosprivate get error: ", err);
             throw err;
         }
     },
@@ -37,7 +35,7 @@ const axiosPrivate: {
             });
             return response;
         } catch (err) {
-            console.error(err);
+            console.error("Axiosprivate post error: ", err);
             throw err;
         }
     },
@@ -53,7 +51,7 @@ const axiosPrivate: {
             });
             return response;
         } catch (err) {
-            console.error(err);
+            console.error("Axiosprivate put error: ", err);
             throw err;
         }
     },
@@ -69,7 +67,7 @@ const axiosPrivate: {
             });
             return response;
         } catch (err) {
-            console.error(err);
+            console.error("Axiosprivate patch error: ", err);
             throw err;
         }
     },
@@ -85,7 +83,7 @@ const axiosPrivate: {
             });
             return response;
         } catch (err) {
-            console.error(err);
+            console.error("Axiosprivate delete error: ", err);
             throw err;
         }
     },

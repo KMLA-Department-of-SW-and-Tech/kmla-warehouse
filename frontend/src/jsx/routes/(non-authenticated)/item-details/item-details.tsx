@@ -10,7 +10,7 @@ import Loading from '../../../components/loading/loading.jsx';
 
 import { useAuth } from '../../../contexts/authContext';
 import itemService from '../../../../js/api/itemService';
-import { GetItem, PostItem, PatchItem } from '../../../../js/types/Item';
+import { GetItem } from '../../../../js/types/Item';
 
 import './item-details.css'; 
 
@@ -32,9 +32,8 @@ export default function ItemDetails() {
       const fetchedItem = await itemService.getById(id);
       setItem(fetchedItem);
     } catch (error) {
-      console.error('Failed to fetch item details:', error);
+      console.error('Failed to fetch item details in item details:', error);
       setItem(null);
-      throw error;
     } finally {
       setLoading(false);
     }
@@ -59,12 +58,11 @@ export default function ItemDetails() {
         setShowNotAuthModal(true);
         return;
       }
-      // console.log(id, borrowQuantity, authValue.accessToken)
       await itemService.borrowRequest(id, borrowQuantity, authValue.accessToken);
       message.success('대여 요청이 성공적으로 처리되었습니다.');
       window.location.reload();
     } catch (error) {
-      console.error('Failed to borrow item:', error);
+      console.error('Failed to borrow item in item details:', error);
       if (error.response) {
         const status = error.response.status;
         const messageText = error.response.data.message || error.message;

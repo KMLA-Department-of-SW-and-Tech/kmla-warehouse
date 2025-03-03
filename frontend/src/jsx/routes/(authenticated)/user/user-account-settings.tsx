@@ -21,7 +21,6 @@ const UserAccountSettings = () => {
   const [userStudentNumber, setUserStudentNumber] = useState<number | undefined>(undefined);
   const [teamNames, setTeamNames] = useState<string[]>([]);
   const [selectedTeam, setSelectedTeam] = useState<string | undefined>(undefined);
-  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const navigate = useNavigate();
   const authValue = useAuth();
@@ -29,10 +28,8 @@ const UserAccountSettings = () => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        setLoading(true);
         const userInfo = await userService.getUserInfo(authValue.accessToken);
         const teams = await userService.getTeamNameList();
-
         setUserName(userInfo.userName || 'Guest');
         setUserGrade(userInfo.userGrade ? Number(userInfo.userGrade) : undefined);
         setUserClassNumber(userInfo.userClassNumber ? Number(userInfo.userClassNumber) : undefined);
@@ -41,12 +38,12 @@ const UserAccountSettings = () => {
         setSelectedTeam(userInfo.teamName || teams[0]);
       } catch (error) {
         message.error('유저 정보를 불러오는 데 실패했습니다.');
-      } finally {
-        setLoading(false);
+        console.error("Failed to fetch user info in user account settings: ", error);
       }
     };
     fetchUserInfo();
   }, [authValue.accessToken]);
+
   const handleLogout = async () => {
     setSaving(true);
     try {
@@ -55,6 +52,7 @@ const UserAccountSettings = () => {
       navigate('/home');
     } catch (error) {
       message.error('로그아웃하는데 실패하였습니다. 다시 시도해주세요.');
+      console.error("Failed log out in user account settings: ", error);
     } finally {
       setSaving(false);
     }
@@ -73,6 +71,7 @@ const UserAccountSettings = () => {
       message.success('정보가 성공적으로 저장되었습니다.');
     } catch (error) {
       message.error('정보 저장에 실패했습니다.');
+      console.error("Failed to save information in user account settings: ", error);
     } finally {
       setSaving(false);
     }

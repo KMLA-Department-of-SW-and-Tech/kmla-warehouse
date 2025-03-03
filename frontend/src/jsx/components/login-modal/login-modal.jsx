@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
 import { FcGoogle } from "react-icons/fc";
@@ -10,6 +10,7 @@ import { signUserInWithGoogle } from "../../../js/firebase/auth";
 import "./login-modal.css"
 
 export default function LoginModal({ openModal, redirectToHomeOnCancel, callBack }) {
+
     const [isModalOpen, setIsModalOpen] = useState(openModal);
     const navigate = useNavigate();
     const authValue = useAuth();
@@ -17,15 +18,13 @@ export default function LoginModal({ openModal, redirectToHomeOnCancel, callBack
     const handleGoogleLogin = async () => {
         const res = await signUserInWithGoogle();
         if(res.isAdmin) navigate("/admin/item");
-        // const isNewUser = getAdditionalUserInfo(res).isNewUser;
-        // console.log(isNewUser);
-        if(!!callBack) callBack();
+        if(callBack) callBack();
     };
 
     const handleCancel = () => {
         setIsModalOpen(false);
         redirectToHomeOnCancel ? navigate("/home") : null;
-        if(!!callBack) callBack();
+        if(callBack) callBack();
     };
 
     return (
