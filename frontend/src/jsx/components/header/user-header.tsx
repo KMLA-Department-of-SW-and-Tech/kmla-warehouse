@@ -5,7 +5,7 @@ import { useAuth } from '../../contexts/authContext';
 import userService from '../../../js/api/userService';
 
 // Header 컴포넌트 정의
-const Headbar: React.FC = () => {
+const UserHeader: React.FC = () => {
   const [loading, setLoading] = useState<Boolean>(true);
   const [currentUserName, setCurrentUserName] = useState<string | null>(null);
   const navigate = useNavigate(); // 페이지 이동을 위한 navigate 함수 생성
@@ -54,4 +54,4 @@ const Headbar: React.FC = () => {
   );
 };
 
-export default Headbar;
+export default UserHeader;

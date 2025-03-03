@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, message, Layout, Typography, Table, Input, Space } from 'antd';
-import Sidebar from '../../../components/sidebar/admin-sidebar';
-import Headbar from '../../../components/header/admin-header';
+import AdminSidebar from '../../../components/sidebar/admin-sidebar';
+import AdminHeader from '../../../components/header/admin-header';
 import { useAuth } from "../../../contexts/authContext";
 import { CheckOutlined } from "@ant-design/icons";
 import userService from "../../../../js/api/userService";
@@ -73,11 +73,11 @@ const AdminUserList = () => {
 
   return (
     <Layout>
-      <Headbar />
+      <AdminHeader />
       <Layout>
         <Layout className='admin-layout'>
           <Sider className='sidebar'>
-            <Sidebar />
+            <AdminSidebar />
           </Sider>
           <Content className='admin-content'>
             <Title level={3}>사용자 목록</Title>

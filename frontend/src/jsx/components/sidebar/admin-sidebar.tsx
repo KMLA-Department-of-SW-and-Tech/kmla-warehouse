@@ -11,7 +11,7 @@ import {
 import './sidebar.css';
 
 
-const Sidebar: React.FC = () => {
+const AdminSidebar: React.FC = () => {
   const navigate = useNavigate();
 
 // menu of admin sidebar
@@ -73,4 +73,4 @@ const handleMenuClick = (e: {key: string}) => {
   );
 };
 
-export default Sidebar;
+export default AdminSidebar;

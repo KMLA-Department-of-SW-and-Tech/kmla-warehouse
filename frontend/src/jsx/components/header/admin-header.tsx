@@ -4,7 +4,7 @@ import userService from "../../../js/api/userService";
 import './header.css';
 import { useAuth } from '../../contexts/authContext';
 
-const Headbar: React.FC = () => {
+const AdminHeader: React.FC = () => {
   const [loading, setLoading] = useState<Boolean>(true);
   const [currentUserName, setCurrentUserName] = useState<string | undefined>("Guest");
   const navigate = useNavigate(); 
@@ -52,4 +52,4 @@ const Headbar: React.FC = () => {
   );
 };
 
-export default Headbar;
+export default AdminHeader;
