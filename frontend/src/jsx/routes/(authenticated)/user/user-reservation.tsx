@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Typography, Card, Row, Col, Layout, Input } from "antd";
+import { Typography, Card, Row, Col, Layout, Button } from "antd";
 import { UnorderedListOutlined } from "@ant-design/icons";
 import UserHeader from "../../../components/header/user-header.tsx";
 import UserSidebar from "../../../components/sidebar/user-sidebar";
@@ -75,10 +75,7 @@ export default function UserReservation() {
         }
     }, [searchQuery, reservationList]);
 
-    const handleViewDetails = (equipmentId: string) => {
-        navigate(`/item/${equipmentId}`);
-    };
-
+ 
     const handleReturn = async (reservationId: string) => {
         try {
             await itemService.returnItem(reservationId, authValue.accessToken);
@@ -135,7 +132,6 @@ export default function UserReservation() {
                                                 key={reservation._id}
                                             >
                                                 <Card
-                                                    hoverable
                                                     cover={
                                                         <div className="reservation-image-container">
                                                             {reservation.item
@@ -161,12 +157,7 @@ export default function UserReservation() {
                                                         </div>
                                                     }
                                                     className="reservation-card"
-                                                    onClick={() =>
-                                                        handleViewDetails(
-                                                            reservation.item
-                                                                ?._id || ""
-                                                        )
-                                                    }
+                                                   
                                                 >
                                                     <Card.Meta
                                                         title={
@@ -176,23 +167,10 @@ export default function UserReservation() {
                                                         }
                                                         description={
                                                             <>
+                                                                <span>{reservation.quantity}</span>
                                                                 <span>
-                                                                    {
-                                                                        reservation.quantity
-                                                                    }
-                                                                </span>
-                                                                <span>
-                                                                    {" "}
-                                                                    /{" "}
-                                                                    {reservation
-                                                                        .item
-                                                                        ?.location ||
-                                                                        "위치 정보 없음"}{" "}
-                                                                    /{" "}
-                                                                    {reservation.timestamp
-                                                                        ? new Date(
-                                                                              reservation.timestamp
-                                                                          ).toLocaleDateString()
+                                                                    {" "}/{" "}{reservation.item?.location ||"위치 정보 없음"}{" "}/{" "}
+                                                                    {reservation.timestamp? new Date(reservation.timestamp).toLocaleDateString()
                                                                         : "날짜 없음"}
                                                                 </span>
                                                             </>
@@ -200,25 +178,19 @@ export default function UserReservation() {
                                                         className="reservation-meta"
                                                     />
 
-                                                    <button
-                                                        type="button"
+                                                    <Button 
                                                         onClick={() =>
-                                                            handleReturn(
-                                                                reservation._id
-                                                            )
+                                                            handleReturn(reservation._id)
                                                         }
-                                                        className="returnButton"
+                                                        className="reservation-button"
                                                     >
-                                                        반납하기
-                                                    </button>
+                                                        반납하기</Button>
                                                 </Card>
                                             </Col>
                                         )
                                     )
                                 ) : (
-                                    <Typography.Text>
-                                        데이터가 없습니다.
-                                    </Typography.Text>
+                                    <Typography.Text>데이터가 없습니다.</Typography.Text>
                                 )}
                             </Row>
                         )}
