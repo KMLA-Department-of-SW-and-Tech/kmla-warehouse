@@ -5,29 +5,33 @@ const verifyRoles = require("../../middleware/verifyRoles"); // in case of admin
 const userController = require("../../controllers/user_controller");
 
 router
-  .route("/sync")
-  .post(verifyJWT, userController.syncFirebaseAndMongooseUserDB); // if there is a firebase login and no mogoose account make one
+    .route("/sync")
+    .post(verifyJWT, userController.syncFirebaseAndMongooseUserDB); // if there is a firebase login and no mogoose account make one
 
 router
-  .route("/")
-  .get(verifyJWT, userController.getUserInfo)
-  .patch(verifyJWT, userController.updateUserInfo);
+    .route("/")
+    .get(verifyJWT, userController.getUserInfo)
+    .patch(verifyJWT, userController.updateUserInfo);
 
 router
-  .route("/unauth-list")
-  .get(
-    verifyJWT,
-    verifyRoles(["Admin"]),
-    userController.getUnauthorizedUserList,
-  );
+    .route("/unauth-list")
+    .get(
+        verifyJWT,
+        verifyRoles(["Admin"]),
+        userController.getUnauthorizedUserList
+    );
 
 router
-  .route("/authorize/:id")
-  .patch(verifyJWT, verifyRoles(["Admin"]), userController.authorizeUser);
+    .route("/authorize/:id")
+    .patch(verifyJWT, verifyRoles(["Admin"]), userController.authorizeUser);
 
 router
-  .route("/auth-list")
-  .get(verifyJWT, verifyRoles(["Admin"]), userController.getAuthorizedUserList);
+    .route("/auth-list")
+    .get(
+        verifyJWT,
+        verifyRoles(["Admin"]),
+        userController.getAuthorizedUserList
+    );
 
 router.route("/team-name-list").get(userController.getTeamNameList);
 
