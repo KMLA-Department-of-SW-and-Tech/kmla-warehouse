@@ -1,41 +1,46 @@
-const multer = require('multer');
-const multerS3 = require('multer-s3');
-const s3 = require('../config/s3'); // Import the S3 client from s3.js
+const multer = require("multer");
+const multerS3 = require("multer-s3");
+const s3 = require("../config/s3"); // Import the S3 client from s3.js
 const { DeleteObjectCommand } = require("@aws-sdk/client-s3");
-require('dotenv').config(); // Load environment variables from .env
+require("dotenv").config(); // Load environment variables from .env
 const itemService = require("../services/item_service");
 
 const upload = multer({
-  storage: multerS3({
-      s3: s3,
-      bucket: process.env.AWS_BUCKET_NAME,
-      contentType: multerS3.AUTO_CONTENT_TYPE, // Automatically set Content-Type
-      metadata: (req, file, cb) => {
-          cb(null, { fieldName: file.fieldname });
-      },
-      key: (req, file, cb) => {
-          // Generate a unique key for the file
-          const uniqueSuffix = Date.now().toString();
-          const sanitizedFileName = file.originalname.replace(/\s+/g, '_'); // Replace spaces with underscores
-          cb(null, `images/${uniqueSuffix}_${sanitizedFileName}`);
-      },
-  }),
-  limits: { fileSize: 5 * 1024 * 1024 }, // Limit file size to 5MB
-  fileFilter: (req, file, cb) => {
-      // Allow only image files
-      if (file.mimetype.startsWith('image/')) {
-          cb(null, true);
-      } else {
-          cb(new multer.MulterError('LIMIT_UNEXPECTED_FILE', 'Only image files are allowed!'), false);
-      }
-  },
+    storage: multerS3({
+        s3: s3,
+        bucket: process.env.AWS_BUCKET_NAME,
+        contentType: multerS3.AUTO_CONTENT_TYPE, // Automatically set Content-Type
+        metadata: (req, file, cb) => {
+            cb(null, { fieldName: file.fieldname });
+        },
+        key: (req, file, cb) => {
+            // Generate a unique key for the file
+            const uniqueSuffix = Date.now().toString();
+            const sanitizedFileName = file.originalname.replace(/\s+/g, "_"); // Replace spaces with underscores
+            cb(null, `images/${uniqueSuffix}_${sanitizedFileName}`);
+        },
+    }),
+    limits: { fileSize: 5 * 1024 * 1024 }, // Limit file size to 5MB
+    fileFilter: (req, file, cb) => {
+        // Allow only image files
+        if (file.mimetype.startsWith("image/")) {
+            cb(null, true);
+        } else {
+            cb(
+                new multer.MulterError(
+                    "LIMIT_UNEXPECTED_FILE",
+                    "Only image files are allowed!"
+                ),
+                false
+            );
+        }
+    },
 });
 
 /*
-* Middleware to handle single image upload.
-* Adds imageUrl and imageKey to the request object upon success.
-*/
-
+ * Middleware to handle single image upload.
+ * Adds imageUrl and imageKey to the request object upon success.
+ */
 
 const deleteImage = async (fileKey) => {
     if (!fileKey) {
@@ -50,7 +55,7 @@ const deleteImage = async (fileKey) => {
 
     try {
         const command = new DeleteObjectCommand(params);
-        await s3.send(command); 
+        await s3.send(command);
         console.log(`File deleted successfully: ${fileKey}`);
         return { success: true, message: "File deleted successfully" };
     } catch (error) {
@@ -60,22 +65,21 @@ const deleteImage = async (fileKey) => {
 };
 
 const handleImageUpload = async (req, res, next) => {
-        try {
-        if(req.params.id) {
+    try {
+        if (req.params.id) {
             const id = req.params.id;
             const item = await itemService.getOne(id);
 
-            if(!item) {
+            if (!item) {
                 throw new Error("Item not found");
             }
 
             try {
-                await deleteImage(item.imageKey); 
-            } catch(e) {
+                await deleteImage(item.imageKey);
+            } catch (e) {
                 console.error("Failed to get Item in image upload stage." + e);
                 return res.status(500).send(e);
             }
-
         }
 
         const uploadSingle = upload.single('image');
@@ -86,8 +90,12 @@ const handleImageUpload = async (req, res, next) => {
                 return res.status(400).json({ error: e.message });
             } else if (e) {
                 // An unknown error occurred when uploading
-                console.error('Unknown error in multer when uploading image:' + e);
-                return res.status(500).send("Internal server error: " + e.message);
+                console.error(
+                    "Unknown error in multer when uploading image:" + e
+                );
+                return res
+                    .status(500)
+                    .send("Internal server error: " + e.message);
             }
 
             // Check if file is uploaded

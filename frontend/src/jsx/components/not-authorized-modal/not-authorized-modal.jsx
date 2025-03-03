@@ -3,8 +3,11 @@ import { useNavigate } from "react-router-dom";
 
 import { Modal } from "antd";
 
-
-export default function NotAuthorizedModal({ openModal, redirectToHomeOnCancel, callBack }) {
+export default function NotAuthorizedModal({
+    openModal,
+    redirectToHomeOnCancel,
+    callBack,
+}) {
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(openModal);
     return (
@@ -14,11 +17,11 @@ export default function NotAuthorizedModal({ openModal, redirectToHomeOnCancel, 
             footer={null}
             onCancel={() => {
                 setIsModalOpen(false);
-                redirectToHomeOnCancel ? navigate('/home') : null
-                if(!!callBack) callBack();
+                redirectToHomeOnCancel ? navigate("/home") : null;
+                if (callBack) callBack();
             }}
         >
-        <p>해당 기능에 대한 권한이 없습니다.</p>
+            <p>해당 기능에 대한 권한이 없습니다.</p>
         </Modal>
     );
 }

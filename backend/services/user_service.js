@@ -10,7 +10,7 @@ module.exports.findUserByFirebaseUid = async (firebaseUid) => {
         console.error("Cannot find user by firebase id: " + e);
         throw e;
     }
-}
+};
 
 module.exports.createUserByFirebaseUid = async (firebaseUid) => {
     try {
@@ -23,16 +23,19 @@ module.exports.createUserByFirebaseUid = async (firebaseUid) => {
         console.error("Cannot create firebase user with firebase id" + e);
         throw e;
     }
-}
+};
 
 module.exports.updateUserByFirebaseUid = async (firebaseUid, body) => {
     try {
-        return await User.updateOne({ firebaseUid: firebaseUid }, { $set: { ...body } });
+        return await User.updateOne(
+            { firebaseUid: firebaseUid },
+            { $set: { ...body } }
+        );
     } catch (e) {
         console.error("Cannot update user with firebase id" + e);
         throw e;
     }
-}
+};
 
 module.exports.getUnauthorizedUsers = async () => {
     try {
@@ -41,7 +44,7 @@ module.exports.getUnauthorizedUsers = async () => {
         console.error("Cannot get unauthorized users" + e);
         throw e;
     }
-}
+};
 
 module.exports.getAuthorizedUsers = async () => {
     try {
@@ -50,13 +53,13 @@ module.exports.getAuthorizedUsers = async () => {
         console.error("Cannot get authorized users" + e);
         throw e;
     }
-}
+};
 
 module.exports.authorizedUserById = async (id) => {
     try {
         return await User.findByIdAndUpdate(id, { userType: "User" });
     } catch (e) {
-        console.error("Cannot authorize user"+  e);
+        console.error("Cannot authorize user" + e);
         throw e;
     }
-}
+};

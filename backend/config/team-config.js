@@ -5,5 +5,4 @@ const teamNameList = [
     "ExampleTeam3",
 ];
 
-
 module.exports = { teamNameList };

@@ -1,13 +1,35 @@
-import axios from 'axios';
-
-// use try catch
+import axios from "axios";
 
 const axiosPrivate: {
-    get: (apiUrl: string, accessToken: string, axiosConfig?: { headers?: object }) => Promise<any>,
-    post: (apiUrl: string, requestData: any, accessToken: string, axiosConfig?: { headers?: object }) => Promise<any>,
-    put: (apiUrl: string, requestData: any, accessToken: string, axiosConfig?: { headers?: object }) => Promise<any>,
-    patch: (apiUrl: string, requestData: any, accessToken: string, axiosConfig?: { headers?: object }) => Promise<any>,
-    delete: (apiUrl: string, accessToken: string, axiosConfig?: { headers?: object }) => Promise<any>
+    // allows authorized api access
+    get: (
+        apiUrl: string,
+        accessToken: string,
+        axiosConfig?: { headers?: object }
+    ) => Promise<any>;
+    post: (
+        apiUrl: string,
+        requestData: any,
+        accessToken: string,
+        axiosConfig?: { headers?: object }
+    ) => Promise<any>;
+    put: (
+        apiUrl: string,
+        requestData: any,
+        accessToken: string,
+        axiosConfig?: { headers?: object }
+    ) => Promise<any>;
+    patch: (
+        apiUrl: string,
+        requestData: any,
+        accessToken: string,
+        axiosConfig?: { headers?: object }
+    ) => Promise<any>;
+    delete: (
+        apiUrl: string,
+        accessToken: string,
+        axiosConfig?: { headers?: object }
+    ) => Promise<any>;
 } = {
     get: async (apiUrl, accessToken, axiosConfig) => {
         try {
@@ -16,12 +38,12 @@ const axiosPrivate: {
                 withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
-                    ...axiosConfig?.headers
-                }
+                    ...axiosConfig?.headers,
+                },
             });
             return response;
         } catch (err) {
-            console.error(err);
+            console.error("Axiosprivate get error: ", err);
             throw err;
         }
     },
@@ -32,12 +54,12 @@ const axiosPrivate: {
                 withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
-                    ...axiosConfig?.headers
-                }
+                    ...axiosConfig?.headers,
+                },
             });
             return response;
         } catch (err) {
-            console.error(err);
+            console.error("Axiosprivate post error: ", err);
             throw err;
         }
     },
@@ -48,12 +70,12 @@ const axiosPrivate: {
                 withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
-                    ...axiosConfig?.headers
-                }
+                    ...axiosConfig?.headers,
+                },
             });
             return response;
         } catch (err) {
-            console.error(err);
+            console.error("Axiosprivate put error: ", err);
             throw err;
         }
     },
@@ -64,12 +86,12 @@ const axiosPrivate: {
                 withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
-                    ...axiosConfig?.headers
-                }
+                    ...axiosConfig?.headers,
+                },
             });
             return response;
         } catch (err) {
-            console.error(err);
+            console.error("Axiosprivate patch error: ", err);
             throw err;
         }
     },
@@ -80,12 +102,12 @@ const axiosPrivate: {
                 withCredentials: true,
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
-                    ...axiosConfig?.headers
-                }
+                    ...axiosConfig?.headers,
+                },
             });
             return response;
         } catch (err) {
-            console.error(err);
+            console.error("Axiosprivate delete error: ", err);
             throw err;
         }
     },

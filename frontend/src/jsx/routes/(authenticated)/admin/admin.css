@@ -1,4 +1,3 @@
-
 .admin-layout {
     background-color: white;
     display: flex;
@@ -33,7 +32,6 @@
 .admin-item-add-form .ant-input-number {
     width: 150px;
     margin-right: 10px;
-
 }
 
 .admin-item-add-form .ant-upload,
@@ -44,7 +42,6 @@
 .admin-reservation-table {
     margin-top: 20px;
 }
-
 
 .admin-table {
     margin-top: 20px;

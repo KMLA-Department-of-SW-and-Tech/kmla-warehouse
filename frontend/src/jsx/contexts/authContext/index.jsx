@@ -17,7 +17,7 @@ export function AuthProvider({ children }) {
     const [userType, setUserType] = useState("Unauthorized");
 
     async function initializeUser(userCred) {
-        if(userCred) {
+        if (userCred) {
             setAccessToken(userCred.accessToken); // accesstoken for jwt
             setCurrentUser({ ...userCred });
             setUserLoggedIn(true);
@@ -26,7 +26,9 @@ export function AuthProvider({ children }) {
             setUserLoggedIn(false);
         }
         try {
-            const userInfo = await userService.getUserInfo(userCred.accessToken);
+            const userInfo = await userService.getUserInfo(
+                userCred.accessToken
+            );
             setUserType(userInfo.userType);
         } catch (err) {
             console.log(err);
@@ -40,14 +42,15 @@ export function AuthProvider({ children }) {
         return unsubscribe;
     }, []);
 
-    const authValue =  {
+    const authValue = {
         currentUser,
         userLoggedIn,
         accessToken,
-        userType
+        userType,
     };
 
     return (
+        // can add some loading features in the future
         <AuthContext.Provider value={authValue}>
             {!loading && children}
         </AuthContext.Provider>
