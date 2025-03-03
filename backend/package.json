@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "cross-env DEBUG=kmla-warehouse:* nodemon ./bin/www",
-    "lint": "eslint ."
+    "dev": "cross-env DEBUG=kmla-warehouse:* nodemon ./bin/www"
   },
   "dependencies": {
     "@netlify/functions": "^2.8.2",
