@@ -1,13 +1,15 @@
 import axiosPrivate from "../hooks/axiosPrivate";
 import { GetLog, PatchLog } from "../types/Log";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const logService = {
     // NEEDS ADMIN AUTH
     // GET log list
     getAll: async (accessToken: string): Promise<GetLog[]> => {
         try {
             const response = await axiosPrivate.get(
-                `/api/logs/list`,
+                `${API_BASE_URL}/api/logs/list`,
                 accessToken
             );
             return response.data;
@@ -25,7 +27,7 @@ const logService = {
     ): Promise<GetLog> => {
         try {
             const response = await axiosPrivate.patch(
-                `/api/logs/${id}`,
+                `${API_BASE_URL}/api/logs/${id}`,
                 update,
                 accessToken
             );

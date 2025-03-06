@@ -2,10 +2,12 @@ import axios from "axios";
 import axiosPrivate from "../hooks/axiosPrivate";
 import { GetUser, PatchUser } from "../types/User";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const userService = {
     getUserInfo: async (accessToken: string): Promise<GetUser> => {
         try {
-            const response = await axiosPrivate.get("/api/user", accessToken);
+            const response = await axiosPrivate.get(`${API_BASE_URL}/api/user`, accessToken);
             return response.data;
         } catch (e) {
             console.error("Userservice get user info error: ", e);
@@ -18,7 +20,7 @@ const userService = {
     ): Promise<void> => {
         try {
             const response = await axiosPrivate.patch(
-                "/api/user",
+                `${API_BASE_URL}/api/user`,
                 update,
                 accessToken
             );
@@ -30,7 +32,7 @@ const userService = {
     getUnauthorizedUsers: async (accessToken: string): Promise<GetUser[]> => {
         try {
             const response = await axiosPrivate.get(
-                "/api/user/unauth-list",
+                `${API_BASE_URL}/api/user/unauth-list`,
                 accessToken
             );
             return response.data;
@@ -45,7 +47,7 @@ const userService = {
     ): Promise<void> => {
         try {
             const response = await axiosPrivate.patch(
-                `/api/user/authorize/${id}`,
+                `${API_BASE_URL}/api/user/authorize/${id}`,
                 {},
                 accessToken
             );
@@ -57,7 +59,7 @@ const userService = {
     getAuthorizedUsers: async (accessToken: string): Promise<GetUser[]> => {
         try {
             const response = await axiosPrivate.get(
-                "/api/user/auth-list",
+                `${API_BASE_URL}/api/user/auth-list`,
                 accessToken
             );
             return response.data;
@@ -68,7 +70,7 @@ const userService = {
     },
     getTeamNameList: async (): Promise<string[]> => {
         try {
-            const response = await axios.get("/api/user/team-name-list");
+            const response = await axios.get(`${API_BASE_URL}/api/user/team-name-list`);
             return response.data;
         } catch (e) {
             console.error("Userservice get team name list error: ", e);
