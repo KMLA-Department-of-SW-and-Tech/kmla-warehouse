@@ -2,13 +2,11 @@ import axios from "axios";
 import axiosPrivate from "../hooks/axiosPrivate";
 import { GetItem } from "../types/Item";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
 const itemService = {
     // Fetch all items, returning only those with "available" status
     getAll: async (): Promise<GetItem[]> => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/api/item/list`);
+            const response = await axios.get("/api/item/list");
             return response.data;
         } catch (e) {
             console.error("Itemservice get all items error: ", e);
@@ -19,7 +17,7 @@ const itemService = {
     // Fetch item details by ID
     getById: async (id: string): Promise<GetItem> => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/api/item/${id}`);
+            const response = await axios.get("/api/item/${id}");
             return response.data;
         } catch (e) {
             console.error("Itemservice get item by id error: ", e);
@@ -36,7 +34,7 @@ const itemService = {
     ): Promise<GetItem> => {
         try {
             const response = await axiosPrivate.patch(
-                `${API_BASE_URL}/api/item/${id}/borrow`,
+                "/api/item/${id}/borrow",
                 { quantity },
                 accessToken
             );
@@ -57,7 +55,7 @@ const itemService = {
     create: async (item: FormData, accessToken: string): Promise<GetItem> => {
         try {
             const response = await axiosPrivate.post(
-                `${API_BASE_URL}/api/item`,
+                "/api/item",
                 item,
                 accessToken,
                 {
@@ -82,7 +80,7 @@ const itemService = {
     ): Promise<GetItem> => {
         try {
             const response = await axiosPrivate.patch(
-                `${API_BASE_URL}/api/item/${id}`,
+                "/api/item/${id}",
                 item,
                 accessToken,
                 { 
@@ -103,7 +101,7 @@ const itemService = {
     delete: async (id: string, accessToken: string): Promise<void> => {
         try {
             const response = await axiosPrivate.delete(
-                `${API_BASE_URL}/api/item/${id}`,
+                "/api/item/${id}",
                 accessToken
             );
             return response.data;
@@ -118,7 +116,7 @@ const itemService = {
     getReservations: async (accessToken: string) => {
         try {
             const response = await axiosPrivate.get(
-                `${API_BASE_URL}/api/item/team-list`,
+                "/api/item/team-list",
                 accessToken
             );
             return response.data;
@@ -133,7 +131,7 @@ const itemService = {
     returnItem: async (id: string, accessToken: string) => {
         try {
             const data = await axiosPrivate.post(
-                `${API_BASE_URL}/api/logs/${id}/return`,
+                "/api/logs/${id}/return",
                 {},
                 accessToken
             );
