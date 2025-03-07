@@ -30,29 +30,30 @@ async function main() {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// req.body가 Buffer인 경우 이를 JSON으로 파싱하는 미들웨어
-app.use((req, res, next) => {
-    if (Buffer.isBuffer(req.body) && req.is("application/json")) {
-        try {
-            req.body = JSON.parse(req.body.toString());
-        } catch (error) {
-            return res.status(400).send("Invalid JSON");
-        }
-    }
-    next();
-});
+// // req.body가 Buffer인 경우 이를 JSON으로 파싱하는 미들웨어
+// app.use((req, res, next) => {
+//     if (Buffer.isBuffer(req.body) && req.is("application/json")) {
+//         try {
+//             req.body = JSON.parse(req.body.toString());
+//         } catch (error) {
+//             return res.status(400).send("Invalid JSON");
+//         }
+//     }
+//     next();
+// });
 
-// req.body가 Buffer인 경우 이를 URL-encoded 데이터로 파싱하는 미들웨어
-app.use((req, res, next) => {
-    if (
-        Buffer.isBuffer(req.body) &&
-        req.is("application/x-www-form-urlencoded")
-    ) {
-        const bodyString = req.body.toString("utf-8");
-        req.body = querystring.parse(bodyString);
-    }
-    next();
-});
+// // req.body가 Buffer인 경우 이를 URL-encoded 데이터로 파싱하는 미들웨어
+// app.use((req, res, next) => {
+//     if (
+//         Buffer.isBuffer(req.body) &&
+//         req.is("application/x-www-form-urlencoded")
+//     ) {
+//         const bodyString = req.body.toString("utf-8");
+//         req.body = querystring.parse(bodyString);
+//         console.log("Multi form body debug: ", req.body);
+//     }
+//     next();
+// });
 
 app.use(logger(env === "development" ? "dev" : "combined"));
 app.use(express.static(path.join(__dirname, "public")));

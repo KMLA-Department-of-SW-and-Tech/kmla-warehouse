@@ -92,6 +92,9 @@ const AdminItem: React.FC = () => {
             message.error("물품을 추가하는 데 실패했습니다.");
             console.error(error);
             throw error;
+        } finally {
+            setPreviewImage(null);
+            setImageFile(null);
         }
         fetchItem();
     };
@@ -99,12 +102,16 @@ const AdminItem: React.FC = () => {
     // modify existing item in table
     const handleUpdateItem = async (id: string, updatedItem: PatchItem) => {
         const formData = new FormData();
+        console.log(Object.entries(updatedItem));
         Object.entries(updatedItem).forEach(([key, value]) => {
-            if (value !== undefined && value !== null) {
+            console.log(key, value);
+            if (!value) {
                 formData.append(key, value.toString());
             }
         });
-
+        return;
+        console.log(formData, updatedItem);
+        return;
         if (imageFile) {
             formData.append("image", imageFile);
         } else {

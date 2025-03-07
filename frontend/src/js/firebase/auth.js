@@ -5,7 +5,7 @@ import { auth } from "./firebase";
 const syncFirebaseWithMongoose = async (credential) => {
     try {
         const result = await axiosPrivate.post(
-            `${API_BASE_URL}/api/user/sync`,
+            "/api/user/sync",
             {},
             credential.user.accessToken
         );
@@ -27,7 +27,7 @@ export const signUserInWithGoogle = async () => {
         if (result) await syncFirebaseWithMongoose(result);
         // check admin
         const userInfo = await axiosPrivate.get(
-            `${API_BASE_URL}/api/user`,
+            "/api/user",
             result.user.accessToken
         );
         return {
