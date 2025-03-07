@@ -8,7 +8,7 @@ const logService = {
     getAll: async (accessToken: string): Promise<GetLog[]> => {
         try {
             const response = await axiosPrivate.get(
-                `/api/logs/list`,
+                "/api/logs/list",
                 accessToken
             );
             return response.data;
@@ -26,7 +26,7 @@ const logService = {
     ): Promise<GetLog> => {
         try {
             const response = await axiosPrivate.patch(
-                `/api/logs/${id}`,
+                "/api/logs/${id}",
                 update,
                 accessToken
             );

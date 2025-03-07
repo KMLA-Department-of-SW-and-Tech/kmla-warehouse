@@ -6,7 +6,7 @@ import { GetUser, PatchUser } from "../types/User";
 const userService = {
     getUserInfo: async (accessToken: string): Promise<GetUser> => {
         try {
-            const response = await axiosPrivate.get(`/api/user`, accessToken);
+            const response = await axiosPrivate.get("/api/user", accessToken);
             return response.data;
         } catch (e) {
             console.error("Userservice get user info error: ", e);
@@ -19,7 +19,7 @@ const userService = {
     ): Promise<void> => {
         try {
             const response = await axiosPrivate.patch(
-                `/api/user`,
+                "/api/user",
                 update,
                 accessToken
             );
@@ -31,7 +31,7 @@ const userService = {
     getUnauthorizedUsers: async (accessToken: string): Promise<GetUser[]> => {
         try {
             const response = await axiosPrivate.get(
-                `/api/user/unauth-list`,
+                "/api/user/unauth-list",
                 accessToken
             );
             return response.data;
@@ -46,7 +46,7 @@ const userService = {
     ): Promise<void> => {
         try {
             const response = await axiosPrivate.patch(
-                `/api/user/authorize/${id}`,
+                "/api/user/authorize/${id}",
                 {},
                 accessToken
             );
@@ -58,7 +58,7 @@ const userService = {
     getAuthorizedUsers: async (accessToken: string): Promise<GetUser[]> => {
         try {
             const response = await axiosPrivate.get(
-                `/api/user/auth-list`,
+                "/api/user/auth-list",
                 accessToken
             );
             return response.data;
@@ -69,7 +69,7 @@ const userService = {
     },
     getTeamNameList: async (): Promise<string[]> => {
         try {
-            const response = await axios.get(`/api/user/team-name-list`);
+            const response = await axios.get("/api/user/team-name-list");
             return response.data;
         } catch (e) {
             console.error("Userservice get team name list error: ", e);
