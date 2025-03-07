@@ -17,7 +17,7 @@ const itemService = {
     // Fetch item details by ID
     getById: async (id: string): Promise<GetItem> => {
         try {
-            const response = await axios.get("/api/item/${id}");
+            const response = await axios.get(`/api/item/${id}`);
             return response.data;
         } catch (e) {
             console.error("Itemservice get item by id error: ", e);
@@ -34,7 +34,7 @@ const itemService = {
     ): Promise<GetItem> => {
         try {
             const response = await axiosPrivate.patch(
-                "/api/item/${id}/borrow",
+                `/api/item/${id}/borrow`,
                 { quantity },
                 accessToken
             );
@@ -80,7 +80,7 @@ const itemService = {
     ): Promise<GetItem> => {
         try {
             const response = await axiosPrivate.patch(
-                "/api/item/${id}",
+                `/api/item/${id}`,
                 item,
                 accessToken,
                 { 
@@ -101,7 +101,7 @@ const itemService = {
     delete: async (id: string, accessToken: string): Promise<void> => {
         try {
             const response = await axiosPrivate.delete(
-                "/api/item/${id}",
+                `/api/item/${id}`,
                 accessToken
             );
             return response.data;
@@ -131,7 +131,7 @@ const itemService = {
     returnItem: async (id: string, accessToken: string) => {
         try {
             const data = await axiosPrivate.post(
-                "/api/logs/${id}/return",
+                `/api/logs/${id}/return`,
                 {},
                 accessToken
             );

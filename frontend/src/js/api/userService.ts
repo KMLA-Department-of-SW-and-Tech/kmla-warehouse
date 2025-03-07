@@ -46,7 +46,7 @@ const userService = {
     ): Promise<void> => {
         try {
             const response = await axiosPrivate.patch(
-                "/api/user/authorize/${id}",
+                `/api/user/authorize/${id}`,
                 {},
                 accessToken
             );

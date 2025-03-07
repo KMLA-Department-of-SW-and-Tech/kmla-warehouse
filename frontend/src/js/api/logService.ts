@@ -26,7 +26,7 @@ const logService = {
     ): Promise<GetLog> => {
         try {
             const response = await axiosPrivate.patch(
-                "/api/logs/${id}",
+                `/api/logs/${id}`,
                 update,
                 accessToken
             );
