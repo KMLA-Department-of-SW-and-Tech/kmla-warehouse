@@ -1,13 +1,14 @@
 import axiosPrivate from "../hooks/axiosPrivate";
 import { GetLog, PatchLog } from "../types/Log";
 
+
 const logService = {
     // NEEDS ADMIN AUTH
     // GET log list
     getAll: async (accessToken: string): Promise<GetLog[]> => {
         try {
             const response = await axiosPrivate.get(
-                `/api/logs/list`,
+                "/api/logs/list",
                 accessToken
             );
             return response.data;

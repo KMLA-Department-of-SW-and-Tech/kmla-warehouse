@@ -35,7 +35,6 @@ router.patch(
     "/:id/borrow",
     verifyJWT,
     verifyRoles(["User"]),
-    upload,
     itemController.borrow
 );
 

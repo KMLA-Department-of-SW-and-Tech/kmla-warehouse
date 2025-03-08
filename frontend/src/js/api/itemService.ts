@@ -6,7 +6,7 @@ const itemService = {
     // Fetch all items, returning only those with "available" status
     getAll: async (): Promise<GetItem[]> => {
         try {
-            const response = await axios.get(`/api/item/list`);
+            const response = await axios.get("/api/item/list");
             return response.data;
         } catch (e) {
             console.error("Itemservice get all items error: ", e);
@@ -83,11 +83,11 @@ const itemService = {
                 `/api/item/${id}`,
                 item,
                 accessToken,
-                {
+                { 
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
-                }
+                },
             );
             return response.data;
         } catch (error) {
@@ -116,7 +116,7 @@ const itemService = {
     getReservations: async (accessToken: string) => {
         try {
             const response = await axiosPrivate.get(
-                `/api/item/team-list`,
+                "/api/item/team-list",
                 accessToken
             );
             return response.data;

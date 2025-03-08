@@ -71,16 +71,12 @@ const handleImageUpload = async (req, res, next) => {
             const item = await itemService.getOne(id);
 
             if (!item) {
-                throw new Error("Item not found");
+                throw new Error("Item with current id not found");
             }
-
-            try {
-                await deleteImage(item.imageKey);
-            } catch (e) {
-                console.error("Failed to get Item in image upload stage." + e);
-                return res.status(500).send(e);
-            }
+            await deleteImage(item.imageKey);
         }
+
+        if(!req.body.image) return next();
 
         const uploadSingle = upload.single("image");
         uploadSingle(req, res, async (e) => {
@@ -111,6 +107,7 @@ const handleImageUpload = async (req, res, next) => {
             });
             return next();
         });
+        return next();
     } catch (e) {
         console.error("Error while uploading image" + e);
         return res.status(500).send("Internal server error: " + e.message);

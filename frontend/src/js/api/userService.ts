@@ -2,6 +2,7 @@ import axios from "axios";
 import axiosPrivate from "../hooks/axiosPrivate";
 import { GetUser, PatchUser } from "../types/User";
 
+
 const userService = {
     getUserInfo: async (accessToken: string): Promise<GetUser> => {
         try {
@@ -17,7 +18,7 @@ const userService = {
         accessToken: string
     ): Promise<void> => {
         try {
-            const response = await axiosPrivate.patch(
+            await axiosPrivate.patch(
                 "/api/user",
                 update,
                 accessToken
@@ -44,7 +45,7 @@ const userService = {
         accessToken: string
     ): Promise<void> => {
         try {
-            const response = await axiosPrivate.patch(
+            await axiosPrivate.patch(
                 `/api/user/authorize/${id}`,
                 {},
                 accessToken
