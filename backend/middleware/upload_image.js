@@ -76,6 +76,8 @@ const handleImageUpload = async (req, res, next) => {
             await deleteImage(item.imageKey);
         }
 
+        if(!req.body.image) return next();
+
         const uploadSingle = upload.single("image");
         uploadSingle(req, res, async (e) => {
             if (e instanceof multer.MulterError) {
@@ -105,6 +107,7 @@ const handleImageUpload = async (req, res, next) => {
             });
             return next();
         });
+        return next();
     } catch (e) {
         console.error("Error while uploading image" + e);
         return res.status(500).send("Internal server error: " + e.message);

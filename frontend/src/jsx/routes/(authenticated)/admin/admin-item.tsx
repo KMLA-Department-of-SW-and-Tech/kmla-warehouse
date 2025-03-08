@@ -27,7 +27,7 @@ import Loading from "../../../components/loading/loading";
 
 import { useAuth } from "../../../contexts/authContext";
 import itemService from "../../../../js/api/itemService";
-import { GetItem, PostItem, PatchItem } from "../../../../js/types/Item";
+import { FormItem, GetItem, PatchItem } from "../../../../js/types/Item";
 
 import "./admin.css";
 
@@ -41,6 +41,7 @@ const AdminItem: React.FC = () => {
     const [form] = Form.useForm();
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
+    const [uploadedImagesForPatch, setUploadedImagesForPatch] = useState<{id: string, file: File}[]>([]);
     const authValue = useAuth();
 
     useEffect(() => {
@@ -62,15 +63,20 @@ const AdminItem: React.FC = () => {
         }
     };
 
-    const handleImageUpload = (file: File) => {
+    const handleImageUpload = (id: string, file: File) => {
         const imageUrl = URL.createObjectURL(file);
         setPreviewImage(imageUrl);
+        setUploadedImagesForPatch(curr => {
+            let filteredList = curr.filter(queue => queue.id !== id);
+            filteredList.push({ id: id, file: file });
+            return filteredList;
+        })
         /* setImageFile(file); */
         return false;
     };
 
     // create new item to table
-    const handleAddItem = async (newItem: PostItem) => {
+    const handleAddItem = async (newItem: FormItem) => {
         const formData = new FormData();
         formData.append("name", newItem.name);
         formData.append("description", newItem.description);
@@ -98,6 +104,8 @@ const AdminItem: React.FC = () => {
 
     // modify existing item in table
     const handleUpdateItem = async (id: string, updatedItem: PatchItem) => {
+        console.log(updatedItem);
+        return;
         const formData = new FormData();
         console.log(Object.entries(updatedItem));
         Object.entries(updatedItem).forEach(([key, value]) => {
@@ -106,7 +114,6 @@ const AdminItem: React.FC = () => {
                 formData.append(key, value.toString());
             }
         });
-        return;
         console.log(formData, updatedItem);
         return;
         if (imageFile) {
@@ -147,37 +154,34 @@ const AdminItem: React.FC = () => {
             throw error;
         }
     };
-
     const columns: ProColumns<GetItem>[] = [
         {
             title: "사진",
             dataIndex: "imageUrl",
             key: "imageUrl",
-            render: (text, record) =>
-                previewImage && editableKeys.includes(record._id) ? (
+            render: (text, record) => previewImage && editableKeys.includes(record._id) ? (
                     <img
-                        src={previewImage}
-                        alt="Preview"
-                        style={{ width: 50, height: 50, objectFit: "cover" }}
+                    src={previewImage}
+                    alt="Preview"
+                    style={{ width: 50, height: 50, objectFit: "cover" }}
                     />
                 ) : text ? (
                     <img
-                        src={String(text)}
-                        alt="img"
-                        style={{ width: 50, height: 50, objectFit: "cover" }}
+                    src={String(text)}
+                    alt="img"
+                    style={{ width: 50, height: 50, objectFit: "cover" }}
                     />
                 ) : (
                     <span>No image</span>
                 ),
             renderFormItem: (_, { isEditable, record }) => {
-                if (!isEditable) return null;
-
+                if (!isEditable || !record) return null;
                 return (
                     <Upload
                         name="image"
                         listType="picture-card"
                         showUploadList={false}
-                        beforeUpload={(file) => handleImageUpload(file)}
+                        beforeUpload={(file) => handleImageUpload(record._id, file)}
                     >
                         {previewImage ? (
                             <img
@@ -287,7 +291,6 @@ const AdminItem: React.FC = () => {
                                         maxCount={1}
                                         listType="picture"
                                         showUploadList={true}
-                                        beforeUpload={handleImageUpload}
                                     >
                                         <Button icon={<UploadOutlined />}>
                                             img
