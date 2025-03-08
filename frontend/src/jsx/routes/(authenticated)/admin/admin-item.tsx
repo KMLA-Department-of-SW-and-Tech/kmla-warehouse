@@ -52,6 +52,7 @@ const AdminItem: React.FC = () => {
         setLoading(true);
         try {
             const response = await itemService.getAll();
+            console.log(response);
             setItems(response);
         } catch (error) {
             message.error("물품을 불러오는 데 실패했습니다.");
@@ -88,15 +89,14 @@ const AdminItem: React.FC = () => {
             setItems((prevItems) => [addedItem, ...prevItems]);
             message.success("성공적으로 물품을 추가했습니다.");
             form.resetFields();
+            setPreviewImage(null);
+            setImageFile(null);
+            await fetchItem(); // rerender function NEEDED
         } catch (error) {
             message.error("물품을 추가하는 데 실패했습니다.");
             console.error(error);
             throw error;
-        } finally {
-            setPreviewImage(null);
-            setImageFile(null);
         }
-        fetchItem();
     };
 
     // modify existing item in table
@@ -287,6 +287,7 @@ const AdminItem: React.FC = () => {
                                 <Form.Item name="imageUrl">
                                     <Upload
                                         name="image"
+                                        maxCount={1}
                                         listType="picture"
                                         showUploadList={true}
                                         beforeUpload={handleImageUpload}
