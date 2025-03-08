@@ -104,26 +104,29 @@ const AdminItem: React.FC = () => {
 
     // modify existing item in table
     const handleUpdateItem = async (id: string, updatedItem: PatchItem) => {
-        console.log(updatedItem);
-        return;
+        // console.log(updatedItem);
         const formData = new FormData();
-        console.log(Object.entries(updatedItem));
+        // console.log(Object.entries(updatedItem));
         Object.entries(updatedItem).forEach(([key, value]) => {
             console.log(key, value);
             if (!value) {
                 formData.append(key, value.toString());
             }
         });
-        console.log(formData, updatedItem);
-        return;
-        if (imageFile) {
+        uploadedImagesForPatch.forEach((queue) => {
+            if(queue.id === id) {
+                formData.append("image", queue.file);
+            }
+        })
+        // console.log(formData, updatedItem);
+        /* if (imageFile) {
             formData.append("image", imageFile);
         } else {
             formData.append(
                 "imageUrl",
                 items.find((item) => item._id === id)?.imageUrl || ""
             );
-        }
+        } */
 
         try {
             const updated = await itemService.update(
@@ -131,10 +134,17 @@ const AdminItem: React.FC = () => {
                 formData,
                 authValue.accessToken
             );
+            message.success("성공적으로 물품을 수정했습니다."); // 뒷처리
+            console.log(updated);
+            return;
+
+            setUploadedImagesForPatch(curr => {
+                const filteredList = curr.filter(queue => queue.id !== id);
+                return filteredList;
+            });
+
             setItems(items.map((item) => (item._id === id ? updated : item)));
-            message.success("성공적으로 물품을 수정했습니다.");
             setPreviewImage(null);
-            setImageFile(null);
             fetchItem();
         } catch (error) {
             message.error("물품을 수정하는 데 실패했습니다.");

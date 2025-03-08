@@ -66,20 +66,25 @@ const deleteImage = async (fileKey) => {
 
 const handleImageUpload = async (req, res, next) => {
     try {
-        if (req.params.id) {
-            const id = req.params.id;
+        /* if (req.params.id) {
+            console.log("hihihihi")
+            return res.status(200).send("hi");
+            if(!req.body.image) return next();
+            const id = req.params.id; // imageUrl is a file some problems
             const item = await itemService.getOne(id);
-
+            
             if (!item) {
                 throw new Error("Item with current id not found");
             }
             await deleteImage(item.imageKey);
         }
 
-        if(!req.body.image) return next();
-
+        if(!req.body.image) return next(); */
+        
+        console.log(req.body)
         const uploadSingle = upload.single("image");
         uploadSingle(req, res, async (e) => {
+            return res.status(200).send("kk");
             if (e instanceof multer.MulterError) {
                 // A Multer error occurred when uploading
                 console.error("Multer Error:", e.message);
@@ -107,7 +112,6 @@ const handleImageUpload = async (req, res, next) => {
             });
             return next();
         });
-        return next();
     } catch (e) {
         console.error("Error while uploading image" + e);
         return res.status(500).send("Internal server error: " + e.message);

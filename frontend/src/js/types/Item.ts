@@ -19,8 +19,5 @@ export type FormItem = {
     imageUrl?: { file: File, fileList: any };
 };
 
-/* export type PatchItem = {
-    
-} */
 
 export type PatchItem = Partial<GetItem>; // needs fixation
