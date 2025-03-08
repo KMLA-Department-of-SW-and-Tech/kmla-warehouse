@@ -65,7 +65,7 @@ const AdminItem: React.FC = () => {
     const handleImageUpload = (file: File) => {
         const imageUrl = URL.createObjectURL(file);
         setPreviewImage(imageUrl);
-        setImageFile(file);
+        /* setImageFile(file); */
         return false;
     };
 
@@ -77,10 +77,9 @@ const AdminItem: React.FC = () => {
         formData.append("quantity", newItem.quantity.toString());
         formData.append("location", newItem.location);
 
-        if (imageFile) {
-            formData.append("image", imageFile);
+        if (newItem.imageUrl && newItem.imageUrl.file) {
+            formData.append("image", newItem.imageUrl.file);
         }
-
         try {
             const addedItem = await itemService.create(
                 formData,
@@ -89,8 +88,6 @@ const AdminItem: React.FC = () => {
             setItems((prevItems) => [addedItem, ...prevItems]);
             message.success("성공적으로 물품을 추가했습니다.");
             form.resetFields();
-            setPreviewImage(null);
-            setImageFile(null);
             await fetchItem(); // rerender function NEEDED
         } catch (error) {
             message.error("물품을 추가하는 데 실패했습니다.");

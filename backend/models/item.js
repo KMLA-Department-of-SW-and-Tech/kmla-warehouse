@@ -7,7 +7,7 @@ const itemSchema = new Schema({
     description: { type: String, maxLength: 1000 },
     totalQuantity: { type: Number, required: true },
     quantity: { type: Number, required: true },
-    location: { type: String, maxLength: 1000 },
+    location: { type: String, maxLength: 100 },
     status: { type: String, enum: ["valid", "deleted"], default: "valid" },
     imageUrl: { type: String },
     imageKey: { type: String },
