@@ -46,7 +46,7 @@ app.use(
 );
 
 // API Index
-router.get("/", (req, res) => {
+router.get("/api", (req, res) => {
     res.json({ message: env === "development" });
 });
 // API routes
