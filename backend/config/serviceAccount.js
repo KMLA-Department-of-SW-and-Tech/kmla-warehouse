@@ -5,7 +5,7 @@ module.exports = {
         type: "service_account",
         project_id: "dswt-sharable-auth",
         private_key_id: process.env.MY_FIREBASE_PRIVATE_KEY_ID,
-        private_key: `-----BEGIN PRIVATE KEY-----\n${process.env.MY_FIREBASE_PRIVATE_KEY}-----END PRIVATE KEY-----\n`,
+        private_key: `-----BEGIN PRIVATE KEY-----\n${process.env.NODE_ENV ? (process.env.MY_FIREBASE_PRIVATE_KEY ? JSON.parse(process.env.MY_FIREBASE_PRIVATE_KEY) : undefined) : process.env.MY_FIREBASE_PRIVATE_KEY}-----END PRIVATE KEY-----\n`,
         client_email:
             "firebase-adminsdk-fbsvc@dswt-sharable-auth.iam.gserviceaccount.com",
         client_id: "108673781990081178998",
