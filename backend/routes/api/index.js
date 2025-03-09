@@ -1,13 +1,9 @@
 const express = require("express");
 const router = express.Router();
-require("dotenv").config();
-
-const env = process.env.NODE_ENV ? process.env.NODE_ENV : "development";
-
 
 // API Index
 router.get("/", (req, res) => {
-    res.json({ message: env === "development" });
+    res.json({ message: "API_INDEX" });
 });
 
 const itemRouter = require("./item");
