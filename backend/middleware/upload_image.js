@@ -66,18 +66,6 @@ const deleteImage = async (fileKey) => {
 
 const handleImageUpload = async (req, res, next) => {
     try {
-        if (req.params.id) {
-            const id = req.params.id;
-            const item = await itemService.getOne(id);
-
-            if (!item) {
-                throw new Error("Item with current id not found");
-            }
-            await deleteImage(item.imageKey);
-        }
-
-        if(!req.body.image) return next();
-
         const uploadSingle = upload.single("image");
         uploadSingle(req, res, async (e) => {
             if (e instanceof multer.MulterError) {
@@ -90,24 +78,29 @@ const handleImageUpload = async (req, res, next) => {
                     "Unknown error in multer when uploading image:" + e
                 );
                 return res
-                    .status(500)
-                    .send("Internal server error: " + e.message);
+                .status(500)
+                .send("Internal server error: " + e.message);
             }
-
             // Check if file is uploaded
-            if (!req.file) {
-                return next();
+            if (!req.file) return next();
+            // now file is existing and I want to upload it
+            if (req.params.id) {
+                const id = req.params.id; // imageUrl is a file some problems
+                const item = await itemService.getOne(id);
+                
+                if (!item) {
+                    throw new Error("Item with current id not found");
+                }
+                await deleteImage(item.imageKey);
             }
-
+            // return res.status(200).send("i");
             // File uploaded successfully
-
             req.body = Object.assign(req.body, {
                 imageUrl: req.file.location,
                 imageKey: req.file.key,
             });
             return next();
         });
-        return next();
     } catch (e) {
         console.error("Error while uploading image" + e);
         return res.status(500).send("Internal server error: " + e.message);

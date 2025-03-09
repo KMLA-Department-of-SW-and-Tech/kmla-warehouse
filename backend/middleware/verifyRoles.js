@@ -11,11 +11,8 @@ const verifyRoles = (allowedRoles) => {
                     "No matching firebase user in mongoose, inspection needed"
                 );
         const userRole = user.userType;
-        console.log(userRole);
 
-        console.log(allowedRoles);
         const validated = allowedRoles.includes(userRole);
-        console.log(validated);
         if (!validated)
             return res.sendStatus(401).send("Unauthorized api access");
         return next();
