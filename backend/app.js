@@ -34,6 +34,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(logger(env === "development" ? "dev" : "combined"));
 app.use(express.static(path.join(__dirname, "public")));
 
+
+
 app.use(
     cors({
         origin: env === "development"
@@ -43,6 +45,10 @@ app.use(
     })
 );
 
+// API Index
+router.get("/", (req, res) => {
+    res.json({ message: env === "development" });
+});
 // API routes
 app.use("/api", apiRouter);
 
