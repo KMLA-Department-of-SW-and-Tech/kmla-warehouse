@@ -14,8 +14,8 @@ export default defineConfig(({ mode }) => {
                     changeOrigin: true,
                     secure: false,
                     ws: true,
-                }
+                },
             },
         },
-    }
+    };
 });

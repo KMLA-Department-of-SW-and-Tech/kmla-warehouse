@@ -85,10 +85,10 @@ module.exports.editOne = async (id, updates, session = null) => {
         }
         const changeInQ = updates.totalQuantity - originalItem.totalQuantity;
         const originalQ = originalItem.quantity;
-        const updatedItem = await Item.findByIdAndUpdate(id, { quantity: originalQ + changeInQ, ...updates}).session(
-            session
-        );
-
+        const updatedItem = await Item.findByIdAndUpdate(id, {
+            quantity: originalQ + changeInQ,
+            ...updates,
+        }).session(session);
 
         return updatedItem;
     } catch (e) {

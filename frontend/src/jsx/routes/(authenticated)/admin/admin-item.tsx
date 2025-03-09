@@ -41,7 +41,9 @@ const AdminItem: React.FC = () => {
     const [form] = Form.useForm();
     // const [imageFile, setImageFile] = useState<File | null>(null);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
-    const [uploadedImagesForPatch, setUploadedImagesForPatch] = useState<{id: string, file: File}[]>([]);
+    const [uploadedImagesForPatch, setUploadedImagesForPatch] = useState<
+        { id: string; file: File }[]
+    >([]);
     const authValue = useAuth();
 
     useEffect(() => {
@@ -65,11 +67,11 @@ const AdminItem: React.FC = () => {
     const handleImageUpload = (id: string, file: File) => {
         const imageUrl = URL.createObjectURL(file);
         setPreviewImage(imageUrl);
-        setUploadedImagesForPatch(curr => {
-            let filteredList = curr.filter(queue => queue.id !== id);
+        setUploadedImagesForPatch((curr) => {
+            let filteredList = curr.filter((queue) => queue.id !== id);
             filteredList.push({ id: id, file: file });
             return filteredList;
-        })
+        });
         return false;
     };
 
@@ -103,26 +105,28 @@ const AdminItem: React.FC = () => {
     // modify existing item in table
     const handleUpdateItem = async (id: string, updatedItem: PatchItem) => {
         const formData = new FormData();
-        if(updatedItem.name) formData.append("name",  updatedItem.name);
-        if(updatedItem.description) formData.append("description", updatedItem.description);
-        if(updatedItem.totalQuantity) formData.append("totalQuantity", updatedItem.totalQuantity.toString());
-        if(updatedItem.location) formData.append("location", updatedItem.location);
+        if (updatedItem.name) formData.append("name", updatedItem.name);
+        if (updatedItem.description)
+            formData.append("description", updatedItem.description);
+        if (updatedItem.totalQuantity)
+            formData.append(
+                "totalQuantity",
+                updatedItem.totalQuantity.toString()
+            );
+        if (updatedItem.location)
+            formData.append("location", updatedItem.location);
         // console.log(Object.entries(updatedItem));
         uploadedImagesForPatch.forEach((queue) => {
-            if(queue.id === id) {
+            if (queue.id === id) {
                 formData.append("image", queue.file);
                 console.log(queue.file);
             }
-        })
+        });
         try {
-            await itemService.update(
-                id,
-                formData,
-                authValue.accessToken
-            );
+            await itemService.update(id, formData, authValue.accessToken);
             message.success("성공적으로 물품을 수정했습니다."); // 뒷처리
-            setUploadedImagesForPatch(curr => {
-                const filteredList = curr.filter(queue => queue.id !== id);
+            setUploadedImagesForPatch((curr) => {
+                const filteredList = curr.filter((queue) => queue.id !== id);
                 return filteredList;
             });
             await fetchItem();
@@ -154,17 +158,18 @@ const AdminItem: React.FC = () => {
             title: "사진",
             dataIndex: "imageUrl",
             key: "imageUrl",
-            render: (text, record) => /* previewImage && editableKeys.includes(record._id) ? (
+            render: (text, record) =>
+                /* previewImage && editableKeys.includes(record._id) ? (
                     <img
                     src={previewImage}
                     alt="Preview"
                     style={{ width: 50, height: 50, objectFit: "cover" }}
                     />
-                ) :  */text ? (
+                ) :  */ text ? (
                     <img
-                    src={String(text)}
-                    alt="img"
-                    style={{ width: 50, height: 50, objectFit: "cover" }}
+                        src={String(text)}
+                        alt="img"
+                        style={{ width: 50, height: 50, objectFit: "cover" }}
                     />
                 ) : (
                     <span>No image</span>
@@ -177,7 +182,9 @@ const AdminItem: React.FC = () => {
                         listType="picture-card"
                         maxCount={1}
                         showUploadList={false}
-                        beforeUpload={(file) => handleImageUpload(record._id, file)}
+                        beforeUpload={(file) =>
+                            handleImageUpload(record._id, file)
+                        }
                     >
                         {previewImage ? (
                             <img
@@ -348,7 +355,7 @@ const AdminItem: React.FC = () => {
                                             defaultDom
                                         ) => {
                                             const { save, cancel } = defaultDom;
-                                            return [ save, cancel ];
+                                            return [save, cancel];
                                         },
                                     }}
                                     recordCreatorProps={false}
