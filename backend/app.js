@@ -29,7 +29,7 @@ async function main() {
 
 app.use(express.json());
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // // req.body가 Buffer인 경우 이를 JSON으로 파싱하는 미들웨어
 // app.use((req, res, next) => {

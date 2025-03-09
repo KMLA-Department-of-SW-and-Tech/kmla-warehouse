@@ -39,7 +39,7 @@ const AdminItem: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
     const [form] = Form.useForm();
-    const [imageFile, setImageFile] = useState<File | null>(null);
+    // const [imageFile, setImageFile] = useState<File | null>(null);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const [uploadedImagesForPatch, setUploadedImagesForPatch] = useState<{id: string, file: File}[]>([]);
     const authValue = useAuth();
@@ -62,7 +62,6 @@ const AdminItem: React.FC = () => {
             setLoading(false);
         }
     };
-
     const handleImageUpload = (id: string, file: File) => {
         const imageUrl = URL.createObjectURL(file);
         setPreviewImage(imageUrl);
@@ -71,7 +70,6 @@ const AdminItem: React.FC = () => {
             filteredList.push({ id: id, file: file });
             return filteredList;
         })
-        /* setImageFile(file); */
         return false;
     };
 
@@ -104,48 +102,35 @@ const AdminItem: React.FC = () => {
 
     // modify existing item in table
     const handleUpdateItem = async (id: string, updatedItem: PatchItem) => {
-        // console.log(updatedItem);
         const formData = new FormData();
+        if(updatedItem.name) formData.append("name",  updatedItem.name);
+        if(updatedItem.description) formData.append("description", updatedItem.description);
+        if(updatedItem.totalQuantity) formData.append("totalQuantity", updatedItem.totalQuantity.toString());
+        if(updatedItem.location) formData.append("location", updatedItem.location);
         // console.log(Object.entries(updatedItem));
-        Object.entries(updatedItem).forEach(([key, value]) => {
-            console.log(key, value);
-            if (!value) {
-                formData.append(key, value.toString());
-            }
-        });
         uploadedImagesForPatch.forEach((queue) => {
             if(queue.id === id) {
                 formData.append("image", queue.file);
+                console.log(queue.file);
             }
         })
-        // console.log(formData, updatedItem);
-        /* if (imageFile) {
-            formData.append("image", imageFile);
-        } else {
-            formData.append(
-                "imageUrl",
-                items.find((item) => item._id === id)?.imageUrl || ""
-            );
-        } */
-
         try {
-            const updated = await itemService.update(
+            await itemService.update(
                 id,
                 formData,
                 authValue.accessToken
             );
             message.success("성공적으로 물품을 수정했습니다."); // 뒷처리
-            console.log(updated);
-            return;
-
             setUploadedImagesForPatch(curr => {
                 const filteredList = curr.filter(queue => queue.id !== id);
                 return filteredList;
             });
-
-            setItems(items.map((item) => (item._id === id ? updated : item)));
-            setPreviewImage(null);
-            fetchItem();
+            await fetchItem();
+            // setItems(curr => {
+            //     const updatedArray = curr.map((item) => (item._id === id ? updated : item));
+            //     return updatedArray;
+            // });
+            // setPreviewImage(null);
         } catch (error) {
             message.error("물품을 수정하는 데 실패했습니다.");
             console.error(error);
@@ -169,13 +154,13 @@ const AdminItem: React.FC = () => {
             title: "사진",
             dataIndex: "imageUrl",
             key: "imageUrl",
-            render: (text, record) => previewImage && editableKeys.includes(record._id) ? (
+            render: (text, record) => /* previewImage && editableKeys.includes(record._id) ? (
                     <img
                     src={previewImage}
                     alt="Preview"
                     style={{ width: 50, height: 50, objectFit: "cover" }}
                     />
-                ) : text ? (
+                ) :  */text ? (
                     <img
                     src={String(text)}
                     alt="img"
@@ -190,6 +175,7 @@ const AdminItem: React.FC = () => {
                     <Upload
                         name="image"
                         listType="picture-card"
+                        maxCount={1}
                         showUploadList={false}
                         beforeUpload={(file) => handleImageUpload(record._id, file)}
                     >
@@ -299,6 +285,7 @@ const AdminItem: React.FC = () => {
                                     <Upload
                                         name="image"
                                         maxCount={1}
+                                        beforeUpload={() => false}
                                         listType="picture"
                                         showUploadList={true}
                                     >
@@ -323,18 +310,26 @@ const AdminItem: React.FC = () => {
                                     value={items}
                                     columns={columns}
                                     editable={{
-                                        type: "multiple",
+                                        type: "single",
                                         editableKeys,
                                         onSave: async (rowKey, data) => {
                                             await handleUpdateItem(
                                                 data._id,
                                                 data as PatchItem
-                                            );
+                                            ); // refresh
                                             setEditableRowKeys((prevKeys) =>
                                                 prevKeys.filter(
                                                     (key) => key !== rowKey
                                                 )
                                             );
+                                        },
+                                        onCancel: async (rowKey) => {
+                                            setEditableRowKeys((prevKeys) =>
+                                                prevKeys.filter(
+                                                    (key) => key !== rowKey
+                                                )
+                                            );
+                                            setPreviewImage(null);
                                         },
                                         onChange: setEditableRowKeys,
                                         saveText: (
@@ -353,7 +348,7 @@ const AdminItem: React.FC = () => {
                                             defaultDom
                                         ) => {
                                             const { save, cancel } = defaultDom;
-                                            return [save, cancel];
+                                            return [ save, cancel ];
                                         },
                                     }}
                                     recordCreatorProps={false}

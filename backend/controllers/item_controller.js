@@ -91,10 +91,8 @@ module.exports.create = async (req, res, next) => {
 
 module.exports.edit = async (req, res, next) => {
     try {
-        console.log("hhihihi");
-        return res.status(200).send("i");
         const id = req.params.id;
-        console.log("edit body", req.body);
+        console.log(req.body);
         return res.status(200).send(await itemService.editOne(id, req.body));
     } catch (e) {
         switch (e.message) {

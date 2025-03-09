@@ -79,13 +79,16 @@ module.exports.createOne = async (body) => {
 
 module.exports.editOne = async (id, updates, session = null) => {
     try {
-        const updatedItem = await Item.findByIdAndUpdate(id, updates).session(
+        const originalItem = await Item.findById(id);
+        if (!originalItem) {
+            throw new Error("Item not found");
+        }
+        const changeInQ = updates.totalQuantity - originalItem.totalQuantity;
+        const originalQ = originalItem.quantity;
+        const updatedItem = await Item.findByIdAndUpdate(id, { quantity: originalQ + changeInQ, ...updates}).session(
             session
         );
 
-        if (!updatedItem) {
-            throw new Error("Item not found");
-        }
 
         return updatedItem;
     } catch (e) {
