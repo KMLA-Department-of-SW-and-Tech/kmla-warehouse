@@ -6,3 +6,9 @@
   from = "/api/*"
   to = "https://kmla-warehouse-backend.netlify.app/api/:splat"
   status = 200
+
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
