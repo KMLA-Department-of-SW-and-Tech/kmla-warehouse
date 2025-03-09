@@ -36,9 +36,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
     cors({
-        origin: env === "development"
+        origin: /* env === "development"
                 ? "http://localhost:5173"
-                : "https://kmla-warehouse.netlify.app",
+                :  */"https://kmla-warehouse.netlify.app",
         credentials: true,
     })
 );
