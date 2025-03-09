@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
         server: {
             proxy: {
                 "/api": {
-                    target: isDev ? "http://localhost:3000" : "https://kmla-warehouse-backend.netlify.app",
+                    target: /* isDev ? "http://localhost:3000" :  */"https://kmla-warehouse-backend.netlify.app",
                     changeOrigin: true,
                     secure: false,
                     ws: true,
