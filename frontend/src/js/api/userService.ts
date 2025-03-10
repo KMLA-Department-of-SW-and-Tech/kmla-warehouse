@@ -65,7 +65,16 @@ const userService = {
     getTeamNameList: async (): Promise<string[]> => {
         try {
             const response = await axios.get("/api/user/team-name-list");
-            return response.data;
+            return response.data[0];
+        } catch (e) {
+            console.error("Userservice get team name list error: ", e);
+            throw e;
+        }
+    },
+    getNoTeamNameAvailable: async (): Promise<string> => {
+        try {
+            const response = await axios.get("/api/user/team-name-list");
+            return response.data[1];
         } catch (e) {
             console.error("Userservice get team name list error: ", e);
             throw e;

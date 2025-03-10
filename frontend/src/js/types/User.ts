@@ -6,7 +6,7 @@ export type GetUser = {
     userGrade?: number;
     userClassNumber?: number;
     userStudentNumber?: number;
-    teamName?: string;
+    teamName: string;
 };
 
 export type PatchUser = Partial<GetUser>;

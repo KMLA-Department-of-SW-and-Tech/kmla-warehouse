@@ -15,18 +15,14 @@ const { Sider, Content } = Layout;
 const { Option } = Select;
 
 const UserAccountSettings = () => {
-    const [userName, setUserName] = useState<string>("Guest");
-    const [userGrade, setUserGrade] = useState<number | undefined>(undefined);
-    const [userClassNumber, setUserClassNumber] = useState<number | undefined>(
-        undefined
-    );
-    const [userStudentNumber, setUserStudentNumber] = useState<
-        number | undefined
-    >(undefined);
+    const [userName, setUserName] = useState<string | null>(null);
+    const [userGrade, setUserGrade] = useState<number | null>(null);
+    const [userClassNumber, setUserClassNumber] = useState<number | null>(null);
+    const [userStudentNumber, setUserStudentNumber] = useState<number | null>(null);
     const [teamNames, setTeamNames] = useState<string[]>([]);
-    const [selectedTeam, setSelectedTeam] = useState<string | undefined>(
-        undefined
-    );
+    const [noTeamNameAvailable, setNoTeamNameAvailable] = useState<string | null>(null);
+    const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
+    const [loadingInfo, setLoadingInfo] = useState<Boolean>(true);
     const [saving, setSaving] = useState(false);
     const navigate = useNavigate();
     const authValue = useAuth();
@@ -38,22 +34,24 @@ const UserAccountSettings = () => {
                     authValue.accessToken
                 );
                 const teams = await userService.getTeamNameList();
-                setUserName(userInfo.userName || "Guest");
+                setNoTeamNameAvailable(await userService.getNoTeamNameAvailable());
+                setUserName(userInfo.userName || null);
                 setUserGrade(
-                    userInfo.userGrade ? Number(userInfo.userGrade) : undefined
+                    userInfo.userGrade ? Number(userInfo.userGrade) : null
                 );
                 setUserClassNumber(
                     userInfo.userClassNumber
                         ? Number(userInfo.userClassNumber)
-                        : undefined
+                        : null
                 );
                 setUserStudentNumber(
                     userInfo.userStudentNumber
                         ? Number(userInfo.userStudentNumber)
-                        : undefined
+                        : null
                 );
                 setTeamNames(teams);
-                setSelectedTeam(userInfo.teamName || teams[0]);
+                setSelectedTeam(userInfo.teamName);
+                setLoadingInfo(false);
             } catch (error) {
                 message.error("유저 정보를 불러오는 데 실패했습니다.");
                 console.error(
@@ -82,16 +80,13 @@ const UserAccountSettings = () => {
     const handleSave = async () => {
         setSaving(true);
         try {
-            await userService.updateCurrentUserInfo(
-                {
-                    userName,
-                    userGrade,
-                    userClassNumber,
-                    userStudentNumber,
-                    teamName: selectedTeam,
-                },
-                authValue.accessToken
-            );
+            const dataToSend = {};
+            Object.assign(dataToSend, { teamName: selectedTeam });
+            if(userName) Object.assign(dataToSend, { userName });
+            if(userGrade) Object.assign(dataToSend, { userGrade });
+            if(userClassNumber) Object.assign(dataToSend, { userClassNumber });
+            if(userStudentNumber) Object.assign(dataToSend, { userStudentNumber });
+            await userService.updateCurrentUserInfo(dataToSend, authValue.accessToken);
             message.success("정보가 성공적으로 저장되었습니다.");
         } catch (error) {
             message.error("정보 저장에 실패했습니다.");
@@ -115,23 +110,29 @@ const UserAccountSettings = () => {
                         <h2>계정 정보 수정</h2>
                         <Form layout="vertical">
                             <Form.Item label="이름">
+                                { loadingInfo ? 
+                                <Input value="" disabled/> :
                                 <Input
                                     value={userName}
                                     onChange={(e) =>
                                         setUserName(e.target.value)
                                     }
-                                />
+                                /> }
                             </Form.Item>
                             <Form.Item label="학년">
+                                { loadingInfo ?
+                                <Input value="" disabled/> :
                                 <Input
                                     type="number"
                                     value={userGrade || ""}
                                     onChange={(e) =>
                                         setUserGrade(Number(e.target.value))
                                     }
-                                />
+                                /> }
                             </Form.Item>
                             <Form.Item label="반">
+                                { loadingInfo ?
+                                <Input value="" disabled/> :
                                 <Input
                                     type="number"
                                     value={userClassNumber || ""}
@@ -140,9 +141,11 @@ const UserAccountSettings = () => {
                                             Number(e.target.value)
                                         )
                                     }
-                                />
+                                /> }
                             </Form.Item>
                             <Form.Item label="학번">
+                                { loadingInfo ?
+                                <Input value="" disabled/> :
                                 <Input
                                     type="number"
                                     value={userStudentNumber || ""}
@@ -151,23 +154,25 @@ const UserAccountSettings = () => {
                                             Number(e.target.value)
                                         )
                                     }
-                                />
+                                /> }
                             </Form.Item>
                             <Form.Item label="팀 이름">
+                                { loadingInfo ?
+                                <Input value="" disabled/> :
                                 <Select
                                     value={selectedTeam}
                                     onChange={setSelectedTeam}
                                 >
                                     {teamNames.map((team) => (
-                                        <Option key={team} value={team}>
-                                            {team}
+                                        <Option key={team}>
+                                            {team === noTeamNameAvailable ? "없음" : team}
                                         </Option>
                                     ))}
-                                </Select>
+                                </Select> }
                             </Form.Item>
                             <Button
                                 type="primary"
-                                onClick={handleSave}
+                                onClick={loadingInfo ? () => {} : handleSave}
                                 loading={saving}
                             >
                                 저장

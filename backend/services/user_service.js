@@ -1,6 +1,7 @@
 const User = require("../models/user");
 // const logService = require("./log_service");
 const mongoose = require("mongoose");
+const teamConfig = require("../config/team-config");
 
 module.exports.findUserByFirebaseUid = async (firebaseUid) => {
     try {
@@ -17,6 +18,7 @@ module.exports.createUserByFirebaseUid = async (firebaseUid) => {
         const newUser = await User.create({
             firebaseUid: firebaseUid,
             userType: "Unauthorized",
+            teamName: teamConfig.noTeamNameAvailable
         });
         return newUser;
     } catch (e) {
