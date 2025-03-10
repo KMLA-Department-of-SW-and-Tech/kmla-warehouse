@@ -113,7 +113,7 @@ const UserAccountSettings = () => {
                                 { loadingInfo ? 
                                 <Input value="" disabled/> :
                                 <Input
-                                    value={userName}
+                                    value={userName || ""}
                                     onChange={(e) =>
                                         setUserName(e.target.value)
                                     }
