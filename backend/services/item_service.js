@@ -120,7 +120,7 @@ module.exports.borrow = async (id, body, userFirebaseUid) => {
         const { quantity } = body;
         const user = await userService.findUserByFirebaseUid(userFirebaseUid);
         const teamName = user.teamName;
-        if(teamName === teamConfig.noTeamNameAvailable) throw new Error("User has not team assigned");
+        if(teamName === teamConfig.noTeamNameAvailable) throw new Error("User has no team assigned");
 
 
         const prevItemState = await module.exports.getOne(id);
