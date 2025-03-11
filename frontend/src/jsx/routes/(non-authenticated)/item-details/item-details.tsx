@@ -49,7 +49,7 @@ export default function ItemDetails() {
 
     const handleBorrow = async () => {
         if (!id) return;
-        if (borrowQuantity < 1) {
+        if (!borrowQuantity || borrowQuantity < 1) {
             message.error("유효한 수량을 입력하세요.");
             return;
         }
@@ -73,7 +73,7 @@ export default function ItemDetails() {
                 newItem.quantity -= borrowQuantity;
                 return newItem;
             });
-        } catch (error) {
+        } catch (error: any) {
             console.error("Failed to borrow item in item details:", error);
             if (error.response) {
                 const status = error.response.status;

@@ -1,6 +1,7 @@
 const Item = require("../models/item");
 const logService = require("./log_service");
 const userService = require("./user_service");
+const teamConfig = require("../config/team-config");
 
 module.exports.getAvailable = async () => {
     try {
@@ -85,10 +86,10 @@ module.exports.editOne = async (id, updates, session = null) => {
         }
         const changeInQ = updates.totalQuantity - originalItem.totalQuantity;
         const originalQ = originalItem.quantity;
-        const updatedItem = await Item.findByIdAndUpdate(id, { quantity: originalQ + changeInQ, ...updates}).session(
-            session
-        );
-
+        const updatedItem = await Item.findByIdAndUpdate(id, {
+            quantity: originalQ + changeInQ,
+            ...updates,
+        }).session(session);
 
         return updatedItem;
     } catch (e) {
@@ -119,6 +120,8 @@ module.exports.borrow = async (id, body, userFirebaseUid) => {
         const { quantity } = body;
         const user = await userService.findUserByFirebaseUid(userFirebaseUid);
         const teamName = user.teamName;
+        if(teamName === teamConfig.noTeamNameAvailable) throw new Error("User has no team assigned");
+
 
         const prevItemState = await module.exports.getOne(id);
 

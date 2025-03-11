@@ -83,11 +83,11 @@ const itemService = {
                 `/api/item/${id}`,
                 item,
                 accessToken,
-                { 
+                {
                     headers: {
                         "Content-Type": "multipart/form-data",
                     },
-                },
+                }
             );
             return response.data;
         } catch (error) {

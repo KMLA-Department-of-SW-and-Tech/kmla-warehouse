@@ -2,7 +2,6 @@ import axios from "axios";
 import axiosPrivate from "../hooks/axiosPrivate";
 import { GetUser, PatchUser } from "../types/User";
 
-
 const userService = {
     getUserInfo: async (accessToken: string): Promise<GetUser> => {
         try {
@@ -18,11 +17,7 @@ const userService = {
         accessToken: string
     ): Promise<void> => {
         try {
-            await axiosPrivate.patch(
-                "/api/user",
-                update,
-                accessToken
-            );
+            await axiosPrivate.patch("/api/user", update, accessToken);
         } catch (e) {
             console.error("Userservice update current user info error: ", e);
             throw e;
@@ -70,7 +65,16 @@ const userService = {
     getTeamNameList: async (): Promise<string[]> => {
         try {
             const response = await axios.get("/api/user/team-name-list");
-            return response.data;
+            return response.data[0];
+        } catch (e) {
+            console.error("Userservice get team name list error: ", e);
+            throw e;
+        }
+    },
+    getNoTeamNameAvailable: async (): Promise<string> => {
+        try {
+            const response = await axios.get("/api/user/team-name-list");
+            return response.data[1];
         } catch (e) {
             console.error("Userservice get team name list error: ", e);
             throw e;

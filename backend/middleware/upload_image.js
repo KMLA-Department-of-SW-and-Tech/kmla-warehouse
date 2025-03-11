@@ -78,8 +78,8 @@ const handleImageUpload = async (req, res, next) => {
                     "Unknown error in multer when uploading image:" + e
                 );
                 return res
-                .status(500)
-                .send("Internal server error: " + e.message);
+                    .status(500)
+                    .send("Internal server error: " + e.message);
             }
             // Check if file is uploaded
             if (!req.file) return next();
@@ -87,7 +87,7 @@ const handleImageUpload = async (req, res, next) => {
             if (req.params.id) {
                 const id = req.params.id; // imageUrl is a file some problems
                 const item = await itemService.getOne(id);
-                
+
                 if (!item) {
                     throw new Error("Item with current id not found");
                 }

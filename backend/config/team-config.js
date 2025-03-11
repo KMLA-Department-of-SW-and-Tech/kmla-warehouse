@@ -5,4 +5,6 @@ const teamNameList = [
     "ExampleTeam3",
 ];
 
-module.exports = { teamNameList };
+const noTeamNameAvailable = "NO_TEAM_NAME_AVAILABLE";
+
+module.exports = { teamNameList, noTeamNameAvailable };

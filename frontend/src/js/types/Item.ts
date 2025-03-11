@@ -16,8 +16,7 @@ export type FormItem = {
     description: string; // Description of the item
     quantity: number; // Available quantity of the item
     location: string; // Location of the item
-    imageUrl?: { file: File, fileList: any };
+    imageUrl?: { file: File; fileList: any };
 };
-
 
 export type PatchItem = Partial<GetItem>; // needs fixation
