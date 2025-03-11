@@ -27,10 +27,13 @@ module.exports.createUserByFirebaseUid = async (firebaseUid) => {
 
 module.exports.updateUserByFirebaseUid = async (firebaseUid, body) => {
     try {
-        return await User.updateOne(
+        console.log(await this.findUserByFirebaseUid(firebaseUid));
+        const updatedata = await User.updateOne(
             { firebaseUid: firebaseUid },
             { $set: { ...body } }
         );
+        console.log(updatedata);
+        return updatedata;
     } catch (e) {
         console.error("Cannot update user with firebase id" + e);
         throw e;
