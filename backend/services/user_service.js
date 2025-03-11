@@ -30,7 +30,7 @@ module.exports.createUserByFirebaseUid = async (firebaseUid) => {
 module.exports.updateUserByFirebaseUid = async (firebaseUid, body) => {
     try {
         console.log(await this.findUserByFirebaseUid(firebaseUid));
-        console.log(body);
+        console.log({...body});
         const updatedata = await User.updateOne(
             { firebaseUid: firebaseUid },
             { $set: { ...body } },
