@@ -29,7 +29,8 @@ const AdminPermission = () => {
       const unauthorizedUsers = await userService.getUnauthorizedUsers(
         authValue.accessToken
       );
-      const filteredUsers = unauthorizedUsers.filter((user) => user.teamName);
+      const nta = await userService.getNoTeamNameAvailable();
+      const filteredUsers = unauthorizedUsers.filter((user) => user.teamName !== nta);
       setUsers(filteredUsers);
     } catch (error) {
       message.error("비승인 유저를 불러오는 데 실패했습니다.");
