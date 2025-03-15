@@ -18,7 +18,7 @@ module.exports.createUserByFirebaseUid = async (firebaseUid) => {
         const newUser = await User.create({
             firebaseUid: firebaseUid,
             userType: "Unauthorized",
-            teamName: teamConfig.noTeamNameAvailable
+            teamName: teamConfig.noTeamNameAvailable,
         });
         return newUser;
     } catch (e) {
@@ -29,14 +29,11 @@ module.exports.createUserByFirebaseUid = async (firebaseUid) => {
 
 module.exports.updateUserByFirebaseUid = async (firebaseUid, body) => {
     try {
-        console.log(await this.findUserByFirebaseUid(firebaseUid));
-        console.log({...body});
         const updatedata = await User.updateOne(
             { firebaseUid: firebaseUid },
             { $set: { ...body } },
             { writeConcern: { w: 1 } }
         );
-        console.log(updatedata);
         return updatedata;
     } catch (e) {
         console.error("Cannot update user with firebase id" + e);

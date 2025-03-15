@@ -1,5 +1,5 @@
 const userService = require("../services/user_service");
-const teamConfig = require("../config/team-config")
+const teamConfig = require("../config/team-config");
 
 module.exports.syncFirebaseAndMongooseUserDB = async (req, res, next) => {
     try {
@@ -86,7 +86,12 @@ module.exports.getAuthorizedUserList = async (req, res, next) => {
 
 module.exports.getTeamNameList = async (req, res, next) => {
     try {
-        return res.status(200).send([teamConfig.teamNameList.concat(teamConfig.noTeamNameAvailable), teamConfig.noTeamNameAvailable]);
+        return res
+            .status(200)
+            .send([
+                teamConfig.teamNameList.concat(teamConfig.noTeamNameAvailable),
+                teamConfig.noTeamNameAvailable,
+            ]);
     } catch (e) {
         console.error("Internal server error when getting team name list" + e);
         return res.status(500).send("Internal server error: " + e.message);

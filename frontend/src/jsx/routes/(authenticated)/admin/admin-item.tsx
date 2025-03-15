@@ -55,7 +55,6 @@ const AdminItem: React.FC = () => {
         setLoading(true);
         try {
             const response = await itemService.getAll();
-            console.log(response);
             setItems(response);
         } catch (error) {
             message.error("물품을 불러오는 데 실패했습니다.");
@@ -115,11 +114,9 @@ const AdminItem: React.FC = () => {
             );
         if (updatedItem.location)
             formData.append("location", updatedItem.location);
-        // console.log(Object.entries(updatedItem));
         uploadedImagesForPatch.forEach((queue) => {
             if (queue.id === id) {
                 formData.append("image", queue.file);
-                console.log(queue.file);
             }
         });
         try {

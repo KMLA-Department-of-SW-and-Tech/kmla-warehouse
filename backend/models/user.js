@@ -14,7 +14,11 @@ const userSchema = new Schema({
     userGrade: { type: Number },
     userClassNumber: { type: Number },
     userStudentNumber: { type: Number },
-    teamName: { type: String, enum: teamConfig.teamNameList.concat([ teamConfig.noTeamNameAvailable ]), required: true },
+    teamName: {
+        type: String,
+        enum: teamConfig.teamNameList.concat([teamConfig.noTeamNameAvailable]),
+        required: true,
+    },
 });
 
 module.exports = mongoose.model("User", userSchema);

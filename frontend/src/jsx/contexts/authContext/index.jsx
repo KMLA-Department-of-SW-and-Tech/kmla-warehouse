@@ -31,7 +31,7 @@ export function AuthProvider({ children }) {
             );
             setUserType(userInfo.userType);
         } catch (err) {
-            console.log(err);
+            console.error("AuthProvider error: ", err);
         }
         setLoading(false);
     }

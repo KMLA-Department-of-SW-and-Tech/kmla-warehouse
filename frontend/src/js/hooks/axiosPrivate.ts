@@ -36,10 +36,13 @@ const axiosPrivate: {
             const response = await axios.get(apiUrl, {
                 ...axiosConfig,
                 withCredentials: true,
-                headers: Object.assign({
-                    Authorization: `Bearer ${accessToken}`,
-                    "Content-Type": "application/json"
-                }, axiosConfig?.headers),
+                headers: Object.assign(
+                    {
+                        Authorization: `Bearer ${accessToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    axiosConfig?.headers
+                ),
             });
             return response;
         } catch (err) {
@@ -52,10 +55,13 @@ const axiosPrivate: {
             const response = await axios.post(apiUrl, requestData, {
                 ...axiosConfig,
                 withCredentials: true,
-                headers: Object.assign({
-                    Authorization: `Bearer ${accessToken}`,
-                    "Content-Type": "application/json"
-                }, axiosConfig?.headers),
+                headers: Object.assign(
+                    {
+                        Authorization: `Bearer ${accessToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    axiosConfig?.headers
+                ),
             });
             return response;
         } catch (err) {
@@ -68,10 +74,13 @@ const axiosPrivate: {
             const response = await axios.put(apiUrl, requestData, {
                 ...axiosConfig,
                 withCredentials: true,
-                headers: Object.assign({
-                    Authorization: `Bearer ${accessToken}`,
-                    "Content-Type": "application/json"
-                }, axiosConfig?.headers),
+                headers: Object.assign(
+                    {
+                        Authorization: `Bearer ${accessToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    axiosConfig?.headers
+                ),
             });
             return response;
         } catch (err) {
@@ -84,10 +93,13 @@ const axiosPrivate: {
             const response = await axios.patch(apiUrl, requestData, {
                 ...axiosConfig,
                 withCredentials: true,
-                headers: Object.assign({
-                    Authorization: `Bearer ${accessToken}`,
-                    "Content-Type": "application/json"
-                }, axiosConfig?.headers),
+                headers: Object.assign(
+                    {
+                        Authorization: `Bearer ${accessToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    axiosConfig?.headers
+                ),
             });
             return response;
         } catch (err) {
@@ -100,10 +112,13 @@ const axiosPrivate: {
             const response = await axios.delete(apiUrl, {
                 ...axiosConfig,
                 withCredentials: true,
-                headers: Object.assign({
-                    Authorization: `Bearer ${accessToken}`,
-                    "Content-Type": "application/json"
-                }, axiosConfig?.headers),
+                headers: Object.assign(
+                    {
+                        Authorization: `Bearer ${accessToken}`,
+                        "Content-Type": "application/json",
+                    },
+                    axiosConfig?.headers
+                ),
             });
             return response;
         } catch (err) {

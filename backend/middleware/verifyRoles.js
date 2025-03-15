@@ -12,8 +12,7 @@ const verifyRoles = (allowedRoles) => {
                 );
         const userRole = user.userType;
         const validated = allowedRoles.includes(userRole);
-        if (!validated)
-            return res.status(401).send("Unauthorized api access");
+        if (!validated) return res.status(401).send("Unauthorized api access");
         return next();
     };
 };
