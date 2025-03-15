@@ -6,9 +6,7 @@ const verifyJWT = require("../../middleware/verifyJWT.js");
 const itemController = require("../../controllers/item_controller");
 const verifyRoles = require("../../middleware/verifyRoles.js");
 
-const multer = require("multer");
-
-const upload = multer();
+const parseJSON = require("../../middleware/parseJSON");
 
 router.get("/list", itemController.list);
 router.get(
@@ -39,7 +37,7 @@ router.patch(
     "/:id/borrow",
     verifyJWT,
     verifyRoles(["User"]),
-    upload.none(),
+    parseJSON,
     itemController.borrow
 );
 
