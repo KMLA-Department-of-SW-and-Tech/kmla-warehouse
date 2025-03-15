@@ -28,9 +28,9 @@ const AdminUserList = () => {
       const authorizedUsers = await userService.getAuthorizedUsers(
         authValue.accessToken
       );
-      const filteredUsers = authorizedUsers.filter((user) => user.teamName && user.userType === "User");
-
-      setUsers(filteredUsers);
+      const nta = await userService.getNoTeamNameAvailable();
+      const filteredUsers = authorizedUsers.filter((user) => user.userType === "User");
+      setUsers(filteredUsers.map(item => item.teamName === nta ? { ...item, teamName: "없음" } : item));
     } catch (error) {
       message.error("승인된 유저를 불러오는 데 실패했습니다.");
       console.error(
