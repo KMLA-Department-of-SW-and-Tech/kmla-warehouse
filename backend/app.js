@@ -4,7 +4,7 @@ const path = require("path");
 // const cookieParser = require('cookie-parser');
 const logger = require("morgan");
 const cors = require("cors");
-const querystring = require("querystring");
+// const querystring = require("querystring");
 require("dotenv").config();
 
 const env = process.env.NODE_ENV ? process.env.NODE_ENV : "development";
@@ -27,10 +27,8 @@ async function main() {
     await mongoose.connect(mongoDB);
 }
 
-if(env === "development") {
-    app.use(express.json());
-    app.use(express.urlencoded({ extended: true }));
-}
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(logger(env === "development" ? "dev" : "combined"));
 app.use(express.static(path.join(__dirname, "public")));
