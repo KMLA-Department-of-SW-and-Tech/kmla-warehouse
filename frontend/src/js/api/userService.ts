@@ -17,7 +17,6 @@ const userService = {
         accessToken: string
     ): Promise<void> => {
         try {
-            console.log(update);
             await axiosPrivate.patch("/api/user", update, accessToken);
         } catch (e) {
             console.error("Userservice update current user info error: ", e);
