@@ -5,8 +5,6 @@ const verifyRoles = require("../../middleware/verifyRoles"); // in case of admin
 const userController = require("../../controllers/user_controller");
 const parseJSON = require("../../middleware/parseJSON");
 
-const logBody = require("../../middleware/logBody");
-
 router
     .route("/sync")
     .post(verifyJWT, userController.syncFirebaseAndMongooseUserDB); // if there is a firebase login and no mogoose account make one
@@ -14,7 +12,7 @@ router
 router
     .route("/")
     .get(verifyJWT, userController.getUserInfo)
-    .patch(verifyJWT, logBody, parseJSON, logBody, userController.updateUserInfo);
+    .patch(verifyJWT, parseJSON, userController.updateUserInfo);
 
 router
     .route("/unauth-list")
