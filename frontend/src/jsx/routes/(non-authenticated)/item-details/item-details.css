@@ -1,91 +1,91 @@
 .layout {
-    min-height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (min-width: 768px) {
-    .layout {
-        flex-direction: row;
-    }
+  .layout {
+    flex-direction: row;
+  }
 }
 
 .sider {
-    background: #fff;
-    position: fixed;
-    height: 100vh;
-    left: 0;
-    top: 64px;
-    width: 250px;
-    display: none;
+  background: #fff;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 64px;
+  width: 250px;
+  display: none;
 }
 
 @media (min-width: 768px) {
-    .sider {
-        display: block;
-    }
+  .sider {
+    display: block;
+  }
 }
 
 .content-layout {
-    margin-left: 0;
-    width: 100%;
-    padding: 20px;
+  margin-left: 0;
+  width: 100%;
+  padding: 20px;
 }
 
 @media (min-width: 768px) {
-    .content-layout {
-        margin-left: 250px;
-        width: calc(100vw - 250px);
-    }
+  .content-layout {
+    margin-left: 250px;
+    width: calc(100vw - 250px);
+  }
 }
 
 .content-wrapper {
-    max-width: 900px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 @media (min-width: 768px) {
-    .content-wrapper {
-        flex-direction: row;
-        align-items: flex-start;
-        gap: 40px;
-    }
+  .content-wrapper {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px;
+  }
 }
 
 .image-container {
-    width: 100%;
-    max-width: 400px;
-    flex-basis: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  max-width: 400px;
+  flex-basis: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (min-width: 1024px) {
-    .image-container {
-        margin-top: 3vw;
-        max-width: 800px;
-    }
+  .image-container {
+    margin-top: 3vw;
+    max-width: 800px;
+  }
 }
 
 .image-container img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    border-radius: 10px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
 }
 
 .text-content {
-    width: 100%;
-    padding: 20px;
-    flex-basis: 50%;
+  width: 100%;
+  padding: 20px;
+  flex-basis: 50%;
 }
 
 .borrow-form {
-    margin-top: 20px;
+  margin-top: 20px;
 }

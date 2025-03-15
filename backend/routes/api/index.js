@@ -3,7 +3,7 @@ const router = express.Router();
 
 // API Index
 router.get("/", (req, res) => {
-    res.json({ message: "API_INDEX" });
+  res.json({ message: "API_INDEX" });
 });
 
 const itemRouter = require("./item");

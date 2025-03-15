@@ -10,35 +10,35 @@ const parseJSON = require("../../middleware/parseJSON");
 
 router.get("/list", itemController.list);
 router.get(
-    "/team-list/",
-    verifyJWT,
-    verifyRoles(["User"]),
-    itemController.listForTeam
+  "/team-list/",
+  verifyJWT,
+  verifyRoles(["User"]),
+  itemController.listForTeam
 );
 
 // router.get("/list-all", itemController.listAll);
 // router.get("/list-all/:teamName", verifyJWT, verifyRoles(["User", "Admin"]), itemController.listAllForTeam);
 
 router.post(
-    "/",
-    verifyJWT,
-    verifyRoles(["Admin"]),
-    uploadImage,
-    itemController.create
+  "/",
+  verifyJWT,
+  verifyRoles(["Admin"]),
+  uploadImage,
+  itemController.create
 );
 
 router
-    .route("/:id")
-    .get(itemController.detail)
-    .patch(verifyJWT, verifyRoles(["Admin"]), uploadImage, itemController.edit)
-    .delete(verifyJWT, verifyRoles(["Admin"]), itemController.delete);
+  .route("/:id")
+  .get(itemController.detail)
+  .patch(verifyJWT, verifyRoles(["Admin"]), uploadImage, itemController.edit)
+  .delete(verifyJWT, verifyRoles(["Admin"]), itemController.delete);
 
 router.patch(
-    "/:id/borrow",
-    verifyJWT,
-    verifyRoles(["User"]),
-    parseJSON,
-    itemController.borrow
+  "/:id/borrow",
+  verifyJWT,
+  verifyRoles(["User"]),
+  parseJSON,
+  itemController.borrow
 );
 
 module.exports = router;

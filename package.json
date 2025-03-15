@@ -1,21 +1,21 @@
 {
-    "name": "kmla-warehouse",
-    "workspaces": [
-        "backend",
-        "frontend"
-    ],
-    "private": true,
-    "scripts": {
-        "start": "npm run start --workspace backend",
-        "dev:frontend": "npm run dev --workspace frontend",
-        "dev:backend": "npm run dev --workspace backend",
-        "dev": "concurrently -c cyan,yellow \"npm run dev:*\"",
-        "log": "git log --all --oneline --graph",
-        "prettier": "npx prettier . --write"
-    },
-    "devDependencies": {
-        "concurrently": "^9.0.0",
-        "prettier": "3.5.3"
-    },
-    "packageManager": "npm@11.0.0+sha512.11dff29565d2297c74e7c594a9762581bde969f0aa5cbe6f5b3644bf008a16c065ece61094d9ffbb81125be38df8e1ba43eb8244b3d30c61eb797e9a2440e3ec"
+  "name": "kmla-warehouse",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "private": true,
+  "scripts": {
+    "start": "npm run start --workspace backend",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "dev:backend": "npm run dev --workspace backend",
+    "dev": "concurrently -c cyan,yellow \"npm run dev:*\"",
+    "log": "git log --all --oneline --graph",
+    "prettier": "npx prettier . --write"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0",
+    "prettier": "3.5.3"
+  },
+  "packageManager": "npm@11.0.0+sha512.11dff29565d2297c74e7c594a9762581bde969f0aa5cbe6f5b3644bf008a16c065ece61094d9ffbb81125be38df8e1ba43eb8244b3d30c61eb797e9a2440e3ec"
 }
