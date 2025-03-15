@@ -34,7 +34,7 @@ module.exports.getUserInfo = async (req, res, next) => {
 
 module.exports.updateUserInfo = async (req, res, next) => {
     try {
-        console.log(req.body);
+        // console.log(req.body);
         return res
             .status(200)
             .send(
