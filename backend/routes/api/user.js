@@ -3,6 +3,9 @@ const router = express.Router();
 const verifyJWT = require("../../middleware/verifyJWT");
 const verifyRoles = require("../../middleware/verifyRoles"); // in case of admin secrurity
 const userController = require("../../controllers/user_controller");
+const multer = require("multer");
+
+const upload = multer();
 
 router
     .route("/sync")
@@ -11,7 +14,7 @@ router
 router
     .route("/")
     .get(verifyJWT, userController.getUserInfo)
-    .patch(verifyJWT, userController.updateUserInfo);
+    .patch(verifyJWT, upload.none(), userController.updateUserInfo);
 
 router
     .route("/unauth-list")
