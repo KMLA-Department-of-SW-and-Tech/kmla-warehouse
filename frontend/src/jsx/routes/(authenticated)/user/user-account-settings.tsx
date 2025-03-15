@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Form, Input, Button, message, Layout, Select } from "antd";
@@ -36,7 +36,8 @@ const UserAccountSettings = () => {
       try {
         const userInfo = await userService.getUserInfo(authValue.accessToken);
         const teams = await userService.getTeamNameList();
-        setNoTeamNameAvailable(await userService.getNoTeamNameAvailable());
+        const nta = await userService.getNoTeamNameAvailable()
+        setNoTeamNameAvailable(nta);
         setUserName(userInfo.userName || null);
         setUserGrade(userInfo.userGrade ? Number(userInfo.userGrade) : null);
         setUserClassNumber(

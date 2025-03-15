@@ -25,10 +25,10 @@ const AdminUserList = () => {
   const fetchAuthorizedUsers = async () => {
     setLoading(true);
     try {
-      const unauthorizedUsers = await userService.getAuthorizedUsers(
+      const authorizedUsers = await userService.getAuthorizedUsers(
         authValue.accessToken
       );
-      const filteredUsers = unauthorizedUsers.filter((user) => user.teamName);
+      const filteredUsers = authorizedUsers.filter((user) => user.teamName && user.userType === "User");
 
       setUsers(filteredUsers);
     } catch (error) {
