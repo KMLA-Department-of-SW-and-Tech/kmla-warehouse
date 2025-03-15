@@ -27,8 +27,10 @@ async function main() {
     await mongoose.connect(mongoDB);
 }
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+if(env === "development") {
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+}
 
 app.use(logger(env === "development" ? "dev" : "combined"));
 app.use(express.static(path.join(__dirname, "public")));
