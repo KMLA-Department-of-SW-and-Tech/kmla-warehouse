@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const upload = require("../../middleware/upload_image.js"); // Import the multer upload configuration
+const uploadImage = require("../../middleware/upload_image.js"); // Import the multer upload configuration
 const verifyJWT = require("../../middleware/verifyJWT.js");
 
 const itemController = require("../../controllers/item_controller");
@@ -25,14 +25,14 @@ router.post(
     "/",
     verifyJWT,
     verifyRoles(["Admin"]),
-    upload,
+    uploadImage,
     itemController.create
 );
 
 router
     .route("/:id")
     .get(itemController.detail)
-    .patch(verifyJWT, verifyRoles(["Admin"]), upload, itemController.edit)
+    .patch(verifyJWT, verifyRoles(["Admin"]), uploadImage, itemController.edit)
     .delete(verifyJWT, verifyRoles(["Admin"]), itemController.delete);
 
 router.patch(
