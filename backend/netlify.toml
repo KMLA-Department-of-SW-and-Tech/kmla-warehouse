@@ -3,6 +3,7 @@
 [functions]
   external_node_modules = ["express"]
   node_bundler = "esbuild"
+  format = "cjs"
 [[redirects]]
   force = true
   from = "/api/*"
