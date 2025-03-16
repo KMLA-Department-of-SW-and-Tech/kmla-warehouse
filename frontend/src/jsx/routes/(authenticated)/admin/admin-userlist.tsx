@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { message, Layout, Typography, Table, Input } from "antd";
+import { message, Layout, Typography, Table } from "antd";
 import AdminHeader from "../../../components/header/admin-header";
 import AdminSidebar from "../../../components/sidebar/admin-sidebar";
 import Loading from "../../../components/loading/loading";

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { Button, message, Layout, Typography, Table, Input } from "antd";
+import { Button, message, Layout, Typography, Table } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
 import AdminHeader from "../../../components/header/admin-header";
 import AdminSidebar from "../../../components/sidebar/admin-sidebar";

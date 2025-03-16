@@ -17,7 +17,6 @@ import {
   EditOutlined,
   SaveOutlined,
   UploadOutlined,
-  PlusOutlined,
 } from "@ant-design/icons";
 import { EditableProTable, ProColumns } from "@ant-design/pro-components";
 import enUS from "antd/lib/locale/en_US";
@@ -151,7 +150,7 @@ const AdminItem: React.FC = () => {
       title: "사진",
       dataIndex: "imageUrl",
       key: "imageUrl",
-      render: (text, record) =>
+      render: (text) =>
         /* previewImage && editableKeys.includes(record._id) ? (
                     <img
                     src={previewImage}
@@ -193,7 +192,7 @@ const AdminItem: React.FC = () => {
     {
       title: "Actions",
       valueType: "option",
-      render: (text, record, _, action) => [
+      render: (__, record, _, action) => [
         <Button
           key="editable"
           icon={<EditOutlined />}
