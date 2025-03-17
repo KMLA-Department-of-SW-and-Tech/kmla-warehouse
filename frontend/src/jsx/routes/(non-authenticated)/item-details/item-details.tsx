@@ -140,6 +140,7 @@ export default function ItemDetails() {
                                 </div>
                                 <div className="text-content">
                                     <Title level={1}>{item.name}</Title>
+                                    <Title level={3}>물품 정보</Title>
                                     <Text>남은 수량 {item.quantity} 개</Text>
                                     <div style={{ marginTop: "10px" }}>
                                         <Text>위치 {item.location}</Text>
