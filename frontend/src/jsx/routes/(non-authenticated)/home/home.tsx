@@ -54,7 +54,7 @@ export default function Home() {
         equipmentList.filter(
           (item) =>
             item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.location.toLowerCase().includes(searchQuery.toLowerCase())
+            item.location?.toLowerCase().includes(searchQuery.toLowerCase())
         )
       );
     } else {
