@@ -16,8 +16,7 @@ import {
     DeleteOutlined,
     EditOutlined,
     SaveOutlined,
-    UploadOutlined,
-    PlusOutlined,
+    UploadOutlined
 } from "@ant-design/icons";
 import { EditableProTable, ProColumns } from "@ant-design/pro-components";
 import enUS from "antd/lib/locale/en_US";

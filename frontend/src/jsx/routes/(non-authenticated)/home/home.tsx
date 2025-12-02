@@ -137,6 +137,7 @@ export default function Home() {
                                                                     equipment.name
                                                                 }
                                                                 className="equipment-image"
+                                                                loading="lazy"
                                                             />
                                                         ) : (
                                                             <Typography.Text>
